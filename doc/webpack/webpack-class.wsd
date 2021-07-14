@@ -1,0 +1,403 @@
+'官方Server：http://www.plantuml.com/plantuml'
+@startuml Demo
+Person ..> 计算机
+note left of 计算机:人依赖计算机（完成工作）
+
+学生 --> 功课
+note left of 功课:学生关联功课
+老师--学生
+note left of 学生:学生和老师互相关联
+校长-->校长
+note left of 校长: 校长自关联
+汽车 o-- 轮胎
+note left of 轮胎: 整体汽车聚合了部分轮胎
+公司 *-- 部门
+note left of 部门: 整体公司组合了部分部门
+
+Animal <|-- Tiger
+note left of B: Tiger继承了Animal
+
+IBrush <|.. PenBrush
+note left of PenBrush: 类PenBrush实现了接口IBrush
+
+M .. N
+note left of N:循环依赖？似乎没有这个概念
+class A {
+    {static}+ string year
+    -string name = 'monkey' /'private'/
+    # string gender /'protected'/
+    + number agent  /'public'/
+    +number getAgent()
+    {abstract}string getYear() /' 斜体 '/
+    ~A() /' 表示权限package private '/
+}
+@enduml
+@startuml webpack class v4.29.6
+package "webpack自定义类型" {
+    note "TNormalModule={\n\ttype,\n\trequest,\n\tuserRequest,\n\trawRequest,\n\tloaders,\n\tresource,\n\tmatchResource,\n\tparser,\n\tgenerator,\n\tresolveOptions\n}" as TNormalModule
+    note "TData={\n\tcontext:TContextInfo,\n\tcontext:string,\n\tdependencies:Dependency[]\n}" as TData
+    note "TContextInfo={\n\tissuer:string,\n\tcompiler:string\n}" as TContextInfo
+    note "TContext={}" as TContext
+    note "TParser={}" as TParser
+    note "TGenerator={}" as TGenerator
+    note "TSlot={\n\tname:string,\n\trequest:string,\n\tmodule:Module[]}" as T
+    note "TAddModuleResult={\n\tmodule:Module,\n\tissuer:boolean,\n\tbuild:boolean,\n\tdependencies:Dependency[]\n}" as TAddModuleResult
+    note "TLoaderContext={\n\tversion,\n\temitWarning,\n\temitError,\n\texec,\n\tresolve,\n\tgetResolve,\n\temitFile,\n\trootContext,\n\twebpack,\n\tsourceMap,\n\t_module,\n\t_compilation,\n\t_compiler,\n\tfs\n}" as TLoaderContext
+}
+' Other
+class Tapable {}
+package "webpack other class" {
+    Tapable <|-- Compilation
+    Tapable <|-- ResplverFactory
+    class Compilation {
+        Compilation(Compiler compiler)
+        - TSlot[] _preparedEntrypoints = []
+        - Map entrypoints = new Map
+        - boolean bail = options.bail
+        - boolean profile = options.profile
+        - Semaphore semaphore = new Semaphore
+        - Map<DepConstructor, ModuleFactory> dependencyFactories = new Map
+        ' 保存的Module
+        - Map<string, Module> _modules = new Map
+        - Module[] modules = []
+        ' 缓存module
+        - Object<string, Module> cache = null
+        - Module[] entries = []
+        - Map<Module, Callback[]> _buildingModules = new Map
+        - Map<Module, Callback[]> _rebuildingModules = new Map
+        + void addEntry(string context, Dependency entry, string name, callback)
+        + TAddModuleResult addModule(Module module, string cacheGroup)
+        - void _addModuleChain(string context, Dependency dependency, fn onModule, fn callback)
+        + any buildModule(Module module, boolean optional, Module origin, Dependency[] dependencies, callback)
+    }
+    class ResplverFactory {
+        ResplverFactory()
+        - Object<string, Hook> hooks = {resolveOptions, resolver}
+        - WeakMap<> cache1 = new WeakMap
+        - Map<> cache2 = new Map
+        + any get(string type, Object resolveOptions)
+        - any _create(string type, Object resolveOptions)
+    }
+    ' 处理request，并存储到cache中
+    class RequestShortener {
+        RequestShortener(string directory)
+        - Map<string, string> cache = new Map
+        + string shorten(string request)
+    }
+    class Semaphore {
+        Semaphore(string available)
+        - number available = available
+        - any[] waits = []
+        - func _continue = XXX
+        + void acquire(func callback)
+        + void release()
+        + void _continue()
+    }
+}
+package "webpack plugins" #00a3fe {
+    class SingleEntryPLugin {
+        ' entriy: 入口文件路径
+        SingleEntryPLugin(string context, string entry, string name)
+        + void apply(Compiler compiler)
+        {static} SingleEntryPLugin createDependency(string entry, string name)
+    }
+    class MultiEntryPlugin {
+        MultiEntryPlugin(string context, string[] entries, string name)
+        + void apply(Compiler compiler)
+        {static} MultiEntryDependency createDependency(string[] entries, string name)
+    }
+    class DllEntryPlugin {
+        DllEntryPlugin(string context, string[] entries, string name)
+        + void apply(Compiler compiler)
+    }
+    class DynamicEntryPlugin {
+        DynamicEntryPlugin(string context, TEntryDynamic entry)
+        - string context = context
+        - TEntryDynamic entry = entry
+        + void apply(Compiler compiler)
+        {static} SingleEntryDependency|MultiEntryDependency createDependency(TEntryDynamic entry, string name)
+    }
+}
+
+' MultiEntryPlugin ..> MultiEntryDependency
+' MultiEntryPlugin ..> MultiModuleFactory
+' MultiEntryPlugin ..> SingleEntryDependency
+' MultiEntryPlugin ..> NormalModuleFactory
+
+' DllEntryPlugin ..> DllEntryDependency
+' DllEntryPlugin ..> DllModuleFactory
+' DllEntryPlugin ..> SingleEntryDependency
+
+' DynamicEntryPlugin ..> MultiEntryDependency
+' DynamicEntryPlugin ..> MultiModuleFactory
+' DynamicEntryPlugin ..> SingleEntryDependency
+' DynamicEntryPlugin ..> NormalModuleFactory
+' DynamicEntryPlugin ..> SingleEntryPlugin
+' DynamicEntryPlugin ..> MultiEntryPlugin
+' ModuleFactory:
+package "webpack module factory" #eee {
+    SingleEntryPLugin ..> NormalModuleFactory
+    Tapable <|-- NormalModuleFactory
+    Tapable <|-- MultiModuleFactory
+    Tapable <|-- ContextModuleFactory
+    Tapable <|-- DllModuleFactory
+    class MultiModuleFactory {
+        MultiModuleFactory()
+        - Object<string, Hook> hooks = {}
+        + void create(TData data, callback)
+    }
+    class NormalModuleFactory {
+        NormalModuleFactory(string context, ResolverFactory resolverFactory, Object options)
+        - Object<string, Hook> hooks = {resolve,factory,beforeResolve,afterResolve,createParser,parser,createGenerator,generator}
+        - ResolverFactory resolverFactory = resolverFactory
+        - RuleSet ruleSet = new RuleSet
+        - boolean cachePredicate = XXX
+        - string context = context || ''
+        - Object parserCache = Object.create(null)
+        - Object generatorCache = Object.create(null)
+        + void create(TData data, callback)
+        + void resolveRequestArray(TContextInfo contextInfo, string context, array, resolver, callback)
+        + any getParser(string type, Object parserOptions)
+        + TParser createParser(string type, Object parserOptions = {})
+        + TGenerator getGenerator(string type, Object generatorOptions)
+        + TGenerator createGenerator(string type, Object generatorOptions = {})
+        + any getResolver(string type, Object resolveOptions)
+    }
+    class ContextModuleFactory {
+        ContextModuleFactory(ResolverFactory resolverFactory)
+        - Object<string, Hook> hooks = {beforeResolve,afterResolver,contextModuleFiles,alternatives}
+        - ResolverFactory resolverFactory = resolverFactory
+        + void create(TData data, callback)
+        + void resolveDependencies(fs, Object options, callback)
+    }
+    class DllModuleFactory {
+        DllModuleFactory()
+        - Object<string, Hook> hooks = {}
+        + void create(TData data, callback)
+    }
+}
+' Dependency
+package "webpack dependency class" {
+    SingleEntryPLugin ..> SingleEntryDependency
+    class Dependency {
+        Dependency()
+        - Module|null module = null
+        - boolean weak = false
+        - boolean optional = false
+        - TDependencyLocation loc = undefined
+        + null getResourceIdentifier()
+        + DependencyReference getReference()
+        + null getExports()
+        + null getWarnings()
+        + null getErrors()
+        + void updateHash(Hash hash)
+        + void disconnect()
+    }
+    Dependency <|-- ModuleDependency
+    class ModuleDependency {
+        ModuleDependency(string request)
+        ' request path which needs resolving，request path for entry
+        ' 就是入口文件path
+        - string request = request
+        - string userRequest = request
+        + string|null getResourceIdentifier()
+    }
+    ModuleDependency <|-- SingleEntryDependency
+    ' 功能：保存单个入口文件的路径等信息
+    class SingleEntryDependency {
+        SingleEntryDependency(string request)
+        - get type = 'single entry'
+    }
+    Dependency <|-- MultiEntryDependency
+    ' 功能：通过dependencies，保存多入口文件的路径等信息
+    class MultiEntryDependency {
+        MultiEntryDependency(SingleEntryDependency[] dependencies, string name)
+        - SingleEntryDependency[] dependencies = dependencies
+        - string name = name
+        - get type = 'multi entry'
+    }
+    Dependency <|-- DllEntryDependency
+    class DllEntryDependency {
+        DllEntryDependency(Dependencies[] dependencies, string name)
+        - Dependencies[] dependencies = dependecies
+        - string name = name
+        + get type = 'dll entry'
+    }
+}
+' Module
+package "webpack module class" {
+    class DependenciesBlock {
+        DependenciesBlock()
+        - Dependency[] dependencies = []
+        - AsyncDependenciesBlock[] blocks = []
+        - DependenciesBlockVariable[] variables = []
+        + AsyncDependenciesBlock addBlock(block)
+        + void addVariable(string name, string expression, Dependency[] dependencies)
+        + void addDependency(Dependency dependency)
+        + void removeDependency(Dependency dependency)
+        + void updateHash(Hash hash)
+        + void disconnect()
+        + void unseal()
+        + boolean hasDependencies(TDependencyFilterFunction filter)
+    }
+    DependenciesBlock <|-- Module
+    class Module {
+        Module(string type, string context)
+        - string type = type
+        - string context = context
+        - number debugId = debugId++
+        - string hash = undefined
+        - string renderHash = undefined
+        - Object resolveOptions = {}
+        - Object factoryMeta = {}
+        - WebpackError[] warnings = []
+        - WebpackError[] errors = []
+        - Object buildMeta = undefined
+        - Object buildInfo = undefined
+        - ModuleReason[] reasons = []
+        - SortableSet<Chunk> _chunks = new SortableSet
+        - number|string id = null
+        - number index = null
+        - number index2 = null
+        - number depth = null
+        - Module issuer = null
+        - object profile = undefined
+        - boolean prefetched = false
+        - boolean built = false
+        - boolean used = null
+        - any usedExports = null
+        - TOptimizationBailoutFunction optimizationBailout = []
+        - any _rewriteChunkInReasons = undefined
+        - boolean useSourceMap = false
+        - any _source = null
+        - get exportsArgument = 'exports'
+        - get moduleArgument = 'module'
+        - get chunksIterable = XXX
+        + void disconnect()
+        + void unseal()
+        + void setChunks(chunks)
+        + void addChunk(chunk)
+        + void removeChunk(chunk)
+        + boolean isInChunk(chunk)
+        + boolean isEntryModule()
+        + Chunk[] getChunks()
+        + number getNumberOfChunks()
+        + boolean hasEqualsChunks(otherModule)
+        + void addReason(Module module, Dependency dependency, string explanation)
+        + void removeReason(Module module, Dependency dependency)
+        + boolean hasReasonForChunk(Chunk chunk)
+        + number hasReasons()
+        + void rewriteChunkInReasons(Chunk oldChunk, Chunk newChunks)
+        - void _doRewriteChunkInReasons(Chunk oldChunk, Chunk newChunks)
+        + boolean|string isUsed(string exportName)
+        + boolean isProvided(string exportName)
+        + string toString()
+        + boolean needRebuild(fileTimestamps, contextTimestamps)
+        + void updateHash(Hash hash)
+        + void sortItems(sortChunks)
+        + void unbuild()
+    }
+    Module <|-- MultiModule
+    class MultiModule {
+        MultiModule(string context, Dependency[] dependencies, string name)
+        - Dependency dependencies[] = dependencies
+        - string name = name
+        - string _identifier = XXX
+        + string identifier()
+        + string readableIdentifier(RequestShortener requestShortener)
+        + any build(Object options, Compilation compilation, resolver, fs, callback)
+        + boolean needRebuild()
+        + number size()
+        + void updateHash(Hash hash)
+        + RawSource source(dependencyTemplates, runtimeTemplate)
+    }
+    Module <|-- NormalModule
+    class NormalModule {
+        NormalModule(TNormalModule options)
+        - string request = request
+        - string userRequest = userRequest
+        - string binary = type.startsWith'webassembly'
+        - any parser = parser
+        - any generator = generator
+        - any matchResource = matchResource
+        - any loaders = loaders
+        - Object resolveOptions = resolveOptions
+        - WebpackError[] error = null
+        - any _source = null
+        - string _buildHash = ''
+        - any buildTimestamp = undefined
+        - Map<string, CachedSourceEntry> _cachedSources = new Map
+        - boolean useSourceMap = false
+        - boolean lineToLine = false
+        - Object _lastSuccessfulBuildMeta = {}
+        + string identifier()
+        + any readableIdentifier(RequestShortener requestShortener)
+        + any libIdent(Object options)
+        + string nameForCondition()
+        + void updateCacheModule(Module module)
+        ' RqwSource OriginalSource SourceMapSource
+        + SourceMapSource createSourceForAsset(string name, string content, any sourceMap)
+        + TLoaderContext createLoaderContext(resolver, options, compilation, fs)
+        + any getCurrentLoader(TLoaderContext loaderContext, index = loaderContext.loaderIndex)
+        + OriginalSource createSource(string source, Buffer resourceBuffer, any sourceMap)
+        + void markModuleAsErrored(error)
+        + any applyNoParseRule(rule, content)
+        + boolean shouldPreventParsing(noParseRule, request)
+        - void _initBuildHash(Compilation compilation)
+        + string getHashDigest(dependencyTemplates)
+        + void build(options, compilation, resolver, fs, callback)
+        + void doBuild(options, compilation, resolver, fs, callback)
+        + CacheSource source(dependencyTemplates, runtimeTemplate, type = "javascript")
+        + string originalSource()
+        + boolean needRebuild(fileTimestamps, contextTimestamps)
+        + number size()
+        + void updateHash(Hash hash)
+    }
+    Module <|-- ContextModule
+    class ContextModule {
+        ContextModule(ResolveDependencies resolveDependencies, Object options)
+        - ResolveDependencies resolveDependencies = resolveDependencies
+        - options = options & {resource,resourceQuery}
+        - Object resolveOptions = options.resolveOptions
+        - Set _contextDependencies = new Set
+        - string _identifier = this._createIdentifier''
+        + string _createIdentifier()
+        + void updateCacheModule(Module module)
+        + string prettyRegExp(string regexString)
+        + string identifier()
+        + string readableIdentifier(RequestShortener requestShortener)
+        + string libIdent(Object options)
+        + boolean needRebuild(fileTimestamps, contextTimestamps)
+        + void build(options, compilation, resolver, fs, callback)
+        + any getUserRequestMap(Dependency dependencies)
+        + any getFakeMap(Dependency dependencies)
+        + any getFakeMapInitStatement(fakeMap)
+        + string getReturn(string type)
+        + string getReturnModuleObjectSource(fakeMap, fakeMapDataExpression = "fakeMap[id]")
+        + string getSyncSource(dependencies, id)
+        + string getWeakSyncSource(dependencies, id)
+        + string getAsyncWeakSource(dependencies, id)
+        + string getEagerSource(dependencies, id)
+        + string getLazyOnceSource(block, dependencies, id, runtimeTemplate)
+        + string getLazySource(blocks, id)
+        + string getSourceString(asyncMode, runtimeTemplate)
+        + RawSource getSource(sourceString)
+        + RawSource source(dependencyTemplates, runtimeTemplate)
+        + any size()
+    }
+    Module <|-- DllModule
+    class DllModule {
+        DllModule(string context, Dependency[] dependencies, string name, string type)
+        - Dependency[] dependencies = dependencies
+        - string name = name
+        - string type = type
+        + string identifier()
+        + string readableIdentifier()
+        + void build(options, compilation, resolver, fs, callback)
+        + RawSource source()
+        + boolean needRebuild()
+        + number size()
+        + void updateHash(Hash hash)
+    }
+}
+@enduml

@@ -1,0 +1,13 @@
+.canvas {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .container {
+        width: 100%;
+        height: 500px;
+        .component {
+            border: 1px solid red;
+        }
+    }
+}

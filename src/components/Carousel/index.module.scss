@@ -1,0 +1,53 @@
+.carousel {
+    position: relative;
+    overflow: hidden;
+    .banner {
+        position: relative;
+        perspective: 10000px;
+        border-radius: 5px;
+        .animation {
+            transition: transform 1s;
+        }
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            // overflow: hidden; // 不能加，旋转图片看不到了
+            .cell {
+                display: block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+            }
+        }
+    }
+    .bottom, .cover {
+        text-align: center;
+        height: 18px;
+        line-height: 18px;
+        .dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 100%;
+            background: #ececec;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        .active {
+            height: 4px;
+            width: 14px;
+            background: #22bfab;
+            border-radius: 8px;
+        }
+    }
+    .cover {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+        z-index: 10000;
+        transform: translateZ(0);
+    }
+}

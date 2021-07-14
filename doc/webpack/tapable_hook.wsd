@@ -1,0 +1,61 @@
+@startuml 2.0.0-beta.11
+    class Hook {
+        - any _args = args
+        - string name = name
+        - any[] taps = []
+        - any[] interceptors = []
+        - any _call = CALL_DELEGATE
+        - any call = CALL_DELEGATE
+        - any _callAsync = CALL_ASYNC_DELEGATE
+        - any callAsync = CALL_ASYNC_DELEGATE
+        - any _promise = PROMISE_DELEGATE
+        - any promise = PROMISE_DELEGATE
+        - any[] _x = undefined
+        - any compile = this.compile
+        - any tap = this.tap
+        - any tapAsync = this.tapAsync
+        - any tapPromise = this.tapPromise
+        {abstract} any compile(options)
+        any _createCall(type)
+        any _tap(type, options, fn)
+        any tap(options, fn)
+        any tapAsync(options, fn)
+        any tapPromise(options, fn)
+        _runRegisterInterceptors(options)
+        any withOptions(options)
+        any isUsed()
+        any intercept(interceptor)
+        any _resetCompilation()
+        any _insert(item)
+    }
+    Hook <|-- SyncHook 
+    Hook <|-- SyncLoopHook 
+    Hook <|-- SyncBailHook 
+    Hook <|-- SyncWaterfallHook 
+    Hook <|-- AsyncSeriesHook 
+    Hook <|-- AsyncSeriesWaterfallHook
+    Hook <|-- AsyncSeriesLoopHook 
+    Hook <|-- AsyncSeriesBailHook 
+    Hook <|-- AsyncParallelHook 
+    Hook <|-- AsyncParallelBailHook
+    class HookMap {
+        - any _map = undefined
+        - string name = name
+        - any _factory = factory
+        - any[] _interceptors = []
+        any get(key)
+        any for(key)
+        any intercept(interceptor)
+    }
+    class MultiHook {
+        - any hooks = hooks
+        - string name = name
+        any tap(options, fn)
+        any tapAsync(options, fn)
+        any tapPromise(options, fn)
+        boolean isUsed()
+        any intercept(interceptor)
+        any withOptions(options)
+    }
+
+@enduml

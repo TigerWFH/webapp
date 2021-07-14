@@ -1,0 +1,87 @@
+@startuml CSSOM
+' CSSOMString === [DOMString、USVString]
+    interface CSSStyleDeclaration {
+        + CSSOMString cssText
+        + long length
+        + getter CSSOMString item(long index)
+        + CSSOMString getPropertyValue(CSSOMString peoperty)
+        + CSSOMString getPropertyPriority(CSSOMString peoperty)
+        + undefined setProperty(CSSOMString property, value, priority)
+        + CSSOMString removeProperty(CSSOMString property)
+        + CSSRule parentRule
+        + CSSOMString cssFloat
+    }
+    note left of CSSStyleDeclaration: window.getComputedStyle(element, cssText)，返回CSSStyleDeclaration
+    CSSStyleDeclaration *-- CSSRule
+    interface ElementCSSInlineStyle {
+        + CSSStyleDeclaration style
+    }
+    note  left of ElementCSSInlineStyle : 为element提供访问inline style properties的接口
+    ElementCSSInlineStyle *-- CSSStyleDeclaration
+    interface MediaList {
+        + CSSOMString mediaText
+        + long length
+        + getter CSSOMString item(idnex)
+        + undefined appendMedium(CSSOMString media)
+        + undefined deleteMedium(CSSOMString media)
+    }
+    interface base.StyleSheet {
+        + CSSOMString type
+        + USVString href
+        + Element ownerNode
+        + CSSStyleSheet parentStyleSheet
+        + MediaList media
+        + boolean disabled
+    }
+    interface CSSStyleSheet {
+        + CSSRule ownerRule
+        + CSSRuleList cssRules
+        + long insertRule(rule, index)
+        + undefined deleteRule(long index)
+    }
+    base.StyleSheet <|-- CSSStyleSheet
+    CSSStyleSheet *-- CSSRule
+    CSSStyleSheet *-- CSSRuleList
+    interface base.StyleSheetList {
+        + getter CSSStyleSheet item(long index)
+        + long length
+    }
+    interface LinkStyle {
+        + CSSStyleSheet sheet
+    }
+    interface CSSRuleList {
+        + getter CSSRule item(index)
+        + long length
+    }
+    interface CSSRule {
+        + short type
+        + DOMString cssText
+        + CSSRule parentRule
+        + CSSStyleSheet parentStyleSheet
+    }
+    interface CSSStyleRule {
+        + CSSOMString selectorText
+        + CSSStyleDeclaration style
+    }
+    CSSRule <|-- CSSStyleRule
+    interface CSSImportantRule {
+        + USVString href
+        + MediaList media
+        + CSSStyleSheet styleSheet
+    }
+    CSSRule <|-- CSSImportantRule
+    CSSImportantRule *-- CSSStyleSheet
+    interface CSSGroupingRule {
+        + CSSRuleList cssRules
+        + long insertRule(CSSOMString rule, long index)
+        + undefined deleteRule(long index)
+    }
+    CSSRule <|-- CSSGroupingRule
+    CSSGroupingRule *-- CSSRuleList
+    interface CSSPageRule {
+        + CSSOMString selectorText
+        + CSSStyleDeclaration style
+    }
+    CSSGroupingRule <|-- CSSPageRule
+    CSSPageRule *-- CSSStyleDeclaration
+@enduml

@@ -1,0 +1,1 @@
+console.log("external script5 with defer========>")

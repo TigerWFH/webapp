@@ -1,0 +1,22 @@
+@import '../variable.scss';
+.modal {
+    width: 80%;
+    height: 200px;
+    background-color: $bg-fff;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px $bg-light;
+}
+.header {
+    height: 44px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.content {
+    overflow: auto;
+    padding: 10px;
+}
+.footer {
+    height: 44px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}

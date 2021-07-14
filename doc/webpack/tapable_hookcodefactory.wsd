@@ -1,0 +1,32 @@
+@startuml HookCodeFactory
+class HookCodeFactory {
+        - any config = config
+        - any options = undefined
+        - any _args = undefined
+        any create(options)
+        any setup(instance, options)
+        any init(options)
+        any deinit()
+        any contentWithInterceptors(options)
+        any header()
+        any needContext()
+        any callTap(tapIndex, options)
+        any callTapSeries(options)
+        any callTapsLooping(options)
+        any callTapsParallel(options)
+        any args(options)
+        any getTapFn(idx)
+        any getTap(idx)
+        any getInterceptor(idx)
+    }
+    HookCodeFactory <|-- SyncHookCodeFactory
+    HookCodeFactory <|-- SyncLoopHookCodeFactory 
+    HookCodeFactory <|-- SyncBailHookCodeFactory 
+    HookCodeFactory <|-- SyncWaterfallHookCodeFactory 
+    HookCodeFactory <|-- AsyncSeriesHookCodeFactory 
+    HookCodeFactory <|-- AsyncSeriesWaterfallHookCodeFactory
+    HookCodeFactory <|-- AsyncSeriesLoopHookCodeFactory 
+    HookCodeFactory <|-- AsyncSeriesBailHookCodeFactory 
+    HookCodeFactory <|-- AsyncParallelHookCodeFactory 
+    HookCodeFactory <|-- AsyncParallelBailHookCodeFactory
+@enduml

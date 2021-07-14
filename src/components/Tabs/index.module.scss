@@ -1,0 +1,32 @@
+.tabs {
+    .scroll {
+        padding-top: 11px;
+        padding-bottom: 11px;
+        padding-left: 14px;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        .titlewrapper {
+            padding-right: 24px;
+            .title {
+                font-size: 14px;
+                color: #666666;
+            }
+            .activetitle {
+                font-size: 16px;
+                color: #333333;
+                font-weight: bolder;
+            }
+            .activebar {
+                display: inline-block;
+                width: 24px;
+                height: 4px;
+                margin-top: 6px;
+                background-color: #FF6837;
+                border-radius: 2px;
+            }
+        }
+        .panel {
+    
+        }
+    }
+}

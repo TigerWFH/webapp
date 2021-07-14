@@ -1,0 +1,25 @@
+$normalBg: #fff;
+$activeBg: #00cb03;
+.normal,
+.active {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 180px;
+  height: 60px;
+  padding: 5px;
+  background-color: $normalBg;
+  .name {
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }
+  .icon {
+  }
+}
+.active {
+  background-color: $activeBg;
+}

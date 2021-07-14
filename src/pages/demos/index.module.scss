@@ -1,0 +1,24 @@
+.demo {
+    width: 500px;
+    height: 500px;
+    border: 1px solid red;
+}
+.container {
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    &:hover {
+        transform: scale(0.5)
+    }
+}
+.content {
+    height: 100px;
+    width: 100px;
+}
+.img {
+    height: 300px;
+    width: 300px;
+    margin: 10px 10px;
+    background-color: #666;
+    border: 1px solid red;
+}

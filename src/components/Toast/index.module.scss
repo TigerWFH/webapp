@@ -1,0 +1,21 @@
+.toast {
+    position: relative;
+    width: 280px;
+    min-height: 100px;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 16px;
+    color: #666666;
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(200% - 2px);
+        height: calc(200% - 2px);
+        border: 1px solid #eee;
+        border-radius: 16px;
+        transform-origin: top left;
+        transform: scale(0.5);
+    }
+}
