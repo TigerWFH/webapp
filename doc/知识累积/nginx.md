@@ -1,4 +1,8 @@
-# nginx：nginx 是一个 HTTP 和反向代理服务器 <https://blog.csdn.net/u010994966/article/details/78193041>
+# nginx：nginx 是一个 HTTP 和反向代理服务器
+
+## 参考资料
+
+[参考资料](https://blog.csdn.net/u010994966/article/details/78193041)
 
 ## nginx 功能
 

@@ -1,6 +1,8 @@
 # 数据结构预备知识
-* 分治策略
-```
+
+- 分治策略
+
+```plain
     1、分解（Divide）：将问题划分成一些子问题，子问题的形式和原问题一样，只是规模更小
     2、解决（Conquer）：递归的求解子问题，如果子问题规模足够小，则停止递归，直接求解
     3、合并（Combine）：将子问题的解，组合成原问题的解
@@ -14,23 +16,29 @@
     2、递归树法：
     3、主方法：递推公式
 ```
-* 树，非线性结构
-```
+
+- 树，非线性结构
+
+```plain
     树是一个包含n（n>=0）个元素的有穷集合，其中
     1、每个元素称为结点(node)
     2、有一个特定的结点称为根节点或树根(root)
     3、除根结点之外的其余数据元素被分为m(m>=0)个互不相交的集合T1、T2，……，Tm，其中每一个集合T也是一棵树，称为原树的子树(subtree)
 ```
-* 二叉树：每个结点最多有两个子树的树
-* 完全二叉树：若设二叉树的深度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第h 层所有的结点都连续集中在最左边，这就是完全二叉树
-* 满二叉树：如果一个二叉树的每一层的节点数都达到最大值，则这个二叉树就是满二叉树（满二叉树是一个三角形）
-* 处理大规模数据算法选择
-```
+
+- 二叉树：每个结点最多有两个子树的树
+- 完全二叉树：若设二叉树的深度为 h，除第 h 层外，其它各层 (1 ～ h-1) 的结点数都达到最大个数，第 h 层所有的结点都连续集中在最左边，这就是完全二叉树
+- 满二叉树：如果一个二叉树的每一层的节点数都达到最大值，则这个二叉树就是满二叉树（满二叉树是一个三角形）
+- 处理大规模数据算法选择
+
+```plain
     1、内存够用
     2、内存不够用
 ```
-* 内部排序（纯内存）
-```
+
+- 内部排序（纯内存）
+
+```plain
     稳定：排序前后，相同元素位置不变；否者就是不稳定
     in-place：占用常量内存，不占用额外内存，即与规模n无关
     out-place：占用额外内存，与规模n有关
@@ -43,117 +51,133 @@
     5、基数排序, out-place
     6、桶排序, out-place
 ```
-* 外部排序（内存+disk）
+
+- 外部排序（内存+disk）
+
+```plain
+
 ```
-```
-* 算法选用
-```
+
+- 算法选用
+
+```plain
     归并排序：内存够，读取次数少，稳定，O(nlogn)
     快速排序：内存够，元素基本有序，不稳定，O(nlogn)，容易内存溢出（递归）
     堆排序：内存够，元素无序，不稳定，O(nlogn)
     希尔排序：内存够，元素无序，不稳定，O(nlogn)
 ```
-# 排序算法（十种排序算法）
-## 交换排序
-* 冒泡排序（稳定, O(n^2), in-place, O(1)）
-```
-    let arr = [1, 2, 3, 8, 5, 2, 1];
-    let begin = new Date().valueOf();
-    function bubleSort(arr) {
-        for (let i = 0; i < arr.length - 1; i++) {
-            for (let j = 0; j < arr.length - 1 - i; j++) {
-                let hasSwap = false;
-                if (arr[j] > arr[j + 1]) {
-                    hasSwap = true;
-                    let tmp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = tmp;
-                }
-                if (!hasSwap) {
-                    break;
-                }
-            }
-        }
+
+## 排序算法（十种排序算法）
+
+### 交换排序
+
+- 冒泡排序（稳定, O(n^2), in-place, O(1)）
+
+```js
+let arr = [1, 2, 3, 8, 5, 2, 1];
+let begin = new Date().valueOf();
+function bubleSort(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      let hasSwap = false;
+      if (arr[j] > arr[j + 1]) {
+        hasSwap = true;
+        let tmp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = tmp;
+      }
+      if (!hasSwap) {
+        break;
+      }
     }
-    bubleSort(arr);
-    let end = new Date().valueOf();
-    console.log("sorted array===>", arr);
-    console.log("time===>", end - begin);
+  }
+}
+bubleSort(arr);
+let end = new Date().valueOf();
+console.log('sorted array===>', arr);
+console.log('time===>', end - begin);
 ```
-* 快速排序（不稳定, O(nlogn), in-place, O(logn)
-``` 
+
+- 快速排序（不稳定, O(nlogn), in-place, O(logn)
+
+```js
 function quickSort(arr, left, right) {
-    if (left >= right) {
-        return arr;
-    }
-    let index = partion(arr, left, right);
-    quickSort(arr, left, index);
-    quickSort(arr, index + 1, right);
+  if (left >= right) {
+    return arr;
+  }
+  let index = partion(arr, left, right);
+  quickSort(arr, left, index);
+  quickSort(arr, index + 1, right);
 }
 
 function partion(arr, left, right) {
-    let start = left;
-    let end = right;
-    let pivot = arr[start];
-    while (start < end) {
-        while (start < end && arr[end] > pivot) {
-            end--;
-        }
-        if (start < end) {
-            arr[start] = arr[end];
-            arr[end] = pivot;
-            start++;
-        }
-        while (start < end && arr[start] < pivot) {
-            start++;
-        }
-        if (start < end) {
-            arr[end] = arr[start];
-            arr[start] = pivot;
-            end--;
-        }
+  let start = left;
+  let end = right;
+  let pivot = arr[start];
+  while (start < end) {
+    while (start < end && arr[end] > pivot) {
+      end--;
     }
+    if (start < end) {
+      arr[start] = arr[end];
+      arr[end] = pivot;
+      start++;
+    }
+    while (start < end && arr[start] < pivot) {
+      start++;
+    }
+    if (start < end) {
+      arr[end] = arr[start];
+      arr[start] = pivot;
+      end--;
+    }
+  }
 
-    return start;
+  return start;
 }
 
-let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 2,34, 34, 2, 78];
+let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 2, 34, 34, 2, 78];
 let begin = new Date().valueOf();
 quickSort(arr, 0, arr.length - 1);
 let end = new Date().valueOf();
-console.log("===>", arr);
-console.log("time===>", end - begin);
+console.log('===>', arr);
+console.log('time===>', end - begin);
 ```
-## 插入排序
-* 简单插入排序（稳定, O(n^2), in-place, O(1), 适合小规模、基本有序数据集合）
-```
-    let arr = [];
-    for (let i = 1; i < 10000; i++) {
-        arr.push(i);
+
+### 插入排序
+
+- 简单插入排序（稳定, O(n^2), in-place, O(1), 适合小规模、基本有序数据集合）
+
+```js
+let arr = [];
+for (let i = 1; i < 10000; i++) {
+  arr.push(i);
+}
+// 插入排序
+let begin = new Date().valueOf();
+function insertSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = i; j > 0; j--) {
+      if (arr[j] < arr[j - 1]) {
+        let tmp = arr[j - 1];
+        arr[j - 1] = arr[j];
+        arr[j] = tmp;
+        hasSwap = true;
+      }
     }
-    // 插入排序
-    let begin = new Date().valueOf();
-    function insertSort(arr) {
-        for (let i = 1; i < arr.length; i++) {
-            for (let j = i; j > 0; j--) {
-                if (arr[j] < arr[j - 1]) {
-                    let tmp = arr[j - 1];
-                    arr[j - 1] = arr[j];
-                    arr[j] = tmp;
-                    hasSwap = true;
-                }
-            }
-        }
-    }
-    insertSort(arr);   
-    let end = new Date().valueOf();
-    console.log("===>", arr);
-    console.log("time===>", end - begin);
+  }
+}
+insertSort(arr);
+let end = new Date().valueOf();
+console.log('===>', arr);
+console.log('time===>', end - begin);
 ```
-* 希尔排序（不稳定, O(nlogn), in-place, O(1)）
-```
+
+- 希尔排序（不稳定, O(nlogn), in-place, O(1)）
+
+```js
     // 增量方式：1、gap = length / 2; gap /= 2
-    // 
+    //
     // 1、确定距离gap
     // 2、确定虚拟数组个数
     // 3、对当前虚拟组进行排序
@@ -217,38 +241,46 @@ console.log("time===>", end - begin);
     console.log("===>", arr);
     console.log("time===>", end - begin);
 ```
-## 选择排序
-* 简单选择排序（不稳定, O(n^2), in-place, O(1)）
-```
-    let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4,1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 4, 2,34, 34, 2, 78];
-    // let arr = [];
-    // for (let i = 1; i < 10000; i++) {
-    //     arr.push(i);
-    // }
-    let begin = new Date().valueOf();
-    // 选择排序
-    function selectSort(arr) {
-        for (let i = 1; i < arr.length; i++) {
-            let pivot = arr[0];
-            let point = 0;
-            for (let j = 0; j <= arr.length - i; j++) {
-                if (pivot < arr[j]) {
-                    pivot = arr[j];
-                    point = j;
-                }
-            }
-            arr[point] = arr[arr.length - i];
-            arr[arr.length - i] = pivot;
-        }
-    }
 
-    selectSort(arr);
-    let end = new Date().valueOf();
-    console.log("===>", arr);
-    console.log("time===>", end - begin);
+### 选择排序
+
+- 简单选择排序（不稳定, O(n^2), in-place, O(1)）
+
+```js
+let arr = [
+  1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 1, 2, 3, 8, 5, 2, 1, 90, 23892, 1,
+  334, 4, 4, 4, 4, 2, 34, 34, 2, 78
+];
+// let arr = [];
+// for (let i = 1; i < 10000; i++) {
+//     arr.push(i);
+// }
+let begin = new Date().valueOf();
+// 选择排序
+function selectSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let pivot = arr[0];
+    let point = 0;
+    for (let j = 0; j <= arr.length - i; j++) {
+      if (pivot < arr[j]) {
+        pivot = arr[j];
+        point = j;
+      }
+    }
+    arr[point] = arr[arr.length - i];
+    arr[arr.length - i] = pivot;
+  }
+}
+
+selectSort(arr);
+let end = new Date().valueOf();
+console.log('===>', arr);
+console.log('time===>', end - begin);
 ```
-* 堆排序（不稳定, O(nlogn), in-place, O(1)）
-```
+
+- 堆排序（不稳定, O(nlogn), in-place, O(1)）
+
+```js
 思想：每建一次堆，选出一个已排序元素；将剩余元素建堆，选出第二个元素；依次类推，直到将所有选出并排序
 let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4,1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 4, 2,34, 34, 2, 78];
 // let arr = [1, 2, 3, 8, 5];
@@ -292,67 +324,78 @@ let end = new Date().valueOf();
 console.log("===>", arr);
 console.log("time===>", end - begin);
 ```
-## 归并排序(稳定, O(nlogn), out-place, O(n))
-```
-    let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4,1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 4, 2,34, 34, 2, 78];
-    // let arr = [1, 2, 3, 8, 5, 1, 2, 3, 8, 5];
-    // let arr = [];
-    // for (let i = 1; i < 9000; i++) {
-    //     arr.push(i);
-    // }
-    let begin = new Date().valueOf();
-/*************************归并排序*********************************/
-    function mergeSort(arr, left, right, tmp) {
-        if (left >= right) {
-            return;
-        }
-        let middle = Math.floor((left + right) / 2);
-        mergeSort(arr, left, middle, tmp);
-        mergeSort(arr, middle + 1, right, tmp);
-        merge(arr, left, middle, right, tmp);
-    }
-    function merge(arr, left, middle, right, tmp) {
-        let start = left;
-        let end = right;
-        let begin = middle + 1;
-        let point = left;
-        while (left <= middle && begin  <= right) {
-            if (arr[left] <= arr[begin]) {
-                tmp[point++] = arr[left++];
-            }
-            else {
-                tmp[point++] = arr[begin++];
-            }
-        }
-        while (left <= middle) {
-            tmp[point++] = arr[left++];
-        }
-        while (begin <= right) {
-            tmp[point++] = arr[begin++];
-        }
 
-        while (start <= end) {
-            point = start;
-            arr[start++] = tmp[point++];
-        }
+### 归并排序(稳定, O(nlogn), out-place, O(n))
+
+```js
+let arr = [
+  1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 1, 2, 3, 8, 5, 2, 1, 90, 23892, 1,
+  334, 4, 4, 4, 4, 2, 34, 34, 2, 78
+];
+// let arr = [1, 2, 3, 8, 5, 1, 2, 3, 8, 5];
+// let arr = [];
+// for (let i = 1; i < 9000; i++) {
+//     arr.push(i);
+// }
+let begin = new Date().valueOf();
+/*************************归并排序*********************************/
+function mergeSort(arr, left, right, tmp) {
+  if (left >= right) {
+    return;
+  }
+  let middle = Math.floor((left + right) / 2);
+  mergeSort(arr, left, middle, tmp);
+  mergeSort(arr, middle + 1, right, tmp);
+  merge(arr, left, middle, right, tmp);
+}
+function merge(arr, left, middle, right, tmp) {
+  let start = left;
+  let end = right;
+  let begin = middle + 1;
+  let point = left;
+  while (left <= middle && begin <= right) {
+    if (arr[left] <= arr[begin]) {
+      tmp[point++] = arr[left++];
+    } else {
+      tmp[point++] = arr[begin++];
     }
-    let tmp = [];
-    mergeSort(arr, 0, arr.length - 1, tmp);
-    let end = new Date().valueOf();
-    console.log("arr===>", arr);
-    console.log("time===>", end - begin);
+  }
+  while (left <= middle) {
+    tmp[point++] = arr[left++];
+  }
+  while (begin <= right) {
+    tmp[point++] = arr[begin++];
+  }
+
+  while (start <= end) {
+    point = start;
+    arr[start++] = tmp[point++];
+  }
+}
+let tmp = [];
+mergeSort(arr, 0, arr.length - 1, tmp);
+let end = new Date().valueOf();
+console.log('arr===>', arr);
+console.log('time===>', end - begin);
 ```
-## 桶排序（非比较型排序算法，看概念有点像针对特定数据使用）
-```
+
+### 桶排序（非比较型排序算法，看概念有点像针对特定数据使用）
+
+```js
     1、桶排序：桶排序是将待排序集合中处于同一个值域的元素存入同一个桶中，也就是根据元素值特性将集合拆分为多个区域，则拆分后形成的多个桶，从值域上看是处于有序状态的。对每个桶中元素进行排序，则所有桶中元素构成的集合是已排序的。
 ```
-## 计数排序（特殊的桶排序，利用数组下标确定元素容器，针对自然数集的排序）
-## 基数排序（计数指数的位，例如十进制的个位、十位等等，特殊的桶排序）
 
-# 数据结构
-## 集合
-* 数学定义
-```
+### 计数排序（特殊的桶排序，利用数组下标确定元素容器，针对自然数集的排序）
+
+### 基数排序（计数指数的位，例如十进制的个位、十位等等，特殊的桶排序）
+
+## 数据结构
+
+### 集合
+
+- 数学定义
+
+```plain
     朴素集合论的定义：集合是确定的一堆东西，集合里的东西称为元素。
     现代集合论的定义：由一个或多个元素组成的整体。
 
@@ -363,8 +406,10 @@ console.log("time===>", end - begin);
     称R是集合A上的一个二元关系，意味着R是AXA的子集。
 
 ```
-* 计算机科学定义
-```
+
+- 计算机科学定义
+
+```plain
     计算机科学中集合也是一堆元素，不过在整个算法过程中，集合是可以增大、缩小或发生其它变化的。这样的集合被称为动态集合。
     不同的算法对集合可能需要执行不同的操作，例如
     字典（dictionary）：能在该集合上进行插入和删除元素，以及测试元素是否属于集合。
@@ -375,8 +420,10 @@ console.log("time===>", end - begin);
     个人理解：集合就是一堆元素和基于这堆元素的操作，就是编程语言中的类型（内置类型），也是class（class就是自定义的外部类型），不同的集合（类型）有着不同的逻辑。
     每种集合都会支持查询操作和修改操作，但是效率却不一样。
 ```
-## 栈（Stack）：实现的是一种后进先出（LIFO）的策略
-```
+
+### 栈（Stack）：实现的是一种后进先出（LIFO）的策略
+
+```plain
     栈拥有的属性栈顶s.top，指向最新插入的元素
     压栈（push）：插入操作，常量操作
     出栈（pop）：删除操作，常量操作
@@ -385,8 +432,10 @@ console.log("time===>", end - begin);
     栈下溢（underflow）：空栈弹出元素
     栈上溢（overflow）：超出栈长增加元素
 ```
-## 队列（Queue）：实现的是一种先进先出（FIFO）的策略
-```
+
+### 队列（Queue）：实现的是一种先进先出（FIFO）的策略
+
+```plain
     对头（head）：
     对尾（tail）：
     入队（enqueue）：操作tail
@@ -396,9 +445,12 @@ console.log("time===>", end - begin);
     队列下溢：
     队列上溢：
 ```
-## 双端队列（deque）：队列的插入和删除操作可以在两端进行
-## 链表（linked list）：各对象按照线性顺序排列
-```
+
+### 双端队列（deque）：队列的插入和删除操作可以在两端进行
+
+### 链表（linked list）：各对象按照线性顺序排列
+
+```plain
     后继元素：
     前驱元素：
     没有前驱元素的元素就是头head，head=null空链表
@@ -407,8 +459,10 @@ console.log("time===>", end - begin);
     双向链表（doubly linked list）：{key，prev，next}
     哨兵（sentinel）：是一个哑对象，作用是简化边界条件的处理。
 ```
-## 有根树（）
-```
+
+### 有根树（）
+
+```plain
     结构1：{key，child1， childn，parent}，容易浪费空间
     结构2：{key，left（孩子），right（兄弟），parent}
 

@@ -1,5 +1,16 @@
 # 基础概念
 
+## 参考资料
+
+[Understanding TypeScript's Popularity](https://orta.io/notes/js/why-typescript)
+
+[译文](https://mp.weixin.qq.com/s/i1Y9GJAYMcCh1EPsJDWQtw)
+
+> TypeScript 分为两部分
+
+- `编译器：处理语法部分`
+- `语言工具：处理与编辑器集成的部分`
+
 ## TypeScript 的核心原则之一是对值所具有的结构进行类型检查
 
 - 接口：接口的作用就是`为类型命名`，`为代码定义契约`
@@ -31,7 +42,7 @@ interface StringArray {
   readonly [index: number]: string; // 防止给索引赋值
 }
 let myArray: StringArray;
-myArray = ["Monkey", "Cat"];
+myArray = ['Monkey', 'Cat'];
 let myStr: string = myArray[0];
 // 4、类类型，实现接口,与C#或Java里接口的基本作用一样，TypeScript也能够用它来明确的强制一个类去符合某种契约
 // 接口描述了类的公共部分，而不是公共和私有两部分。 它不会帮你检查类是否具有某些私有成员
@@ -60,7 +71,7 @@ interface SquareConfig {
 function createSquare(config: SquareConfig): { color: string; area: number } {
   // ...
 }
-let mySquare = createSquare({ colour: "red", width: 100 }); // ts报错,可以是会用类型断言绕开报错
+let mySquare = createSquare({ colour: 'red', width: 100 }); // ts报错,可以是会用类型断言绕开报错
 let mySquare = createSquare({ width: 100, opacity: 0.5 } as SquareConfig); // 最佳的方式是能够添加一个字符串索引签名
 // 索引签名
 interface SquareConfig {

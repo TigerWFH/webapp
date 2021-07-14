@@ -1,6 +1,8 @@
-# 描述dom中的类继承关系
+# 描述 dom 中的类继承关系
+
 ## Top
-```
+
+```plain
     exception DOMException {
         unsigned short: code;
     }
@@ -27,7 +29,7 @@
         Node cloneNode(in boolean deep);
 
     }
-    interface NodeList { 
+    interface NodeList {
         Node item(in unsigned long index);
         readonly attribute unsigned long length;
     }
@@ -46,8 +48,10 @@
     interface AbortSignal: EventTarget {}
     interface AbortController {}
 ```
+
 ## Second
-```
+
+```plain
     1、interface CharacterData : Node {
         attribute DOMString data;
         readonly attribute unsigned long length;
@@ -109,14 +113,18 @@
     10、inteface EntityReference : Node {}
 
 ```
+
 ## third
-```
+
+```plain
     interface Text : CharacterData {
         Text splitText(in unsigned long offset) raises(DOMException);
     }
     interface Comment : CharacterData {}
 ```
+
 ## fouth
-```
+
+```plain
     interface CDATASection : Text {}
 ```

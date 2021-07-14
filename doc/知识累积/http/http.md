@@ -1,5 +1,7 @@
 # 关于 http
 
+## 参考资料
+
 ## HTTP/1.1 协议<https://www.ietf.org/rfc/rfc2616.txt>
 
 > HTTP 协议是以 ASCII 码传输，建立在 TCP/IP 协议之上的应用层协议。请求分为状态行、请求头、消息主体

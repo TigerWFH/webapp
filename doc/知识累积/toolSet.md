@@ -11,7 +11,7 @@
 
 ## 包管理工具：npm、yarn
 
-## 编译工具：babel、typescript、esbuild
+## 编译工具：babel、typescript（tsc）、esbuild
 
 ## 打包工具：webpack、rollup、browserily、parcel、snowpack、FIS3（Vite 是一个开发服务器）<https://zhuanlan.zhihu.com/p/350601275>
 

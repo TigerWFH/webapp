@@ -2,6 +2,8 @@
 
 > docker 把应用程序及其依赖打包在 image 文件里面。并通过 image 文件生成 docker 容器实例
 
+## 参考资料
+
 ## dockerfile：文本文件，用来设定 image 文件
 
 ```js

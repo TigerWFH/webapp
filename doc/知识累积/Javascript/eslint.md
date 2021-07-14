@@ -1,5 +1,7 @@
 # eslint
 
+## 参考资料
+
 ## 同类型工具以及现状
 
 - `JSLint(Douglas Crockford)：Javascript语法校验工具，不支持自定义配置规则`<https://github.com/douglascrockford/JSLint/blob/master/README>
@@ -26,7 +28,7 @@
 
 ```yaml
 settings:
-  sharedData: "hello"
+  sharedData: 'hello'
 ```
 
 - `Cascading and Hierarchy：涉及配置项root，拥有该配置项文件的目录就是根目录`
@@ -43,8 +45,8 @@ settings:
 
 ```js
 module.exports = {
-  extends: "eslint:recommended",
-  rules: [("indent": ["error", 4])],
+  extends: 'eslint:recommended',
+  rules: [('indent': ['error', 4])]
 };
 ```
 

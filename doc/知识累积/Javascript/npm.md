@@ -1,4 +1,8 @@
-# npm 相关知识点<https://docs.npmjs.com/about-packages-and-modules>
+# npm
+
+## 参考资料
+
+[文档](https://docs.npmjs.com/about-packages-and-modules)
 
 > npm 包是 CommonJS 规范的一部分<https://segmentfault.com/a/1190000018888081>
 
@@ -15,7 +19,7 @@
     */
 ```
 
-## npm 配置项：https://www.npmjs.cn/misc/config/
+## npm 配置项<https://www.npmjs.cn/misc/config/>
 
 > npm 包可以分为客户端、服务端、客户单和服务端混合的包。主流模块规范时 CommonJS 和 ESM。
 > JS 文件后缀.mjs 和.js，优先加载.mjs
@@ -65,7 +69,7 @@
     */
 ```
 
-## 搭建 npm 私有仓库:使用 nexus 搭建 npm 包私有仓库：https://www.cnblogs.com/tuituji27/p/11171780.html
+## 搭建 npm 私有仓库:使用 nexus 搭建 npm 包私有仓库<https://www.cnblogs.com/tuituji27/p/11171780.html>
 
 ```js
 /*

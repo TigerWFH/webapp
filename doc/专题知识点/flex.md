@@ -20,7 +20,7 @@
 - `Figure：图窗`
 
 - `physical directions:` 就是指 top、right、bottom、left、axes(vertical and horizontal)、and size(height and width)
-- `principal box: `
+- `principal box:`
 
 ## block and inline layout
 
@@ -61,11 +61,10 @@
 - Browserslist（babel-preset-env、auto-prefixer），也用到了 caniuse<https://github.com/browserslist/browserslist>
 
 ```js
-"last 1 version";
-"> 1%";
-"maintained node version";
-"not dead";
-
+'last 1 version';
+'> 1%';
+'maintained node version';
+'not dead';
 ```
 
 - caniuse-lite: Browserlist 的浏览器数据来源就是 caniuse-lite，而他是 caniuse-db 的精简版本，提供 API 供外部调用
