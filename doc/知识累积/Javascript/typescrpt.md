@@ -1,4 +1,4 @@
-# 基础概念
+# typescript
 
 ## 参考资料
 
@@ -13,75 +13,180 @@
 - `编译器：处理语法部分`
 - `语言工具：处理与编辑器集成的部分`
 
-## TypeScript 的核心原则之一是对值所具有的结构进行类型检查
+## 声明文件（\*.d.ts）
 
-- 接口：接口的作用就是`为类型命名`，`为代码定义契约`
+>
 
-```typescript
-// 1、定义变量
-interface LabelledValue {
-  label: string; // 必选属性
-  name?: string; // 可选属性, 称为options bag模式
-  readonly x: number; // 只读属性, typescript有ReadonlyArray<T>类似Array<T>, 类型断言重写：a = ro as number[]
-}
+## 编译代码（tsc）
 
-function printLabel(labelledObj: LabelledValue) {
-  console.log(labelledObj.label);
-}
-// 2、函数类型，可忽略参数名
-interface SearchFunc {
-  (source: string, substring: string): boolean;
-}
-let mySearch: SearchFunc;
-mySearch = function (source: string, subString: string) {
-  let result = source.search(subString);
-  return result > -1;
-};
-// 3、可索引类型，用于描述可以通过索引得到的类型比如a[10]或ageMap['XXX']，可索引类型觉有一个 索引签名，描述了对象索引的类型，还有索引返回值得类型
-// TypeScript支持两种索引签名：字符串和数字,可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型
-interface StringArray {
-  [index: number]: string;
-  readonly [index: number]: string; // 防止给索引赋值
-}
-let myArray: StringArray;
-myArray = ['Monkey', 'Cat'];
-let myStr: string = myArray[0];
-// 4、类类型，实现接口,与C#或Java里接口的基本作用一样，TypeScript也能够用它来明确的强制一个类去符合某种契约
-// 接口描述了类的公共部分，而不是公共和私有两部分。 它不会帮你检查类是否具有某些私有成员
-interface ClockInterface {
-  currentTime: Date;
-  setTime(d: Date);
-}
+## 类型注解：一种轻量级的为函数或变量添加约束的方式
 
-class Clock implements ClockInterface {
-  currentTime: Date;
-  setTime(d: Date) {
-    this.currentTime = d;
+## 接口 interface
+
+> 接口兼容问题（implements）：
+
+## 类 class
+
+## 泛型
+
+## 类型推论
+
+## 类型兼容
+
+## 高级类型
+
+## 迭代器和生成器
+
+## 命名空间和模块: 都可以包含代码和声明
+
+> TypeScript 1.5 术语名已经发生了变化。内部模块现是命名空间。外部模块现在是模块。与 ES6 术语保持一致
+>
+> 不应该对模块使用命名空间，使用命名空间是为了提供逻辑分组和避免命名冲突。 模块文件本身已经是一个逻辑分组
+
+- `命名空间namespace：`解决命名冲突问题
+
+```ts
+/* no namespace */
+interface StringValidator {
+  isAcceptable(s: string): boolean;
+}
+let lettersRegexp = /^[A-Za-z]+$/;
+let numberRegexp = /^[0-9]+$/;
+
+class Letter implements StringValidator {
+  isAcceptable(s: string) {
+    return lettersRegexp.test(s);
   }
-  constructor(h: number, m: number) {}
 }
-// 5、类静态部分与实例部分的区别
+
+class ZipCodeValidator implements StringValidator {
+  isAcceptable(s: string) {
+    return s.length === 5 && numberRegexp.test(s);
+  }
+}
+// 验证器过多，比如出现多易出现命名问题
+/* with namespace */
+namespace wfh {
+  export interface StringValidator {
+    isAcceptable(s: string): boolean;
+  }
+  let lettersRegexp = /^[A-Za-z]+$/;
+  let numberRegexp = /^[0-9]+$/;
+
+  export class Letter implements StringValidator {
+    isAcceptable(s: string) {
+      return lettersRegexp.test(s);
+    }
+  }
+
+  export class ZipCodeValidator implements StringValidator {
+    isAcceptable(s: string) {
+      return s.length === 5 && numberRegexp.test(s);
+    }
+  }
+}
 ```
 
-- `类型断言：` as
+- `命名空间拆分到多个文件中`
+  > 因为不同文件之间存在依赖关系，所以我们加入了【引用标签】（三斜线指令）来告诉编译器文件之间的关联
 
-```typescript
-interface SquareConfig {
-  color?: string;
-  width?: number;
+```ts
+// Validation.ts
+namespace wfh {
+  export interface StringValidator {
+    isAcceptable(s: string): boolean;
+  }
 }
-function createSquare(config: SquareConfig): { color: string; area: number } {
-  // ...
+// LettersOnlyValidator.ts
+/// <reference path="Validation.ts" />
+namespace wfh {
+  const letter = /\./;
+  export class Letter implements StringValidator {
+    isAcceptable(s: string) {
+      return true;
+    }
+  }
 }
-let mySquare = createSquare({ colour: 'red', width: 100 }); // ts报错,可以是会用类型断言绕开报错
-let mySquare = createSquare({ width: 100, opacity: 0.5 } as SquareConfig); // 最佳的方式是能够添加一个字符串索引签名
-// 索引签名
-interface SquareConfig {
-  color?: string;
-  width?: number;
-  [propName: string]: any; // 索引签名，任意数量的其它属性
+// ZipValidator.ts
+/// <reference path="Validation.ts" />
+namespace wfh {
+  const numberRegexp = /^[0-9]+$/;
+  export class ZipCodeValidator implements StringValidator {
+    isAcceptable(s: string) {
+      return s.length === 5 && numberRegexp.test(s);
+    }
+  }
 }
+
+// demo.ts，不用直接import或export？？？
+/// <reference path="Validation.ts" />
+/// <reference path="LettersOnlyValidator.ts" />
+/// <reference path="ZipValidator.ts" />
+// Some samples to try
+let strings = ['Hello', '98052', '101'];
+
+// Validators to use
+let validators: { [s: string]: Validation.StringValidator } = {};
+validators['ZIP code'] = new Validation.ZipCodeValidator();
+validators['Letters only'] = new Validation.LettersOnlyValidator();
+
+// Show whether each string passed each validator
+for (let s of strings) {
+  for (let name in validators) {
+    console.log(
+      `"${s}" - ${
+        validators[name].isAcceptable(s) ? 'matches' : 'does not match'
+      } ${name}`
+    );
+  }
+}
+// 别名
+namespace Shapes {
+  export namespace Polygons {
+    export class Triangle {}
+    export class Square {}
+  }
+}
+
+import polygons = Shapes.Polygons;
+let sq = new polygons.Square(); // Same as "new Shapes.Polygons.Square()"
 ```
 
-- `readonly 和 const:`属性使用 readonly，变量使用 const
--
+- `模块module`
+
+## 模块解析
+
+## 声明合并
+
+## 装饰器
+
+## JSX
+
+## Mixins
+
+## 三斜线指令:三斜线指令是包含单个 XML 标签的单行注释。 注释的内容会做为编译器指令使用
+
+> 三斜线引用告诉编译器在编译过程中要引入的额外的文件
+>
+> 编译器会对输入文件进行预处理来解析所有三斜线引用指令。 在这个过程中，额外的文件会加到编译过程中。
+
+## Javascript
+
+[JSDoc](https://github.com/Microsoft/TypeScript/wiki/JSDoc-support-in-JavaScript)
+
+> TS 可以推断 JS 文件中类型，无法推断也可以通过 jsdoc 注释实现检测
+>
+> TypeScript@2.3以后支持通过--checkJS 对.js 文件进行类型检查和错误提示
+>
+> // @ts-nocheck 忽而略类型检查
+>
+> // @ts-check 开启局部检测
+>
+> // @ts-ignore 忽略本行错误
+
+```js
+/** @type {number} */
+var x;
+x = 0; // OK
+x = false; // Error
+```
