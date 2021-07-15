@@ -6,6 +6,8 @@
 
 [译文](https://mp.weixin.qq.com/s/i1Y9GJAYMcCh1EPsJDWQtw)
 
+[打包声明文件提案](https://github.com/Microsoft/TypeScript/issues/4433)
+
 > TypeScript 分为两部分
 
 - `编译器：处理语法部分`
