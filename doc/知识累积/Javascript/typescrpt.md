@@ -1,25 +1,35 @@
-# typescript
+# typescript<https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html>
 
-## 参考资料
-
-[Understanding TypeScript's Popularity](https://orta.io/notes/js/why-typescript)
-
-[译文](https://mp.weixin.qq.com/s/i1Y9GJAYMcCh1EPsJDWQtw)
-
-[打包声明文件提案](https://github.com/Microsoft/TypeScript/issues/4433)
-
-> TypeScript 分为两部分
-
-- `编译器：处理语法部分`
-- `语言工具：处理与编辑器集成的部分`
-
-## 声明文件（\*.d.ts）
-
+> TypeScript shares syntax and runtime behavior with JavaScript
 >
+> Each and every value in JavaScript has a set of behaviors you can observe from running different operations.As a principle, TypeScript never changes the runtime behavior of JavaScript code
 
-## 编译代码（tsc）
+## 术语
 
-## 类型注解：一种轻量级的为函数或变量添加约束的方式
+- `callable`
+- `property`
+- `behaviors`
+- `capabilities`
+- `primitives: 原始的，基础的`
+
+## TSC：the TypeScript compiler，检测和擦除类型
+
+## TypeScript: A Static Type Checker
+
+> does so based on the kinds of values, it’s a static type checker
+
+## Handbook（学习指南）
+
+A reader who completes the walkthrough should be able to:
+
+- Read and understand commonly-used TypeScript syntax and patterns
+- Explain the effects of important compiler options
+- Correctly predict type system behavior in most cases
+
+## Types
+
+- `any:可以避免类型检测Error`设置 noImplicitAny，禁止设置 any 类型
+- `Object Type`
 
 ## 接口 interface
 
@@ -190,3 +200,16 @@ var x;
 x = 0; // OK
 x = false; // Error
 ```
+
+## 参考资料
+
+[Understanding TypeScript's Popularity](https://orta.io/notes/js/why-typescript)
+
+[译文](https://mp.weixin.qq.com/s/i1Y9GJAYMcCh1EPsJDWQtw)
+
+[打包声明文件提案](https://github.com/Microsoft/TypeScript/issues/4433)
+
+> TypeScript 分为两部分
+
+- `编译器：处理语法部分`
+- `语言工具：处理与编辑器集成的部分`

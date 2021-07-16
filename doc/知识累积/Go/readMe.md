@@ -27,10 +27,10 @@
 
 ```js
 /*
-   1、GOPATH=/usr/any/deps:/usr/any/project1，依赖都会安装到deps, 但是没有版本管理 go get命令下载包
+   1、GOPATH=/usr/any/deps:/usr/any/project1:/usr/any/project2，依赖都会安装到deps,project1和project2存放项目代码 但是没有版本管理 go get命令下载包
    2、项目目录下维护一个vendor目录，编译时优先使用该目录。vendor目录的嵌套，导致版本冲突问题依然无法解决 go get命令下载包
    3、module:
-        依赖下载到GOPATH/pkg/mod目录下
+        依赖下载到GOPATH/pkg/mod目录下，已经指定了依赖的路径
         go mod init name：用于自己引用自己使用，因为项目不在GOPATH/src下，需要有一个标识符
         go.mod：类似package.json
         go.sum: 类似package-lock.json

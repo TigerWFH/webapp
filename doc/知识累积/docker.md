@@ -1,6 +1,46 @@
 # docker
 
+## 术语
+
+> 云计算服务
+
+- `LaaS：Infrastructure as a service`基础设施既服务
+- `PaaS：Platform as a service`平台即服务
+- `SaaS：Software as a Service`软件既服务
+
 > docker 把应用程序及其依赖打包在 image 文件里面。并通过 image 文件生成 docker 容器实例
+> docker 启动创建一个容器（沙箱），从仓库获取镜像，并在容器中启动运行镜像
+
+## `镜像(Image)`：只读
+
+- `基于已有镜像创建`
+- `基于模板创建`
+- `基于Dockerfile创建`：Docker 程序将读取 Dockerfile 中的指令生成指定镜像
+  > Dockerfile 大致分为四部分：基础镜像信息，维护者信息，镜像操作指令，容器启动时执行指令
+  - `Dockerfile指令`
+    - `基础镜像信息：`FROM
+    - `维护者信息：`MAINTAINER
+    - `镜像操作指令`
+    - `容器启动时指令`：CMD
+
+## `容器(Container)`
+
+## `仓库(Repository)`，存放镜像的地方
+
+## Dockerfile 指令
+
+- `FROM`：设置基础镜像
+- `MAINTAINER`：维护者信息
+- `RUN`：构建镜像时运行的 shell 命令
+- `ADD`：拷贝文件或目录到镜像中，URL 或压缩包会自动下载或解压
+- `COPY`：拷贝文件或目录到镜像中，不支持自动下载和压缩
+- `WORKDIR`：为 RUN、CMD、ENTRYPOINT 以及 COPY 和 AND 设置工作目录
+- `VOLUME`：指定容器挂载点到宿主机自动生成的目录或其他容器
+- `EXPOSE`：声明容器运行的服务端口
+- `ENTRYPOINT`：启动容器时执行的 shell 命令，参数不会被覆盖
+- `CMD`：启动容器时执行的 shell 命令
+- `ENV`：设置环境内环境变量
+- `USER`：为 RUN、CMD 和 ENTRYPOINT 执行 Shell 命令指定运行用户
 
 ## 参考资料
 
