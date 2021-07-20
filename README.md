@@ -1187,7 +1187,7 @@ class CommentList extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      comments: DataSource.getCommnets(),
+      comments: DataSource.getCommnets()
     };
   }
   componentDidMount() {
@@ -1198,7 +1198,7 @@ class CommentList extends React.Component {
   }
   handleChange() {
     this.setState({
-      comments: DataSource.getComments(),
+      comments: DataSource.getComments()
     });
   }
   render() {
@@ -1216,7 +1216,7 @@ class BlogPost extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      blogPost: DataSource.getblogPost(props.id),
+      blogPost: DataSource.getblogPost(props.id)
     };
   }
   componentDidMount() {
@@ -1227,7 +1227,7 @@ class BlogPost extends React.Component {
   }
   handleChange() {
     this.setState({
-      comments: DataSource.getblogPost(this.props.id),
+      comments: DataSource.getblogPost(this.props.id)
     });
   }
   render() {
@@ -1241,7 +1241,7 @@ function withSubscribtion(wrappedComponent, cb) {
       super(props);
       this.handleChange = this.handleChange.bind(this);
       this.state = {
-        data: cb(DataSource, props),
+        data: cb(DataSource, props)
       };
     }
     componentDidMount() {
@@ -1285,7 +1285,7 @@ const BlogPostWithSubscription = withSubscription(
 // 直接修改InputComponent原型，当有第二个Hoc进行同样的操作，lopProps的操作就会被覆盖
 function logProps(InputComponent) {
   InputComponent.prototype.componentDidUpdate = function (preProps) {
-    console.log("Current props:", this.props);
+    console.log('Current props:', this.props);
   };
   // The fact that we're returning the original input is a hint that it has been mutated.
 
@@ -1295,7 +1295,7 @@ function logProps(InputComponent) {
 function logProps(WrappedComponent) {
   return class extends React.Component {
     componentDidMount() {
-      console.log("Current props:", this.props);
+      console.log('Current props:', this.props);
     }
     render() {
       // Wraps the input component in a container, without mutating it. Good!
@@ -1392,7 +1392,7 @@ function enhance(WrappedComponent) {
  * 加载模块：require([dependencies], function() {})
  */
 // 定义模块alpha
-define("alpha", ["require", "exports", "beta"], function (
+define('alpha', ['require', 'exports', 'beta'], function (
   require,
   exports,
   beta
@@ -1400,10 +1400,10 @@ define("alpha", ["require", "exports", "beta"], function (
   exports.verb = function () {
     return beta.verb();
     //Or:
-    return require("beta").verb();
+    return require('beta').verb();
   };
 });
-require(["alpha"], function (alpha) {
+require(['alpha'], function (alpha) {
   alpha.verb();
 });
 /**
@@ -1414,7 +1414,7 @@ require(["alpha"], function (alpha) {
  * 导出接口：exports，对象，提供模块接口
  * 模块：   module，对象
  */
-define({ foo: "bar" });
+define({ foo: 'bar' });
 /**
  * umd(Universal Module Definition)：通用模块定义
  */
@@ -2403,7 +2403,7 @@ node --dbu-brk app.js
 
 // 劫持数据
 function hold(data) {
-  if (!data || typeof data !== "object") {
+  if (!data || typeof data !== 'object') {
     return;
   }
   if (Array.isArray(data)) {
@@ -2414,14 +2414,14 @@ function hold(data) {
         enumerable: true,
         get: function () {
           // do something
-          console.log("get===>", data[key]);
+          console.log('get===>', data[key]);
           return data[key];
         },
         set: function (value) {
           // do something
-          console.log("set===>", value);
+          console.log('set===>', value);
           data[key] = value;
-        },
+        }
       });
     });
   }
@@ -2785,31 +2785,31 @@ Why is @babel/plugin-transform-runtime and tslib included by default?
 
 ```js
 // rollup.config.js
-import ts from "@wessberg/rollup-plugin-ts";
-import pkg from "./package.json";
-import { builtinModules } from "module";
+import ts from '@wessberg/rollup-plugin-ts';
+import pkg from './package.json';
+import { builtinModules } from 'module';
 
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
       file: pkg.main,
-      format: "cjs",
-      sourcemap: true,
+      format: 'cjs',
+      sourcemap: true
     },
     {
       file: pkg.module,
-      format: "esm",
-      sourcemap: true,
-    },
+      format: 'esm',
+      sourcemap: true
+    }
   ],
   plugins: [ts()],
   external: [
     ...builtinModules,
     ...(pkg.dependencies == null ? [] : Object.keys(pkg.dependencies)),
     ...(pkg.devDependencies == null ? [] : Object.keys(pkg.devDependencies)),
-    ...(pkg.peerDependencies == null ? [] : Object.keys(pkg.peerDependencies)),
-  ],
+    ...(pkg.peerDependencies == null ? [] : Object.keys(pkg.peerDependencies))
+  ]
 };
 ```
 
@@ -2907,27 +2907,27 @@ export default {
 
 ```js
 var app = new Vue({
-  el: "#app",
+  el: '#app',
   data: {
-    message: "页面加载",
+    message: '页面加载',
     bSeen: true,
     todos: [
       {
-        text: "学习javascript",
+        text: '学习javascript'
       },
       {
-        text: "学习React",
+        text: '学习React'
       },
       {
-        text: "学习Vue",
-      },
-    ],
+        text: '学习Vue'
+      }
+    ]
   },
   methods: {
     reversMessage: () => {
-      this.message = this.message.split("").reverse().join("");
-    },
-  },
+      this.message = this.message.split('').reverse().join('');
+    }
+  }
 });
 ```
 
@@ -3006,23 +3006,23 @@ class WordCount extends HTMLParagraphElement {
       return text.split(/\s+/g).length;
     }
 
-    var count = "Words:" + countWords(wcParent);
+    var count = 'Words:' + countWords(wcParent);
 
     // create shadow root
     // shadow dom就是自定义组件渲染的实际dom，也可以不渲染，有生命周期
-    var shadow = this.attachShadow({ mode: "open" });
-    var text = document.createElement("span");
+    var shadow = this.attachShadow({ mode: 'open' });
+    var text = document.createElement('span');
     text.textContent = count;
     shadow.appendChild(text);
 
     setInterval(function () {
-      var count = "Words" + countWords(wcParent);
+      var count = 'Words' + countWords(wcParent);
       text.textContent = count;
     }, 200);
   }
 }
 
-customElements.define("word-count", WorldCount, { extends: "p" });
+customElements.define('word-count', WorldCount, { extends: 'p' });
 ```
 
 - `vue devtools：https://github.com/vuejs/vue-devtools#vue-devtools`方便调试
@@ -3085,3 +3085,5 @@ list指令：
 ## 宏
 
 ## 支持的数据类型有：Boolean、Date、Number、String、Sequence（java 中的数组，list，set 等）、hash（java 中的 Map）
+
+## antd/x6 和 jsplumb 调研
