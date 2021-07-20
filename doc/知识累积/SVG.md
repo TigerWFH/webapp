@@ -1,81 +1,57 @@
-# SVG 和 X6
+# SVG 和 X6 和 jsplumb
 
-## X6
+## SVG(Scalable Vector Graphics)，可缩放矢量图形，是一种用于描述二维的矢量图形，基于 XML 的标记语言
 
-## configOptions
+> 可以和 CSS、DOM、JavaScript、SMIL 等无缝衔接
+>
+> SVG 图像是使用各种元素创建的，这些元素分别应用于矢量图像的结构、绘制与布局<https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element>
 
-- `x：节点位置x坐标`
-- `y：节点位置y坐标`
-- `width：节点宽度`
-- `height：节点高度`
-- `angle：节点旋转角度`
-- `attrs：`
-- `attrs：属性集合`
+### SVG 属性
 
-## SVG 属性分为 properties 和 attributes，properties 可以使用 CSS 设置
+#### 核心属性
 
-> svg 标签支持 style property，直接写 CSS 样式
-> svg defs 标签，支持在 defs 定义 style 标签
-> viewBox属性，可以只展示部分图像
+> id, lang, tabindex, xml:base, xml:lang, xml:space
 
-## defs 标签
+#### 样式属性
 
-## g 标签：可以把属性赋给一整个元素集合
+> class, style
 
-## rect 标签
+#### 显示属性（所有 SVG 显示属性都可以作为 CSS 属性使用）<https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/Presentation>
 
-- `x：元素左上角x轴坐标`
-- `y：元素左上角y轴坐标`
-- `width：元素宽度`
-- `height：元素高度`
-- `rx：圆角x轴半径`
-- `ry：圆角y轴半径`
+> alignment-baseline, baseline-shift, clip, clip-path, clip-rule, color, color-profile, cusor, direction, display, fill, stroke,...
 
-## image 标签
+### SVG 元素
 
-## text 标签
+#### 容器元素
 
-### properties，既可以写成 SVG 属性；也可以写成 CSS 样式
+- `svg`
+- `defs`
+- `g`
+- `a`
 
-- `font-family:`
-- `font-style:`
-- `font-weight:`
-- `font-variant:`
-- `font-stretch:`
-- `font-size:`
-- `font-size-adjust:`
-- `kerning:`
-- `letter-spacing:`
-- `word-spacing:`
-- `text-decoration:`
+#### 图形元素
 
-## tspan 标签：标记大块文本的子部分，必须是 text 或 tspan 的子元素
+- `path`实现了 SVGPathElement 接口，创建线条, 曲线, 弧形
+  - `专有属性d:`命令+参数形式，属性 d 采用的是用户坐标系统，所以不需标明单位
+    - `M 命令：`移动画笔
+    - `L 命令：`画直线
+    - `H 命令：`水平直线
+    - `V 命令：`垂直直线
+    - `Z 命令：`闭合路径命令，d="M10 10 H 90 V 90 H 10 Z"
+    - `C（S） 命令：`三次贝塞尔曲线命令，C x1 y1, x2 y2, x y
+    - `Q（T） 命令：`二次贝塞尔曲线命令，Q x1 y1, x y
+    - `A 命令：`弧线命令
+  - `专有属性pathLength`
+- `circle`
+- `line`
+- `ellipse`
+- `polygon`
+- `polyline`
+- `rect`
 
-- `以下未知是properties还是attributes`
-- `x`
-- `y`
-- `dx`
-- `dy`
-- `rotate`
-- `textLength`
-- `textLength`
+#### 非渲染元素
 
-## font 标签
-
-## font-face
-
-## tref 标签：引用已经定义的文本
-
-## textPath 标签
-
-## clipPath 标签：剪切
-
-## stop 标签
-
-## linearGradient 标签
-
-## radialGradient 标签
-
-## filter 标签
-
-## mask 标签
+- `script`
+- `style`
+- `title`
+- `symbol`
