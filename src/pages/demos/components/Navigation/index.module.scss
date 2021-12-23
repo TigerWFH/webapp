@@ -1,0 +1,44 @@
+.swiper {
+    // swiper
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    border: 1px solid #00a3fe;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;//随着手指离开还会保持滚动
+    * {
+        box-sizing: border-box;
+        touch-action: none; // touch-action 用于设置触摸屏用户如何操纵元素的区域。none:对触摸操作进行任何操作
+    }
+    .container {
+        flex-shrink: 0;
+        flex-grow: 0;
+        display: flex;
+        max-height: 220px;
+        position: relative;
+        transition: transform 0.2s linear;
+        .frame {
+            display: flex;
+            flex-wrap: wrap;
+            border-left: 1px solid black;
+            transition: height 0.2 linear;
+            .info {
+                flex-shrink: 0;
+                flex-grow: 0;
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 20%;
+                padding: 5px;
+                border: 1px solid #eee;
+                box-sizing: border-box;
+                .image {
+                    width: 100%;
+                    height: 80px;
+                    border: 1px solid red;
+                }
+            }
+        }
+    }
+}

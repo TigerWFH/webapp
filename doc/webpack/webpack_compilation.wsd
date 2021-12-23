@@ -1,0 +1,137 @@
+@startuml webpack类图
+    class Compilation {
+        - Hook hooks = {}
+        - string name = undefined
+        - Compiler compiler = compiler
+        - ResolverFactory = compiler.resolverFactory
+        - InputFileSystem inputFileSystem = compiler.inputFileSystem
+        - RequestShortener requestShortener = compiler.requestShortener
+        - any options = compiler.options
+        - any outputOptions = options.output
+        - any bail = options.bail
+        - any profile = options.profile
+        - any performance = options.performance
+        - MainTemplate mainTemplate = new MainTemplate
+        - ChunkTemplate chunkTemplate = new ChunkTemplate
+        - HotUpdateChunkTemplate hotUpdateChunkTemplate = new HotUpdateChunkTemplate
+        - RuntimeTemplate runtimeTemplate = new RuntimeTemplate
+        - any moduleTemplates = {javascript: new ModuleTemplate,webassembly: new ModuleTemplate}
+        - Semaphore semaphore = new Semaphore
+        - any[] entries = []
+        - any[] _preparedEntrypoints = []
+        - Map entrypoints = new Map
+        - Chunk[] chunks = []
+        - ChunkGroup[] chunkGroups = []
+        - Map namedChunks = new Map
+        - Map namedChunkGroups = new Map
+        - Module[] modules = []
+        - Map _modules = new Map
+        - Cache cache = null
+        - any records = null
+        - string[] additionalChunkAssets = []
+        - CompilationAssets assets = {}
+        - WebpackError[] errors = []
+        - WebpackError[] warnings = []
+        - Compilation[] children = []
+        - Map dependencyFactories = new Map
+        - Map dependencyTemplates = new Map
+        - any childrenCounters = {}
+        - Set usedChunkIds = null
+        - Map fileTimestamps = undefined
+        - Set compilationDependencies = undefined
+        - Map _buildingModules = new Map
+        - Map _rebuildingModules = new Map
+        - Set emittedAssets = new Set
+        Stats getStats()
+        any addModule(module, cacheGroup)
+        any getModule(module)
+        any findModule(identifier)
+        any waitForBuildingFinished(module, callback)
+        any buildModule(module, optional, origin, dependencies, thisCallback)
+        any processModuleDependencies(module, callback)
+        any addModuleDependencies(module, dependencies, bail, cacheGroup, recursive, callback)
+        any _addModuleChain(context, dependency, onModule, callback)
+        any addEntry(context, entry, name, callback)
+        any prefetch(context, dependency, callback)
+        any rebuildModule(module, thisCallback)
+        any finish()
+        any unseal()
+        any seal(callback)
+        any sortModules(modules)
+        any reportDependencyErrorsAndWarnings(module, blocks)
+        any addChunkInGroup(groupOptions, module, loc, request)
+        any addChunk(name)
+        any assignDepth(module)
+        any getDependencyReference(module, dependency)
+        any processDependenciesBlocksForChunkGroups(inputChunkGroups)
+        any removeReasonsOfDependencyBlock(module, block)
+        any patchChunksAfterReasonRemoval(module, chunk)
+        any removeChunkFromDependencies(block, chunk)
+        any applyModuleIds()
+        any applyChunkIds()
+        any sortItemsWithModuleIds()
+        any sortItemsWithChunkIds()
+        any summarizeDependencies()
+        any createHash()
+        any modifyHash(update)
+        any createModuleAssets()
+        any createChunkAssets()
+        any getPath(filename, data)
+        any createChildCompiler(name, outputOptions, plugins)
+        any checkConstraints()  
+    }
+    class MainTemplate {
+        ' this.hooks
+        - SyncWaterfallHook bootstrap = new ["source","chunk","hash","moduleTemplate","dependencyTemplates"]
+        - SyncWaterfallHook localVars = new ["source", "chunk", "hash"]
+        - SyncWaterfallHook requireExtensions = new ["source", "chunk", "hash"]
+        - SyncWaterfallHook requireEnsure = new ["source","chunk","hash","chunkIdExpression"]
+        ' - jsonpScript
+        ' - linkPreload
+        ' - linkPrefetch
+        - any _outputOptions = outputOptions
+    }
+    ' Compilation *--  SyncHook
+    ' Compilation *--  SyncBailHook
+    ' Compilation *--  SyncWaterfallHook
+    ' Compilation *--  AsyncSeriesHook
+    Compilation <--> Compiler
+    Compilation --> OutputFileSystem
+    Compilation *-- FileSystemInfo
+    Compilation -->  InputFileSystem
+    Compilation -->  ResolverFactory
+    Compilation --> RequestShortener
+    Compilation *-- MainTemplate
+    Compilation *-- ChunkTemplate
+    Compilation *-- RuntimeTemplate
+    Compilation *-- ModuleTemplate
+    Compilation --> WebpackError
+    Compilation *-- ModuleGraph
+    Compilation ..> Module
+    Compilation ..> CodeGenerationResult
+    Compilation *-- AsyncQueue
+    Compilation ..> FactorizeModuleOptions
+    Compilation --> Compilation
+    Compilation ..> ModuleFactory
+    Compilation *-- DependencyTemplates
+    Compilation *-- LazySet
+    Compilation ..> Stats
+    Compilation ..> StatsFactory
+    Compilation ..> StatsPrinter
+    Compilation ..> CacheFacade
+    Compilation ..> Logger
+    Compilation ..> ModuleRestoreError
+    Compilation ..> ModuleStoreError
+    Compilation ..> Dependency
+    Compilation ..> ModuleProfile
+    Compilation ..> BuildCycleError
+    Compilation ..> ModuleNotFoundError
+    Compilation ..> ChunkGraph
+    Compilation ..> ModuleDependencyWarning
+    Compilation ..> ModuleDependencyError
+    Compilation ..> CodeGenerationError
+    Compilation ..> ChunkGroup
+    Compilation ..> ChunkRenderError
+    Compilation ..> Chunk
+    Compilation ..> CachedSource
+@enduml

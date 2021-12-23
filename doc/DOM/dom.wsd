@@ -1,0 +1,147 @@
+@startuml DOM
+    interface Event {}
+    interface AnimationEvent {}
+    interface BeforeUnloaded {}
+    interface CustomEvent {}
+    interface FetchEvent {}
+    interface FocusEvent {}
+    interface HashChangeEvent {}
+    interface InputEvent {}
+    interface StorageEvent {}
+    interface UIEvent {}
+    interface MouseEvent {}
+    interface TouchEvent {}
+    interface WheelEvent {}
+    interface DragEvent {}
+
+    Event <|-- AnimationEvent
+    Event <|-- BeforeUnloaded
+    Event <|-- CustomEvent
+    Event <|-- FetchEvent
+    Event <|-- FocusEvent
+    Event <|-- HashChangeEvent
+    Event <|-- InputEvent
+    Event <|-- StorageEvent
+    Event <|-- UIEvent
+    UIEvent <|-- TouchEvent
+    UIEvent <|-- MouseEvent
+    MouseEvent <|-- WheelEvent
+    MouseEvent <|-- DragEvent
+
+    interface EventTarget {
+        + undefined addEventListener(DOMString type, EventListener? callback, optional options)
+        + undefined removeEventListener(DOMString type, EventListener? callback, optional options)
+        + boolean dispatchEvent(Event event)
+    }
+    interface CustomEvent {}
+    interface NodeList {}
+    interface NamedNodeMap {}
+    interface Node {
+        + unsigned short nodeType
+        + DOMString nodeName
+        + USVString baseURI
+        + boolean isConnected
+        + Document ownerDocument
+        + Node parentNode
+        + Element parentElement
+        + NodeList childrens
+        + Node firstChild
+        + Node lastChild
+        + Node previousSibling
+        + Node nextSibling
+        + DOMString nodeValue
+        + DOMString textContent
+        + NamedNodeMap attributes
+        + Node getRootNode(optinal options = {})
+        + Node insertBefore(Node newChild, Node refChild)
+        + Node replaceChild(Node newChild, Node oldChild)
+        + Node removeChild(Node oldChild)
+        + Node appendChild(Node newChild)
+        + boolean hasChildNodes()
+        + Node cloneNode(boolean deep)
+    }
+    interface CharacterData {}
+    interface Attr {}
+    interface Element {
+        + DOMString namespaceURI
+        + DOMString prefix
+        + DOMString localName
+        + DOMString tagName
+        + DOMString id
+        + DOMString className
+        + DOMTokenList classList
+        + DOMString slot
+        + NamedNodeMap attributes
+
+        + Number clientWidth
+        + Number clientHeight
+        + Number clientTop
+        + Number clientLeft
+
+        + Number scrollWidth：元素的滚动视图宽度
+        + Number scrollHeight：元素的滚动视图高度
+        + Number scrollTop：元素垂直方向滚动距离
+        + Number scrollLeft：元素水平方向滚动的距离
+
+        + boolean hasAttributes()
+        + sequence<DOMString> getAttributeNames()
+        + DOMString getAttribute(DOMString name)
+        + DOMString getAttributeNS(DOMString namespace, DOMString localName)
+        + undefined setAttribute(DOMString qualifiedName, DOMString value)
+        + undefined setAttributeNS(DOMString namespace, DOMString qualifiedName, DOMString value)
+        + undefined removeAttribute(DOMString qualifiedName)
+        + undefined removeAttributeNS(DOMString namespace, DOMString qualifiedName)
+        + boolean toggleAttribute(DOMString qualifiedName, boolean force)
+        + Attr getAttributeNode(DOMString name)
+        + Attr setAttributeNode(Attr newAttr)
+    }
+    interface DocumentType {}
+    interface Document {
+        + DocumentType doctype
+        + DOMImplementation implementation
+        + Element documentElement
+        + Element createElement(in DOMString tagName)
+        + DocumentFragment createDocumentFragment()
+        + Text createTextNode(in DOMString data)
+        + Comment createComment(in DOMString data)
+        + CDATASection createCDATASection(in DOMString data)
+        + ProcessingInstruction createProcessingInstruction(in DOMString target, in DOMString data)
+        + Attr createAttribute(in DOMString name)
+        + EntityReference createEntityReference(in DOMString name)
+        + NodeList getElementByTagName(in DOMString tagName)
+    }
+    interface ProcessingInstruction {}
+    interface Notation {}
+    interface Entity {}
+    interface EntityReference {}
+
+    interface Text {}
+    interface Comment {}
+
+    interface CDATASection {}
+
+    interface HTMLElement {
+        + Number offsetParent
+        + Number offsetWidth
+        + Number offsetHeight
+        + Number offsetTop
+        + Number offsetLeft
+    }
+
+    EventTarget <|-- Node
+    Node <|-- CharacterData
+    Node <|-- Attr
+    Node <|-- Element
+    Node <|-- DocumentType
+    Node <|-- Document
+    Node <|-- ProcessingInstruction
+    Node <|-- Notation
+    Node <|-- Entity
+    Node <|-- EntityReference
+    CharacterData <|-- Text
+    CharacterData <|-- Comment
+    Text <|-- CDATASection
+
+
+
+@enduml

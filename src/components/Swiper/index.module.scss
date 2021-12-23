@@ -1,0 +1,76 @@
+.swiper {
+    // swiper
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    // border: 1px solid #00a3fe;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;//随着手指离开还会保持滚动
+    .next {
+        position: absolute;
+        top: calc(50% - 14px);
+        right: 0;
+        z-index: 1;
+        font-size: 20px;
+        color: #333;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    .back {
+        position: absolute;
+        top: calc(50% - 14px);
+        left: 0;
+        z-index: 1;
+        font-size: 20px;
+        color: #333;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    .ghost {
+        color: #999;
+    }
+    * {
+        box-sizing: border-box;
+        touch-action: none; // touch-action 用于设置触摸屏用户如何操纵元素的区域。none:对触摸操作进行任何操作
+    }
+    .container {
+        flex-shrink: 0;
+        flex-grow: 0;
+        display: flex;
+        position: relative;
+        will-change: transform;
+        z-index: 9999;
+        overflow: hidden;
+        // border: 1px solid #00a3fe;
+    }
+    .animation {
+        transition: transform 0.2s linear;
+    }
+    .bottom, .cover {
+        text-align: center;
+        height: 18px;
+        line-height: 18px;
+        .dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 100%;
+            background: #ececec;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        .active {
+            height: 4px;
+            width: 14px;
+            background: #22bfab;
+            border-radius: 8px;
+        }
+    }
+    .cover {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+        z-index: 10000;
+        transform: translateZ(0);
+    }
+}

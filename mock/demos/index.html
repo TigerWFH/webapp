@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试加载顺序</title>
+    <script>
+        window.addEventListener('load', function load () {
+            console.log('window.onload=============>')
+        })
+        window.document.addEventListener('DOMContentLoaded', function domcontentloaded () {
+            console.log('document.DOMContentLoaded=============>')
+        })
+        console.log('inline script======>')
+    </script>
+    <script src='./script1.js'></script>
+    <script async src='./script2.js'></script>
+    <script defer src='./script3.js'></script>
+    <script async src='./script4.js'></script>
+    <script defer src='./script5.js'></script>
+    <script src='./script6.js'></script>
+</head>
+
+<body>
+    <div>
+        inline
+    </div>
+    <div>
+        without defer and async
+    </div>
+    <div>
+        width async
+    </div>
+    <div>
+        with defer
+    </div>
+    <div>
+        width async
+    </div>
+    <div>
+        with defer
+    </div>
+    <div>
+        without defer and async
+    </div>
+</body>
+
+</html>

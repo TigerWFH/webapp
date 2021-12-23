@@ -1,0 +1,12 @@
+.banner {
+    margin-top: 8px;
+    background-color: #fff;
+    .imgContainer {
+        border-radius: 8px;
+        overflow: hidden;
+        .img {
+            height: 90px;
+            width: 100%;
+        }
+    }
+}

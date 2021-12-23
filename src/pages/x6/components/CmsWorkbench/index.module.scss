@@ -1,0 +1,106 @@
+.cmsworkbench {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f4;
+  height: 100%;
+  overflow: hidden;
+  * {
+    box-sizing: border-box;
+  }
+  .toolbar {
+    height: 44px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    margin-bottom: 2px;
+    background-color: #fff;
+    .active {
+      border: 1px solid #00a3fe;
+    }
+    .toollist {
+      flex-grow: 1;
+      display: flex;
+    }
+    .business {
+      flex-grow: 0;
+      flex-shrink: 0;
+      width: 80px;
+      .save {
+        width: 78px;
+        height: 42px;
+        line-height: 44px;
+        text-align: center;
+        cursor: pointer;
+        // box-shadow: 0 2px 0 #00a3fe;
+        border: 1px solid #00a3fe;
+      }
+    }
+  }
+  .content {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    background-color: #f3f3f4;
+    height: 100%;
+    overflow: hidden;
+    .workbench {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      .pc {
+        flex-shrink: 1;
+        width: 920px;
+        height: 100%;
+        margin-right: 2px;
+        margin-top: 10px;
+      }
+      .phone {
+        width: 375px;
+        height: 667px;
+        margin-top: 100px;
+      }
+      .phone,
+      .pc {
+        background-color: #fff;
+        .unit {
+          position: relative;
+          width: 100%;
+          .delete {
+            position: absolute;
+            top: 0;
+            right: -60px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 100;
+          }
+          .component {
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+        }
+      }
+    }
+
+    .config {
+      flex-shrink: 0;
+      flex-grow: 0;
+      width: 400px;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: #fafafa;
+      // border: 1px solid green;
+    }
+  }
+  .preview {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

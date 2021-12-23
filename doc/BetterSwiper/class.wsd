@@ -1,0 +1,189 @@
+@startuml BSwiper
+    class EventEmitter {
+        - Events events
+        - EventTypes eventTypes
+        + Object on(string type, Func fn, Object context)
+        + Object once(string type, Func fn, Object context)
+        + Object off(string type, Func fn)
+        + any trigger(string type, any[] ...args)
+        + void registryTypes(string[] names)
+        + void destroy()
+        - boolean hasType(string type)
+    }
+    class Behavior {
+        + HTMLElement wrapper
+        + HTMLElement content
+        + Options options
+        + number currentPos
+        + number startPos
+        + number absStartPos
+        + number dist
+        + number minScrollPos
+        + number maxScrollPos
+        + boolean hasScroll
+        + number direction
+        + number movingDirection
+        + number relativeOffset
+        + number wrapperSize
+        + number contentSize
+        + EventEmitter hooks
+        Behavior(wrapper, content, options)
+        + void start()
+        + any move(number delta)
+        + void setMovingDirection(number delta)
+        + void setDirection(number delta)
+        + any performDampingAlgorithm(number delta, number dampingFactor)
+        + any end(number duration)
+        - any momentum()
+        - any refresh(HTMLElement content)
+        - any setContent(HTMLElement content)
+        - any resetState()
+        + any computeBoundary()
+        + void updatePosition()
+        + number getCurrentPos()
+        + any checkInBoundary()
+        + any adjustPosition(number pos)
+        + void updateStartPos()
+        + void updateAbsStartPos()
+        + void resetStartPos()
+        + any getAbsDist(number delta)
+        + void destroy()
+    }
+    EventEmitter --* Behavior
+    class ActionsHandler {
+        + Options options
+        + HTMLElement wrapper
+        + EventEmitter hooks
+        + number initiated
+        + number pointX
+        + number pointY
+        + EventRegister wrapperEventRegister
+        + EventRegister targetEventRegister
+        ActionsHandler(wrapper, options)
+        - handleDOMEvents()
+        - beforeHandler()
+        + setInitiated(number type)
+        - start(TouchEvent e)
+        - move(TouchEvent e)
+        - end(TouchEvent e)
+        - click(TouchEvent e)
+        + setContent(HTMLElement content)
+        + rebindDOMEvents()
+        + destroy()
+    }
+    class Translate {
+        + HTMLElement content
+        + CSSStyleDeclaration style
+        + EventEmitter hooks
+        + getComputedPosition()
+        + translate()
+        + setContent()
+        + destroy()
+    }
+    EventEmitter --* Translate
+    class ScrollerActions {
+        - Behavior scrollBeHaviorX
+        - Behavior scrollBeHaviorY
+        - ActionsHandler actionsHandler
+        - Animater animater
+        - BScrollOptions options
+        - DirectionLockAction directionLockAction
+        - boolean fingerMoved
+        - boolean contentMoved
+        - boolean enabled
+        - number startTime
+        - number endTime
+        - boolean ensuringInteger
+        ScrollerActions(scrollBehaviorX, scrollBehaviorY, actionsHandler, animater, options)
+        - void bindActionsHandler()
+        - void handleStart(TouchEvent e)
+        - any handleMove(number deltaX, number deltaY, TouchEvent e)
+        - any checkMomentum(absDistX, absDistY, timestamp)
+        - any handleEnd(TouchEvent e)
+        - any ensureIntegerPos(currentPos)
+        - any handleClick(TouchEvent e)
+        + any getCurrentPos()
+        + any refresh()
+        + any destroy()
+    }
+    interface ExposedAPI {
+        + scrollTo(number x, number y, number time)
+        + scrollBy(deltaX, deltaY, time)
+        + scrollToElement(el, time, offsetX, offsetY)
+        + resetPosition(time,  easing)
+    }
+    class Scroller {
+        + ActionsHandler actionsHandler
+        + Translater translater
+        + Animater animater
+        + Behavior scrollBeHaviorX
+        + Behavior scrollBeHaviorY
+        + ScrollerActions actions
+        + EventEmitter hooks
+        + EventRegister transitionEndRegistry
+        + BScrollOptions options
+        + Object wrapperOffset
+        + number _reflow
+        + number resizeTimeout
+        + number lastClickTime
+        + HTMLElement wrapper
+        + HTMLElement content
+        Scroller(wrapper, content, options)
+        - void init()
+        - void registerTransitionEnd()
+        - void bindTranslater()
+        - void bindAnimater()
+        - void bindActions()
+        - void checkFlick()
+        - void momentum()
+        - void checkClick()
+        - void resize()
+        - void transitionEnd()
+        + void togglePointerEvents()
+        + void refresh(HTMLElement content)
+        - boolean setContent(HTMLElement content)
+        + scrollBy()
+        + scrollTo()
+        + scrollToElement()
+        + resetPosition()
+        + reflow()
+        + updatePositions()
+        + getCurrentPos()
+        + enable()
+        + disable()
+        + destroy()
+    }
+    ExposedAPI <|.. Scroller
+    Scroller *-- Behavior
+    Scroller *-- EventEmitter
+    Scroller *- ActionsHandler
+    Scroller *- Translate
+    Scroller *- ScrollerActions
+    ' 入口
+    class BScrollConstructor {
+        {static} PluginItem[] plugins
+        {static} PluginsMap pluginMap
+        - Scroller scroller
+        - OptionsConstructor options
+        - EventEmitter hooks
+        - any plugins
+        - HTMLElement wrapper
+        - HTMLElement content
+        {static} use(PluginCtor ctor)
+        BScrollConstructor(ElementParam el, Options options)
+        + Object setContent(any wrapper)
+        - void init(any wrapper)
+        - void applyPlugins()
+        - void handleAutoBlur()
+        - void eventBubbling()
+        - void refreshWithoutReset()
+        + void proxy(any config)
+        + void refresh()
+        + void enable()
+        + void disable()
+        + void destroy()
+        + void eventRegistry(string[] name)
+    }
+    BScrollConstructor *-- EventEmitter
+    BScrollConstructor *-- Scroller
+@enduml

@@ -1,0 +1,57 @@
+
+.root {
+    position: relative;
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	width: 140px;
+	height: 140px;
+	border-radius: 100%;
+	background: radial-gradient(rgba(255,255,255,0.5), rgba(0,0,0,0.2));
+	animation: loading 5s linear infinite;
+}
+
+.container {
+    width: 0;
+    height: 0;
+    border: 1px solid #339933;
+}
+.square {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-width: 70px;
+    border-style: solid;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70px, -70px);
+    border-style: solid;
+    border-color:#FFCCCC transparent transparent transparent;
+    border-radius: 100%;
+}
+
+.arc {
+    position: absolute;
+}
+
+@keyframes loading {
+    0% {
+		transform: rotate(0deg);
+	}
+	20%{
+		transform: rotate(72deg)
+	}
+	40%{
+		transform: rotate(144deg);
+	}
+	60%{
+		transform: rotate(216deg);
+	}
+	80%{
+		transform: rotate(288deg)
+	}
+	100%{
+		transform: rotate(360deg)
+	}
+}

@@ -1,0 +1,24 @@
+@startuml Servlet
+' Servlet接口规范
+' javax是Sun公司提供的扩展包。ava和javax都是Java的API(Application Programming Interface)包，java是核心包，javax的x是extension的意思，也就是扩展包。java类库是java发布之初就确定了的基础库，而javax类库则是在上面增加的一层东西，就是为了保持版本兼容要保存原来的，但有些东西有了更好的解决方案
+' javax.servlet.ServletException
+' javax.servlet.http.HttpServlet
+' javax.servlet.http.HttpServletRequest
+' javax.servlet.http.HttpServletResponse
+' public class UserServlet extends HttpServlet
+interface Servlet {
+    + void init(ServletConfig config)
+    + ServletConfig getServletConfig()
+    + void service(ServletRequest request, ServletResponse response)
+    + String getServletInfo()
+    + destroy()
+}
+interface ServletConfig {
+
+}
+' abstract class GenericServlet implements Servlet,ServletConfig
+class GenericServlet {
+
+}
+
+@enduml

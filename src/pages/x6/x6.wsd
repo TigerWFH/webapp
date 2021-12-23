@@ -1,0 +1,235 @@
+@startuml X6p基础信息
+interface IDisposable {
+    +  boolean disposed
+    + void dispose()
+}
+class Disposable {
+    - boolean _disposed
+    + boolean disposed
+    + boolean dispose()
+}
+class Base {
+    +  Graph graph
+    ' 返回graph.options
+    + any options
+    ' 返回graph.model
+    + Model model
+    ' 返回graph.view
+    + View view
+    Base(Graph graph)
+    - void init()
+    
+}
+class Renderer {
+    # KeyValue<CellView> views
+    # KeyValue<Comment> zPivots
+    # Updates updates
+    # void init()
+    # void startListening()
+    # void stopListening()
+    # void resetUpdates()
+    # void onSortModel()
+    # void onModelReseted(any optinos)
+    # void onBatchStop(any options)
+    # void onCellAdded()
+    # void onCellRemoved()
+    # void onCellZIndexChanged()
+}
+
+interface IHook {
+    createView
+    createModel
+    createRenderer
+    createCoordManager
+}
+
+class Basecoat<T> {}
+Basecoat <|-- Collection
+class Collection {
+    + number length
+    + Comparator comparator
+    + Cell[] cells
+    + Object<string, Cell> map
+}
+Basecoat <|-- Model
+Model *-- Collection
+class Model {
+    +  Collection collection
+    #  KeyValue<number> batches
+    #  WeapMap<Cell, boolean> addings
+    + Graph graph
+    # KeyValue<boolean> nodes
+    # KeyValue<boolean> edges
+    # KeyValue<string[]> outgoings
+    # KeyValue<string[]> incomings
+}
+note right of Model: 画布的数据模型
+
+interface Common {
+    + HTMLElement container
+    + Model model
+    + number x
+    + number y
+    + number width
+    + number height
+    + any autoResize
+    + any BackgroundColor
+    + object scaling
+    + SortType sorting
+    + boolean async
+    + boolean frozen
+    + number magnetThreshold
+    + number moveThreshold
+    + number clickThreshold
+    + boolean preventDefaultContextMenu
+    + boolean preventDefaultDblClick
+    + boolean preventDefaultMouseDown
+    + boolean preventDefaultBlankAction
+    + Interacting interacting
+}
+Common <|-- Definition
+interface  Definition {
+    + GridManager_Options grid
+    + Connecting connecting
+    + Rotating rotating
+    + Resizing resizing
+    + Translating translating
+    + Transforming transforming
+    + Highlighting highlighting
+    + Embedding embedding
+    + PanningManager_Options panning
+    + SelectionManager_Options selecting
+    + SnaplineManager_Options snapline
+    + ClipboardManager_Options clipboard
+    + HistoryManager_CommonOptions history
+    + ScrollerManager_Options scroller
+    + MiniMapManager_Options minimap
+    + Object keyboard
+    + Object mousewheel
+    + Knob knob 
+}
+Basecoat <|-- View
+abstract class View {
+    +  string cid
+    + Element container
+    # Selectors selectors
+    + number priority
+    View()
+    + void unmount()
+    + Node remove()
+}
+note right of View: 画布的视图，包括DOM渲染
+View <|-- GraphView
+class GraphView {
+    + HTMLElement container
+    + HTMLDivElement background
+    + HTMLDivElement grid
+    + SVGSVGElement svg
+    + SVGDefsElement defs
+    + SVGGElement viewport
+    + SVGGElement primer
+    + SVGGElement stage
+    + SVGGElement decorator
+    + SVGGElement overlay
+    + Model model
+    + Graph_Options options
+}
+
+Basecoat <|-- Graph
+Graph *-- CSSManager
+Graph *-- HookManager
+Graph *-- Model
+Graph *-- GraphView
+Graph *-- Renderer
+' Graph *-- DefsManager
+' Graph *-- GridManager
+' Graph *-- CoordManager
+' Graph *-- KnobManager
+class Graph {
+    + Definition options
+    + CSSManager css
+    ' 以下都是hook创建的实例
+    + Model model
+    + GraphView view
+    + HookManager hook
+    + Grid grid
+    + Defs defs
+    + Knob knob
+    + Coord coord
+    + ViewRenderer renderer
+    + Snapline snapline
+    + Highlight highlight
+    + Transform transform
+    + Clipboard clipboard
+    + Selection selection
+    + Background background
+    + History history
+    + Scroller scroller
+    + MiniMap minimap
+    + Shortcut keyboard
+    + Wheel mousewheel
+    + Panning panning
+    + Print print
+    + Format format
+    + SizeManager size
+    + HTMLElement container
+}
+IDisposable <|.. Disposable
+Disposable <|-- Base
+Base <|-- Renderer
+Base --> Graph
+@enduml
+
+@startuml 节点相关
+class Basecoat {}
+class Graph {}
+Basecoat <|-- Model
+Model --> Graph
+class Model {
+    +  Collection collection
+    #  KeyValue<number> batches
+    #  WeapMap<Cell, boolean> addings
+    + Graph graph
+    # KeyValue<boolean> nodes
+    # KeyValue<boolean> edges
+    # KeyValue<string[]> outgoings
+    # KeyValue<string[]> incomings
+}
+note right of Model: 画布的数据模型
+Basecoat <|-- Store
+class Store<D> {
+    ' 此处的data记录节点实例数据
+    # D data
+    # D previous
+    # Partial<D> changed
+    # boolean pending
+    # boolean changing
+    # Store_MutateOptions pendingOptions
+    + boolean hasChanged()
+    + toJSON()
+}
+note left of Store::data
+    记录当前节点实例数据
+end note
+note left of Store::previous
+    记录当前接节点之前的实例数据
+end note
+Basecoat <|-- Cell
+Cell *-- Store
+class Cell{
+    # {static} Markup markup
+    # {static} Cell_Defaults defaults
+    # {static} Attr_Definitions attrHooks
+    # {static} Cell_PropHook[] propHooks
+    + {static} config(Cell_Options options)
+    + {static} Markup getMarkup()
+    + string id
+    # Store store
+    # Animation animation
+    # Model _model
+    # Cell _parent
+    # Cell[] _children
+}
+class Node {}
+class Edge {}
+@enduml

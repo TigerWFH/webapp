@@ -1,0 +1,32 @@
+.change {
+    border: 1px solid red;
+    .content {
+        .transform {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin-left: 10px;
+            margin-right: 10px;
+            border: 1px solid black;
+            transition: height 0.2s linear;
+            &:hover {
+                height: 200px;
+                transition: height 0.2s linear;
+            }
+        }
+        .transform1 {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            // transform-origin: 0 0;
+            transition: transform 0.2s linear;
+            &:hover {
+                // transform-origin: 0 0;
+                height: 200px;
+                transform: height;
+                transition: transform 0.2s linear;
+            }
+        }
+    }
+}

@@ -1,0 +1,79 @@
+.experience {
+    display: flex;
+	position: relative;
+	height: 100%;
+	margin-top: 10px;
+    background: #fafafa;
+    .container {
+        display: flex;
+		align-items: center;
+        flex: 1;
+        .chart {
+            display: flex;
+			align-items: center;
+			box-shadow: 0 5px 5px 0 #c9c9c9;
+			flex: 1;
+        }
+        .content {
+            display: flex;
+			align-items: center;
+			flex: 2;
+			flex-direction: column;
+            height: 100%;
+            .summary {
+                display: flex;
+				flex-direction: column;
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				width: 90%;
+                box-shadow: 0 5px 5px 0 #767676;
+                .label {
+                    display: flex;
+					justify-content: flex-start;
+					font-size: 2rem;
+                }
+                .summary-content {
+                    display: flex;
+					justify-content: flex-start;
+					flex-direction: column;
+					text-indent: 2em;
+					line-height: 2.5;
+                }
+            }
+            .detail {
+                display: flex;
+	            align-items: flex-start;
+	            flex-direction: column;
+	            flex: 1;
+	            width: 90%;
+	            padding: 10px 10px 10px 10px;
+	            margin-bottom: 20px;
+                box-shadow: 0 5px 5px 0 #767676;
+                .info {
+                    display: flex;
+		            width: 100%;
+                    min-height: 2em;
+                    .info-label {
+                        display: inline-block;
+                        text-align: left;
+                        width: 30%;
+                        color: #767676;
+                        font-size: 16px;
+                        vertical-align: top;
+                    }
+                    .info-data {
+                        display: inline-block;
+                        width: 70%;
+                        color: #000;
+                        font-size: 18px;
+                        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+                        overflow-y: auto;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,502 @@
+.wrapper {
+    overflow: auto;
+    padding-bottom: 150px;
+    .slipcontainer {
+        .flip { // To activate 3D space, an element needs perspective，
+            width: 200px;
+            height: 260px;
+            perspective: 600px; // 激活当前元素3D空间，并指定当前3D空间的灭点（vanishing point），所有子元素共享（后代元素不共享，需要扩展）
+            overflow: hidden;
+            .scene {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                transition: transform 1s;
+                transform-style: preserve-3d; // 扩展flip的3D空间，让scene的后代也可以共享同样的3D空间
+                transform-origin: center right;
+                .front, .back {
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    backface-visibility: hidden;
+                }
+                .front {
+                    background-color: red;
+                }
+                .back {
+                    background-color: blue;
+                    transform: rotateY(180deg);
+                }
+            }
+            .flipped {
+                transform: translateX(-100%) rotateY(180deg);
+            }
+            .flipped1 {
+                transform: rotateY(0deg);
+            }
+        }
+    }
+    .zoom {
+        border: 1px solid red;
+        perspective: 10000px;
+        .stage {
+            transform-style: preserve-3d;
+            transform: translateZ(200px);
+            img {
+                width: 100px;
+                border: 1px solid black;
+            }
+        }
+    }
+    .container {
+        margin: 20px auto;;
+        border: 1px dotted red;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        perspective: 50px;
+        perspective-origin: 50% 70%;
+        // &:nth-child(1){
+        //     transform: rotateY(0deg);
+        // }
+        // &:nth-child(2){
+        //     transform: rotateY(90deg);
+        // }
+        // &:nth-child(3){
+        //     transform: rotateY(180deg);
+        // }
+        // &:nth-child(4){
+        //     transform: rotateY(270deg);
+        // }
+        .stage {
+            transform-style: preserve-3d;
+            backface-visibility: visible;
+            transition: transform 1s ease-in 0s;
+        }
+        .base1 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            border: 1px solid red;
+            background-color: red;
+            width: 50px;
+            height: 50px;
+            transform: rotateY(10deg) translateZ(30px);
+        }
+        .base2 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            border: 1px solid red;
+            background-color: aqua;
+            width: 50px;
+            height: 50px;
+            transform: rotateY(100deg) translateZ(30px);
+        }
+        .base3 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            border: 1px solid red;
+            background-color: rebeccapurple;
+            width: 50px;
+            height: 50px;
+            transform: rotateY(190deg) translateZ(30px);
+        }
+        .base4 {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            border: 1px solid red;
+            background-color: forestgreen;
+            width: 50px;
+            height: 50px;
+            transform: rotateY(280deg) translateZ(30px);
+        }
+    }
+    .loop {
+        height: 300px;
+        text-align: center;
+        border: 1px solid #00a3fe;
+        .perspective {
+            position: relative;
+            margin: 50px auto;
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+            perspective: 200px;
+            .image1,.image2,.image3,.image4 {
+                position: absolute;
+                top: 50px;
+                left: 50px;
+                border: 1px solid red;
+                width: 100px;
+                height: 100px;
+            }
+            .image1 {
+                background-color: red;
+            }
+            .image2 {
+                background-color: blue;
+                left: 100px;
+                transform: rotateY(90deg) translateZ(50px);
+            }
+            .image3 {
+                background-color: #00a3fe;
+                transform: rotateY(180deg);
+            }
+            .image4 {
+                background-color: rgb(17, 16, 16);
+                transform: rotateY(270deg);
+            }
+        }
+    }
+    .mirror {
+        position: relative;
+        height: 300px;
+        img.origin {
+            position: absolute;
+            left: 300px;
+            width: 200px;
+            &:hover {
+                transform: matrix(-1, 0, 0, 1, -200, 0);
+                // width: 300px;
+                // transition: width 2s 0 linear;
+            }
+        }
+    }
+    .demo {
+        height: 200px;
+        perspective: 150px;
+        .rotate, .rotate2, .rotate3, .rotate4 {
+            margin-top: 50px;
+            margin-right: 20px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #00a3fe;
+        }
+        .rotate2 {
+            transform: rotate(90deg);
+        }
+        .rotate3 {
+            transform: rotateX(45deg);
+        }
+        .rotate4 {
+            transform: rotateY(45deg);
+        }
+    }
+    .skew {
+        .demo1, .demo2, .demo3 {
+            margin-top: 50px;
+            margin-right: 20px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #00a3fe;
+        }
+        .demo2 {
+            transform: skewX(30deg);
+        }
+        .demo3 {
+            transform: skewY(30deg);
+        }
+    }
+    .flip { // To activate 3D space, an element needs perspective，
+        width: 200px;
+        height: 260px;
+        perspective: 600px; // 激活当前元素3D空间，并指定当前3D空间的灭点（vanishing point），所有子元素共享（后代元素不共享，需要扩展）
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 1s;
+            transform-style: preserve-3d; // 扩展flip的3D空间，让scene的后代也可以共享同样的3D空间
+            transform-origin: center right;
+            .front, .back {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                backface-visibility: hidden;
+            }
+            .front {
+                background-color: red;
+            }
+            .back {
+                background-color: blue;
+                transform: rotateY(180deg);
+            }
+        }
+        .flipped {
+            transform: translateX(-100%) rotateY(180deg);
+        }
+        .flipped1 {
+            transform: rotateY(0deg);
+        }
+    }
+    .btn {
+        display: inline-block;
+        width: 88px;
+        height: 44px;
+        text-align: center;
+        line-height: 88px;
+    }
+    .cube {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #ccc;
+        perspective: 400px;
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(-100px);
+            transition: transform 1s;
+            .front,.back,.right,.left,.top,.bottom {
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                line-height: 200px;
+                border: 1px solid black;
+                font-size: 40px;
+                text-align: center;
+                color: white;
+            }
+            .front {
+                transform: rotateY(0deg) translateZ(100px);
+                background: hsla(  0, 100%, 50%, 0.7);
+            }
+            .right {
+                transform: rotateY(90deg)  translateZ(100px);
+                background: hsla( 60, 100%, 50%, 0.7);
+            }
+            .back {
+                transform: rotateY(180deg) translateZ(100px);
+                background: hsla(120, 100%, 50%, 0.7);
+            }
+            .left {
+                transform: rotateY(-90deg) translateZ(100px); // 旋转后移动，旋转后正面方向就是Z方向
+                background: hsla(180, 100%, 50%, 0.7);
+            }
+            .top {
+                transform: rotateX(90deg) translateZ(100px);
+                background: hsla(240, 100%, 50%, 0.7);
+            }
+            .bottom {
+                transform: rotateX(-90deg) translateZ(100px);
+                background: hsla(300, 100%, 50%, 0.7); 
+            }
+        }
+        .showfront { transform: translateZ(-100px) rotateY(0deg); }
+        .showright { transform: translateZ(-100px) rotateY(-90deg); }
+        .showback { transform: translateZ(-100px) rotateY(-180deg); }
+        .showleft { transform: translateZ(-100px) rotateY(90deg); }
+        .showtop { transform: translateZ(-100px) rotateX(-90deg); }
+        .showbottom { transform: translateZ(-100px) rotateX(90deg); }
+    }
+    .box {
+        width: 300px;
+        height: 200px;
+        perspective: 500px;
+        border: 1px solid #ccc;
+        .scene {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(-50px);
+            transition: transform 1s;
+            .front,.back,.left,.right,.top,.bottom {
+                position: absolute;
+                font-size: 40px;
+                border: 2px solid black;
+                font-weight: bold;
+                color: white;
+                text-align: center;
+            }
+            .front,.back {
+                width: 300px;
+                height: 200px;
+                line-height: 200px;
+            }
+            .front {
+                transform: rotateY(0deg) translateZ(50px);
+                background: hsla(  0, 100%, 50%, 0.7);
+            }
+            .back {
+                transform: rotateY(180deg) translateZ(50px);
+                background: hsla(120, 100%, 50%, 0.7);
+            }
+            .right,.left {
+                width: 100px;
+                height: 200px;
+                left: 100px;
+                line-height: 200px;
+            }
+            .right {
+                transform: rotateY(90deg) translateZ(150px);
+                background: hsla( 60, 100%, 50%, 0.7);
+            }
+            .left {
+                transform: rotateY(-90deg) translateZ(150px);
+                background: hsla(180, 100%, 50%, 0.7);
+            }
+            .top,.bottom {
+                width: 300px;
+                height: 100px;
+                top: 50px;
+                line-height: 100px;
+            }
+            .top {
+                transform: rotateX(90deg) translateZ(100px);
+                background: hsla(240, 100%, 50%, 0.7);
+            }
+            .bottom {
+                transform: rotateX(-90deg) translateZ(100px);
+                background: hsla(300, 100%, 50%, 0.7);
+            }
+        }
+        .showfront {
+            transform: translateZ(-50px) rotateY(0deg);
+        }
+        .showright {
+            transform: translateZ(-150px) rotateY(-90deg);
+        }
+        .showleft {
+            transform: translateZ(-150px) rotateY(90deg);
+        }
+        .showback {
+            transform: translateZ(-50px) rotateY(-180deg);
+        }
+        .showtop {
+            transform: translateZ(-100px) rotateX(-90deg);
+        }
+        .showbottom {
+            transform: translateZ(-100px) rotateX(90deg);
+        }
+    }
+    .carousel {
+        width: 210px;
+        height: 140px;
+        position: relative;
+        perspective: 10000px;
+        border: 1px solid #ccc;
+        margin: 20px auto;
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: translateZ(-288px);
+            transition: transform 1s;
+            .cell1,.cell2,.cell3,.cell4,.cell5,.cell6,.cell7,.cell8,.cell9 {
+                position: absolute;
+                width: 190px;
+                height: 120px;
+                left: 10px;
+                top: 10px;
+                border: 2px solid black;
+                font-weight: bold;
+                color: #fff;
+                text-align: center;
+            }
+            .cell1 {
+                transform: rotateY(0deg) translateZ(288px);
+                background: hsla(  0, 100%, 50%, 0.8);
+            }
+            .cell2 {
+                transform: rotateY(40deg) translateZ(288px);
+                background: hsla( 40, 100%, 50%, 0.8);
+            }
+            .cell3 {
+                transform: rotateY(80deg) translateZ(288px);
+                background: hsla( 80, 100%, 50%, 0.8);
+            }
+            .cell4 {
+                transform: rotateY(120deg) translateZ(288px);
+                background: hsla(120, 100%, 50%, 0.8);
+            }
+            .cell5 {
+                transform: rotateY(160deg) translateZ(288px);
+                background: hsla(160, 100%, 50%, 0.8);
+            }
+            .cell6 {
+                transform: rotateY(200deg) translateZ(288px);
+                background: hsla(200, 100%, 50%, 0.8);
+            }
+            .cell7 {
+                transform: rotateY(240deg) translateZ(288px);
+                background: hsla(240, 100%, 50%, 0.8);
+            }
+            .cell8 {
+                transform: rotateY(280deg) translateZ(288px);
+                background: hsla(280, 100%, 50%, 0.8);
+            }
+            .cell9 {
+                transform: rotateY(320deg) translateZ(288px);
+                background: hsla(320, 100%, 50%, 0.8);
+            }
+        }
+    }
+    .carousel2 {
+        width: 210px;
+        height: 140px;
+        position: relative;
+        perspective: 10000px;
+        border: 1px solid #ccc;
+        margin: 20px auto;
+        overflow: hidden;
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: translateZ(-288px);
+            transition: transform 1s;
+            .cell1,.cell2,.cell3,.cell4,.cell5,.cell6,.cell7,.cell8,.cell9 {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                font-weight: bold;
+                color: #fff;
+                text-align: center;
+                backface-visibility: hidden;
+            }
+            .cell1 {
+                transform: rotateY(0deg) translateZ(288px);
+                background: hsla(  0, 100%, 50%, 0.8);
+            }
+            .cell2 {
+                transform: rotateY(40deg) translateZ(288px);
+                background: hsla( 40, 100%, 50%, 0.8);
+            }
+            .cell3 {
+                transform: rotateY(80deg) translateZ(288px);
+                background: hsla( 80, 100%, 50%, 0.8);
+            }
+            .cell4 {
+                transform: rotateY(120deg) translateZ(288px);
+                background: hsla(120, 100%, 50%, 0.8);
+            }
+            .cell5 {
+                transform: rotateY(160deg) translateZ(288px);
+                background: hsla(160, 100%, 50%, 0.8);
+            }
+            .cell6 {
+                transform: rotateY(200deg) translateZ(288px);
+                background: hsla(200, 100%, 50%, 0.8);
+            }
+            .cell7 {
+                transform: rotateY(240deg) translateZ(288px);
+                background: hsla(240, 100%, 50%, 0.8);
+            }
+            .cell8 {
+                transform: rotateY(280deg) translateZ(288px);
+                background: hsla(280, 100%, 50%, 0.8);
+            }
+            .cell9 {
+                transform: rotateY(320deg) translateZ(288px);
+                background: hsla(320, 100%, 50%, 0.8);
+            }
+        }
+    }
+}

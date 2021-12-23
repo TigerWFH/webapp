@@ -1,0 +1,24 @@
+.frame {
+    display: flex;
+    flex-wrap: wrap;
+    .info {
+        flex-shrink: 0;
+        flex-grow: 0;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+        width: 20%;
+        box-sizing: border-box;
+        .image {
+            width: 40px;
+            height: 40px;
+        }
+        .title {
+            margin-top: 8px;
+            color: #333;
+            font-size: 12px;
+        }
+    }
+}

@@ -1,0 +1,314 @@
+@startuml Module and Dependency
+    class Dependency {
+        - boolean weak = false
+        - boolean optional = false
+        - TDependencyLocation loc = undefined
+        + string|null getResourceIdentifier()
+        + {abstract} never getReference(moduleGraph)
+        + any[] getReferencedExports(moduleGraph)
+        + any getCondition(moduleGraph)
+        + ExportsSpec|undefined getExports(moduleGraph)
+        + WebpackError[] getWarnings(moduleGraph)
+        + WebpackError[] getErrors(moduleGraph)
+        + void updateHash(hash, chunkGraph)
+        + number getNumberOfIdOccurrences()
+        + any serialize({ write })
+        + any deserialize({ read })
+    }
+    class Hash {
+        + {abstract} any update(string|Buffer data, string inputEncoding)
+        + {abstract} string|Buffer digest(string encoding)
+    }
+    class Chunk {
+        - number|string|null id = null
+        - (number|string)[] ids = null
+        - number debugId = debugId++
+        - SortableSet<string> idNameHints = new SortableSet
+        - boolean = preventIntegration = false
+        - any filenameTemplate = undefined
+        - SortableSet<ChunkGroup> _groups = new SortableSet
+        - ChunkFilesSet<string> files = new ChunkFilesSet
+        - Set<string> auxiliaryFiles = new Set
+        - boolean rendered = false
+        - string hash = undefined
+        - TRecord<string, string> contentHash = Object.create(null)
+        - string renderedHash = undefined
+        - string chunkReason = undefined
+        - boolean extraAsync = false
+        + boolean hasEntryModule()
+        + void removeModule(Module module)
+        + void getNumberOfModules()
+        + any compareTo(otherChunk)
+        + boolean containsModule(module)
+        + Module[] getModules()
+        + void remove()
+        + void moveModule(Module module, Chunk otherChunk)
+        + boolean integrate(Chunk otherChunk)
+        + boolean canBeIntegrated(Chunk otherChunk)
+        + boolean isEmpty()
+        + number modulesSize()
+        + number size(TChunkSizeOptions options = {})
+        + number integratedSize(Chunk otherChunk, TChunkSizeOptions options)
+        + TChunkModuleMaps getChunkModuleMaps(TModuleFilterPredicate filterFn)
+        + boolean hasModuleInGraph(TModuleFilterPredicate filterFn, TChunkFilterPredicate filterChunkFn)
+        + TChunkMaps getChunkMaps(boolean realHash)
+        + boolean hasRuntime()
+        + boolean canBeInitial()
+        + boolean isOnlyInitial()
+        + void addGroup(ChunkGroup chunkGroup)
+        + void removeGroup(ChunkGroup chunkGroup)
+        + boolean isInGroup(ChunkGroup chunkGroup)
+        + number getNumberOfGroups()
+        + void disconnectFromGroups()
+        + void split(Chunk newChunk)
+        + void updateHash(Hash hash, ChunkGraph chunkGraph)
+        + Set<Chunk> getAllAsyncChunks()
+        + Set<Chunk> getAllInitialChunks()
+        + Set<Chunk> getAllReferencedChunks()
+        + boolean hasAsyncChunks()
+        + Record<string, (string | number)[]> getChildIdsByOrders(ChunkGraph chunkGraph, any filterFn)
+        + Record<string, (string | number)[]> getChildIdsByOrdersMap(ChunkGraph chunkGraph, boolean includeDirectChildren, any filterFn)
+    }
+    class ChunkGraph {
+        - WeakMap<Module, ChunkGraphModule> _modules = new WeakMap
+        - WeakMap<Chunk, ChunkGraphChunk> _chunks = new WeakMap
+    }
+    class ChunkGroup {
+       - number groupDebugId = debugId++
+       - any options = options
+       - SortableSet<ChunkGroup> _children = new SortableSet
+       - SortableSet<ChunkGroup> _parents = new SortableSet
+       - SortableSet<ChunkGroup> _blocks = new SortableSet
+       - Chunk[] chunks = []
+       - TOriginRecord[] origins = []
+       - Map<Module, number> _modulePreOrderIndices = new Map
+       - Map<Module, number> _modulePostOrderIndices = new Map
+       - number index = undefined
+       + void addOptions(TChunkGroupOptions options)
+       + boolean unshiftChunk(Chunk chunk)
+       + boolean insertChunk(Chunk chunk, Chunk before)
+       + boolean pushChunk(Chunk chunk)
+       + boolean replaceChunk(Chunk oldChunk, Chunk newChunk)
+       + boolean removeChunk(Chunk chunk)
+       + boolean addChild(ChunkGroup group)
+       + ChunkGroup[] getChildren()
+       + ChunkGroup[] getNumberOfChildren()
+       + boolean removeChild(ChunkGroup group)
+       + boolean addParent(ChunkGroup parentChunk)
+       + ChunkGroup[] getParents()
+       + number getNumberOfParents()
+       + boolean hasParent(ChunkGroup parent)
+       + boolean removeParent(ChunkGroup chunkGroup)
+       + any[] getBlocks()
+       + number getNumberOfBlocks()
+       + boolean hasBlock(AsyncDependenciesBlock block)
+       + boolean addBlock(AsyncDependenciesBlock block)
+       + void addOrigin(Module module, DependencyLocation loc, string request)
+       + string[] getFiles()
+       + void remove()
+       + void sortItems()
+       + any compareTo(ChunkGraph chunkGraph, ChunkGroup otherGroup)
+       + any getChildrenByOrders(ModuleGraph moduleGraph, ChunkGraph chunkGraph)
+       + void setModulePreOrderIndex(Module module, number index)
+       + number getModulePreOrderIndex(Module module)
+       + void setModulePostOrderIndex(Module module, number index)
+       + number getModulePostOrderIndex(Module module)
+       + any checkConstraints()
+    }
+    class ChunkGraphModule {
+        - SortableSet<Chunk> chunks = new Sortable
+        - Set<Chunk>|undefined entryInChunks = undefined
+        - Set<Chunk>|undefined runtimeInChunks = undefined
+        - string hash = undefined
+        - string renderdHash = undefined
+        - string|number id = null
+        - Set<string>|undefined runtimeRequirements = undefined
+    }
+    class ChunkGraphChunk {
+        - SortableSet<Module> modules = new SortableSet
+        - Map<Module, Entrypoint> entryModules = new Map
+    }
+    class Entrypoint { 
+        - Chunk runtimeChunk = undefined
+        + void setRuntimeChunk(Chunk chunk)
+        + Chunk|null getRuntimeChunk()
+        + boolean replaceChunk(Chunk oldChunk, Chunk newChunk)
+    }
+    class Module {
+        - string type = type
+        - string context = context
+        - boolean = needId = true
+        - number debugId = debugId++
+        - any resolveOptions = XXX
+        - amy factoryMeta = undefined
+        - WebpackError[] _warnings = undefined
+        - WebpackError[] _errors = undefined
+        - BuildMeta buildMeta = undefined
+        - any buildInfo = undefined
+        - Dependency[] presentationalDependencies = undefined
+        + any addChunk(chunk)
+        + any removeChunk(chunk)
+        + any isInChunk(chunk)
+        + any isEntryModule()
+        + any getChunks()
+        + any getNumberOfChunks()
+        + any isProvided(exportName)
+        + any getExportsType(strict)
+        + void addPresentationalDependency(presentationalDependency)
+        + void clearDependenciesAndBlocks()
+        + void addWarning(warning)
+        + any getWarnings()
+        + any getNumberOfWarnings()
+        + void addError(error)
+        + any getErrors()
+        + any getNumberOfErrors()
+        + void clearWarningsAndErrors()
+        + boolean isOptional(moduleGraph)
+        + boolean isAccessibleInChunk(chunkGraph, chunk, ignoreChunk)
+        + boolean isAccessibleInChunkGroup(chunkGraph, chunkGroup, ignoreChunk)
+        + boolean hasReasonForChunk(chunk, moduleGraph, chunkGraph)
+        + boolean hasReasons(moduleGraph)
+        + boolean isModuleUsed(moduleGraph)
+        + any isExportUsed(moduleGraph, exportName)
+        + any getUsedName(moduleGraph, exportName)
+        + string toString()
+        + void needBuild(context, callback)
+        + boolean needRebuild(fileTimestamps, contextTimestamps)
+        + updateHash(hash,chunkGraph = ChunkGraph.getChunkGraphForModule(this,"Module.updateHash","DEP_WEBPACK_MODULE_UPDATE_HASH"))
+        + void invalidateBuild()
+        + string identifier()
+        + string readableIdentifier(requestShortener)
+        + void build(options, compilation, resolver, fs, callback)
+        + Set<string> getSourceTypes()
+        + source(dependencyTemplates, runtimeTemplate, type = "javascript")
+        + number size(type)
+        + string libIdent(options)
+        + string nameForCondition()
+        + ReadonluSet<string> getRuntimeRequirements(context)
+        + CodeGenerationResult codeGeneration(context)
+        + boolean chunkCondition(chunk, compilation)
+        + void updateCacheModule(module)
+        + Source originalSource()
+        + any serialize(context)
+        + any deserialize(context)
+    }    
+    class ModuleGraph {
+        - Map<Dependency, ModuleGraphDependency> _dependencyMap = new Map
+        - Map<Module, ModuleGraphModule> _moduleMap = new Map
+        - Map<Module, Set<ModuleGraphConnection>> _originMap = new Map
+        - Map<any, Object> _metaMap = new Map
+        - any _cacheModuleGraphModuleKey1 = undefined
+        - any _cacheModuleGraphModuleValue1 = undefined
+        - any _cacheModuleGraphModuleKey2 = undefined
+        - any _cacheModuleGraphModuleValue2 = undefined
+        - any _cacheModuleGraphDependencyKey = undefined
+        - any _cacheModuleGraphDependencyValue = undefined
+        - ModuleGraphModule _getModuleGraphModule(module)
+        - ModuleGraphDependency _getModuleGraphDependency(dependency)
+        + void setParents(dependency, block, module)
+        + Module getParentModule(dependency)
+        + DependenciesBlock getParentBlock(dependency)
+        + void setResolvedModule(originModule, dependency, module)
+        + void updateModule(dependency, module)
+        + void removeConnection(dependency)
+        + void addExplanation(dependency, explanation)
+        + void cloneModuleAttributes(Module sourceModule, Module targetModule)
+        + void removeModuleAttributes(Module module)
+        + void removeAllModuleAttributes()
+        + void moveModuleConnections(Module oldModule, Module newModule, filterConnection)
+        + void addExtraReason(Module module, string explanation)
+        + Module getResolvedModule(Dependency dependency)
+        + ModuleGraphConnection getConnection(Dependency dependency)
+        + Module getModule(Dependency dependency)
+        + Module getOrigin(Dependency dependency)
+        + Module getResolvedOrigin(Dependency dependency)
+        + Iterable<ModuleGraphConnection> getIncomingConnections(Module module)
+        + Iterable<ModuleGraphConnection> getOutgoingConnections(Module module)
+        + ModuleProfile getProfile(Module module)
+        + void setProfile(Module module, ModuleProfile profile)
+        + Module getIssuer(Module module)
+        + void setIssuer(Module module, Module issuer)
+        + void setIssuerIfUnset(Module module, Module issuer)
+        + string|OptimizationBailoutFunction)[] getOptimizationBailout(Module module)
+        + any etProvidedExports(Module module)
+        + boolean isExportProvided(Module module, string exportName)
+        + ExportsInfo getExportsInfo(Module module)
+        + ExportsInfo getExportInfo(Module module, string exportName)
+        + ExportsInfo getReadOnlyExportInfo(Module module, string exportName)
+        + any getUsedExports(Module module)
+        + number getPreOrderIndex(Module module)
+        + number getPostOrderIndex(Module module)
+        + void setPreOrderIndex(Module module, number index)
+        + void setPostOrderIndex(Module module, number index)
+        + boolean setPostOrderIndexIfUnset(Module module, number index)
+        + number getDepth(Module module)
+        + void setDepth(Module module, number depth)
+        + boolean setDepthIfLower(Module module, number depth)
+        + boolean isAsync(Module module)
+        + void setAsync(Module module)
+        + Object getMeta(any thing)
+        + {static} ModuleGraph getModuleGraphForModule(Module module, string deprecateMessage, string deprecationCode)
+        + {static} void getModuleGraphForModule(Module module, ModuleGraph moduleGraph)
+    }
+    class ModuleGraphModule {
+
+    }
+    class ModuleGraphConnection {
+       - Module originModule = originModule
+       - Module resolvedOriginModule = originModule
+       - Dependency dependency = dependency
+       - Module resolvedModule = module
+       - boolean weak = weak
+       - boolean condition = !!condition
+       - boolean _active = true
+       - any condition = condition
+       - Set<string> explanations = undefined
+       + void addCondition(any condition)
+       + void addExplanation(string explanation)
+    }
+    class ModuleGraphDependency {
+        - ModuleGraphConnection connection = undefined
+        - Module parentModule = undefined
+        - DependenciesBlock parentBlock = undefined
+    } 
+    class DependenciesBlock {
+        - Dependency[] dependencies = []
+        - AsyncDependenciesBlock[] blocks = []
+        + void addBlock(AsyncDependenciesBlock block)
+        + void addDependency(Dependency dependency)
+        + void removeDependency(Dependency dependency)
+        + void clearDependenciesAndBlocks()
+        + void updateHash(Hash hash, ChunkGraph chunkGraph)
+        + void serialize({ write })
+        + void deserialize({ read })
+    }
+    class AsyncDependenciesBlock {
+        - TChunkGroupOptions groupOptions = groupOptions
+        - TDependencyLocation loc = loc
+        - string request = request
+        - DependenciesBlock parent undefined
+    }
+    Dependency <-- DependenciesBlock
+    Chunk ..> Module
+    Chunk ..> ChunkGraph
+    Chunk ..> ChunkGroup
+    ChunkGroup --> Chunk
+    ChunkGroup ..> AsyncDependenciesBlock
+    ChunkGroup ..> ChunkGraph
+    ChunkGroup ..> ModuleGraph
+    ChunkGroup <|-- Entrypoint
+    ChunkGraphChunk ..> Module
+    ChunkGraphChunk ..> Entrypoint
+    ChunkGraph ..> Module
+    ChunkGraph ..> ChunkGraphModule
+    ChunkGraph ..> Chunk
+    ChunkGraph ..> ChunkGraphChunk
+    DependenciesBlock <|-- AsyncDependenciesBlock
+    DependenciesBlock --> AsyncDependenciesBlock
+    DependenciesBlock ..> Hash
+    DependenciesBlock ..> ChunkGraph
+    ModuleGraphDependency --> ModuleGraphConnection
+    ModuleGraphDependency --> Module
+    ModuleGraphDependency --> DependenciesBlock
+    AsyncDependenciesBlock --> DependenciesBlock
+@enduml

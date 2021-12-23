@@ -1,0 +1,17 @@
+.profile {
+    height: 100%;
+    background-color: #7c498f;
+    text-align: center;
+    overflow: auto;
+    .container {
+        margin-bottom: 40px;
+        .label {
+            color: #fff;
+            font-size: 2rem;
+        }
+        .sublabel {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+    }
+}

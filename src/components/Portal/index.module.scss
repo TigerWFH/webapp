@@ -1,0 +1,16 @@
+$bg: rgba(0, 0, 0, 0.3);
+.portal,
+.mask {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  touch-action: none;
+}
+.mask {
+  background-color: $bg; //opacity会影响整个元素以及后代元素
+}

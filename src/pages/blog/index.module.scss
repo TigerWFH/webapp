@@ -1,0 +1,16 @@
+.blog {
+    height: 100%;
+    background-image: linear-gradient(0deg, #f4f4f4 50%, #03c067 80%);// 可以指定颜色开始位置
+    .group {
+        border: 1px solid red;
+        overflow: hidden;
+        .cell {
+            display: block;
+            border-bottom: 1px dashed #00a3fe;
+            overflow: hidden;
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 2px;
+        }
+    }
+}

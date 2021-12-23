@@ -1,0 +1,24 @@
+name: Webapp autodeploy https://tigerwfh.github.io
+on:
+  push:
+    branches:
+     - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout
+       uses: actions/checkout@master
+       with:
+        persist-credentials: false
+    
+     - name: Build
+       run: npm install && npm run build
+
+     - name: Deploy
+       uses: JamesIves/github-pages-deploy-action@4.0.0
+       with:
+         token: ${{secrets.ACCESS_TOKEN}}
+         repository-name: TigerWFH/tigerwfh.github.io
+         folder: build
+         branch: gh-pages

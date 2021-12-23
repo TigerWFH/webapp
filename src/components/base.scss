@@ -1,0 +1,54 @@
+@import './flex.scss';
+
+// 前端重用应该分为逻辑重用和视觉重用
+// 逻辑重用可以封装组件，视觉重用使用类
+/*
+  1、背景色：bg
+  2、主题色：theme color
+  3、辅助色：sub color
+  4、高亮：high light
+  5、正常：normal
+  6、激活：active
+  7、灰色：ghost
+*/
+* {
+  box-sizing: content-box; /* W3C: width指content宽度 */
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+#root {
+  height: 100%;
+}
+.app {
+  height: 100%;
+  padding: 76px 0px 10px 250px;
+}
+.show {
+  padding-left: 250px;
+  transition: padding-left 0.5s;
+}
+.hide {
+  padding-left: 10px;
+  transition: padding-left 0.5s;
+}
+.view {
+  height: calc(100% - 95px);
+}
+@import '~antd/dist/antd.css';

@@ -1,0 +1,123 @@
+@startuml Android部分类图
+    class Object{}
+    class android.Manifest {}
+    Object <|-- android.Manifest
+    class android.R {
+        ' 好多内部class（）
+    }
+    Object <|-- android.R
+
+    abstract class android.content.Context {
+        + {abstract} Looper getMainLooper()
+        + {abstract} ClassLoader getClassLoader()
+    }
+    Object <|-- android.content.Context
+
+    class android.content.ContextWrapper {
+        - Context mBase
+    }
+    android.content.Context <|-- android.content.ContextWrapper
+
+    class ApplicationThread {
+        ' ActivityThread的私有类
+        + AppBindData data
+    }
+    abstract class android.app.ClientTransactionHandler {}
+    class android.app.ActivityThread {
+        - ContextImpl mSystemContext
+        - ContextImpl mSystemUiContext
+        ' 内部类ActivityThread, new ActivityThread()
+        ' 用于应用和AMS（ActivityManageService）通信
+        + ApplicationThread mAppThread
+        + Looper mLooper
+        ' 内部类H，new H()
+        + H mH
+        ' 管理activity的成员，记录了应用创建的所有activity实例记录，对应ActivityRecord
+        + ArrayMap<IBinder, ActivityClientRecord> mActivities
+        + ArrayMap<IBinder, Service> mServices
+        + AppBindData mBoundApplication
+        + Profiler mProfiler
+        ' 存储Applicaiton实例
+        + Application mInitialApplication
+        + ActivityThread sCurrentActivityThread
+        + Instrumentation mInstrumentation
+        + ResourcesManager mResourcesManager
+        + GcIdler mGcIdler
+        + ArrayMap<IBinder, Service> mServices
+        + ArrayMap<ProviderKey, ProviderClientRecord> mProviderMap
+        + ArrayMap<IBinder, ProviderRefCount> mProviderRefCountMap
+        + ArrayMap<IBinder, ProviderClientRecord> mLocalProviders
+        + ArrayMap<Activity, ArrayList<OnActivityPausedListener>> mOnPauseListeners
+        + {static} void main(String[] args)
+    }
+    android.app.ClientTransactionHandler <|-- android.app.ActivityThread
+    android.app.ActivityThread *-- ApplicationThread
+
+    class android.app.Application {
+        - LoadedApk mLoadedApk
+        + void onCreate()
+        + void onLowMemory()
+        + void onTerminate()
+        + void onTrimMemory()
+        + void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback)
+    }
+    android.content.ContextWrapper <|-- android.app.Application
+    android.app.ActivityThread *-- android.app.Application
+
+    class android.content.BroadcasrReceiver {}
+    class android.content.ContentProvider {}
+
+    interface android.view.ViewManager {
+        + {abstract} void addView()
+        + {abstract} void removeView()
+        + {abstract} void updateViewLayout()
+    }
+    interface android.view.WindowManager {
+
+    }
+    android.view.ViewManager <|-- android.view.WindowManager
+    
+    class android.view.ContextThemeWrapper {}
+    android.content.ContextWrapper <|-- android.view.ContextThemeWrapper
+    abstract class android.view.Window {
+        - Window mContainer
+        - Window mActivChild
+        - final Context mContext
+        + {abstract} void addContentView(View view, ViewGRoup.LayoutParams params)
+        + Context getContext()
+        + WindowManager getWindowManager()
+    }
+    Object <|-- android.view.Window
+
+    class com.android.internal.policy.PhoneWindow {
+        ' widnow的顶级View，包含window decor
+        - DecorView mDecor
+        ' This is the view in which the window contents are placed. It is either mDecor itself, or a child of mDecor where the contents go.
+        + ViewGroup mContentParent
+        + ContextMenuBuilder mContextMenu
+        + MenuHelper mContextMenuHelper
+    }
+    android.view.Window <|-- com.android.internal.policy.PhoneWindow
+
+    class android.app.Activity {
+        ' set by the thread after the constructor and before onCreate(Bundle savedInstanceState) is called
+        - Application mApplication
+        - Window mWindow
+        - WindowManager mWindowManager
+        + void addContentView(View view, ViewGroup.LayoutParams params)
+        + Application getApplication()
+        + Intent getIntent()
+        + Window getWindow()
+        + WindowManager getWindowManager()
+        + void setContentView(View view)
+        + void setIntent(Intent newIntent)
+    }
+
+    abstract class android.app.ClientTransactionHandler {
+    }
+
+    android.view.ContextThemeWrapper <|-- android.app.Activity
+    android.app.Activity *-- com.android.internal.policy.PhoneWindow
+    android.app.Activity o-- android.app.Application
+
+@enduml

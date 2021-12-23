@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="theme-color" content="#000000" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title>Monkey的小屋</title>
+  <script>
+    // 苹果手机的缩放
+    try {
+      // 禁用双击缩放
+      document.addEventListener("touchstart", function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      });
+      var lastTouchEnd = 0;
+      document.addEventListener("touchend", function (event) {
+        var now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+      // 禁用双指手势操作
+      document.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
+    } catch (error) { }
+    // 禁止移动端浏览器橡皮筋效果（下拉）这样会禁掉所有的滚动事件传播
+    // pointer-events:none
+    // try {
+    //   // let beginY
+    //   document.documentElement.addEventListener("touchstart", function(event) {
+    //     beginY = event.touches[0].pageY
+    //   })
+    //   document.documentElement.addEventListener("touchmove", function(event) {
+    //     currentY = event.touches[0].pageY
+    //     let about = document.getElementById("about")
+    //     console.log("stop=====》", about.scrollTop)
+    //     console.log("stop=====》", about.scrollTop)
+    //     if (currentY - beginY > 0 && about.scrollTop <=0) {
+    //       console.log("stop")
+    //         event.preventDefault();
+    //     }
+    //   }, {
+    //     passive: false
+    //   });
+    // } catch (error) {
+      
+    // }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+      // alert("domcontentloaded")
+    });
+    document.addEventListener("DOMContentLoaded", function (event) {
+      // alert("domcontentloaded2")
+    });
+
+    window.addEventListener("load", function (event) {
+      // alert('load')
+    });
+
+    window.addEventListener("pageshow", function (event) {
+      // alert('pageshow')
+    })
+  </script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+
+</html>

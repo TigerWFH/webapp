@@ -1,0 +1,474 @@
+@startuml 接口继承关系
+interface Entry<K,V> {
+    + {abstract} K getKey()
+    + {abstract} V getValue()
+    + {abstract} V setValue(V value)
+    + {abstract} boolean equals(Object o)
+    + {abstract} int hashCode()
+    + {static} <K extends Comparable<? super K>, V> Comparator<Map.Entry<K, V>> comparingByKey()
+    + {static} <K, V extends Comparable<? super V>> Comparator<Map.Entry<K, V>> comparingByValue()
+    + {static} <K, V> Comparator<Map.Entry<K, V>> comparingByKey(Comparator<? super K> cmp)
+    + {static} <K, V> Comparator<Map.Entry<K, V>> comparingByValue(Comparator<? super V> cmp)
+    + {abstract} boolean quals(Object o)
+    + {abstract} int hashCode()
+    ~ V getOrDefault(Object key, V defaultValue)
+    ~ void forEach(BiConsumer<? super K, ? super V> action)
+    ~ void replaceAll(BiFunction<? super K, ? super V, ? extends V> function)
+    ~ V putIfAbsent(K key, V value)
+    ~ boolean remove(Object key, Object value)
+    ~ boolean replace(K key, V oldValue, V newValue)
+    ~ V replace(K key, V value)
+    ~ V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction)
+    ~ V computeIfPresent(K key, BiFunction<? super K, ? extends V> remappingFunction)
+    ~ V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction)
+    ~ V merge(K key, V value, BiFunction<? super V, ? super V, ? extends V> remappingFunction)
+}
+interface Cloneable {}
+interface Serializable {}
+' ******************** Map ******************
+interface Map<K,V> {
+    + {abstract} int size()
+    + {abstract} boolean isEmpty()
+    + {abstract} boolean containsKey(Object key)
+    + {abstract} boolean containsValue(Object value)
+    + {abstract} V put(K key, V value)
+    + {abstract} V remove(Object key)
+    + {abstract} void putAll(Map<? extends K, ? extends V> m)
+    + {abstract} void clear()
+    + {abstract} Set<K> keySet()
+    + {abstract} Collection<V> values()
+    + {abstract} Set<Map.Entry<K, V>> entrySet()
+}
+interface SortedMap<K,V> {
+    + {abstract} Comparator<? super K> comparator()
+    + {abstract} SortedMap<K,V> subMap(K fromKey, K toKey)
+    + {abstract} SortedMap<K,V> headMap(K toKey)
+    + {abstract} SortedMap<K,V> tailMap(K fromKey)
+    + {abstract} K firstKey()
+    + {abstract} K lastKey()
+    + {abstract} Set<K> keySet()
+    + {abstract} Collection<V> values()
+    + {abstract} Set<Map.EntryK, V>> entrySet()
+}
+interface NavigableMap<K,V> {}
+Map <|-- SortedMap
+SortedMap <|-- NavigableMap
+
+' ******************** Set ******************
+interface Iterable<E> {
+    + {abstract} Iterator<E> iterator()
+    ~ {abstract} void forEach(Consumer<? supper E> action)
+    + {abstract} Spliterator<E> spliterator()
+}
+interface Collection<E> {
+    + {abstract} int size()
+    + {abstract} boolean isEmpty()
+    + {abstract} boolean contains(Object o)
+    + {abstract} Iterator<E> iterator()
+    + {abstract} Object[] toArray()
+    + {abstract} <T> T[] toArray(T[] a)
+    ' 向集合添加元素e，指定集合元素改变了，返回true
+    + {abstract} boolean add(E e)
+    + {abstract} boolean remove(Object o)
+    + {abstract} boolean containsAll(Collection<?> c)
+    ' 把集合c中的元素全部添加到集合中，成功返回true
+    + {abstract} boolean addAll(Collection<? extends E> c)
+    + {abstract} boolean removeAll(Collection<?> c)
+    ~ {abstract} boolean removeIf(Predicate<? super E> filter)
+    ' 删除不是C的元素
+    + {abstract} boolean retainAll(Collection<?> c)
+    ' 清空集合
+    + {abstract} void clear()
+    + {abstract} boolean equals(Object o)
+    + {abstract} int hashCode()
+    ~ {abstract} Spliterator<E> spliterator()
+    ~ {abstract} Stream<E> parallelStream()
+    ~ {abstract} Stream<E> stream()
+}
+interface Set<E> {
+    + {abstract} int size()
+    + {abstract} boolean isEmpty()
+    + {abstract} boolean contains(Object o)
+    + {abstract} Iterator<E> iterator()
+    + {abstract} Object[] toArray()
+    + {abstract} <T> T[] toArray(T[] a)
+    ' 向集合添加元素e，指定集合元素改变了，返回true
+    + {abstract} boolean add(E e)
+    + {abstract} boolean remove(Object o)
+    + {abstract} boolean containsAll(Collection<?> c)
+    ' 把集合c中的元素全部添加到集合中，成功返回true
+    + {abstract} boolean addAll(Collection<? extends E> c)
+    + {abstract} boolean retainAll(Collection<?> c)
+    + {abstract} boolean removeAll(Collection<?> c)
+    ' 清空集合
+    + {abstract} void clear()
+    + {abstract} boolean equals(Object o)
+    + {abstract} int hashCode()
+    ' 删除不是C的元素
+    ~ {abstract} Spliterator<E> spliterator()
+    ' 将集合转成数组
+}
+interface SortedSet<E> {
+    + {abstract} Comparator<? super E> comparator()
+    + {abstract} SortedSet<E> subSet(E fromElement, EtoElement)
+    + {abstract} SortedSet<E> headSet(E toElement)
+    + {abstract} SortedSet<E> tailSet(E fromElement)
+    + {abstract} E first()
+    + {abstract} E last()
+    ~ {abstract} Spliterator<E> spliterator()
+}
+interface NavigableSet<E> {
+    + {abstract} E lower(E e)
+    + {abstract} E floor(E e)
+    + {abstract} E ceiling(E e)
+    + {abstract} E higher(E e)
+    + {abstract} E pollFirst()
+    + {abstract} E pollLast()
+    + {abstract} Iterator<E> iterator()
+    + {abstract} NavigableSet<E> descendingSet()
+    + {abstract} Iterator<E> descendingIterator()
+    + {abstract} NavigableSet<E> sunSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive)
+    + {abstract} NavigableSet<E> headSet(E toElement, boolean inclusive)
+    + {abstract} NavigableSet<E> tailSet(E toElement, boolean inclusive)
+    + {abstract} SortedSet<E> subSet(E fromElement, E toElement)
+    + {abstract} SortedSet<E> headSet(E toElement)
+    + {abstract} SortedSet<E> tailSet(E fromElement)
+}
+interface List<E> {
+   + {abstract} int size()
+   + {abstract} boolean isEmpty()
+   + {abstract} boolean contains(Object o)
+   + {abstract} Iterator<E> iterator()
+   + {abstract} Object[] toArray()
+   + {abstract} <T> T[] toArray(T[] a)
+   + {abstract} boolean add(E e)
+   + {abstract} boolean remove(Object o)
+   + {abstract} boolean containsAll(Collection<?> c)
+   + {abstract} boolean addAll(Collection<? extends E> c)
+   + {abstract} boolean addAll(int index, Collection<? extends E> c)
+   + {abstract} boolean removeAll(Collection<?> c)
+   + {abstract} boolean retainAll(Collection<?> c)
+   ~ {abstract} void replaceAll(UnaryOperator<E> operator)
+   ~ {abstract} void sort(Comparator<? super E> c)
+   + {abstract} void clear()
+   + {abstract} boolean equals(Object o)
+   + {abstract} int hahsCode()
+   + {abstract} E get(int index)
+   + {abstract} E set(int index, E element)
+   + {abstract} void add(int index, E element)
+   + {abstract} E remove(int index)
+   + {abstract} int indexOf(Object o)
+   + {abstract} int lastIndexOf(Object o)
+   + {abstract} ListIterator<E> listIterator(int index)
+   + {abstract} List<E> subList(int fromIndex, int toIndex)
+   ~ {abstract} Spliterator<E> spliterator()
+}
+interface Queue<E> {
+    + {abstract} boolean add(E e)
+    + {abstract} boolean offer(W e)
+    + {abstract} E remove()
+    + {abstract} E poll()
+    + {abstract} E element()
+    + {abstract} E peek()
+}
+interface Deque<E> {
+    + {abstract} void addFirst(E e)
+    + {abstract} void addLast(E e)
+    + {abstract} boolean offerFirst(E e)
+    + {abstract} boolean offerLast(E e)
+    + {abstract} E removeFirst()
+    + {abstract} E removeLast()
+    + {abstract} E pollFirst()
+    + {abstract} E pollLast()
+    + {abstract} E getFirst()
+    + {abstract} getLast()
+    + {abstract} E peekFirst()
+    + {abstract} E peekLast()
+    + {abstract} boolean removeFirstOccurrence(Object o)
+    + {abstract} boolean removeLastOccurrence(Object o)
+    + {abstract} boolean add(E e)
+    + {abstract} boolean offer(E e)
+    + {abstract} E remove()
+    + {abstract} E poll()
+    + {abstract} E element()
+    + {abstract} E peek(E e)
+    + {abstract} void push(E e)
+    + {abstract} E pop()
+    + {abstract} boolean remove(Object o)
+    + {abstract} boolean contains(Object o)
+    + {abstract} int size()
+    + {abstract} Iterator<E> iterator()
+    + {abstract} Iterator<E> descendingIterator()
+}
+Iterable <|-- Collection
+Collection <|-- Set
+Set <|-- SortedSet
+SortedSet <|-- NavigableSet
+Collection <|-- List
+Collection <|-- Queue
+Queue <|-- Deque
+together {
+    interface Entry
+    interface Map
+    interface Iterable
+    interface Cloneable
+    interface Serializable
+}
+together {
+    interface Set
+    interface List
+    interface Queue
+}
+@enduml
+@startuml class继承关系
+    interface Cloneable {}
+    interface Serializable {}
+
+    ' ******************** Other ******************
+    abstract class Dictionary<K,V> {}
+    class Arrays {}
+    ' ******************** Map ******************
+    ' ****************************************
+    interface Map<K,V> {}
+    interface SortedMap<K,V> {}
+    interface NavigableMap<K,V> {}
+    abstract class AbstractMap<K,V> {}
+    class IdentityHashMap<K,V> {}
+    class EnumMap<K extends Enum<K,V>> {}
+    class HashMap<K,V> {}
+    class LinkedHashMap<K,V> {}
+    class TreeMap<K,V> {}
+    class WeakHashMap<K,V> {}
+
+    Map <|.. AbstractMap
+    AbstractMap <|-- IdentityHashMap
+    AbstractMap <|-- EnumMap
+    AbstractMap <|-- HashMap
+    Map <|.. HashMap
+    HashMap <|-- LinkedHashMap
+    Map <|.. LinkedHashMap
+    AbstractMap <|-- TreeMap
+    NavigableMap <|.. TreeMap
+    AbstractMap <|-- WeakHashMap
+    Map <|.. WeakHashMap
+
+    ' ******************** Collection ******************
+    ' *******************************************
+    interface Collection<E> {}
+    interface Set<E> {}
+    interface List<E> {}
+    interface Deque<E> {}
+    interface Queue<E> {}
+    interface NavigableSet<E> {}
+    abstract class AbstractCollection<E> {
+        # AbstractCollection()
+        + {abstract} Iterator<E> it4erator()
+        + {abstract} int size()
+        + boolean isEmpty()
+        + boolean contains(Object o)
+        + Object[] toArray()
+        + <T> T[] toArray(T[] a)
+        - {static} final int MAX_ARRAY_SIZE
+        - {static} <T> T[] finishToArray(T[] r, Iterator<?> it)
+        - {static} int hugeCapacity(int minCapacity)
+        + boolean add(E e)
+        + boolean remove(Object o)
+        + boolean containsAll(Collection<?> c)
+        + boolean addAll(Collection<? extends E> c)
+        + boolean removeAll(Collection<?> c)
+        + boolean retainAll(Collection<?> c)
+        + boolean retainAll(Collection<?> c)
+        + void clear()
+        + String toString()
+    }
+    ' *****************Queue****************
+    abstract class AbstractQueue<E> {}
+    class PriorityQueue<E> {}
+    class ArrayDeque<E> {}
+    AbstractCollection <|-- AbstractQueue
+    Queue <|.. AbstractQueue
+    AbstractQueue <|-- PriorityQueue
+    AbstractCollection <|-- ArrayDeque
+    Deque <|.. ArrayDeque
+    ' Cloneable <|.. ArrayDeque
+    ' Serializable <|.. ArrayDeque
+    ' *****************List****************
+    abstract class AbstractList<E> {}
+    abstract class AbstractSequentialList<E> {}
+    class LinkedList {}
+    class Vector<E> {}
+    class Stack<E> {}
+    class ArrayList<E> {}
+    AbstractCollection <|-- AbstractList
+    List <|.. AbstractList
+
+    AbstractList <|-- Vector
+    Vector <|-- Stack
+    AbstractList <|-- AbstractSequentialList
+    AbstractSequentialList <|-- LinkedList
+    List <|.. LinkedList
+    Deque <|.. LinkedList
+    ' Cloneable <|.. LinkedList
+    ' Serializable <|.. LinkedList
+    AbstractList <|-- ArrayList
+    List <|.. ArrayList
+    ' Cloneable <|.. ArrayList
+    ' Serializable <|.. ArrayList
+    ' *****************Set****************
+    abstract class AbstractSet<E> {
+        # AbstractSet()
+        + boolean equals(Object o)
+        + int hashCode()
+        + boolean removeAll(Collection<?> c)
+    }
+    class EnumSet<E extends Enum<E>> {
+        + final Class<E> elementType
+        + final Enum<?>[] universe
+        - {static} Enum<?>[] ZERO_LENGTH_ENUM_ARRAY
+        EnumSet(Class<E> elementType, Enum<?>[] universe)
+        + {static} <E extends Enum<E>> EnumSet<E> noneOf(Class<E> elementType)
+        + {static} <E extends Enum<E>> EnumSet<E> allOf(Class<E> elementType)
+        + {abstract} void addAll()
+        + {static} <E extends Enum<E>> EnumSet<E> copyOf(EnumSet<E> s)
+        + {static} <E extends Enum<E>> EnumSet<E> copyOf(Collection<E> c)
+        + {static} <E extends Enum<E>> EnumSet<E> complementOf(EnumSet<E> s)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E e)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E e1, E e2)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E e1, E e2, E e3)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E e1, E e2, E e3, E e4)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E e1, E e2, E e3, E e4, E e5)
+        + {static} <E extends Enum<E>> EnumSet<E> of(E first, E... rest)
+        + {static} <E extends Enum<E>> EnumSet<E> range(E from, E to)
+        + {abstract} void addRange(E from, E to)
+        + EnumSet<E> clone()
+        + {abstract} void complement()
+        + final void typeCheck(E e)
+        - {static} <E extends Enum<E>> E【】 getUniverse(Class<E> elementType)
+        + Object writeReplace()
+    }
+    class HashSet<E> {}
+    class TreeSet<E> {
+        - transient NavigableMap<E, Object> m
+        - {static} final Object PRESENT
+        TreeSet(NavigableMap<E, Object> m)
+        + TreeSet()
+        + TreeSet(Comparator<? super E> comparator)
+        + TreeSet(Collection<? extends E> c)
+        + TreeSet(SortedSet<E> s)
+        + Iterator<E> descendingIterator()
+        + NavigableSet<E> descendingSet()
+        + int size()
+        + boolean isEmpty()
+        + boolean contains(Object o)
+        + boolean add(E e)
+        + boolean remove(Object o)
+        + void clear()
+        + boolean addAll(Collection<? extends E> c)
+        + NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive)
+        + NavigableSet<E> headSet(E toElement, boolean Inclusive)
+        + NavigableSet<E> tailSet(E fromElement, boolean Inclusive)
+        + SortedSet<E> subSet(E fromElement, E toElement)
+        + SortedSet<E> headSet(E toElement)
+        + SortedSet<E> tailSet(E fromElement)
+        + Comparator<? super E> comparator()
+        + E first()
+        + E last()
+        + E lower(E e)
+        + E floor(E e)
+        + E ceiling(E e)
+        + E higher(E e)
+        + E pollFirst()
+        + E pollLast()
+        + Object clone()
+        - void writeObject(java.io.ObjectOutputStream s)
+        - void readObject(java.io.ObjectInputStream s)
+        + Spliterator<E> spliterator()
+        - {static} final long serialVersionUID
+    }
+    class LinkedHashSet<E> {}
+    Collection <|.. AbstractCollection
+    AbstractCollection <|-- AbstractSet
+    Set <|.. AbstractSet
+
+    Set <|.. EnumSet
+    ' Cloneable <|.. EnumSet
+    ' Serializable <|.. EnumSet
+    AbstractSet <|-- EnumSet
+
+    Set <|.. HashSet
+    ' Cloneable <|.. HashSet
+    ' Serializable <|.. HashSet
+    AbstractSet <|-- HashSet
+
+    Set <|.. LinkedHashSet
+    ' Cloneable <|.. LinkedHashSet
+    ' Serializable <|.. LinkedHashSet
+    HashSet <|-- LinkedHashSet
+
+    NavigableSet <|.. TreeSet
+    ' Cloneable <|.. TreeSet
+    ' Serializable <|.. TreeSet
+    AbstractSet <|-- TreeSet
+    together {
+        interface Collection
+        interface Cloneable
+        interface Serializable
+    }
+@enduml
+@startuml BUSINESS
+    interface TradeQueryGwServicve {}
+    interface Serializable {}
+    interface TradeBsManager {
+        + boolean inWhiteList(Long sellerId)
+    }
+    interface TransactionWrapper {}
+    interface ManagerListener2 {}
+    abstract class SkipInitialCallbackListener2 {
+        + void receiveConfigInfo(String dataId, String group, String configInfo)
+        + {abstract} void receiveConfigInfo0(String var1, String var2, String var3)
+    }
+    abstract class BaseManager {}
+    abstract class AbstractGwServiceImpl {}
+    class HashTable {
+        + synchronized boolean containsKey(Object key)
+    }
+    HashTable <|-- Properties
+    class Properties {
+
+    }
+    class MiscConfig {
+        + {abstract}String getDubboEnv()
+    }
+    BaseDiamond ..> Properties
+    class BaseDiamond {
+        + String getValue(String key)
+    }
+    class ControlCache {
+        + String getSellerOptWhiteList()
+    }
+    class TradeBsManagerImpl {
+        + boolean inWhiteList(Long sellerId)
+    }
+    class TradeButtonGW {
+        + boolean enableAccept
+        + boolean enableCancel
+        + boolean enableFinish
+        + boolean enableRemark
+    }
+    class TradeQueryGwServiceImpl {
+        - TradeButtonGW buildTradeButton(Long sellerId, String status, boolean isFDA)
+    }
+    TradeQueryGwServicve <|.. TradeQueryGwServiceImpl
+    AbstractGwServiceImpl <|-- TradeQueryGwServiceImpl
+    TradeQueryGwServiceImpl ..> TradeButtonGW
+    Serializable <|.. TradeButtonGW
+    TradeQueryGwServiceImpl ..> TradeBsManagerImpl
+    TransactionWrapper <|.. BaseManager
+    BaseManager <|-- TradeBsManagerImpl
+    TradeBsManager <|.. TradeBsManagerImpl
+    TradeBsManagerImpl ..> ControlCache
+    ManagerListener2 <|.. SkipInitialCallbackListener2
+    SkipInitialCallbackListener2 <|-- BaseDiamond
+    BaseDiamond <|-- ControlCache
+    BaseDiamond ..> MiscConfig
+@enduml

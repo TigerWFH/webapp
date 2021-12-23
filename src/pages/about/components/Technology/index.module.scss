@@ -1,0 +1,20 @@
+.technology {
+    position: relative;
+    height: 100%;
+    margin-top: 10px;
+    background-color: #fafafa;
+    text-align: center;
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 960px;
+        height: 480px;
+        transform: translate(-480px, -240px);
+    }
+    // 空白太多
+    // .container2 {
+    //     margin: 25% auto;
+    //     width: 960px;
+    // }
+}

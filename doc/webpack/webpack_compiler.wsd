@@ -1,0 +1,222 @@
+@startuml webpack类图
+    class Compiler {
+        - Hook hooks = {}
+        - string name = undefined
+        - Compilation parentCompilation = undefined
+        - Compiler root = this
+        - string outputPath = ''
+        - OutputFileSystem outputFileSystem = null
+        - IntermediateFileSystem intermediateFileSystem = null
+        - InputFileSystem inputFileSystem = null
+        - WatchFileSystem watchFileSystem = null
+        - string|null recordsInputPath = null
+        - string|null recordsOutputPath = null
+        - any records = {}
+        - Set managedPaths = new Set
+        - Set immutablePaths = new Set
+        - Set modifiedFiles = new Set
+        - Set removedFiles = new Set
+        - Map fileTimestamps = new Map
+        - Map contextTimestamps = new Map
+        - ResolverFactory resolverFactory = new ResolverFactory
+        - any infrastructureLogger = undefined
+        - WebpackOptions options = {}
+        - string context = context
+        - RequestShortener requestShortener = new RequestShortener
+        - Cache cache = new Cache
+        - string compilerPath = ''
+        - boolean running = false
+        - boolean watchMode = false
+        - WeakMap _assetEmittingSourceCache = new WeakMap
+        - Map _assetEmittingWrittenFiles = new Map
+        any getCache(name)
+        any getInfrastructureLogger(name)
+        any watch(watchOptions, handler)
+        any run(callback)
+        any runAsChild(callback)
+        any purgeInputFileSystem()
+        any emitAssets(compilation, callback)
+        any emitRecords(callback)
+        any readRecords(callback)
+        any createChildCompiler(compilation,compilerName,compilerIndex,outputOptions,plugins)
+        boolean isChild()
+        Compilation createCompilation()
+        Compilation newCompilation(params)
+        NormalModuleFactory createNormalModuleFactory()
+        ContextModuleFactory createContextModuleFactory()
+        any newCompilationParams()
+        any compile(callback)
+        any close(callback)
+    }
+    class ModuleFactory {
+        + {abstract} create(data, callback)
+    }
+    class NormalModuleFactory {
+        ' this.hooks
+        - AsyncSeriesBailHook resolve = new AsyncSeriesBailHook
+        - HookMap<AsyncSeriesBailHook> resolveForScheme = new HookMap
+        - AsyncSeriesBailHook factorize = new AsyncSeriesBailHook
+        - AsyncSeriesBailHook beforeResolve = new AsyncSeriesBailHook
+        - AsyncSeriesBailHook afterResolve = new AsyncSeriesBailHook
+        - AsyncSeriesBailHook createModule = new AsyncSeriesBailHook
+        - SyncWaterfallHook module = new SyncWaterfallHook
+        - HookMap<SyncBailHook> createParser = new HookMap
+        - HookMap<SyncHook> parser = new HookMap
+        - HookMap<SyncHook> generator = new HookMap
+        - ResolverFactory resolverFactory = resolverFactory
+        - any ruleSet = XXX
+        - boolean unsafeCache = !!options.unsafeCache
+        - string context = context
+        - any fs = fs
+        - Map parseCache = new Map
+        - Map generatorCache = new Map
+        + void create(data, callback)
+        + any resolveRequestArray(contextInfo,context,array,resolver,resolveContext,callback)
+        + any getParser(type, parserOptions = EMPTY_RESOLVE_OPTIONS)
+        + any createParser(type, parserOptions = {})
+        + any getGenerator(type, generatorOptions = EMPTY_RESOLVE_OPTIONS)
+        + createGenerator(type, generatorOptions = {})
+        + any getResolver(type, resolveOptions)
+    }
+    class ResolverFactory {
+        'this.hooks
+        - HookMap<SyncWaterfallHook> resoverOptions = new HookMap
+        - HookMap<SyncHook> resolver = new HookMap
+        - Map cache = new Map
+
+        + any get(type, resolveOptions = EMPTY_RESOLVE_OPTIONS)
+        - any _create(type, resolveOptionsWithDepType)
+    }
+    class ContextModuleFactory {
+        ' this.hooks
+        - AsyncSeriesWaterfallHook beforeResolve = new AsyncSeriesWaterfallHook
+        - AsyncSeriesWaterfallHook afterResolve = new AsyncSeriesWaterfallHook
+        - SyncWaterfallHook contextModuleFiles = new SyncWaterfallHook
+        - ResolverFactory resolverFactory = resolverFactory
+        + void create(data, callback)
+        + any resolveDependencies(fs, options, callback)
+    }
+    class FileSystemInfo {
+        - any fs = fs
+        - any logger = logger
+        - number _remainingLogs = XX
+        - Set _loggedPaths = new Set
+        - WeakMap _snapshotCache = new WeakMap
+        - Map _snapshotOptimization = new Map
+        - Map _fileTimestamps = new Map
+        - Map _fileHashed = new Map
+        - Map _contextTimestamps = new Map
+        - Map _contextHashes = new Map
+        - AsyncQueue fileTimestampQueue = new AsyncQueue
+        - AsyncQueue fileHashQueue = new AsyncQueue
+        - AsyncQueue contextTimestampQueue = new AsyncQueue
+        - AsyncQueue contextHashQueue = new AsyncQueue
+        - AsyncQueue managedItemQueue = new AsyncQueue
+        - AsyncQueue managedItemDirectoryQueue = new AsyncQueue
+        - any managedPaths = XXX
+        - any managedPathsWithSlash = XXX
+        - any immutablePaths = XXX
+        - any immutablePathsWithSlash = XXX
+        - void _log(path, reason, ...args)
+        + void addFileTimestamps(map)
+        + void addContextTimestamps(map)
+        + void getFileTimestamp(path, callback)
+        + void getContextTimestamp(path, callback)
+        + void getFileHash(path, callback)
+        + void getContextHash(path, callback)
+        + void resolveBuildDependencies(context, deps, callback)
+        + void checkResolveResultsValid(resolveResults, callback)
+        + void createSnapshot(startTime, files, directories, missing, options, callback)
+        + SnapShot mergeSnapshots(snapshot1, snapshot2)
+        + void checkSnapshotValid(snapshot, callback)
+        - any _checkSnapshotValidNoCache(snapshot, callback)
+        - any _readFileTimestamp(path, callback)
+    }
+    class RequestShortener {
+        - any contextify = xxx
+        + any shorten(request)
+    }
+    class CacheFacade {
+        - any _cache = cache
+        - string name = name
+        + CacheFacade getChildCache(name)
+        + ItemCacheFacade getItemCache(identifier, etag)
+        + any getLazyHashedEtag(obj)
+        + void get(identifier, etag, callback)
+        + Promise<any> getPromise(identifier, etag)
+        + void store(identifier, etag, data, callback)
+        + Promise<void> storePromise(identifier, etag, data)
+    }
+    class CacheFacade {
+        - Cache _cache = cache
+        - string _name = name
+        - any _etag = etag
+        + void get(callback)
+        + Promise<T> getPromise()
+        + void store(data, callback)
+        + Promise<void> storePromise(data)
+    }
+    class Cache {
+        ' this.hooks
+        - AsyncSeriesBailHook get = new ["identifier", "etag", "gotHandlers"]
+        - AsyncParallelHook store = new ["identifier", "etag", "data"]
+        - AsyncParallelHook storeBuildDependencies = new ["dependencies"]
+        - SyncHook beginIdle = new []
+        - AsyncParallelHook endIdle = new []
+        - AsyncParallelHook shutdown = new []
+        + void get(identifier, etag, callback)
+        + void store(identifier, etag, data, callback)
+        + void storeBuildDependencies(dependencies, callback)
+        + void beginIdle()
+        + void endIdle(callback)
+        + void shutdown(callback)
+    }
+    class Logger {
+        ' 即WebpackLogger
+        + void error(...args)
+        + void warn(...args)
+        + void info(...args)
+        + void log(...args)
+        + void debug(...args)
+        + void assert(...args)
+        + void trace(...args)
+        + void clear(...args)
+        + void status(...args)
+        + void group(...args)
+        + void groupCpllapsed(...args)
+        + void groupEnd(...args)
+        + void profile(label)
+        + void profileEnd(label)
+        + void time(label)
+        + void timeLog(label)
+        + void timeEnd(label)
+        + void timeAggregate(label)
+        + void timeAggregateEnd(label)
+    }
+    Compiler  -->  Compiler
+    Compiler  <-->  Compilation
+    ' Compiler *--  SyncHook
+    ' Compiler *--  SyncBailHook
+    ' Compiler *--  AsyncSeriesHook
+    ' Compiler *--  AsyncParallelHook
+    Compiler -->  OutputFileSystem
+    Compiler -->  IntermediateFileSystem
+    Compiler -->  InputFileSystem
+    Compiler  -->  WatchFileSystem
+    Compiler ..> FileSystemInfo
+    Compiler *--  ResolverFactory
+    ' Compiler  -->  WebpackOptions
+    Compiler  *--  RequestShortener
+    Compiler ..> CacheFacade
+    Compiler ..> ConcurrentCompilationError
+    Compiler ..> NormalModuleFactory
+    Compiler ..> ContextModuleFactory
+    Compiler  *--  Cache
+    Compiler ..> Logger
+    Compiler ..> WebpackError
+    ModuleFactory <|-- NormalModuleFactory
+    NormalModuleFactory --> ResolverFactory
+    ModuleFactory <|-- ContextModuleFactory
+    ContextModuleFactory --> ResolverFactory
+    ItemCacheFacade <.. CacheFacade
+@enduml
