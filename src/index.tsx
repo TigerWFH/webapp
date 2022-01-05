@@ -266,7 +266,7 @@ const elem = (
           <Route path={'/canvas'} exact component={Canvas}></Route>
           <Route path={'/x6'} exact component={X6}></Route>
           <Route path={'/dnd'} exact component={Dnd}></Route>
-          <Route path={'/dndframe'} exact component={DndFrame}></Route>
+          <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
           <Route path={'/test'} exact component={Test}></Route>
           <Route path={'/tools'} exact component={Tools}></Route>
           <Route component={About}></Route>
