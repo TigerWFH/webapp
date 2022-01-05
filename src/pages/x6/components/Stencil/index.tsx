@@ -60,9 +60,11 @@ class Stencil extends React.Component<IStencilProps, any> {
     const searched = e.target.value;
     const { allToolList } = this.state;
     let newToolList = allToolList;
+    console.log('search===>', newToolList);
     if (searched) {
       newToolList = allToolList.filter(
-        (tool: any) => tool.name === searched || tool.id === searched
+        (tool: any) =>
+          tool.name?.indexOf(searched) > -1 || tool.id?.indexOf(searched) > -1
       );
     }
 
