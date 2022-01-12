@@ -137,7 +137,7 @@ function CmsWorkbench(props: ICmsWorkbench) {
       <div className={styles.content}>
         <div className={styles.workbench} style={bgStyle}>
           <div className={bPhone ? styles.phone : styles.pc}>
-            {dataList.map((component: any, index: number) => {
+            {/* {dataList.map((component: any, index: number) => {
               const { componentType = '', id } = component;
               if (WITHOUT_RENDER_COMPONENTTYPE_LIST.includes(componentType)) {
                 return null;
@@ -160,7 +160,7 @@ function CmsWorkbench(props: ICmsWorkbench) {
                   </div>
                 ) : null;
               }
-            })}
+            })} */}
           </div>
         </div>
         <div className={styles.config}>

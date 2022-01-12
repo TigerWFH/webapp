@@ -1,7 +1,7 @@
 /*
     DragTarget为Workbench提供统一的数据模型
 */
-
+import Immutable from 'immutable';
 type Text = string | number;
 
 export interface IAnyObj {
@@ -42,11 +42,14 @@ export interface IMetaData {
 
 // 工作台统一接口
 export interface IWorkbench {
-  dataList: IComponent[]; // 数据集合
-  setDataList: setFn<IComponent[]>;
+  // dataList: IComponent[]; // 数据集合
+  dataList: Immutable.List<IComponent>; // 数据集合
+  edgeList?: Immutable.List<any>;
   current: IComponent; // 当前选中数据
-  setCurrent: setFn<IComponent>;
   configs: IAnyObj; // 所有节点对应的配置项数据
+  init: setFn<{ dataList: any; edgeList?: any; configs: {}; current: {} }>;
+  setDataList: setFn<IComponent[]>;
+  setCurrent: setFn<IComponent>;
   setConfig: setFn<IAnyObj>;
   [name: string]: any; // 根据DnD存储的Drop状态计算的一些属性
 }

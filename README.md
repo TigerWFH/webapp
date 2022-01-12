@@ -3122,3 +3122,27 @@ list指令：
 ### 隔离本地状态
 
 > 如果你不确定某个状态是否属于本地，请问自己：“如果此组件呈现两次，交互是否应反映在另一个副本中？” 只要答案为“否”，那你就找到本地状态了。
+
+## Immutable
+
+```js
+// js Object转Immutable Map，浅转换
+immutable.Map({ name: 'monkey' });
+// js Array转Immutable List，浅转换
+immutable.List([1, 2, 3]);
+// js转immutable对象，fromJS，深度转换
+immutable.fromJS([1, 2, 3]);
+immutable.fromJS({ name: 'monkey' });
+
+// immutable转JS，深度转换
+immutableData.toJS();
+// List或Map大小
+immutableData.size;
+immutableData.count();
+// 相等判断
+immutableData.is(A, B);
+// 对象合并
+var a = immutable.fromJS();
+var b = immutable.fromJS();
+var c = a.merge(b);
+```

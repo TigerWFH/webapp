@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useDrop } from 'react-dnd';
 import styles from './index.module.scss';
 import { v1 as uuid } from 'uuid';
+import Immutable from 'immutable';
 import * as t from '../types';
 enum ITEM_TYPE {
   X6_DROP_TARGET = 'X6_DROP_TARGET'
@@ -12,10 +13,18 @@ interface IDropTargetProps {
   workbench?: React.ComponentClass<any, any> | React.FC<any> | any;
 }
 
-const initialState = {
-  dataList: [] as t.IComponent[],
-  current: {} as t.IComponent,
-  configs: {} as t.IAnyObj
+interface IInitialState {
+  dataList: Immutable.List<t.IComponent>;
+  edgeList: Immutable.List<any>;
+  current: Immutable.Map<string, any>;
+  configs: Immutable.Map<string, any>;
+}
+
+const initialState: IInitialState = {
+  dataList: Immutable.List([]),
+  edgeList: Immutable.List([]),
+  current: Immutable.Map({}),
+  configs: Immutable.Map({})
 };
 
 function reducers(state: any, action: any) {
@@ -24,16 +33,39 @@ function reducers(state: any, action: any) {
   const { dataList, current, configs } = state;
 
   switch (type) {
-    case 'drop': {
+    case 'init': {
+      // 回填数据
+      const {
+        dataList = [],
+        edgeList = [],
+        current = {},
+        configs = {}
+      } = payload;
+
       return {
-        dataList: [...dataList, payload],
-        current: payload,
-        configs: {
-          ...configs
-        }
+        dataList: Immutable.List.isList(dataList)
+          ? dataList
+          : Immutable.List(dataList),
+        edgeList: Immutable.List.isList(edgeList)
+          ? edgeList
+          : Immutable.List(edgeList),
+        current: Immutable.Map.isMap(current)
+          ? current
+          : Immutable.Map(current),
+        configs: Immutable.Map.isMap(configs) ? configs : Immutable.Map(configs)
       };
     }
-    case 'delete': {
+    case 'drop': {
+      return {
+        dataList: dataList.push(payload),
+        current: Immutable.Map(payload),
+        configs
+      };
+    }
+    case 'data': {
+      return state;
+    }
+    case 'deleteData': {
       const { current, configs, dataList } = state;
       const { id: currId } = current;
       const newDataList = dataList.filter((data: any) => data.id !== currId);
@@ -49,10 +81,16 @@ function reducers(state: any, action: any) {
         }
       };
     }
+    case 'edge': {
+      return state;
+    }
+    case 'deleteEdge': {
+      return state;
+    }
     case 'current': {
       return {
         ...state,
-        current: payload
+        current: Immutable.Map(payload)
       };
     }
     case 'configs': {
@@ -75,16 +113,40 @@ function reducers(state: any, action: any) {
 }
 
 function DropTarget(props: IDropTargetProps) {
-  const [{ dataList, current, configs }, dispatch] = React.useReducer(
+  const [{ dataList, edgeList, current, configs }, dispatch] = React.useReducer(
     reducers,
     initialState
   );
-  // 改变dataList
-  const deleteData = React.useCallback(() => {
+  const initData = React.useCallback((payload) => {
     dispatch({
-      type: 'delete'
+      type: 'init',
+      payload
     });
   }, []);
+  const setData = React.useCallback((payload) => {
+    dispatch({
+      type: 'data',
+      payload
+    });
+  }, []);
+  const deleteData = React.useCallback(() => {
+    dispatch({
+      type: 'deleteData'
+    });
+  }, []);
+  const setEdge = React.useCallback((payload) => {
+    dispatch({
+      type: 'edge',
+      payload
+    });
+  }, []);
+  const deleteEdge = React.useCallback((payload) => {
+    dispatch({
+      type: 'deleteEdge',
+      payload
+    });
+  }, []);
+
   const setCurrent = React.useCallback((payload) => {
     dispatch({
       type: 'current',
@@ -130,8 +192,13 @@ function DropTarget(props: IDropTargetProps) {
   return (
     <div ref={drop} className={styles.droptarget}>
       <Workbench
+        init={initData}
         dataList={dataList}
+        setData={setData}
         deleteData={deleteData}
+        edgeList={edgeList}
+        setEdge={setEdge}
+        deleteEdge={deleteEdge}
         current={current}
         setCurrent={setCurrent}
         configs={configs}
