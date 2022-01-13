@@ -23,6 +23,14 @@
   - `EdgeView：`Edge 数据对应的视图
 - `Coordinate：`坐标系工具
 
+## X6 画布功能
+
+### x6 拖动画布 panning 和滚动画布 scroller 区别
+
+- `panning：`支持拖拽平移
+
+- `scroller：`使画布具备滚动、平移、居中、缩放等能力
+
 ### 默认，X6 使用 rect 图形渲染
 
 ```js

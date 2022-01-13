@@ -177,10 +177,28 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
   };
 
   componentDidMount() {
+    // 屏蔽浏览器右键菜单，有兼容性问题《https://segmentfault.com/q/1010000004934881》
+    window.oncontextmenu = function () {
+      return false;
+    };
+    console.log('css====>', styles.ss);
     // 此处请求需要回填的数据
     this.graph = new Graph({
       container: this.container as HTMLDivElement,
       grid: true,
+      panning: {
+        enabled: true,
+        modifiers: ['alt']
+      },
+      selecting: {
+        enabled: true,
+        // className: styles.ss, // 需要改写css类，实现样式覆盖
+        rubberband: true, // 启用框选（橡皮筋）
+        strict: true,
+        movable: true,
+        showNodeSelectionBox: true,
+        showEdgeSelectionBox: true
+      },
       snapline: {
         enabled: true,
         sharp: true
@@ -188,9 +206,19 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       scroller: {
         enabled: true,
         pageVisible: false,
-        pageBreak: false,
-        pannable: true
+        pageBreak: false
+        // pannable: true, // 类似panning
+        // modifiers: ['alt'], // 此处两项配置等同于外部的panning配置
       }
+    });
+    this.graph?.on('cell:selected', (args: any) => {
+      console.log('cell selected===>', args);
+    });
+    this.graph?.on('edge:selected', (args: any) => {
+      console.log('edge selected');
+    });
+    this.graph?.on('node:selected', (args: any) => {
+      console.log('node selected');
     });
     const { init } = this.props;
     setTimeout(() => {
@@ -232,6 +260,10 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           shape: 'rect'
         };
         this.graph?.addNode(node);
+        this.graph?.addEdge({
+          target: { x: 10, y: 50 },
+          source: { x: 70, y: 50 }
+        });
       } else if (dataSource === 'COPY_EDGE_DATA') {
         console.log('边拷贝数据');
       } else {
@@ -267,9 +299,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         <div className={styles.toolbar}>
           <button onClick={this.onChange}>dispatch</button>
         </div>
-        <div className={styles.graph} ref={this.refContainer}>
-          工作区
-        </div>
+        <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>
       </div>
     );
