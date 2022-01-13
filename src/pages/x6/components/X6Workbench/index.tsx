@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Graph, Shape, Cell } from '@antv/x6';
+import { ContextMenu, Menu } from '@antv/x6-react-components';
 import Immutable from 'immutable';
 import styles from './index.module.scss';
 import * as t from '../types';
@@ -223,6 +224,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     this.graph?.on('node:selected', (args: any) => {
       console.log('node selected');
     });
+    this.graph?.on('node:contextmenu', (args) => {
+      console.log('node contextmenu');
+    });
+    this.graph?.on('edge:contextmenu', (args) => {
+      console.log('edge contextmenu');
+    });
+    this.graph?.on('blank:contextmenu', (args) => {
+      console.log('blank contextmenu');
+    });
     const { init } = this.props;
     setTimeout(() => {
       console.log('init==========>');
@@ -297,10 +307,20 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
   render() {
     console.log('x6------render====>', this.props);
+    const menu = (
+      <Menu>
+        <Menu.Item key="1">1</Menu.Item>
+        <Menu.Item key="2">1</Menu.Item>
+        <Menu.Item key="3">1</Menu.Item>
+      </Menu>
+    );
     return (
       <div className={styles.container}>
         <div className={styles.toolbar}>
           <button onClick={this.onChange}>dispatch</button>
+          <ContextMenu menu={menu}>
+            <button>menu</button>
+          </ContextMenu>
         </div>
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>
