@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Form } from 'antd';
 import { Background, BackgroundConfig } from '../Background';
 import { Alert, AlertConfig } from '../Alert';
 import { WfhInput, WfhInputConfig } from '../WfhInput';
@@ -33,19 +32,13 @@ const MOCK_MAP_CONRIG = new Map<string, React.ComponentClass | React.FC<any>>([
 ]);
 
 function CmsWorkbench(props: ICmsWorkbench) {
-  const {
-    dataList = [] as t.IComponent[],
-    deleteData,
-    current = {} as t.IComponent,
-    setCurrent,
-    configs = {} as t.IAnyObj,
-    setConfigs
-  } = props;
+  const { dataList, deleteData, current, setCurrent, configs, setConfigs } =
+    props;
   const {
     id: currId,
     componentType: currComponentType,
     displayName: currDisplayName
-  } = current;
+  } = current.toJS();
 
   console.log('cmsworkbench====>', props);
 
@@ -76,7 +69,7 @@ function CmsWorkbench(props: ICmsWorkbench) {
 
   let Config: any = MOCK_MAP_CONRIG.get(currComponentType);
   const currConfig: any = React.useRef(null);
-  const config = configs[currId] || {};
+  const config = configs.toJS()[currId] || {};
   const bgStyle: any = {};
   if (config.color) {
     bgStyle.backgroundColor = config.color;
@@ -137,7 +130,7 @@ function CmsWorkbench(props: ICmsWorkbench) {
       <div className={styles.content}>
         <div className={styles.workbench} style={bgStyle}>
           <div className={bPhone ? styles.phone : styles.pc}>
-            {/* {dataList.map((component: any, index: number) => {
+            {dataList.toJS().map((component: any, index: number) => {
               const { componentType = '', id } = component;
               if (WITHOUT_RENDER_COMPONENTTYPE_LIST.includes(componentType)) {
                 return null;
@@ -160,7 +153,7 @@ function CmsWorkbench(props: ICmsWorkbench) {
                   </div>
                 ) : null;
               }
-            })} */}
+            })}
           </div>
         </div>
         <div className={styles.config}>
