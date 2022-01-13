@@ -209,16 +209,54 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
   }
 
   componentDidUpdate(prevProps: any, prevState: any) {
-    const { dataList, edgeList } = this.props;
+    const { dataList, edgeList, dataSource, current } = this.props;
+    const prevDataList = prevProps.dataList;
+    const prevEdgeList = prevProps.edgeList;
     if (
-      !Immutable.is(dataList, prevProps.dataList) ||
-      !Immutable.is(edgeList, prevProps.edgeList)
+      !Immutable.is(dataList, prevDataList) ||
+      !Immutable.is(edgeList, prevEdgeList)
     ) {
       console.log('didUpdate');
-      this.graph?.fromJSON({
-        nodes: dataList.toJS(),
-        edges: edgeList?.toJS()
-      });
+      const elemList = dataList.toJS();
+      if (dataSource === 'DRAG_NODE_DATA') {
+        console.log('拖拽产生的数据=====>', current);
+        const tmp = current?.toJS();
+        const { id, componentType } = tmp;
+        const node = {
+          id,
+          label: componentType,
+          x: 20,
+          y: 80,
+          width: 80,
+          height: 40,
+          shape: 'rect'
+        };
+        this.graph?.addNode(node);
+      } else if (dataSource === 'COPY_EDGE_DATA') {
+        console.log('边拷贝数据');
+      } else {
+        const targetList = elemList.map((elem: any) => {
+          const { componentType } = elem;
+          if (componentType) {
+            return {
+              id: elem.id,
+              height: 40,
+              width: 80,
+              x: 80,
+              y: 80,
+              shape: 'rect',
+              label: componentType
+            };
+          }
+
+          return elem;
+        });
+
+        this.graph?.fromJSON({
+          nodes: targetList,
+          edges: edgeList?.toJS()
+        });
+      }
     }
   }
 

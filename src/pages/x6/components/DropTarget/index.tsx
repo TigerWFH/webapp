@@ -8,6 +8,15 @@ enum ITEM_TYPE {
   X6_DROP_TARGET = 'X6_DROP_TARGET'
 }
 
+// 定义数据来源类型
+enum DATA_SOURCE_TYPE {
+  DRAG_NODE_DATA = 'DRAG_NODE_DATA', // 拖拽节点数据,
+  // DRAG_EDGE_DATA = 'DRAG_EDGE_DATA', // 拖拽边数据，暂无
+  COPY_EDGE_DATA = 'COPY_NODE_DATA', // 拷贝边数据
+  API_DATA = 'API_DATA', // 接口产生的批量数据,
+  OTHER_DATA = 'OTHER_DATA'
+}
+
 interface IDropTargetProps {
   accept: string[]; // 可以接收的ITEM
   workbench?: React.ComponentClass<any, any> | React.FC<any> | any;
@@ -18,23 +27,21 @@ interface IInitialState {
   edgeList: Immutable.List<any>;
   current: Immutable.Map<string, any>;
   configs: Immutable.Map<string, any>;
+  dataSource: DATA_SOURCE_TYPE;
 }
 
 const initialState: IInitialState = {
   dataList: Immutable.List([]),
   edgeList: Immutable.List([]),
   current: Immutable.Map({}),
-  configs: Immutable.Map({})
+  configs: Immutable.Map({}),
+  dataSource: DATA_SOURCE_TYPE.DRAG_NODE_DATA
 };
 
 function reducers(state: any, action: any) {
-  console.log('action=====>', state, action);
   const { type, payload } = action;
-  const { dataList, current, configs } = state;
-
   switch (type) {
     case 'init': {
-      // 回填数据
       const {
         dataList = [],
         edgeList = [],
@@ -52,18 +59,21 @@ function reducers(state: any, action: any) {
         current: Immutable.Map.isMap(current)
           ? current
           : Immutable.Map(current),
-        configs: Immutable.Map.isMap(configs) ? configs : Immutable.Map(configs)
+        configs: Immutable.Map.isMap(configs)
+          ? configs
+          : Immutable.Map(configs),
+        dataSource: DATA_SOURCE_TYPE.API_DATA
       };
     }
     case 'drop': {
+      const { dataList, edgeList, configs } = state;
       return {
         dataList: dataList.push(payload),
+        edgeList,
         current: Immutable.Map(payload),
-        configs
+        configs,
+        dataSource: DATA_SOURCE_TYPE.DRAG_NODE_DATA
       };
-    }
-    case 'data': {
-      return state;
     }
     case 'deleteData': {
       const { current, configs, dataList } = state;
@@ -94,6 +104,7 @@ function reducers(state: any, action: any) {
       };
     }
     case 'configs': {
+      const { configs } = state;
       const { id, config } = payload;
       const prevConfig = configs[id] || {};
       return {
@@ -113,10 +124,8 @@ function reducers(state: any, action: any) {
 }
 
 function DropTarget(props: IDropTargetProps) {
-  const [{ dataList, edgeList, current, configs }, dispatch] = React.useReducer(
-    reducers,
-    initialState
-  );
+  const [{ dataList, edgeList, current, configs, dataSource }, dispatch] =
+    React.useReducer(reducers, initialState);
   const initData = React.useCallback((payload) => {
     dispatch({
       type: 'init',
@@ -125,7 +134,7 @@ function DropTarget(props: IDropTargetProps) {
   }, []);
   const setData = React.useCallback((payload) => {
     dispatch({
-      type: 'data',
+      type: 'drop',
       payload
     });
   }, []);
@@ -183,7 +192,8 @@ function DropTarget(props: IDropTargetProps) {
       },
       collect: (monitor) => {
         return {
-          demo: 'dropDemo'
+          // dataSource: DATA_SOURCE_TYPE.DRAG_DATA
+          demo: 'xxxx'
         };
       }
     };
@@ -194,7 +204,8 @@ function DropTarget(props: IDropTargetProps) {
       <Workbench
         init={initData}
         dataList={dataList}
-        setData={setData}
+        dataSource={dataSource}
+        // setData={setData}
         deleteData={deleteData}
         edgeList={edgeList}
         setEdge={setEdge}
