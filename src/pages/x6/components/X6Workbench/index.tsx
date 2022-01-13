@@ -190,6 +190,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         enabled: true,
         modifiers: ['alt']
       },
+      clipboard: {
+        enabled: true
+      },
       selecting: {
         enabled: true,
         // className: styles.ss, // 需要改写css类，实现样式覆盖
