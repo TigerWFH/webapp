@@ -113,6 +113,10 @@ const Tools = Loadable((props: any) => import('@/pages/tools'), {
   fallback: <div>Loading</div>
 });
 
+const Rxjs = Loadable((props: any) => import('@/pages/rxjs'), {
+  fallback: <div>Loading</div>
+});
+
 const STATIC_ROUTE = [
   {
     href: '/',
@@ -269,6 +273,7 @@ const elem = (
           <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
           <Route path={'/test'} exact component={Test}></Route>
           <Route path={'/tools'} exact component={Tools}></Route>
+          <Route path={'/rxjs'} exact component={Rxjs}></Route>
           <Route component={About}></Route>
         </Switch>
       </MyApp>
