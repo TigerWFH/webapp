@@ -225,13 +225,13 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       console.log('node selected');
     });
     this.graph?.on('node:contextmenu', (args) => {
-      console.log('node contextmenu');
+      console.log('node contextmenu====》', args);
     });
     this.graph?.on('edge:contextmenu', (args) => {
-      console.log('edge contextmenu');
+      console.log('edge contextmenu======>', args);
     });
     this.graph?.on('blank:contextmenu', (args) => {
-      console.log('blank contextmenu');
+      console.log('blank contextmenu======>', args);
     });
     const { init } = this.props;
     setTimeout(() => {
@@ -322,6 +322,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             <button>menu</button>
           </ContextMenu>
         </div>
+        {/* <ContextMenu menu={menu}>
+          <div className={styles.graph} ref={this.refContainer} />
+        </ContextMenu> */}
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>
       </div>

@@ -403,7 +403,76 @@ Graph.registerEdge('custom-edge', CustomEdge, false);
 
 ### View(View, CellView, NodeView, EdgeView)
 
-### Registry
+### Registry（登记、注册）：添加一些自定义功能
+
+> Registry 提供了自定义功能
+
+- `EdgeTool：`边小工具
+
+  > x6 默认提供了边叫工具：vertices（路径节点工具）、segments(线段工具)、boundary(边界)、button、button-remove、source-arrowhead、target-arrowhead、edge-editor
+
+- `NodeTool：`节点小工具是一些渲染在节点上的一些组件，这些组件附带交互功能
+  > x6 默认提供了节点小工具：button、button-remove、boundary、node-editor
+
+```js
+
+// 创建节点时，添加小工具
+  graph.addNode({
+    tools: [
+      {
+        name: 'tool-name',
+        {
+          name: 'button-remove',
+          args: { x: 10, y: 10 }
+        }
+      }
+    ]
+  })
+// 创建节点后添加小工具
+node.addTools([
+  {
+    name: 'tool-name'
+  },
+  {
+    name: 'button-remove',
+    args: {x: 10, y: 10 }
+  }
+])
+
+```
+
+> 在 Registry.NodeTool.registry 对象上提供了注册和取消注册工具的方法，工具实际上一个继承自 ToolItem 的视图
+>
+> 向系统注册自定义工具类
+
+```js
+// 例如内置的button工具
+class Button extends ToolsView.ToolItem<EdgeView | NodeView, Button.Options>
+// 注册函数
+// register(entries: {[name: string]: Definition}, force?: boolean): void
+// register(name: string, entiry: Definition, force?: boolean): Definition
+// unregister(name: string): Definition | null
+// 分别挂载到了Graph对应的静态方法上
+// Graph.registerNodeTool
+// Graph.unregisterNodeTool
+
+// 完全自定义工具，继承ToolItem
+class CustomTool extends ToolItem {}
+// 继承内置工具并扩展
+const MyButton = Button.define<Button.Options>({
+  name: 'my-btn',
+  markup: '',
+  onClick({View}){}
+})
+
+Graph.registerNodeTool('my-btn', MyButton, true)
+// 快速继承
+Graph.registerNodeTool('my-btn', {
+  inherit: 'button',
+  markup: '',
+  onClick: function(){}
+}, true)
+```
 
 ### 拖拽 Dnd：import { Addon } from "@antv/x6
 

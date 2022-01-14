@@ -3146,3 +3146,20 @@ var a = immutable.fromJS();
 var b = immutable.fromJS();
 var c = a.merge(b);
 ```
+
+## typescript
+
+### typeof：操作符用来获取变量的类型，包括函数
+
+```typescript
+type Definition =
+  | typeof ToolItem
+  | (new (options: ToolItem.Options) => ToolItem);
+```
+
+### type：关键字用来定义类型
+
+```typescript
+type Methods = 'GET' | 'POST' | 'DELETE' | 'PUT';
+let method: Methods = 'PUT';
+```
