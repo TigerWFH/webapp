@@ -3149,7 +3149,17 @@ var c = a.merge(b);
 
 ## typescript
 
-### typeof：操作符用来获取变量的类型，包括函数
+### 类型
+
+> 布尔值（boolean）、数字（number）、字符串（string）、数组（Array、[]）、元组（Tuple）、枚举（enum）、Any（不清楚的类型）、Void（与 any 相反，没有任何类型）、Null、Undefined、Never（不存在的值得类型）、Object（非原始类型）
+>
+> 类型断言：尖括号语法，(<string>someValue).length；as 语法 somevalue as string
+
+### typeof 类型保护和 instanceof 类型保护
+
+> TypeScript 可以将它识别为一个类型保护。 也就是说我们可以直接在代码里检查类型了
+>
+> instanceof 类型保护是通过构造函数来细化类型的一种方式
 
 ```typescript
 type Definition =
@@ -3157,9 +3167,54 @@ type Definition =
   | (new (options: ToolItem.Options) => ToolItem);
 ```
 
-### type：关键字用来定义类型
+### type 类型别名
+
+> 类型别名会给一个类型起个新名字。类型别名也可以是泛型
 
 ```typescript
 type Methods = 'GET' | 'POST' | 'DELETE' | 'PUT';
 let method: Methods = 'PUT';
+```
+
+### 索引类型查询操作符：keyof
+
+> 对于任何类型 T，keyof T 结果为 T 上已知的公共属性名的联合
+
+```typescript
+interface Person {
+  name: string;
+  age: number;
+}
+let personProps: keyof Person; // name | age
+```
+
+### 索引访问操作符：T[K],返回 key 的类型
+
+### 映射类型（或者说类型工具，已经内置到了 es5 的声明文件，无需单独引入）<https://segmentfault.com/a/1190000020536733>
+
+> TypeScript 提供了从旧类型中创建新类型的一种方式 — 映射类型。 在映射类型里，新类型以相同的形式去转换旧类型里每个属性
+
+```typescript
+// ts内置空能
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
+// 使用
+type PersonPartial = Partial<Person>;
+type ReadonlyPerson = Readonly<Person>;
+```
+
+> typescript 预定义了一些条件类型
+
+```typescript
+// Exclude<T, U>，从T中剔除可以赋值给U的类型
+// Extract<T, U>，提取T中可以赋值给U的类型
+// NonNullable<T>，从T中剔除null和undefined
+// ReturnType<T>，获取函数的返回类型值
+// InstanceType<T>，获取构造函数类型的实例类型
 ```
