@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Menu, Dropdown } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { Graph, ToolsView, EdgeView } from '@antv/x6';
 
 interface ContextMenuToolOptions extends ToolsView.ToolItem.Options {
@@ -13,6 +13,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
 > {
   private knob: HTMLDivElement | undefined;
   private timer: number | undefined;
+  private context: any;
 
   render() {
     if (!this.knob) {
@@ -24,6 +25,21 @@ class ContextMenuTool extends ToolsView.ToolItem<
     return this;
   }
 
+  onMenu = (arg: any) => {
+    console.log('arg====>', arg, this.context);
+    // 在这里处理业务逻辑，但是不同的业务节点可能逻辑不同
+  };
+
+  renderMenu() {
+    return (
+      <Menu onClick={this.onMenu}>
+        <Menu.Item key="1">1</Menu.Item>
+        <Menu.Item key="2">2</Menu.Item>
+        <Menu.Item key="3">3</Menu.Item>
+      </Menu>
+    );
+  }
+
   private toggleContextMenu(visible: boolean) {
     ReactDom.unmountComponentAtNode(this.knob as HTMLDivElement);
     document.removeEventListener('mousedown', this.onMouseDown);
@@ -33,7 +49,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
         <Dropdown
           visible={true}
           trigger={['contextMenu']}
-          overlay={this.options.menu}>
+          overlay={this.renderMenu()}>
           <a />
         </Dropdown>,
         this.knob as HTMLDivElement
@@ -61,7 +77,9 @@ class ContextMenuTool extends ToolsView.ToolItem<
     }, 200);
   };
 
-  private onContextMenu({ e }: { e: MouseEvent }) {
+  private onContextMenu({ e, ...rest }: { e: MouseEvent }) {
+    console.log('rest=========>', rest); // 拿到当前节点信息
+    this.context = rest;
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = 0;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Graph, Shape, Cell } from '@antv/x6';
-import { ContextMenu, Menu } from '@antv/x6-react-components';
+import { Menu } from 'antd';
 import Immutable from 'immutable';
 import './Tools'; // 载入工具
 import styles from './index.module.scss';
@@ -8,7 +8,10 @@ import * as t from '../types';
 interface IX6Workbench extends t.IWorkbench {}
 
 const menu = (
-  <Menu>
+  <Menu
+    onClick={function (options) {
+      console.log('===========>', options);
+    }}>
     <Menu.Item key="1">1</Menu.Item>
     <Menu.Item key="2">1</Menu.Item>
     <Menu.Item key="3">1</Menu.Item>
