@@ -2,9 +2,18 @@ import * as React from 'react';
 import { Graph, Shape, Cell } from '@antv/x6';
 import { ContextMenu, Menu } from '@antv/x6-react-components';
 import Immutable from 'immutable';
+import './Tools'; // 载入工具
 import styles from './index.module.scss';
 import * as t from '../types';
 interface IX6Workbench extends t.IWorkbench {}
+
+const menu = (
+  <Menu>
+    <Menu.Item key="1">1</Menu.Item>
+    <Menu.Item key="2">1</Menu.Item>
+    <Menu.Item key="3">1</Menu.Item>
+  </Menu>
+);
 
 const MOCKDATA = {
   nodes: [
@@ -14,7 +23,15 @@ const MOCKDATA = {
       y: 40,
       width: 80,
       height: 40,
-      label: 'node1'
+      label: 'node1',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node2',
@@ -22,7 +39,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node2'
+      label: 'node2',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node3',
@@ -30,7 +55,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node3'
+      label: 'node3',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node4',
@@ -38,7 +71,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node4'
+      label: 'node4',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node5',
@@ -46,7 +87,15 @@ const MOCKDATA = {
       y: 40,
       width: 80,
       height: 40,
-      label: 'node5'
+      label: 'node5',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node6',
@@ -54,7 +103,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node6'
+      label: 'node6',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node7',
@@ -62,7 +119,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node7'
+      label: 'node7',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node8',
@@ -70,7 +135,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node8'
+      label: 'node8',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node8',
@@ -78,7 +151,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node8'
+      label: 'node8',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node9',
@@ -86,7 +167,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node9'
+      label: 'node9',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node10',
@@ -94,7 +183,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node10'
+      label: 'node10',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node11',
@@ -102,7 +199,15 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node11'
+      label: 'node11',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       id: 'node12',
@@ -110,53 +215,149 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node12'
+      label: 'node12',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     }
   ],
   edges: [
     {
       source: 'node1',
-      target: 'node10'
+      target: 'node10',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node1',
-      target: 'node8'
+      target: 'node8',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node1',
-      target: 'node3'
+      target: 'node3',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node1',
-      target: 'node9'
+      target: 'node9',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node1',
-      target: 'node2'
+      target: 'node2',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node2',
-      target: 'node4'
+      target: 'node4',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node2',
-      target: 'node5'
+      target: 'node5',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node2',
-      target: 'node6'
+      target: 'node6',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node2',
-      target: 'node7'
+      target: 'node7',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node9',
-      target: 'node11'
+      target: 'node11',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     },
     {
       source: 'node9',
-      target: 'node12'
+      target: 'node12',
+      tools: [
+        {
+          name: 'contextmenu',
+          args: {
+            menu
+          }
+        }
+      ]
     }
   ]
 };
@@ -275,7 +476,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         this.graph?.addNode(node);
         this.graph?.addEdge({
           target: { x: 10, y: 50 },
-          source: { x: 70, y: 50 }
+          source: { x: 70, y: 50 },
+          tools: [
+            {
+              name: 'contextmenu',
+              args: {
+                menu
+              }
+            }
+          ]
         });
       } else if (dataSource === 'COPY_EDGE_DATA') {
         console.log('边拷贝数据');
@@ -307,24 +516,11 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
   render() {
     console.log('x6------render====>', this.props);
-    const menu = (
-      <Menu>
-        <Menu.Item key="1">1</Menu.Item>
-        <Menu.Item key="2">1</Menu.Item>
-        <Menu.Item key="3">1</Menu.Item>
-      </Menu>
-    );
     return (
       <div className={styles.container}>
         <div className={styles.toolbar}>
           <button onClick={this.onChange}>dispatch</button>
-          <ContextMenu menu={menu}>
-            <button>menu</button>
-          </ContextMenu>
         </div>
-        {/* <ContextMenu menu={menu}>
-          <div className={styles.graph} ref={this.refContainer} />
-        </ContextMenu> */}
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>
       </div>
