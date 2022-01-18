@@ -215,27 +215,26 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         // modifiers: ['alt'], // 此处两项配置等同于外部的panning配置
       }
     });
-    this.graph?.on('cell:selected', (args: any) => {
-      console.log('cell selected===>', args);
-    });
-    this.graph?.on('edge:selected', (args: any) => {
-      console.log('edge selected');
-    });
-    this.graph?.on('node:selected', (args: any) => {
-      console.log('node selected');
-    });
-    this.graph?.on('node:context', (args: any) => {
-      console.log('node context====》', args);
-    });
-    this.graph?.on('edge:context', (args: any) => {
-      console.log('edge context======>', args);
-    });
-    this.graph?.on('blank:context', (args: any) => {
-      console.log('blank context======>', args);
-    });
+    // this.graph?.on('cell:selected', (args: any) => {
+    //   console.log('cell selected===>', args);
+    // });
+    // this.graph?.on('edge:selected', (args: any) => {
+    //   console.log('edge selected');
+    // });
+    // this.graph?.on('node:selected', (args: any) => {
+    //   console.log('node selected');
+    // });
+    // this.graph?.on('node:context', (args: any) => {
+    //   console.log('node context====》', args);
+    // });
+    // this.graph?.on('edge:context', (args: any) => {
+    //   console.log('edge context======>', args);
+    // });
+    // this.graph?.on('blank:context', (args: any) => {
+    //   console.log('blank context======>', args);
+    // });
     const { init } = this.props;
     setTimeout(() => {
-      console.log('init==========>');
       const tools = [
         {
           name: 'contextmenu',
@@ -331,12 +330,18 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     }
   }
 
+  onGetAllData = () => {
+    const allData = this.graph?.toJSON();
+    console.log('allData====>', allData);
+  };
+
   render() {
     console.log('x6------render====>', this.props);
     return (
       <div className={styles.container}>
         <div className={styles.toolbar}>
           <button onClick={this.onChange}>dispatch</button>
+          <button onClick={this.onGetAllData}>获取数据</button>
         </div>
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>

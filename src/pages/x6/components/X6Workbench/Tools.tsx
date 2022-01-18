@@ -4,8 +4,8 @@ import { Dropdown, Menu } from 'antd';
 import { Graph, ToolsView, EdgeView } from '@antv/x6';
 
 interface ContextMenuToolOptions extends ToolsView.ToolItem.Options {
-  menu: React.ReactElement;
-  graph: Graph;
+  //   menu: React.ReactElement;
+  //   graph: Graph;
 }
 
 class ContextMenuTool extends ToolsView.ToolItem<
@@ -14,7 +14,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
 > {
   private knob: HTMLDivElement | undefined;
   private timer: number | undefined;
-  private context: any;
+  private contextMenu: any;
 
   render() {
     if (!this.knob) {
@@ -27,18 +27,17 @@ class ContextMenuTool extends ToolsView.ToolItem<
   }
 
   onMenu = (arg: any) => {
-    console.log('arg====>', arg, this.context);
-    const graph = this.options.graph;
+    console.log('arg====>', arg, this.contextMenu);
     const { key } = arg;
     if (key === '1') {
-      const { edge } = this.context;
+      const { edge } = this.contextMenu;
       const source = edge.getSource();
       const target = edge.getTarget();
       console.log('copy edge source and target=======>', source, target);
 
       //   获取边的起始节点
 
-      graph?.addEdge({
+      this.graph?.addEdge({
         target: { x: 80, y: 50 },
         source: { x: 100, y: 50 },
         tools: [
@@ -103,7 +102,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
 
   private onContextMenu({ e, ...rest }: { e: MouseEvent }) {
     // 拿到当前节点信息
-    this.context = rest;
+    this.contextMenu = rest;
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = 0;
@@ -114,6 +113,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
   }
 
   delegateEvents() {
+    //   注册监听事件
     this.cellView.on('cell:contextmenu', this.onContextMenu, this);
     return super.delegateEvents();
   }
