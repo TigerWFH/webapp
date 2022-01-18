@@ -287,7 +287,7 @@ graph.addNode({
 > Cell
 
 - `id：唯一标识`
-- `markup：渲染使用的HTML或SVG标签`
+- `markup：cell DOM结构`
   - `tagName：HTML或SVG标签名`
   - `ns：标签对应命名空间`
   - `selector：SVG或HTML标签的唯一标识`
@@ -322,7 +322,8 @@ graph.addNode({
 - `visible：是否可见`
 - `parent：父节点`
 - `children：子节点或边`
-- `data：附加数据`
+- `tools：工具选项`，ToolItem、ToolItem[]、Tools
+- `data：附加业务数据`
 
 > Node：1、使用构造函数 new Shape.Rect(options)构造；2、graph.addNode(options)构造
 
@@ -331,6 +332,7 @@ graph.addNode({
 - `width：节点宽度`
 - `height：节点高度`
 - `angle：节点旋转角度`
+- `portMarkup：链接桩的DOM结构`
 
 > Edge：1、使用构造函数 new Shape.Edge(options)构造；2、graph.addEdge(options)构造
 

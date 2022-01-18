@@ -213,7 +213,24 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         pageBreak: false
         // pannable: true, // 类似panning
         // modifiers: ['alt'], // 此处两项配置等同于外部的panning配置
+      },
+      connecting: {
+        // 边的连接设定
+        snap: true,
+        allowBlank: true,
+        allowMulti: true,
+        allowLoop: true,
+        allowNode: true,
+        allowEdge: true,
+        allowPort: true,
+        highlight: true
       }
+      // interacting: {
+      //   // 边和节点的交互
+      //   nodeMovable: true,
+      //   edgeMovable: true,
+      //   arrowheadMovable: true
+      // }
     });
     // this.graph?.on('cell:selected', (args: any) => {
     //   console.log('cell selected===>', args);
@@ -233,8 +250,51 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     // this.graph?.on('blank:context', (args: any) => {
     //   console.log('blank context======>', args);
     // });
+    // 动态添加/删除链接桩
+    // this.graph?.on('node:mouseenter', ({ cell }) => {
+    //   if (cell.isNode()) {
+    //     cell.addPorts([
+    //       {
+    //         id: 'top',
+    //         args: {
+    //           position: 'top'
+    //         },
+    //         attrs: {
+    //           circle: {
+    //             r: 6,
+    //             magnet: true,
+    //             stroke: '#31d0c6',
+    //             strokeWidth: 2,
+    //             fill: '#fff'
+    //           }
+    //         }
+    //       },
+    //       {
+    //         id: 'bottom',
+    //         // args: {
+    //         //   position: 'bottom'
+    //         // },
+    //         attrs: {
+    //           circle: {
+    //             r: 6,
+    //             magnet: true,
+    //             stroke: '#31d0c6',
+    //             strokeWidth: 2,
+    //             fill: '#fff'
+    //           }
+    //         }
+    //       }
+    //     ]);
+    //   }
+    // });
+    // this.graph?.on('node:mouseleave', ({ cell }) => {
+    //   if (cell.isNode()) {
+    //     cell.removePorts();
+    //   }
+    // });
     const { init } = this.props;
     setTimeout(() => {
+      // 小工具
       const tools = [
         {
           name: 'contextmenu',
@@ -243,10 +303,74 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           }
         }
       ];
+      /*
+      链接桩(Ports)
+        markup，链接桩节点，可以定义在单个链接桩、链接桩群组和portMarkup三个位置
+        // DOM结构
+        markup = {
+          tagName: 'circle',
+          selector: 'circle',
+          attrs: {
+            r: 10,
+            fill: '#fff',
+            stroke: '#000'
+          }
+        }
+        // 使用
+        ports = [
+          {
+            id: '',
+            attrs: {
+              circle: {
+                r: 6,
+                fille: '',
+                stroke: '',
+                strokeWidth: '',
+              }
+            }
+          }
+        ]
+        // 链接桩位置
+      */
+      const ports = [
+        {
+          id: 'top',
+          attrs: {
+            circle: {
+              r: 6,
+              magnet: true,
+              stroke: '#31d0c6',
+              strokeWidth: 2,
+              fill: '#fff'
+            }
+          }
+        },
+        {
+          id: 'right',
+          attrs: {
+            circle: {
+              r: 6,
+              magnet: true,
+              stroke: '#31d0c6',
+              strokeWidth: 2,
+              fill: '#fff'
+            }
+          }
+        }
+        // {
+        //   id: 'bottom',
+        //   position: 'bottom'
+        // },
+        // {
+        //   id: 'left',
+        //   position: 'left'
+        // }
+      ];
 
       const nodes = MOCKDATA.nodes.map((node) => ({
         ...node,
-        tools
+        tools,
+        ports
       }));
       const edges = MOCKDATA.edges.map((edge) => ({
         ...edge,
@@ -332,7 +456,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
   onGetAllData = () => {
     const allData = this.graph?.toJSON();
-    console.log('allData====>', allData);
+    const model = this.graph?.model;
+    const view = this.graph?.view;
+    console.log('allData====>', allData, model, view);
   };
 
   render() {

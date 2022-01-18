@@ -1,0 +1,68 @@
+@startuml X6 Model数据结构
+class Markup {
+    tagName: string
+    ns?: string
+    selector?: string
+    groupSelector?: string | string[]
+    attrs?: object
+    style?: object
+    className?: string | string[]
+    textContent?: string
+    children?: Markup[]
+}
+
+class PortGroupMetadata {
+    markup?: Markup
+    attrs?: object
+    zIndex?: number
+    position?: object
+    label?: object
+}
+note right of PortGroupMetadata: 链接桩群组定义
+
+class PortMetadata {
+    id?: string
+    group?: string
+    args?: object
+    markup?: Markup
+    attrs?: object
+    zIndex?: number
+    label?: object
+}
+note right of PortMetadata: 链接桩定义
+
+class Cell.Metadata {
+    id: string
+    markup: Markup
+    shape: string
+    view: string
+    zIndex: number
+    visible: boolean
+    parent: string
+    children: string[]
+    tools: ToolItem | ToolItem[] | Tools
+    attrs: Attr.CellAttrs
+    data: any
+}
+class Node.Metadata {
+    size: Object
+    position: Object
+    angle: number
+    ports: object
+    portMarkup: Markup
+    portLabelMarkup: Markup
+}
+
+class Edge.Metadata {
+    source: TerminalData
+    target: TerminalData
+    vertices: Point.Point[]
+    router: RouterData
+    connector: ConnectorData
+    labels: Label[] | string[]
+    defaultLabel: Label
+}
+
+Cell.Metadata <|-- Node.Metadata
+Cell.Metadata <|-- Edge.Metadata
+@enduml
