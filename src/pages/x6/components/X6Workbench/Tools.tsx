@@ -31,7 +31,12 @@ class ContextMenuTool extends ToolsView.ToolItem<
     const graph = this.options.graph;
     const { key } = arg;
     if (key === '1') {
-      console.log('copy=======>', graph);
+      const { edge } = this.context;
+      const source = edge.getSource();
+      const target = edge.getTarget();
+      console.log('copy edge source and target=======>', source, target);
+
+      //   获取边的起始节点
 
       graph?.addEdge({
         target: { x: 80, y: 50 },

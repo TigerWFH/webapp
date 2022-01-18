@@ -655,3 +655,65 @@ graph.addNode({
 
  */
 ```
+
+## RXJS
+
+> RXJS 中的流以 Observable 对象呈现，获取数据需要订阅 Observable 对象
+
+### 术语
+
+- `Observable：`可观察对象
+- `Observer：`观察者
+- `Operator：`操作
+- `Subject：`主体
+- `Scheduler：`调度器
+- `notification：`通知
+- `emission：`发送
+- `Subscription：`订阅对象，用来释放订阅资源
+- `Subscriber：`订阅者
+- `Subscribe：`订阅（动词）
+- `emit：`发出
+- `concat：`连接
+- `project：`投影
+- `disposal：`清理
+
+### Observable
+
+> 通过 Rx.Observable.create 或者创建方法创建 Observable 对象
+>
+> 创建 Observable、订阅 Observable、执行 Observable、清理 Observable
+
+- `Rx.Observable.create是Observable构造函数别名，接收一个subscribe函数`
+
+```js
+// 默认，在变量末尾加$，表示这个变量是一个Observable对象
+// 创建Observable**********************
+var observable$ = Rx.Observable.create((observer) => {
+  var id = setInterval(() => {
+    observer.next('hi');
+  }, 1000);
+});
+// 也可以使用创建函数：of、from、interval、range等等
+import { range, filter, map } from 'rxjs';
+range(1, 200)
+  .pipe(
+    filter((x) => x % 2 === 1),
+    map((x) => x + x)
+  )
+  .subscribe((x) => console.log(x));
+// 订阅Observable****************订阅 Observable 像是调用函数, 并提供接收数据的回调函数
+observable$.subscribe((x) => console.log(x));
+//
+```
+
+### Observer<http://xgrommx.github.io/rx-book/content/observable/observable_methods/of.html>
+
+> 观察者是由 Observable 发送的值的消费者。观察者只是一组回调函数的集合，每个回调函数对应一种 Observable 发送的通知类型：next、error 和 complete 。下面的示例是一个典型的观察者对象
+
+```js
+var observer = {
+  next: (x) => console.log(x),
+  error: (err) => console.log(error),
+  complete: () => console.log('complete')
+};
+```
