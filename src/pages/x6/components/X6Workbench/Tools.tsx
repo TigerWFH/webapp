@@ -5,6 +5,7 @@ import { Graph, ToolsView, EdgeView } from '@antv/x6';
 
 interface ContextMenuToolOptions extends ToolsView.ToolItem.Options {
   menu: React.ReactElement;
+  graph: Graph;
 }
 
 class ContextMenuTool extends ToolsView.ToolItem<
@@ -27,13 +28,31 @@ class ContextMenuTool extends ToolsView.ToolItem<
 
   onMenu = (arg: any) => {
     console.log('arg====>', arg, this.context);
+    const graph = this.options.graph;
+    const { key } = arg;
+    if (key === '1') {
+      console.log('copy=======>', graph);
+
+      graph?.addEdge({
+        target: { x: 80, y: 50 },
+        source: { x: 100, y: 50 },
+        tools: [
+          {
+            name: 'contextmenu',
+            args: {
+              graph: this.graph
+            }
+          }
+        ]
+      });
+    }
     // 在这里处理业务逻辑，但是不同的业务节点可能逻辑不同
   };
 
   renderMenu() {
     return (
       <Menu onClick={this.onMenu}>
-        <Menu.Item key="1">1</Menu.Item>
+        <Menu.Item key="1">复制</Menu.Item>
         <Menu.Item key="2">2</Menu.Item>
         <Menu.Item key="3">3</Menu.Item>
       </Menu>
@@ -78,7 +97,7 @@ class ContextMenuTool extends ToolsView.ToolItem<
   };
 
   private onContextMenu({ e, ...rest }: { e: MouseEvent }) {
-    console.log('rest=========>', rest); // 拿到当前节点信息
+    // 拿到当前节点信息
     this.context = rest;
     if (this.timer) {
       clearTimeout(this.timer);

@@ -7,17 +7,6 @@ import styles from './index.module.scss';
 import * as t from '../types';
 interface IX6Workbench extends t.IWorkbench {}
 
-const menu = (
-  <Menu
-    onClick={function (options) {
-      console.log('===========>', options);
-    }}>
-    <Menu.Item key="1">1</Menu.Item>
-    <Menu.Item key="2">1</Menu.Item>
-    <Menu.Item key="3">1</Menu.Item>
-  </Menu>
-);
-
 const MOCKDATA = {
   nodes: [
     {
@@ -26,15 +15,7 @@ const MOCKDATA = {
       y: 40,
       width: 80,
       height: 40,
-      label: 'node1',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node1'
     },
     {
       id: 'node2',
@@ -42,15 +23,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node2',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node2'
     },
     {
       id: 'node3',
@@ -58,15 +31,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node3',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node3'
     },
     {
       id: 'node4',
@@ -74,15 +39,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node4',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node4'
     },
     {
       id: 'node5',
@@ -90,15 +47,7 @@ const MOCKDATA = {
       y: 40,
       width: 80,
       height: 40,
-      label: 'node5',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node5'
     },
     {
       id: 'node6',
@@ -106,15 +55,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node6',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node6'
     },
     {
       id: 'node7',
@@ -122,15 +63,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node7',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node7'
     },
     {
       id: 'node8',
@@ -138,15 +71,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node8',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node8'
     },
     {
       id: 'node8',
@@ -154,15 +79,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node8',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node8'
     },
     {
       id: 'node9',
@@ -170,15 +87,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node9',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node9'
     },
     {
       id: 'node10',
@@ -186,15 +95,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node10',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node10'
     },
     {
       id: 'node11',
@@ -202,15 +103,7 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node11',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node11'
     },
     {
       id: 'node12',
@@ -218,149 +111,53 @@ const MOCKDATA = {
       y: 180,
       width: 80,
       height: 40,
-      label: 'node12',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      label: 'node12'
     }
   ],
   edges: [
     {
       source: 'node1',
-      target: 'node10',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node10'
     },
     {
       source: 'node1',
-      target: 'node8',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node8'
     },
     {
       source: 'node1',
-      target: 'node3',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node3'
     },
     {
       source: 'node1',
-      target: 'node9',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node9'
     },
     {
       source: 'node1',
-      target: 'node2',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node2'
     },
     {
       source: 'node2',
-      target: 'node4',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node4'
     },
     {
       source: 'node2',
-      target: 'node5',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node5'
     },
     {
       source: 'node2',
-      target: 'node6',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node6'
     },
     {
       source: 'node2',
-      target: 'node7',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node7'
     },
     {
       source: 'node9',
-      target: 'node11',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node11'
     },
     {
       source: 'node9',
-      target: 'node12',
-      tools: [
-        {
-          name: 'contextmenu',
-          args: {
-            menu
-          }
-        }
-      ]
+      target: 'node12'
     }
   ]
 };
@@ -383,10 +180,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
   componentDidMount() {
     // 屏蔽浏览器右键菜单，有兼容性问题《https://segmentfault.com/q/1010000004934881》
-    window.oncontextmenu = function () {
-      return false;
-    };
-    console.log('css====>', styles.ss);
+    // document.oncontext = function () {
+    //   return false;
+    // };
     // 此处请求需要回填的数据
     this.graph = new Graph({
       container: this.container as HTMLDivElement,
@@ -428,21 +224,39 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     this.graph?.on('node:selected', (args: any) => {
       console.log('node selected');
     });
-    this.graph?.on('node:contextmenu', (args) => {
-      console.log('node contextmenu====》', args);
+    this.graph?.on('node:context', (args: any) => {
+      console.log('node context====》', args);
     });
-    this.graph?.on('edge:contextmenu', (args) => {
-      console.log('edge contextmenu======>', args);
+    this.graph?.on('edge:context', (args: any) => {
+      console.log('edge context======>', args);
     });
-    this.graph?.on('blank:contextmenu', (args) => {
-      console.log('blank contextmenu======>', args);
+    this.graph?.on('blank:context', (args: any) => {
+      console.log('blank context======>', args);
     });
     const { init } = this.props;
     setTimeout(() => {
       console.log('init==========>');
+      const tools = [
+        {
+          name: 'contextmenu',
+          args: {
+            graph: this.graph
+          }
+        }
+      ];
+
+      const nodes = MOCKDATA.nodes.map((node) => ({
+        ...node,
+        tools
+      }));
+      const edges = MOCKDATA.edges.map((edge) => ({
+        ...edge,
+        tools
+      }));
+
       init({
-        dataList: MOCKDATA.nodes,
-        edgeList: MOCKDATA.edges,
+        dataList: nodes,
+        edgeList: edges,
         current: {},
         configs: {}
       });
@@ -484,7 +298,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             {
               name: 'contextmenu',
               args: {
-                menu
+                graph: this.graph
               }
             }
           ]
