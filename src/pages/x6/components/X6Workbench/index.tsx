@@ -1,8 +1,10 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 import { Graph, Shape, Cell } from '@antv/x6';
-import { Menu } from 'antd';
+import { Tooltip } from 'antd';
 import Immutable from 'immutable';
 import './Tools'; // 载入工具
+import './MyNodes';
 import styles from './index.module.scss';
 import * as t from '../types';
 interface IX6Workbench extends t.IWorkbench {}
@@ -224,13 +226,27 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         allowEdge: true,
         allowPort: true,
         highlight: true
-      }
+      },
       // interacting: {
       //   // 边和节点的交互
       //   nodeMovable: true,
       //   edgeMovable: true,
       //   arrowheadMovable: true
-      // }
+      // },
+      onPortRendered(args) {
+        const selectors = args.contentSelectors;
+        const container = selectors && selectors.foContent;
+        if (container) {
+          ReactDOM.render(
+            (
+              <Tooltip title="port">
+                <div className={styles.myport} />
+              </Tooltip>
+            ) as any,
+            container as any
+          );
+        }
+      }
     });
     // this.graph?.on('cell:selected', (args: any) => {
     //   console.log('cell selected===>', args);
@@ -409,9 +425,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           label: componentType,
           x: 20,
           y: 80,
-          width: 80,
-          height: 40,
-          shape: 'rect'
+          // width: 80,
+          // height: 40,
+          shape: 'my-shape'
         };
         this.graph?.addNode(node);
         this.graph?.addEdge({
