@@ -25,6 +25,19 @@
 
 ## X6 画布功能
 
+### 画布重绘
+
+```js
+  /*
+    set markup：触发change:markup事件，画布重绘
+    setMarkup()：触发change:markup事件，画布重绘
+    removeMarkup():
+
+    attrs：触发change:attrs事件，画布重绘
+  */ 
+
+```
+
 ### x6 拖动画布 panning 和滚动画布 scroller 区别
 
 - `panning：`支持拖拽平移
