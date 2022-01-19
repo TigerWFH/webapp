@@ -29,27 +29,27 @@ class ContextMenuTool extends ToolsView.ToolItem<
   onMenu = (arg: any) => {
     console.log('arg====>', arg, this.contextMenu);
     const { key } = arg;
-    if (key === '1') {
-      const { edge } = this.contextMenu;
-      const source = edge.getSource();
-      const target = edge.getTarget();
-      console.log('copy edge source and target=======>', source, target);
+    // if (key === '1') {
+    //   const { edge } = this.contextMenu;
+    //   const source = edge.getSource();
+    //   const target = edge.getTarget();
+    //   console.log('copy edge source and target=======>', source, target);
 
-      //   获取边的起始节点
+    //   //   获取边的起始节点
 
-      this.graph?.addEdge({
-        target: { x: 80, y: 50 },
-        source: { x: 100, y: 50 },
-        tools: [
-          {
-            name: 'contextmenu',
-            args: {
-              graph: this.graph
-            }
-          }
-        ]
-      });
-    }
+    //   this.graph?.addEdge({
+    //     target: { x: 80, y: 50 },
+    //     source: { x: 100, y: 50 },
+    //     tools: [
+    //       {
+    //         name: 'contextmenu',
+    //         args: {
+    //           graph: this.graph
+    //         }
+    //       }
+    //     ]
+    //   });
+    // }
     // 在这里处理业务逻辑，但是不同的业务节点可能逻辑不同
   };
 

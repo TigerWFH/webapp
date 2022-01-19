@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Graph, Shape, Cell } from '@antv/x6';
+import { Graph, Shape, Cell, Edge } from '@antv/x6';
 import { Tooltip } from 'antd';
 import Immutable from 'immutable';
 import './Tools'; // 载入工具
@@ -216,16 +216,31 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         // pannable: true, // 类似panning
         // modifiers: ['alt'], // 此处两项配置等同于外部的panning配置
       },
+      highlighting: {
+        // 设置高亮配置
+      },
       connecting: {
         // 边的连接设定
         snap: true,
-        allowBlank: true,
-        allowMulti: true,
-        allowLoop: true,
+        allowBlank: false,
+        // allowMulti: true,
+        allowLoop: false,
         allowNode: true,
-        allowEdge: true,
-        allowPort: true,
-        highlight: true
+        // allowEdge: false,
+        // allowPort: true,
+        highlight: true,
+        createEdge: () => {
+          return new Edge({
+            tools: [
+              {
+                name: 'contextmenu'
+              }
+            ]
+          });
+        }
+        // validateMagnet({ magnet }) {
+        //   return magnet.getAttribute('port-group') !== 'in';
+        // }
       },
       // interacting: {
       //   // 边和节点的交互

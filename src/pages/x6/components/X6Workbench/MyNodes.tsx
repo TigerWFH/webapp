@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Graph, Markup } from '@antv/x6';
+import { Graph, Markup, Edge } from '@antv/x6';
 import '@antv/x6-react-shape';
 
 /*
@@ -114,3 +114,5 @@ Graph.registerNode('my-shape', {
     ]
   }
 });
+
+
