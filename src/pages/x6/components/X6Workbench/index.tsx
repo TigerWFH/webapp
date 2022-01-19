@@ -118,48 +118,114 @@ const MOCKDATA = {
   ],
   edges: [
     {
-      source: 'node1',
-      target: 'node10'
+      source: {
+        cell: 'node1',
+        port: 'right'
+      },
+      target: {
+        cell: 'node10',
+        port: 'top'
+      }
     },
     {
-      source: 'node1',
-      target: 'node8'
+      source: {
+        cell: 'node1',
+        port: 'right'
+      },
+      target: {
+        cell: 'node8',
+        port: 'top'
+      }
     },
     {
-      source: 'node1',
-      target: 'node3'
+      source: {
+        cell: 'node1',
+        port: 'right'
+      },
+      target: {
+        cell: 'node3',
+        port: 'top'
+      }
     },
     {
-      source: 'node1',
-      target: 'node9'
+      source: {
+        cell: 'node1',
+        port: 'right'
+      },
+      target: {
+        cell: 'node9',
+        port: 'top'
+      }
     },
     {
-      source: 'node1',
-      target: 'node2'
+      source: {
+        cell: 'node1',
+        port: 'right'
+      },
+      target: {
+        cell: 'node2',
+        port: 'top'
+      }
     },
     {
-      source: 'node2',
-      target: 'node4'
+      source: {
+        cell: 'node2',
+        port: 'right'
+      },
+      target: {
+        cell: 'node4',
+        port: 'top'
+      }
     },
     {
-      source: 'node2',
-      target: 'node5'
+      source: {
+        cell: 'node2',
+        port: 'right'
+      },
+      target: {
+        cell: 'node5',
+        port: 'top'
+      }
     },
     {
-      source: 'node2',
-      target: 'node6'
+      source: {
+        cell: 'node2',
+        port: 'right'
+      },
+      target: {
+        cell: 'node6',
+        port: 'top'
+      }
     },
     {
-      source: 'node2',
-      target: 'node7'
+      source: {
+        cell: 'node2',
+        port: 'right'
+      },
+      target: {
+        cell: 'node7',
+        port: 'top'
+      }
     },
     {
-      source: 'node9',
-      target: 'node11'
+      source: {
+        cell: 'node9',
+        port: 'right'
+      },
+      target: {
+        cell: 'node11',
+        port: 'top'
+      }
     },
     {
-      source: 'node9',
-      target: 'node12'
+      source: {
+        cell: 'node9',
+        port: 'right'
+      },
+      target: {
+        cell: 'node12',
+        port: 'top'
+      }
     }
   ]
 };
@@ -186,6 +252,16 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     //   return false;
     // };
     // 此处请求需要回填的数据
+    const magnetAvailabilityHighlighter = {
+      name: 'stroke',
+      args: {
+        padding: 3,
+        attrs: {
+          strokeWidth: 3,
+          stroke: '#52c41a'
+        }
+      }
+    };
     this.graph = new Graph({
       container: this.container as HTMLDivElement,
       grid: true,
@@ -218,6 +294,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       },
       highlighting: {
         // 设置高亮配置
+        magnetAvailable: magnetAvailabilityHighlighter
       },
       connecting: {
         // 边的连接设定
@@ -228,16 +305,16 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         allowNode: true,
         // allowEdge: false,
         // allowPort: true,
-        highlight: true,
-        createEdge: () => {
-          return new Edge({
-            tools: [
-              {
-                name: 'contextmenu'
-              }
-            ]
-          });
-        }
+        highlight: true
+        // createEdge: () => {
+        //   return new Edge({
+        //     tools: [
+        //       {
+        //         name: 'contextmenu'
+        //       }
+        //     ]
+        //   });
+        // }
         // validateMagnet({ magnet }) {
         //   return magnet.getAttribute('port-group') !== 'in';
         // }
@@ -262,6 +339,28 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           );
         }
       }
+    });
+    this.graph?.on('edge:mouseenter', ({ cell }) => {
+      cell.addTools([
+        {
+          name: 'source-arrowhead'
+        },
+        {
+          name: 'target-arrowhead',
+          args: {
+            attrs: {
+              fill: 'red'
+            }
+          }
+        },
+        {
+          name: 'contextmenu'
+        }
+      ]);
+    });
+
+    this.graph?.on('edge:mouseleave', ({ cell }) => {
+      cell.removeTools();
     });
     // this.graph?.on('cell:selected', (args: any) => {
     //   console.log('cell selected===>', args);
@@ -405,7 +504,8 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       }));
       const edges = MOCKDATA.edges.map((edge) => ({
         ...edge,
-        tools
+        tools,
+        shape: 'edge'
       }));
 
       init({
