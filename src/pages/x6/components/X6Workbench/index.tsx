@@ -340,13 +340,19 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         }
       }
     });
-    this.graph?.on('node:mouseenter', ({ cell }) => {
-      cell.addTools([
-        {
-          name: 'contextmenu'
-        }
-      ]);
-    });
+
+    // this.graph?.on('node:mouseenter', ({ cell }) => {
+    //   cell.addTools([
+    //     {
+    //       name: 'contextmenu'
+    //     }
+    //   ]);
+    // });
+
+    // this.graph?.on('node:mouseleave', ({ cell }) => {
+    //   cell.removeTools();
+    // });
+
     this.graph?.on('edge:mouseenter', ({ cell }) => {
       cell.addTools([
         {
@@ -500,22 +506,14 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           label: componentType,
           x: 20,
           y: 80,
-          // width: 80,
+          // width: 80, // 节点有默认的大小，此处可以不设置
           // height: 40,
           shape: 'my-shape'
         };
         this.graph?.addNode(node);
         this.graph?.addEdge({
           target: { x: 10, y: 50 },
-          source: { x: 70, y: 50 },
-          tools: [
-            {
-              name: 'contextmenu',
-              args: {
-                graph: this.graph
-              }
-            }
-          ]
+          source: { x: 70, y: 50 }
         });
       } else if (dataSource === 'COPY_EDGE_DATA') {
         console.log('边拷贝数据');
@@ -529,13 +527,17 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
               width: 80,
               x: 80,
               y: 80,
-              shape: 'my-shape',
               label: componentType
             };
           }
 
           return {
             ...elem,
+            tools: [
+              {
+                name: 'contextmenu'
+              }
+            ],
             shape: 'wfh-shape'
           };
         });
