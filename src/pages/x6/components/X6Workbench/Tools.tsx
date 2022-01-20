@@ -51,6 +51,9 @@ export class ContextMenuTool extends ToolsView.ToolItem<
           }
         ]
       });
+    } else if (key === '2') {
+      const result = cell.removeNode();
+      console.log('remove====>', result);
     }
     // 在这里处理业务逻辑，但是不同的业务节点可能逻辑不同
   };

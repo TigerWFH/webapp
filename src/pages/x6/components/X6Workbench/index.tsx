@@ -533,7 +533,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
           return {
             ...elem,
-            shape: 'wfh-rect'
+            shape: 'wfh-demo'
           };
         });
 

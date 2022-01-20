@@ -1,8 +1,27 @@
 import React from 'react';
 import { Graph, Markup } from '@antv/x6';
+import { ReactShape } from '@antv/x6-react-shape';
 import { WfhRect } from '../WfhRect';
 import { WfhTriangle } from '../WfhTriangle';
 import { ContextMenuTool } from './Tools';
+
+interface IGraphOperations {
+  removeNode(args: any): boolean;
+}
+
+class WfhDemo extends ReactShape implements IGraphOperations {
+  removeNode(args: any): boolean {
+    return true;
+  }
+}
+
+WfhDemo.config({
+  width: 200,
+  height: 80,
+  component: <WfhRect />
+});
+
+Graph.registerNode('wfh-demo', WfhDemo);
 
 // 注册rect节点
 Graph.registerNode('wfh-rect', {
