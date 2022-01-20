@@ -1,7 +1,9 @@
 import React from 'react';
 import { Graph, Markup } from '@antv/x6';
 import { WfhShape } from './MyNodes';
+import { ContextMenuTool } from './Tools';
 
+// 注册自定义节点
 Graph.registerNode('wfh-shape', {
   inherit: 'react-shape',
   x: 200,
@@ -47,3 +49,8 @@ Graph.registerNode('wfh-shape', {
     ]
   }
 });
+
+// 注册tools
+// 注册到系统中
+Graph.registerEdgeTool('contextmenu', ContextMenuTool, true);
+Graph.registerNodeTool('contextmenu', ContextMenuTool, true);

@@ -2,12 +2,10 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Graph } from '@antv/x6';
 import { Tooltip } from 'antd';
-// import { WfhShape } from './MyNodes';
 import Immutable from 'immutable';
-import '@antv/x6-react-shape';
-import './Tools'; // 载入工具
-import styles from './index.module.scss';
 import * as t from '../types';
+import styles from './index.module.scss';
+import '@antv/x6-react-shape';
 import './register';
 interface IX6Workbench extends t.IWorkbench {}
 
@@ -301,7 +299,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       connecting: {
         // 边的连接设定
         snap: true,
-        allowBlank: false,
+        allowBlank: true,
         // allowMulti: true,
         allowLoop: false,
         allowNode: true,
