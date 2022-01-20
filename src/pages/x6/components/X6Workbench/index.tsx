@@ -1,12 +1,14 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Graph, Shape, Cell, Edge } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import { Tooltip } from 'antd';
+// import { WfhShape } from './MyNodes';
 import Immutable from 'immutable';
+import '@antv/x6-react-shape';
 import './Tools'; // 载入工具
-import './MyNodes';
 import styles from './index.module.scss';
 import * as t from '../types';
+import './register';
 interface IX6Workbench extends t.IWorkbench {}
 
 const MOCKDATA = {
@@ -340,6 +342,13 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         }
       }
     });
+    this.graph?.on('node:mouseenter', ({ cell }) => {
+      cell.addTools([
+        {
+          name: 'contextmenu'
+        }
+      ]);
+    });
     this.graph?.on('edge:mouseenter', ({ cell }) => {
       cell.addTools([
         {
@@ -424,44 +433,6 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     // });
     const { init } = this.props;
     setTimeout(() => {
-      // 小工具
-      const tools = [
-        {
-          name: 'contextmenu',
-          args: {
-            graph: this.graph
-          }
-        }
-      ];
-      /*
-      链接桩(Ports)
-        markup，链接桩节点，可以定义在单个链接桩、链接桩群组和portMarkup三个位置
-        // DOM结构
-        markup = {
-          tagName: 'circle',
-          selector: 'circle',
-          attrs: {
-            r: 10,
-            fill: '#fff',
-            stroke: '#000'
-          }
-        }
-        // 使用
-        ports = [
-          {
-            id: '',
-            attrs: {
-              circle: {
-                r: 6,
-                fille: '',
-                stroke: '',
-                strokeWidth: '',
-              }
-            }
-          }
-        ]
-        // 链接桩位置
-      */
       const ports = [
         {
           id: 'top',
@@ -487,24 +458,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             }
           }
         }
-        // {
-        //   id: 'bottom',
-        //   position: 'bottom'
-        // },
-        // {
-        //   id: 'left',
-        //   position: 'left'
-        // }
       ];
 
       const nodes = MOCKDATA.nodes.map((node) => ({
         ...node,
-        tools,
+        // tools,
         ports
       }));
       const edges = MOCKDATA.edges.map((edge) => ({
         ...edge,
-        tools,
         shape: 'edge'
       }));
 
@@ -569,12 +531,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
               width: 80,
               x: 80,
               y: 80,
-              shape: 'rect',
+              shape: 'my-shape',
               label: componentType
             };
           }
 
-          return elem;
+          return {
+            ...elem,
+            shape: 'wfh-shape'
+          };
         });
 
         this.graph?.fromJSON({

@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@antv/layout": "0.1.14",
-    "@antv/x6": "1.29.5",
+    "@antv/x6": "1.29.6",
     "@antv/x6-react-components": "1.1.13",
-    "@antv/x6-react-shape": "^1.4.5",
+    "@antv/x6-react-shape": "1.6.0",
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-decorators": "7.16.4",
     "@loadable/component": "5.15.0",
