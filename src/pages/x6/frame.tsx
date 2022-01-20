@@ -12,8 +12,8 @@ import { WfhInput } from './components/WfhInput';
 import { WfhInputNum } from './components/WfhInputNum';
 import { WfhSelect } from './components/WfhSelect';
 import { WfhTable } from './components/WfhTable';
-import { WfhRect } from './components/X6Workbench/components/WfhRect';
-import { WfhTriangle } from './components/X6Workbench/components/WfhTriangle';
+import { WfhRect } from './components/WfhRect';
+import { WfhTriangle } from './components/WfhTriangle';
 import Immutable from 'immutable';
 import styles from './index.module.scss';
 

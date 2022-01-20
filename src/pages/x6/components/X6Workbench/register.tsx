@@ -1,7 +1,7 @@
 import React from 'react';
 import { Graph, Markup } from '@antv/x6';
-import { WfhRect } from './components/WfhRect';
-import { WfhTriangle } from './components/WfhTriangle';
+import { WfhRect } from '../WfhRect';
+import { WfhTriangle } from '../WfhTriangle';
 import { ContextMenuTool } from './Tools';
 
 // 注册rect节点

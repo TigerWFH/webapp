@@ -14,7 +14,7 @@ interface ICustomProps {
 }
 export class WfhRect extends Component<ICustomProps, any> {
   count: number;
-  static componentType: string;
+  static componentType: string; // 组件类型
   static title: string;
   constructor(props: any) {
     super(props);
