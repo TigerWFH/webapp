@@ -12,6 +12,8 @@ import { WfhInput } from './components/WfhInput';
 import { WfhInputNum } from './components/WfhInputNum';
 import { WfhSelect } from './components/WfhSelect';
 import { WfhTable } from './components/WfhTable';
+import { WfhRect } from './components/X6Workbench/components/WfhRect';
+import { WfhTriangle } from './components/X6Workbench/components/WfhTriangle';
 import Immutable from 'immutable';
 import styles from './index.module.scss';
 
@@ -89,6 +91,24 @@ interface IDragSourceProps {
 
 */
 const MOCK_TOO_LIST: IDragSourceProps[] = [
+  {
+    id: WfhRect.title, // 用于搜索
+    name: WfhRect.title, // 用于搜索
+    type: DND_ITEM_LIST[0],
+    data: {
+      componentType: WfhRect.componentType,
+      config: {}
+    }
+  },
+  {
+    id: WfhTriangle.title, // 用于搜索
+    name: WfhTriangle.title, // 用于搜索
+    type: DND_ITEM_LIST[0],
+    data: {
+      componentType: WfhTriangle.componentType,
+      config: {}
+    }
+  },
   {
     id: Alert.title, // 用于搜索
     name: Alert.title, // 用于搜索

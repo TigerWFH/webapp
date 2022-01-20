@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ReactShape } from '@antv/x6-react-shape';
+import styles from './index.module.scss';
 
 /*
   X6部分操作会引起画布的重绘；使用的React组件也会被重绘，可以通过SCU优化
@@ -11,8 +12,10 @@ import { ReactShape } from '@antv/x6-react-shape';
 interface ICustomProps {
   node?: ReactShape;
 }
-export class WfhShape extends Component<ICustomProps, any> {
+export class WfhTriangle extends Component<ICustomProps, any> {
   count: number;
+  static componentType: string;
+  static title: string;
   constructor(props: any) {
     super(props);
     console.log('constructor');
@@ -61,13 +64,9 @@ export class WfhShape extends Component<ICustomProps, any> {
   };
 
   render() {
-    return (
-      <div style={{ border: '1px solid red' }}>
-        {/* <div onClick={this.onChangeData}>change data</div>
-        <div onClick={this.onChangeName}>change name</div> */}
-        {/* {`MyShape-${this.state.name}-${this.props.node?.data?.name}`} */}
-        {`MyShape-`}
-      </div>
-    );
+    return <div className={styles.root}>triangle</div>;
   }
 }
+
+WfhTriangle.componentType = 'wfh-triangle';
+WfhTriangle.title = 'triangle';

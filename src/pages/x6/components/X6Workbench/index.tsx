@@ -341,17 +341,17 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       }
     });
 
-    // this.graph?.on('node:mouseenter', ({ cell }) => {
-    //   cell.addTools([
-    //     {
-    //       name: 'contextmenu'
-    //     }
-    //   ]);
-    // });
+    this.graph?.on('node:mouseenter', ({ cell }) => {
+      cell.addTools([
+        {
+          name: 'contextmenu'
+        }
+      ]);
+    });
 
-    // this.graph?.on('node:mouseleave', ({ cell }) => {
-    //   cell.removeTools();
-    // });
+    this.graph?.on('node:mouseleave', ({ cell }) => {
+      cell.removeTools();
+    });
 
     this.graph?.on('edge:mouseenter', ({ cell }) => {
       cell.addTools([
@@ -500,15 +500,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       if (dataSource === 'DRAG_NODE_DATA') {
         console.log('拖拽产生的数据=====>', current);
         const tmp = current?.toJS();
-        const { id, componentType } = tmp;
+        const { id, componentType, title } = tmp;
         const node = {
           id,
-          label: componentType,
+          label: title,
           x: 20,
           y: 80,
           // width: 80, // 节点有默认的大小，此处可以不设置
           // height: 40,
-          shape: 'my-shape'
+          shape: componentType
         };
         this.graph?.addNode(node);
         this.graph?.addEdge({
@@ -533,12 +533,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
           return {
             ...elem,
-            tools: [
-              {
-                name: 'contextmenu'
-              }
-            ],
-            shape: 'wfh-shape'
+            shape: 'wfh-rect'
           };
         });
 

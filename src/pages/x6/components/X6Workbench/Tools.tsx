@@ -27,7 +27,9 @@ export class ContextMenuTool extends ToolsView.ToolItem<
   }
 
   onMenu = (arg: any) => {
-    console.log('arg====>', arg, this.contextMenu);
+    console.log('arg====>', arg, this);
+    const { cell } = this.contextMenu;
+    console.log('=====>cell=====>', cell.shape);
     const { key } = arg;
     if (key === '1') {
       const { edge } = this.contextMenu;
