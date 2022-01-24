@@ -7,6 +7,7 @@ import * as t from '../types';
 import styles from './index.module.scss';
 import '@antv/x6-react-shape';
 import './register';
+import { validate } from 'uuid';
 interface IX6Workbench extends t.IWorkbench {}
 
 const MOCKDATA = {
@@ -299,13 +300,29 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       connecting: {
         // 边的连接设定
         snap: true,
-        allowBlank: true,
+        allowBlank: false,
         // allowMulti: true,
         allowLoop: false,
         allowNode: true,
         // allowEdge: false,
         // allowPort: true,
-        highlight: true
+        highlight: true,
+        validateConnection(args: any) {
+          const { sourceCell, targetCell, edge } = args;
+          console.log('validateConnection=========>', edge);
+          if (targetCell && sourceCell) {
+            if (sourceCell.canConnect(targetCell.getRegisterName())) {
+              return true;
+            }
+          }
+
+          return false;
+        },
+        validateEdge(args: any) {
+          console.log('validateEdge====>', args);
+
+          return true;
+        }
         // createEdge: () => {
         //   return new Edge({
         //     tools: [
@@ -319,12 +336,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         //   return magnet.getAttribute('port-group') !== 'in';
         // }
       },
-      // interacting: {
-      //   // 边和节点的交互
-      //   nodeMovable: true,
-      //   edgeMovable: true,
-      //   arrowheadMovable: true
-      // },
+      interacting: {},
       onPortRendered(args) {
         const selectors = args.contentSelectors;
         const container = selectors && selectors.foContent;

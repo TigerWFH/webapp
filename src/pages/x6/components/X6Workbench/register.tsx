@@ -5,27 +5,62 @@ import { WfhRect } from '../WfhRect';
 import { WfhTriangle } from '../WfhTriangle';
 import { ContextMenuTool } from './Tools';
 
+// 公共的业务接口
 interface IGraphOperations {
-  removeNode(args: any): boolean;
+  getRegisterName(): string;
+  removeNode?(args: any): boolean;
+  canConnect?(args: string): boolean;
 }
 
-class WfhDemo extends ReactShape implements IGraphOperations {
+// 注册业务节点
+class WfhDemoNode extends ReactShape implements IGraphOperations {
+  getRegisterName() {
+    return 'wfh-demo';
+  }
+
   removeNode(args: any): boolean {
+    return true;
+  }
+
+  canConnect(args: string) {
+    const NOT_CONNECTTION_TYPE = ['wfh-rect', 'wfh-triangle'];
+    if (NOT_CONNECTTION_TYPE.includes(args)) {
+      return false;
+    }
+
     return true;
   }
 }
 
-WfhDemo.config({
+WfhDemoNode.config({
   width: 200,
   height: 80,
   component: <WfhRect />
 });
 
-Graph.registerNode('wfh-demo', WfhDemo);
+Graph.registerNode('wfh-demo', WfhDemoNode, true);
 
 // 注册rect节点
-Graph.registerNode('wfh-rect', {
-  inherit: 'react-shape',
+class WfhRectNode extends ReactShape implements IGraphOperations {
+  getRegisterName() {
+    return 'wfh-rect';
+  }
+
+  removeNode(args: any): boolean {
+    return true;
+  }
+
+  canConnect(args: string) {
+    const NOT_CONNECTTION_TYPE = ['wfh-rect'];
+    if (NOT_CONNECTTION_TYPE.includes(args)) {
+      return false;
+    }
+
+    return true;
+  }
+}
+
+WfhRectNode.config({
   width: 160,
   height: 30,
   component: <WfhRect />,
@@ -67,9 +102,28 @@ Graph.registerNode('wfh-rect', {
     ]
   }
 });
+Graph.registerNode('wfh-rect', WfhRectNode, true);
 // 注册triangle节点
-Graph.registerNode('wfh-triangle', {
-  inherit: 'react-shape',
+class WfhTriangleNode extends ReactShape implements IGraphOperations {
+  getRegisterName() {
+    return 'wfh-triangle';
+  }
+
+  removeNode(args: any): boolean {
+    return true;
+  }
+
+  canConnect(args: string) {
+    const NOT_CONNECTTION_TYPE = ['wfh-triangle'];
+    if (NOT_CONNECTTION_TYPE.includes(args)) {
+      return false;
+    }
+
+    return true;
+  }
+}
+
+WfhTriangleNode.config({
   width: 160,
   height: 30,
   component: <WfhTriangle />,
@@ -109,6 +163,8 @@ Graph.registerNode('wfh-triangle', {
     ]
   }
 });
+
+Graph.registerNode('wfh-triangle', WfhTriangleNode, true);
 
 // 注册tools
 // 注册到系统中
