@@ -5,6 +5,7 @@
 ## 术语<https://www.jianshu.com/p/bc4d8ce267d1>
 
 - `创建器(creator)：`用来创建流，返回一个 Observable 类型的对象
+
   - `of(1,2,3)：`将单值转为流
   - `from([1,2,3])：`将数组转为流
   - `range(1, 10)：`范围转为流
@@ -12,8 +13,42 @@
   - `defer(factory)`
   - `timer()`
   - `interval()`
-  - `fromEventPattern()`
-  - `fromEvent()`
+  - `fromEvent(target, EventType)：`能够从事件流产生 observable，但是对数据源的要求比较严格，要求是 DOM 或者 Node 的 EventEmitter，所以就出现了 fromEventPattern
+
+```js
+/* node */
+import EventEmitter from 'events';
+
+// dom
+const clicks = fromEvent(document, 'click');
+clicks.subscribe((x) => console.log(x));
+// node
+const emitter = new EventEmitter();
+const source$ = fromEvent(emitter, 'msg');
+source$.subscribe((x) => {
+  console.log(x);
+});
+emitter.emit('msg', 1);
+emitter.emit('msg', 2);
+emitter.emit('msg', 3);
+```
+
+- `fromEventPattern(addEventHandler, removeEventHandler)：`
+
+```js
+function addClickHandler(handler) {
+  document.addEventListener('click', handler);
+}
+
+function removeClickHandler(handler) {
+  document.removeEventListener('click', handler);
+}
+
+const clicks = fromEventPattern(addClickHandler, removeClickHandler);
+
+clicks.subscribe((x) => console.log(x));
+```
+
 - `操作符(operator)：`类似 map、filter 等，用来对条目进行处理，作为 Observable 对象的 pipe 方法的入参传递进去
 - `主题对象(Subject)：`和创建器不同，创建器是供直接调用的函数，而 Subject 则是一个实现了 Observable 接口的类。它的典型用法是用来管理事件，比如当用户点击了某个按钮时，你希望发出一个事件，那么就可以调用 subject.next(someValue) 来把事件内容放进流中。当你希望手动控制往这个流中放数据的时机时，这种特性非常有用。事件分发？？？
 
