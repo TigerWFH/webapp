@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Dropdown, Menu } from 'antd';
 import { ToolsView, EdgeView } from '@antv/x6';
+import { Edge } from '@antv/x6';
 
 interface ContextMenuToolOptions extends ToolsView.ToolItem.Options {
   //   menu: React.ReactElement;
@@ -26,11 +27,11 @@ export class ContextMenuTool extends ToolsView.ToolItem<
     return this;
   }
 
-  onMenu = (arg: any) => {
-    console.log('arg====>', arg, this);
+  onMenu = (args: any) => {
+    console.log('arg====>', args, this);
     const { cell } = this.contextMenu;
     console.log('=====>cell=====>', cell.shape);
-    const { key } = arg;
+    const { key, domEvent } = args;
     if (key === '1') {
       const { edge } = this.contextMenu;
       const source = edge.getSource();
@@ -52,17 +53,34 @@ export class ContextMenuTool extends ToolsView.ToolItem<
         ]
       });
     } else if (key === '2') {
-      const result = cell.removeNode();
-      console.log('remove====>', result);
+      const { e } = this.contextMenu;
+      if (cell.isNode()) {
+        const outgoingEdges = this.graph?.getOutgoingEdges(cell);
+        const incomingEdges = this.graph?.getIncomingEdges(cell);
+        const { clientX, clientY } = e;
+        const pos = this.graph.clientToGraph(clientX, clientY);
+        if (outgoingEdges) {
+          outgoingEdges.forEach((edge: Edge) => {
+            edge.setSource(pos);
+          });
+        }
+        if (incomingEdges) {
+          incomingEdges.forEach((edge: Edge) => {
+            edge.setTarget(pos);
+          });
+        }
+        this.graph?.removeNode(cell);
+      } else if (cell.isEdge()) {
+        this.graph?.removeEdge(cell);
+      }
     }
-    // 在这里处理业务逻辑，但是不同的业务节点可能逻辑不同
   };
 
   renderMenu() {
     return (
       <Menu onClick={this.onMenu}>
         <Menu.Item key="1">复制</Menu.Item>
-        <Menu.Item key="2">2</Menu.Item>
+        <Menu.Item key="2">删除</Menu.Item>
         <Menu.Item key="3">3</Menu.Item>
       </Menu>
     );
@@ -105,9 +123,10 @@ export class ContextMenuTool extends ToolsView.ToolItem<
     }, 200);
   };
 
-  private onContextMenu({ e, ...rest }: { e: MouseEvent }) {
+  private onContextMenu(args: any) {
+    const { e } = args;
     // 拿到当前节点信息
-    this.contextMenu = rest;
+    this.contextMenu = args;
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = 0;

@@ -300,29 +300,30 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       connecting: {
         // 边的连接设定
         snap: true,
-        allowBlank: false,
+        allowBlank: true,
         // allowMulti: true,
         allowLoop: false,
         allowNode: true,
         // allowEdge: false,
         // allowPort: true,
-        highlight: true,
-        validateConnection(args: any) {
-          const { sourceCell, targetCell, edge } = args;
-          console.log('validateConnection=========>', edge);
-          if (targetCell && sourceCell) {
-            if (sourceCell.canConnect(targetCell.getRegisterName())) {
-              return true;
-            }
-          }
+        highlight: true
+        // validateConnection(args: any) {
+        //   const { sourceCell, targetCell, edge } = args;
+        //   console.log('validateConnection=========>', edge);
+        //   if (targetCell && sourceCell) {
+        //      cell.shape可以代替getRegisterName
+        //     if (sourceCell.canConnect(targetCell.getRegisterName())) {
+        //       return true;
+        //     }
+        //   }
 
-          return false;
-        },
-        validateEdge(args: any) {
-          console.log('validateEdge====>', args);
+        //   return false;
+        // },
+        // validateEdge(args: any) {
+        //   console.log('validateEdge====>', args);
 
-          return true;
-        }
+        //   return true;
+        // }
         // createEdge: () => {
         //   return new Edge({
         //     tools: [
