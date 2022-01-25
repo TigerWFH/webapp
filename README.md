@@ -3149,6 +3149,37 @@ var c = a.merge(b);
 
 ## typescript
 
+### typescript 中的声明
+
+> 1、告诉 ts 编译器，某个导入项（对象、变量、包、类等等）已经存在了，不用检查
+>
+> 2、对于发布的 npm 包，IDE 可以通过声明文件做代码提示
+>
+> 类型合并：类型是可以合并的
+
+```ts
+// 声明变量: declare var | const | let
+declare var name: string;
+declare const gender: string;
+declare let grade: number;
+//  声明函数、声明重载函数
+declare function greet(name: string): void;
+declare function greet(name: number): void;
+declare function greet(name: string[]): void;
+// 声明类
+declare class Greeter {
+    constructor(greeting: string);
+
+    greeting: string;
+    showGreeting(: void;)
+}
+// 声明命名空间
+declare namespace myLib {
+  function makeGreeting(s: string): void;
+  let numberOfGreetings: number;
+}
+```
+
 ### 类型
 
 > 布尔值（boolean）、数字（number）、字符串（string）、数组（Array、[]）、元组（Tuple）、枚举（enum）、Any（不清楚的类型）、Void（与 any 相反，没有任何类型）、Null、Undefined、Never（不存在的值得类型）、Object（非原始类型）
