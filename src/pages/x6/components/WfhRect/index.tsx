@@ -29,8 +29,9 @@ export class WfhRect extends Component<ICustomProps, any> {
     const { node } = this.props;
     console.log('SCU=====>', prevNode === node);
     const data = node?.getData();
-    console.log('666666666666666====>', data);
     if (node?.hasChanged('data')) {
+      console.log('hasChange====>', data);
+
       return true;
     } else {
       console.log('data didnot change====>', data);
@@ -65,7 +66,7 @@ export class WfhRect extends Component<ICustomProps, any> {
     });
   };
 
-  render() {
+  renderClassic() {
     return (
       <div className={styles.root}>
         <div onClick={this.onChangeData}>change data</div>
@@ -74,6 +75,19 @@ export class WfhRect extends Component<ICustomProps, any> {
         {`MyShape-`}
       </div>
     );
+  }
+
+  renderSimplified() {
+    return <div>simplified</div>;
+  }
+
+  render() {
+    const { node } = this.props;
+    const { type } = node?.getData() || {};
+    console.log('mode========>', type);
+    return type === 'simplified'
+      ? this.renderSimplified()
+      : this.renderClassic();
   }
 }
 

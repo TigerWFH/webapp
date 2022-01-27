@@ -63,8 +63,28 @@ export class WfhTriangle extends Component<ICustomProps, any> {
     });
   };
 
+  renderClassic() {
+    return (
+      <div className={styles.root}>
+        <div onClick={this.onChangeData}>change data</div>
+        <div onClick={this.onChangeName}>change name</div>
+        {`Triangle-${this.state.name}-${this.props.node?.data?.name}`}
+        {`Triangle-`}
+      </div>
+    );
+  }
+
+  renderSimplified() {
+    return <div>simplified</div>;
+  }
+
   render() {
-    return <div className={styles.root}>triangle</div>;
+    const { node } = this.props;
+    const { mode } = node?.getData() || {};
+    console.log('mode========>', mode);
+    return mode === 'simplified'
+      ? this.renderSimplified()
+      : this.renderClassic();
   }
 }
 

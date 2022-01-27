@@ -569,7 +569,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     const allNodes = this.graph?.getNodes();
     allNodes?.forEach((node) => {
       node.setData({
-        type: 'classic'
+        type: 'simplified'
       });
     });
   };
