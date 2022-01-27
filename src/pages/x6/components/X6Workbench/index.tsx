@@ -565,6 +565,15 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     console.log('allData====>', allData, model, view);
   };
 
+  onSwitchMode = () => {
+    const allNodes = this.graph?.getNodes();
+    allNodes?.forEach((node) => {
+      node.setData({
+        type: 'classic'
+      });
+    });
+  };
+
   render() {
     console.log('x6------render====>', this.props);
     return (
@@ -572,6 +581,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         <div className={styles.toolbar}>
           <button onClick={this.onChange}>dispatch</button>
           <button onClick={this.onGetAllData}>获取数据</button>
+          <button onClick={this.onSwitchMode}>改变模式</button>
         </div>
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>

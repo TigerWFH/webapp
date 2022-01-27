@@ -53,7 +53,7 @@ class Log extends React.Component<ILogProps, never, never> {
     }
 
     render() {
-        const { name, bActive, bDecision, width, height } = this.props;
+        const { name, bActive, bDecision, width, height, node } = this.props;
         const inlineStyles = {
             height: `${height}px`,
             width: `${width}px`,

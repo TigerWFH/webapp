@@ -14,6 +14,10 @@ interface IGraphOperations {
 
 // 注册业务节点
 class WfhDemoNode extends ReactShape implements IGraphOperations {
+  mode: string = 'classic';
+  setMode(mode: string) {
+    this.mode = mode;
+  }
   getRegisterName() {
     return 'wfh-demo';
   }

@@ -28,10 +28,12 @@ export class WfhRect extends Component<ICustomProps, any> {
     const prevNode = this.props.node;
     const { node } = this.props;
     console.log('SCU=====>', prevNode === node);
+    const data = node?.getData();
+    console.log('666666666666666====>', data);
     if (node?.hasChanged('data')) {
       return true;
     } else {
-      console.log('data didnot change');
+      console.log('data didnot change====>', data);
     }
 
     return false;
