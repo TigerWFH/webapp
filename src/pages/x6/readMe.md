@@ -29,14 +29,13 @@
 ### 画布重绘
 
 ```js
-  /*
+/*
     set markup：触发change:markup事件，画布重绘
     setMarkup()：触发change:markup事件，画布重绘
     removeMarkup():
 
     attrs：触发change:attrs事件，画布重绘
-  */ 
-
+  */
 ```
 
 ### x6 拖动画布 panning 和滚动画布 scroller 区别
@@ -225,55 +224,43 @@ Edge <|-- Shape.ShadowEdge
   Graph.registerNode(name: string, cls: typeof Node, overwrite?: boolean)
   Graph.registerNode(name: string, options: Object, overwrite?: boolean)
 */
-// 方案一
-import { Node } from "antv/x6"
-// 继承
-class Rect extends Node {
-  // 扩展内容，比如操作业务数据的方法
-}
-// 配置,使用静态方法做默认配置cell.config(options),该方法会被继承
-Rect.config({
-  width: 100,
-  height: 100,
-  markup: [
-    {
-      tagName: 'rect',
-      selector: 'body',
-    },
-    {
-      tagName: 'text',
-      selector: 'label'
-    }
-  ],
-  attrs: {
-    body: {
-      fill: '#ffffff',
-      stroke: '#333333',
-      strokeWidth: 2
-    },
-    label: {
+/*
+  方案1：
+    扩展派生类：Demo
+    配置默认项：Demo.config({})
+    注册入系统：Graph.registerNode(name:strin, cls: typeof Node, overwrite?: boolean)
+  方案2（便捷方法）：使用系统内置节点类型的静态方法define定义新节点
+    配置默认项：const RedRect = Rect.define({})
+    注册入系统：Graph.registerNode('red-react', RedRect)
+  方案3（便捷方法）：Graph.registerNode另一种签名
+    注册入系统：Graph.registerNode(name: string, options: Object, overwrite?: boolean)
+-----------------------------------------------------------
+  关于react组件的注册
+  独立的react支持包：@antv/x6-react-shape，提供了react-shape和ReactShape
+  使用方法：
+    graph.addNode({
+      x:,
+      y:,
+      width:,
+      height:,
+      shape: 'rect-shape',
+      component: ReactComponent
+    })
 
-    }
-  },
-  propHooks(metadata) {
-    cosnt { label, ...others} = metadata
-    if (label) {
-      ObjectExt.setByPath(others, 'attrs/text/text', label)
-    }
+  注册react组件
+    方案1：Graph.registerNode(name, options, overwrite)，可以直接使用shape
 
-    return others
-  }
-})
-// 注册自定义节点类型到x6系统
-// Graph.registerNode(name: string, cls: typeof Node, overwrite?: boolean)
-Graph.registerNode('rect', 'Rect');// 注册shape为rect的节点类型
-graph.addNode({
-  shape: 'rect',
-  x: 30,
-  y: 40
-})
+    方案2：Graph.registerReactComponent(name, ReactComponent)，还需要x6节点的支持，该函数只是注册了一批React组件，React组件可以灵活与X6节点配合。方法如下：
+      graph.addNode({
+        shape: xxx,
+        component: '', // 此处填写通过Graph.registerReactComponent注册的组件，也可以注册xxx节点时，直接指定react组件
+      })
+    
+  结论：
+    注册的都是X6的Cell的扩展类，只是在config阶段指定React组件
+    Graph.registerReactComponent(name, ReactComponent)只是在ReactShape作用域内注册了react组件，实际使用还是要通过x6节点的config中的component指定，静态和动态的区别
 
-
+*/
 ```
 
 ### 边元素（Edge）
