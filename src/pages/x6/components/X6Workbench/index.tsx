@@ -6,8 +6,8 @@ import Immutable from 'immutable';
 import * as t from '../types';
 import styles from './index.module.scss';
 import '@antv/x6-react-shape';
+import { WfhDD, WfhDemoNode } from './biz';
 import './register';
-import { validate } from 'uuid';
 interface IX6Workbench extends t.IWorkbench {}
 
 const MOCKDATA = {
@@ -554,6 +554,12 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           nodes: targetList,
           edges: edgeList?.toJS()
         });
+        /*
+          继承Cell节点，不注册可以直接实例化使用
+          注册的作用就是：依赖注入
+        */
+        this.graph?.addNode(new WfhDD());
+        this.graph?.addNode(new WfhDemoNode());
       }
     }
   }

@@ -67,6 +67,7 @@ export class WfhRect extends Component<ICustomProps, any> {
   };
 
   renderClassic() {
+    // 经典视图
     return (
       <div className={styles.root}>
         <div onClick={this.onChangeData}>change data</div>
@@ -78,6 +79,7 @@ export class WfhRect extends Component<ICustomProps, any> {
   }
 
   renderSimplified() {
+    // 精简视图
     return <div>simplified</div>;
   }
 
