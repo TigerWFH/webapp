@@ -88,7 +88,7 @@ export class WfhRectNode extends ReactShape implements IGraphOperations {
 WfhRectNode.config({
   width: 160,
   height: 30,
-  component: <WfhRect />,
+  // component: <WfhRect />,
   portMarkup: [Markup.getForeignObjectMarkup()],
   ports: {
     groups: {

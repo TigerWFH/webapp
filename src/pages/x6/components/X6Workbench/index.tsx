@@ -6,6 +6,7 @@ import Immutable from 'immutable';
 import * as t from '../types';
 import styles from './index.module.scss';
 import '@antv/x6-react-shape';
+import { WfhRect } from '../WfhRect';
 import { WfhDD, WfhDemoNode } from './biz';
 import './register';
 interface IX6Workbench extends t.IWorkbench {}
@@ -521,7 +522,8 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           y: 80,
           // width: 80, // 节点有默认的大小，此处可以不设置
           // height: 40,
-          shape: componentType
+          shape: componentType,
+          component: <WfhRect />
         };
         this.graph?.addNode(node);
         this.graph?.addEdge({
