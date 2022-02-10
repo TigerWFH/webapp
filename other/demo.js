@@ -1,3 +1,259 @@
+'use strict';
+
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function');
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: { value: subClass, writable: true, configurable: true }
+  });
+  Object.defineProperty(subClass, 'prototype', { writable: false });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf =
+    Object.setPrototypeOf ||
+    function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+  return _setPrototypeOf(o, p);
+}
+
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+      result;
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
+    return call;
+  } else if (call !== void 0) {
+    throw new TypeError(
+      'Derived constructors may only return object or undefined'
+    );
+  }
+  return _assertThisInitialized(self);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError(
+      "this hasn't been initialised - super() hasn't been called"
+    );
+  }
+  return self;
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === 'function') return true;
+  try {
+    Boolean.prototype.valueOf.call(
+      Reflect.construct(Boolean, [], function () {})
+    );
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _get() {
+  if (typeof Reflect !== 'undefined' && Reflect.get) {
+    _get = Reflect.get;
+  } else {
+    _get = function _get(target, property, receiver) {
+      var base = _superPropBase(target, property);
+      if (!base) return;
+      var desc = Object.getOwnPropertyDescriptor(base, property);
+      if (desc.get) {
+        return desc.get.call(arguments.length < 3 ? target : receiver);
+      }
+      return desc.value;
+    };
+  }
+  return _get.apply(this, arguments);
+}
+
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = _getPrototypeOf(object);
+    if (object === null) break;
+  }
+  return object;
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf
+    ? Object.getPrototypeOf
+    : function _getPrototypeOf(o) {
+        return o.__proto__ || Object.getPrototypeOf(o);
+      };
+  return _getPrototypeOf(o);
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ('value' in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, 'prototype', { writable: false });
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+var Animal = /*#__PURE__*/ (function () {
+  function Animal(name, age) {
+    var _this = this;
+
+    _classCallCheck(this, Animal);
+
+    _defineProperty(this, 'getAge', function () {
+      console.log('animal-age');
+      return _this.age;
+    });
+
+    this.name = name;
+    this.age = age;
+  }
+
+  _createClass(Animal, [
+    {
+      key: 'getName',
+      value: function getName() {
+        console.log('animal-name');
+        return this.name;
+      }
+    }
+  ]);
+
+  return Animal;
+})();
+
+var Monkey = /*#__PURE__*/ (function (_Animal) {
+  _inherits(Monkey, _Animal);
+
+  var _super = _createSuper(Monkey);
+
+  function Monkey(name, age, desc) {
+    var _thisSuper, _this2;
+    /*
+        结论1：
+            class中，箭头函数是挂载在实例上的；非箭头函数是挂载在原型上的
+        结论2：
+            箭头函数生成时机是new实例的时候
+
+            基类Animal中的箭头函数挂载到基类实例上的；
+            子类Monkey中的箭头函数是挂载到子类实例上的；
+        结论3：
+            箭头函数和非箭头函数实例顺序
+            单个class：
+                非箭头函数在new之前会挂载到原型上；
+                箭头函数在new的时候，生成并挂载到实例上
+            继承中：
+                非箭头函数在new之前会挂载到原型上，且先挂载基类的非箭头函数，在挂载子类的非箭头函数
+                箭头函数在new时候生成，且先生成基类，并将基类的箭头函数挂载到原型上（原因就是子类的原型就是基类的实例）；再生成子类的箭头函数，挂载到子类实例上
+        结论4：
+            生成挂载到原型上的顺序：
+                基类非箭头函数、子类非箭头函数、基类箭头函数、子类的箭头函数（挂载到自己的实例上）
+        所以，在写class继承的时候，要覆盖，最好保证子类和基类同名成员函数写法的一致性，不然会因为覆盖优先级问题导致非预期结果
+
+    */
+    Monkey.prototype.getAge();
+    _classCallCheck(this, Monkey);
+    Monkey.prototype.getAge();
+
+    _this2 = _super.call(this, name, age);
+
+    _defineProperty(_assertThisInitialized(_this2), 'getName', function () {
+      _get(
+        ((_thisSuper = _assertThisInitialized(_this2)),
+        _getPrototypeOf(Monkey.prototype)),
+        'getName',
+        _thisSuper
+      ).call(_thisSuper);
+
+      console.log('monkey_name');
+      return _this2.name;
+    });
+
+    _this2.desc = desc;
+    return _this2;
+  }
+
+  _createClass(Monkey, [
+    {
+      key: 'getAge',
+      value: function getAge() {
+        console.log('monkey_age');
+      }
+    }
+  ]);
+
+  return Monkey;
+})(Animal);
+
+var monkey = new Monkey('monkey', 12, 'I am a monkey');
+monkey.getAge();
 // let target = [1,2,3,2,34,3,4,523,23,45,768,34,34,1,23,345];
 
 // function selectSort(arr) {
@@ -116,26 +372,32 @@
 // }
 
 function createThunkMiddleware(extraArgument) {
-    return ({ dispatch, getState }) => (next) => (action) => {
-        console.log("async-action-dispatch===>", dispatch)
-        if (typeof action === 'function') {
-            return action(dispatch, getState, extraArgument);
-        }
+  return ({ dispatch, getState }) =>
+    (next) =>
+    (action) => {
+      console.log('async-action-dispatch===>', dispatch);
+      if (typeof action === 'function') {
+        return action(dispatch, getState, extraArgument);
+      }
 
-        return next(action);
+      return next(action);
     };
 }
 
 const thunk = createThunkMiddleware();
 
 let dispatch = (action, ...args) => {
-    console.log("origin")
-}
+  console.log('origin');
+};
 
 const middlewareAPI = {
-    dispatch: (action, ...args) => { return dispatch(action, ...args) }
-}
+  dispatch: (action, ...args) => {
+    return dispatch(action, ...args);
+  }
+};
 
-dispatch = thunk(middlewareAPI)(function(action, ...args){console.log("new dispatch")})
+dispatch = thunk(middlewareAPI)(function (action, ...args) {
+  console.log('new dispatch');
+});
 
-dispatch(1, 23)
+dispatch(1, 23);
