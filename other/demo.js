@@ -172,8 +172,8 @@ var Animal = /*#__PURE__*/ (function () {
       return _this.age;
     });
 
-    this.name = name;
-    this.age = age;
+    this.name = name || 'Animal';
+    this.age = age || 0;
   }
 
   _createClass(Animal, [
@@ -190,37 +190,27 @@ var Animal = /*#__PURE__*/ (function () {
 })();
 
 var Monkey = /*#__PURE__*/ (function (_Animal) {
+  // 改写子类原型
   _inherits(Monkey, _Animal);
 
   var _super = _createSuper(Monkey);
 
   function Monkey(name, age, desc) {
+    console.log('getAge_in_Monkey======>', Monkey.prototype.getAge);
     var _thisSuper, _this2;
     /*
         结论1：
             class中，箭头函数是挂载在实例上的；非箭头函数是挂载在原型上的
         结论2：
-            箭头函数生成时机是new实例的时候
-
             基类Animal中的箭头函数挂载到基类实例上的；
             子类Monkey中的箭头函数是挂载到子类实例上的；
         结论3：
-            箭头函数和非箭头函数实例顺序
-            单个class：
-                非箭头函数在new之前会挂载到原型上；
-                箭头函数在new的时候，生成并挂载到实例上
-            继承中：
-                非箭头函数在new之前会挂载到原型上，且先挂载基类的非箭头函数，在挂载子类的非箭头函数
-                箭头函数在new时候生成，且先生成基类，并将基类的箭头函数挂载到原型上（原因就是子类的原型就是基类的实例）；再生成子类的箭头函数，挂载到子类实例上
-        结论4：
-            生成挂载到原型上的顺序：
-                基类非箭头函数、子类非箭头函数、基类箭头函数、子类的箭头函数（挂载到自己的实例上）
-        所以，在写class继承的时候，要覆盖，最好保证子类和基类同名成员函数写法的一致性，不然会因为覆盖优先级问题导致非预期结果
-
+            编译后代码逻辑：
+                改写子类的原型指向父类原型，并改写constructor
+                创建基类实例，并将子类的实例属性挂到基类实例，返回该实例即可
+                原型上存在getAge（Monkey子类原型自带），实例上也存在getAge（Animal基类实例上的getAge）
     */
-    Monkey.prototype.getAge();
     _classCallCheck(this, Monkey);
-    Monkey.prototype.getAge();
 
     _this2 = _super.call(this, name, age);
 
@@ -239,7 +229,7 @@ var Monkey = /*#__PURE__*/ (function (_Animal) {
     _this2.desc = desc;
     return _this2;
   }
-
+  // 为子类原型添加原型函数（class Monkey中的非箭头函数）
   _createClass(Monkey, [
     {
       key: 'getAge',
@@ -253,7 +243,9 @@ var Monkey = /*#__PURE__*/ (function (_Animal) {
 })(Animal);
 
 var monkey = new Monkey('monkey', 12, 'I am a monkey');
+console.log('******************');
 monkey.getAge();
+monkey.__proto__.getAge();
 // let target = [1,2,3,2,34,3,4,523,23,45,768,34,34,1,23,345];
 
 // function selectSort(arr) {
