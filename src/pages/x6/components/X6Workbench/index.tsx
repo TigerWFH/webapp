@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Graph } from '@antv/x6';
+import { Graph, Edge } from '@antv/x6';
 import { Tooltip } from 'antd';
 import Immutable from 'immutable';
 import * as t from '../types';
@@ -307,36 +307,44 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         allowNode: true,
         // allowEdge: false,
         // allowPort: true,
-        highlight: true
-        // validateConnection(args: any) {
-        //   const { sourceCell, targetCell, edge } = args;
-        //   console.log('validateConnection=========>', edge);
-        //   if (targetCell && sourceCell) {
-        //      cell.shape可以代替getRegisterName
-        //     if (sourceCell.canConnect(targetCell.getRegisterName())) {
-        //       return true;
-        //     }
-        //   }
+        highlight: true,
+        // 【生成边触发】点击magnet，生成边
+        validateMagnet({ magnet }) {
+          console.log('validateMagnet');
+          return magnet.getAttribute('port-group') !== 'in';
+        },
+        // 【生成边触发】连接的过程中创建新的边
+        createEdge: () => {
+          console.log('createEdge');
+          return new Edge({
+            tools: [
+              {
+                name: 'contextmenu'
+              }
+            ]
+          });
+        },
+        // 【生成边触发】【移动边触发】在移动边的时候判断连接是否有效
+        validateConnection(args: any) {
+          console.log('validateConnection');
+          return true;
+          // const { sourceCell, targetCell, edge } = args;
+          // console.log('validateConnection=========>', edge);
+          // if (targetCell && sourceCell) {
+          //   //  cell.shape可以代替getRegisterName
+          //   if (sourceCell.canConnect(targetCell.getRegisterName())) {
+          //     return true;
+          //   }
+          // }
 
-        //   return false;
-        // },
-        // validateEdge(args: any) {
-        //   console.log('validateEdge====>', args);
+          // return false;
+        },
+        // 【生成边触发】【移动边触发】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效
+        validateEdge(args: any) {
+          console.log('validateEdge====>', args);
 
-        //   return true;
-        // }
-        // createEdge: () => {
-        //   return new Edge({
-        //     tools: [
-        //       {
-        //         name: 'contextmenu'
-        //       }
-        //     ]
-        //   });
-        // }
-        // validateMagnet({ magnet }) {
-        //   return magnet.getAttribute('port-group') !== 'in';
-        // }
+          return true;
+        }
       },
       interacting: {},
       onPortRendered(args) {
