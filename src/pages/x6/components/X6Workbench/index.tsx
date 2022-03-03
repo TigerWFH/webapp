@@ -590,6 +590,69 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     });
   };
 
+  computer(rootNodes: Node[]) {
+    let currentNodes = rootNodes || [];
+    const array = [];
+    let i = 0;
+    let maxDegree = 0;
+    while (currentNodes.length >= 1) {
+      array[i] = currentNodes.length;
+      i++;
+      const children = currentNodes.reduce((sum: Node[], curr: Node) => {
+        // 合并子节点
+        const result =
+          this.graph?.getNeighbors(curr as any, {
+            outgoing: true
+          }) || [];
+        // 计算最大度
+        maxDegree = maxDegree > result.length ? maxDegree : result.length;
+        // 合并
+        sum = sum.concat(result as any);
+
+        return sum;
+      }, []);
+
+      currentNodes = children;
+    }
+
+    return [array, maxDegree];
+  }
+
+  onLayout = () => {
+    // const allNodes = this.graph?.getNodes();
+    const rootNodes: Node[] = this.graph?.getRootNodes() || ([] as any);
+    const leafNodes = this.graph?.getLeafNodes() || [];
+    let currentNodes = rootNodes;
+    const ELEMENT_WIDTH = 110 + 20;
+    const ELEMENT_HEIGHT = 44 + 4;
+
+    console.log('leaf========>', leafNodes.length);
+    // const [array = [], maxDegree] = this.computer(rootNodes as any);
+    // const deep = (array as []).length;
+    // console.log('computer=========>', array, maxDegree);
+    this.graph?.batchUpdate(() => {
+      let level = 0;
+      while (currentNodes.length > 0) {
+        console.log('6666666======>', currentNodes);
+        const result = currentNodes.reduce(
+          (sum: Node[], node: any, index: number) => {
+            node.position(
+              0 + level * ELEMENT_WIDTH,
+              0 + index * ELEMENT_HEIGHT
+            );
+            const result = this.graph?.getNeighbors(node as any, {
+              outgoing: true
+            });
+            sum = sum.concat(result as any);
+            return sum;
+          },
+          []
+        );
+        level += 1;
+        currentNodes = result;
+      }
+    });
+  };
   render() {
     console.log('x6------render====>', this.props);
     return (
@@ -598,6 +661,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           <button onClick={this.onChange}>dispatch</button>
           <button onClick={this.onGetAllData}>获取数据</button>
           <button onClick={this.onSwitchMode}>改变模式</button>
+          <button onClick={this.onLayout}>自动布局</button>
         </div>
         <div className={styles.graph} ref={this.refContainer} />
         <div className={styles.config}>抽屉</div>
