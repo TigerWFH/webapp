@@ -248,6 +248,11 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     setCurrent({ name: '' } as any);
   };
 
+  /*
+    magnet
+    当magnet属性为true，标识该元素可以被链接，既在连线过程中可以当做连线的起点或终点
+  */
+
   componentDidMount() {
     // 屏蔽浏览器右键菜单，有兼容性问题《https://segmentfault.com/q/1010000004934881》
     // document.oncontext = function () {
@@ -309,13 +314,14 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         // allowPort: true,
         highlight: true,
         // 【生成边触发】点击magnet，生成边
-        validateMagnet({ magnet }) {
+        validateMagnet(args) {
+          const { magnet } = args;
           console.log('validateMagnet');
           return magnet.getAttribute('port-group') !== 'in';
         },
         // 【生成边触发】连接的过程中创建新的边
-        createEdge: () => {
-          console.log('createEdge');
+        createEdge: (args) => {
+          console.log('createEdge=====>', args);
           return new Edge({
             tools: [
               {
@@ -326,7 +332,21 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         },
         // 【生成边触发】【移动边触发】在移动边的时候判断连接是否有效
         validateConnection(args: any) {
-          console.log('validateConnection');
+          /*
+          args:
+            edge
+            edgeView
+            sourceView
+            targetView
+            sourcePort
+            targetPort
+            sourceMagnet
+            targetMagnet
+            sourceCell
+            targetCell
+            type
+          */
+          console.log('validateConnection======>', args);
           return true;
           // const { sourceCell, targetCell, edge } = args;
           // console.log('validateConnection=========>', edge);
@@ -341,6 +361,12 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         },
         // 【生成边触发】【移动边触发】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效
         validateEdge(args: any) {
+          /*
+          args:
+            edge
+            type
+            previous
+          */
           console.log('validateEdge====>', args);
 
           return true;
