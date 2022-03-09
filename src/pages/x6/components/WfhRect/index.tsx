@@ -66,30 +66,32 @@ export class WfhRect extends Component<ICustomProps, any> {
     });
   };
 
-  renderClassic() {
+  renderClassic(id: string) {
     // 经典视图
     return (
       <div className={styles.root}>
-        <div onClick={this.onChangeData}>change data</div>
+        {`id:${id}`}
+        {/* <div onClick={this.onChangeData}>change data</div>
         <div onClick={this.onChangeName}>change name</div>
         {`MyShape-${this.state.name}-${this.props.node?.data?.name}`}
-        {`MyShape-`}
+        {`MyShape-`} */}
       </div>
     );
   }
 
-  renderSimplified() {
+  renderSimplified(id: string) {
     // 精简视图
-    return <div>simplified</div>;
+    return <div>{`id: ${id}`}</div>;
   }
 
   render() {
     const { node } = this.props;
+
     const { type } = node?.getData() || {};
     console.log('mode========>', type);
     return type === 'simplified'
-      ? this.renderSimplified()
-      : this.renderClassic();
+      ? this.renderSimplified((node as any).id)
+      : this.renderClassic((node as any).id);
   }
 }
 

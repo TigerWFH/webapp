@@ -1,3 +1,35 @@
+/*
+节点连线钩子触发顺序：
+  validateMagnet(args)【新边触发】【source】【触发edge:connect】【不触发edge:added】
+    args：
+      e:JQuery.Event
+      cell:
+      magnet:
+      view:
+  createEdge(args)【新边触发】【新建边实例，替换系统默认边】
+    args：
+      sourceCell
+      sourceMagnet
+      source
+  validateConnect(args)【新边触发】【移动边触发】【触发edge:connect】
+    args：
+      edge
+      edgeView
+      sourceView
+      targetView
+      sourcePort
+      targetPort
+      sourceMagnet
+      targetMagnet
+      sourceCell（把所有节点都扫描了3遍）
+      targetCell（把所有节点都扫描了3遍）
+      type：【source、target】
+  validateEdge(args)【新边触发】【移动边触发】【节点和边关系已经建立，返回false会触发edge:removed】
+    args：
+      edge
+      type：【source、target】
+      previous：指向当前type上一次的位置，可能是Cell也可能是坐标
+*/
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Graph, Edge } from '@antv/x6';
@@ -351,7 +383,11 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             targetCell
             type
           */
-          console.log('validateConnection======>', args);
+          const { targetCell } = args;
+          const { model } = targetCell;
+          const tmpEdges = model.getOutgoingEdges(targetCell);
+
+          console.log('validateConnection======>', args, tmpEdges);
           return true;
           // const { sourceCell, targetCell, edge } = args;
           // console.log('validateConnection=========>', edge);
@@ -364,7 +400,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
           // return false;
         },
-        // 【生成边触发】【移动边触发】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效
+        // 【生成边触发】【移动边触发】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效，但是节点与边的关系已经生成
         validateEdge(args: any) {
           /*
           args:
@@ -372,20 +408,32 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             type
             previous
           */
+
+          return false;
           const { edge, type } = args;
+          const tmpSource = edge.getTarget();
+          const tmpTarget = edge.getSource();
+
+          const source = edge.getSourceNode();
+          const target = edge.getTargetNode();
           if (type === 'source') {
-            const source = edge.getSourceNode();
             if (!source) {
               return false;
             }
           } else if (type === 'target') {
-            const target = edge.getTargetNode();
             if (!target) {
               return false;
             }
           }
-
-          console.log('validateEdge====>', args);
+          const { model } = target;
+          const tmpEdges = model.getIncomingEdges(target);
+          console.log(
+            'validateEdge====>',
+            tmpEdges,
+            tmpSource,
+            tmpTarget,
+            args
+          );
 
           return true;
         }
@@ -405,6 +453,18 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           );
         }
       }
+    });
+
+    this.graph?.on('edge:added', (args) => {
+      console.log('edge:added===>', args);
+    });
+
+    this.graph?.on('edge:removed', (args) => {
+      console.log('edge:removed=====>', args);
+    });
+
+    this.graph?.on('edge:connected', (args) => {
+      console.log('edge:connected====>', args);
     });
 
     this.graph?.on('node:mouseenter', ({ cell }) => {
