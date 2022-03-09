@@ -316,11 +316,16 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         // 【生成边触发】点击magnet，生成边
         validateMagnet(args) {
           const { magnet } = args;
-          console.log('validateMagnet');
+          console.log('validateMagnet=====>', args);
           return magnet.getAttribute('port-group') !== 'in';
         },
         // 【生成边触发】连接的过程中创建新的边
         createEdge: (args) => {
+          /*
+          sourceCell
+          sourceMagnet
+          source
+          */
           console.log('createEdge=====>', args);
           return new Edge({
             tools: [
@@ -367,6 +372,19 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             type
             previous
           */
+          const { edge, type } = args;
+          if (type === 'source') {
+            const source = edge.getSourceNode();
+            if (!source) {
+              return false;
+            }
+          } else if (type === 'target') {
+            const target = edge.getTargetNode();
+            if (!target) {
+              return false;
+            }
+          }
+
           console.log('validateEdge====>', args);
 
           return true;
