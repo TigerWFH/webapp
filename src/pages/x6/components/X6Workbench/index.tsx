@@ -11,7 +11,8 @@
       sourceCell
       sourceMagnet
       source
-  validateConnect(args)【新边触发】【移动边触发】【触发edge:connect】
+  validateConnect(args)【新边触发】【移动边触发】【触发edge:
+    当鼠标放开的时候，不会连接到当前元素，否则会连接到当前元素；但也不会清除已经生成的边
     args：
       edge
       edgeView
@@ -383,11 +384,16 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             targetCell
             type
           */
-          const { targetCell } = args;
-          const { model } = targetCell;
-          const tmpEdges = model.getOutgoingEdges(targetCell);
+          const { targetCell, targetMagnet, sourceCell, type } = args;
+          // const { model } = targetCell;
+          // const tmpEdges = model.getOutgoingEdges(targetCell);
+          if (type === 'source') {
+            console.log('sourceCell======>', sourceCell);
+          } else {
+            console.log('targetCell======>', targetCell);
+          }
 
-          console.log('validateConnection======>', args, tmpEdges);
+          // console.log('validateConnection======>', args, tmpEdges);
           return true;
           // const { sourceCell, targetCell, edge } = args;
           // console.log('validateConnection=========>', edge);
@@ -409,7 +415,6 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             previous
           */
 
-          return false;
           const { edge, type } = args;
           const tmpSource = edge.getTarget();
           const tmpTarget = edge.getSource();
