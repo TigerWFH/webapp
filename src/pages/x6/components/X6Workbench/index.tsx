@@ -346,13 +346,13 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         // allowEdge: false,
         // allowPort: true,
         highlight: true,
-        // 【生成边触发】点击magnet，生成边
+        // 【生成边触发】【connect交互】点击magnet，生成边
         validateMagnet(args) {
           const { magnet } = args;
           console.log('validateMagnet=====>', args);
           return magnet.getAttribute('port-group') !== 'in';
         },
-        // 【生成边触发】连接的过程中创建新的边
+        // 【生成边触发】【connect交互】连接的过程中创建新的边
         createEdge: (args) => {
           /*
           sourceCell
@@ -368,7 +368,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             ]
           });
         },
-        // 【生成边触发】【移动边触发】在移动边的时候判断连接是否有效
+        // 【生成边触发】【移动边触发】【connect交互】在移动边的时候判断连接是否有效
         validateConnection(args: any) {
           /*
           args:
@@ -406,7 +406,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
           // return false;
         },
-        // 【生成边触发】【移动边触发】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效，但是节点与边的关系已经生成
+        // 【生成边触发】【移动边触发】【connect交互】当停止拖动边的时候根据 validateEdge 返回值来判断边是否生效，但是节点与边的关系已经生成
         validateEdge(args: any) {
           /*
           args:
@@ -459,19 +459,46 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         }
       }
     });
+    // 点选和框选Selection
+    // cell:selected（args: cell, options）, node:selected（args: cell, node, options）, edge:selected（args: cell, edge, options）
+    this.graph?.on('cell:selected', (args) => {
+      console.log('cell:selected====>', args);
+    });
+    this.graph?.on('node:selected', (args) => {
+      console.log('node:selected====>', args);
+    });
+    this.graph?.on('edge:selected', (args) => {
+      console.log('edge:selected====>', args);
+    });
+    // cell: unselected, node:unselected, edge:unselected
+    // 选中节点发生变更增加新选中，删除新选中时触发【删除选中触发一次】【新选中也会触发一次】
+    this.graph?.on('selection:changed', (args) => {
+      /*
+        args:
+          removed: 取消选中的节点
+          added: 新选中的节点
+          seleced: 选中的节点
+          options: {}，设置项
+      */
+      console.log('selection:changed======>', args);
+    });
 
+    // 添加边时触发【模板添加新边】【复制添加新边】
     this.graph?.on('edge:added', (args) => {
       console.log('edge:added===>', args);
     });
 
+    // 删除边时触发【所有删除操作】
     this.graph?.on('edge:removed', (args) => {
       console.log('edge:removed=====>', args);
     });
 
+    // 连接边时触发【连接链接桩产生新边】【移动已有的边】触发
     this.graph?.on('edge:connected', (args) => {
       console.log('edge:connected====>', args);
     });
 
+    // 鼠标进入
     this.graph?.on('node:mouseenter', ({ cell }) => {
       cell.addTools([
         {
