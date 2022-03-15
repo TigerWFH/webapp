@@ -471,7 +471,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       console.log('edge:selected====>', args);
     });
     // cell: unselected, node:unselected, edge:unselected
-    // 选中节点发生变更增加新选中，删除新选中时触发【删除选中触发一次】【新选中也会触发一次】
+    // 选中节点发生变更增加新选中，删除新选中时触发【删除选中触发一次】【新选中也会触发一次】【框选只选节点；单选才能选边】
     this.graph?.on('selection:changed', (args) => {
       /*
         args:
