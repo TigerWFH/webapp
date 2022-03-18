@@ -28,30 +28,44 @@ export class ContextMenuTool extends ToolsView.ToolItem<
   }
 
   onMenu = (args: any) => {
-    console.log('arg====>', args, this);
-    const { cell } = this.contextMenu;
-    console.log('=====>cell=====>', cell.shape);
+    const { cell, edge } = this.contextMenu;
     const { key, domEvent } = args;
     if (key === '1') {
-      const { edge } = this.contextMenu;
-      const source = edge.getSource();
-      const target = edge.getTarget();
+      const source = edge.getSourceNode();
+      const target = edge.getTargetNode();
+      const sourcePos = source?.position();
+      const targetPos = target?.position();
       console.log('copy edge source and target=======>', source, target);
+      const clone = edge.clone();
+      // clone.disconnect({
+      //   silent: true
+      // });
+      clone.setSource({
+        x: sourcePos.x + 50,
+        y: sourcePos.y + 50
+      });
+      clone.setTarget({
+        x: targetPos.x + 50,
+        y: targetPos.y + 50
+      });
+      console.log('origin======>', edge);
+      console.log('clone=====>', clone);
+
+      this.graph?.addEdge(clone);
 
       //   获取边的起始节点
-
-      this.graph?.addEdge({
-        target: { x: 80, y: 50 },
-        source: { x: 100, y: 50 },
-        tools: [
-          {
-            name: 'contextmenu',
-            args: {
-              graph: this.graph
-            }
-          }
-        ]
-      });
+      // this.graph?.addEdge({
+      //   target: { x: 80, y: 50 },
+      //   source: { x: 160, y: 50 },
+      //   tools: [
+      //     {
+      //       name: 'contextmenu',
+      //       args: {
+      //         graph: this.graph
+      //       }
+      //     }
+      //   ]
+      // });
     } else if (key === '2') {
       const { e } = this.contextMenu;
       if (cell.isNode()) {

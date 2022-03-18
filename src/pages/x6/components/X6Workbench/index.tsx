@@ -54,62 +54,54 @@ const MOCKDATA = {
       height: 40,
       label: 'node1'
     },
-    {
-      id: 'node2',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node2'
-    },
-    {
-      id: 'node3',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node3'
-    },
-    {
-      id: 'node4',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node4'
-    },
-    {
-      id: 'node5',
-      x: 40,
-      y: 40,
-      width: 80,
-      height: 40,
-      label: 'node5'
-    },
-    {
-      id: 'node6',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node6'
-    },
-    {
-      id: 'node7',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node7'
-    },
-    {
-      id: 'node8',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node8'
-    },
+    // {
+    //   id: 'node2',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node2'
+    // },
+    // {
+    //   id: 'node3',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node3'
+    // },
+    // {
+    //   id: 'node4',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node4'
+    // },
+    // {
+    //   id: 'node5',
+    //   x: 40,
+    //   y: 40,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node5'
+    // },
+    // {
+    //   id: 'node6',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node6'
+    // },
+    // {
+    //   id: 'node7',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node7'
+    // },
     {
       id: 'node8',
       x: 160,
@@ -118,38 +110,45 @@ const MOCKDATA = {
       height: 40,
       label: 'node8'
     },
-    {
-      id: 'node9',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node9'
-    },
+    // {
+    //   id: 'node9',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node9'
+    // },
     {
       id: 'node10',
       x: 160,
       y: 180,
       width: 80,
       height: 40,
-      label: 'node10'
-    },
-    {
-      id: 'node11',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node11'
-    },
-    {
-      id: 'node12',
-      x: 160,
-      y: 180,
-      width: 80,
-      height: 40,
-      label: 'node12'
+      label: 'node10',
+      data: {
+        name: 'node10',
+        age: 123,
+        info: {
+          from: 'china'
+        }
+      }
     }
+    // {
+    //   id: 'node11',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node11'
+    // },
+    // {
+    //   id: 'node12',
+    //   x: 160,
+    //   y: 180,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'node12'
+    // }
   ],
   edges: [
     {
@@ -160,6 +159,12 @@ const MOCKDATA = {
       target: {
         cell: 'node10',
         port: 'top'
+      },
+      data: {
+        age: 1,
+        info: {
+          name: '边'
+        }
       }
     },
     {
@@ -171,97 +176,97 @@ const MOCKDATA = {
         cell: 'node8',
         port: 'top'
       }
-    },
-    {
-      source: {
-        cell: 'node1',
-        port: 'right'
-      },
-      target: {
-        cell: 'node3',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node1',
-        port: 'right'
-      },
-      target: {
-        cell: 'node9',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node1',
-        port: 'right'
-      },
-      target: {
-        cell: 'node2',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node2',
-        port: 'right'
-      },
-      target: {
-        cell: 'node4',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node2',
-        port: 'right'
-      },
-      target: {
-        cell: 'node5',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node2',
-        port: 'right'
-      },
-      target: {
-        cell: 'node6',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node2',
-        port: 'right'
-      },
-      target: {
-        cell: 'node7',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node9',
-        port: 'right'
-      },
-      target: {
-        cell: 'node11',
-        port: 'top'
-      }
-    },
-    {
-      source: {
-        cell: 'node9',
-        port: 'right'
-      },
-      target: {
-        cell: 'node12',
-        port: 'top'
-      }
     }
+    // {
+    //   source: {
+    //     cell: 'node1',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node3',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node1',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node9',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node1',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node2',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node2',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node4',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node2',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node5',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node2',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node6',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node2',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node7',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node9',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node11',
+    //     port: 'top'
+    //   }
+    // },
+    // {
+    //   source: {
+    //     cell: 'node9',
+    //     port: 'right'
+    //   },
+    //   target: {
+    //     cell: 'node12',
+    //     port: 'top'
+    //   }
+    // }
   ]
 };
 
@@ -370,6 +375,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         },
         // 【生成边触发】【移动边触发】【connect交互】在移动边的时候判断连接是否有效
         validateConnection(args: any) {
+          console.log('validateConnection======>', args);
           /*
           args:
             edge
@@ -468,7 +474,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
       console.log('node:selected====>', args);
     });
     this.graph?.on('edge:selected', (args) => {
-      console.log('edge:selected====>', args);
+      const { edge } = args;
+      const { target, source } = edge;
+      console.log('edge:selected====>', target, source);
     });
     // cell: unselected, node:unselected, edge:unselected
     // 选中节点发生变更增加新选中，删除新选中时触发【删除选中触发一次】【新选中也会触发一次】【框选只选节点；单选才能选边】
@@ -481,6 +489,42 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           options: {}，设置项
       */
       console.log('selection:changed======>', args);
+      const { selected } = args;
+      const cell = selected[0];
+      if (cell?.isNode()) {
+        const clone = cell.clone();
+        console.log('cell=====>', cell.shape, clone.shape, cell, clone);
+      }
+      if (cell?.isEdge()) {
+        const clone = cell.clone();
+        console.log(
+          'cell========>',
+          cell.getTargetCellId(),
+          cell.getSourceCellId()
+        );
+        console.log(
+          'clone========>',
+          clone.getTargetCellId(),
+          clone.getSourceCellId()
+        );
+        cell.on('change:data', (args) => {
+          console.log('args======>', args);
+        });
+        cell.setData({
+          configs: {
+            name: 123
+          }
+        });
+        setTimeout(() => {
+          cell.setData({
+            configs: {
+              name: 'monkey'
+            }
+          });
+        }, 5000);
+      }
+      const { target, source } = (selected[0] as any) || ({} as any);
+      console.log('==========>', target, source);
     });
 
     // 添加边时触发【模板添加新边】【复制添加新边】
@@ -495,7 +539,9 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
     // 连接边时触发【连接链接桩产生新边】【移动已有的边】触发
     this.graph?.on('edge:connected', (args) => {
-      console.log('edge:connected====>', args);
+      const { edge } = args;
+      const { target, source } = edge;
+      console.log('edge:connected====>', target, source);
     });
 
     // 鼠标进入
@@ -704,8 +750,8 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           继承Cell节点，不注册可以直接实例化使用
           注册的作用就是：依赖注入
         */
-        this.graph?.addNode(new WfhDD());
-        this.graph?.addNode(new WfhDemoNode());
+        // this.graph?.addNode(new WfhDD());
+        // this.graph?.addNode(new WfhDemoNode());
       }
     }
   }
