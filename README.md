@@ -3249,3 +3249,50 @@ type ReadonlyPerson = Readonly<Person>;
 // ReturnType<T>，获取函数的返回类型值
 // InstanceType<T>，获取构造函数类型的实例类型
 ```
+
+## 劫持手段
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      if (window.addEventListener) {
+        const old = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function (event, handler, b) {
+          console.log('new===>', this.getAttribute('data-custom'));
+          old(
+            event,
+            function (...args) {
+              window.open('https://www.baidu.com', '_blank');
+              console.log(`出发了${event}`);
+              handler(...args);
+            },
+            b
+          );
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <button id="123">按钮</button>
+    <script>
+      const dom = document.getElementById('123');
+      dom.setAttribute(
+        'data-custom',
+        JSON.stringify({
+          name: 'monkey',
+          age: 12
+        })
+      );
+      dom.addEventListener('click', function () {
+        console.log('click');
+      });
+    </script>
+  </body>
+</html>
+```

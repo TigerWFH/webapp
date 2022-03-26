@@ -83,7 +83,13 @@ export class ContextMenuTool extends ToolsView.ToolItem<
             edge.setTarget(pos);
           });
         }
-        this.graph?.removeNode(cell);
+        /*
+          X6删除接口，默认删除节点，会删除关联的边。可以配置disconnectEdges，
+          会把关联边的target和source重置为(0,0)，且tools无法操作，目前没有找到有效方案。
+          但是可以提前切除边和节点的关系，然后删除节点
+        */
+        // this.graph?.removeNode(cell);
+        this.graph?.removeCells([cell]);
       } else if (cell.isEdge()) {
         this.graph?.removeEdge(cell);
       }

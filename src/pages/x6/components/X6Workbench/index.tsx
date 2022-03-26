@@ -465,6 +465,16 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         }
       }
     });
+    // removeCell和removeCells会触发cell:removed,node:removed,edge:removed
+    this.graph?.on('cell:removed', function (args) {
+      console.log('cell:removed====>', args);
+    });
+    this.graph?.on('node:removed', function (args) {
+      console.log('node:removed====>', args);
+    });
+    this.graph?.on('edge:removed', function (args) {
+      console.log('edge:removed====>', args);
+    });
     // 点选和框选Selection
     // cell:selected（args: cell, options）, node:selected（args: cell, node, options）, edge:selected（args: cell, edge, options）
     this.graph?.on('cell:selected', (args) => {
