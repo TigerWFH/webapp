@@ -7,6 +7,27 @@
 [代码阻止方式](https://go-zh.org/doc/code.html)
 [更多特性](https://tour.go-zh.org/concurrency/11)
 
+> 提醒一句，入门教程涉及到代码放入 src 目录下的，基本是基于 GOPATH 的教程，请忽略
+>
+> 最新版不需要手动配置 GOPATH
+
+## vscode 配置 go 开发环境<https://mp.weixin.qq.com/s/J01LY7s6xMB8Lk10sxTFhg>
+
+## go 版本管理工具 gvm<https://github.com/moovweb/gvm>
+
+### 手动安装 go
+
+### 安装 gvm
+
+> bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+
+### gvm 命令
+
+- `gvm list`
+- `gvm listall`
+- `gvm install go1.2`
+- `gvm use go1.2`
+
 ## go 源码构建（https://www.yuanmomo.net/2019/08/12/v2ray-init-dev-env/）
 
 ## 讨论思路:带着问题、分析、方案来讨论(https://www.gitmemory.com/issue/v2ray/v2ray-core/2541/639397815)
