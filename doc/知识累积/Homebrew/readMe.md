@@ -28,14 +28,14 @@
 
 > brew update
 
-## 查看过时的软件包
+## homebrew 行间明林
 
-> brew outdated
-
-## 升级所有软件包或指定包
-
-> brew upgrade <package>
-
-## 终止升级
-
-> brew pin <package>
+- `brew install pkg`安装
+- `brew uninstall pkg`卸载
+- `brew search pkg`查找
+- `brew list`查看安装软件
+- `brew list`查看安装软件
+- `brew outdated`查看过时的软件
+- `brew upgrade pkg`更新所有包或特定包
+- `brew info pkg`显示包信息
+- `brew pin pkg`终止包升级
