@@ -824,6 +824,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
     // console.log('computer=========>', array, maxDegree);
     this.graph?.batchUpdate(() => {
       let level = 0;
+      /*eslint no-loop-func: "off"*/
       while (currentNodes.length > 0) {
         console.log('6666666======>', currentNodes);
         const result = currentNodes.reduce(
