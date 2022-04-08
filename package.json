@@ -205,7 +205,7 @@
     ]
   },
   "proxy": "http://localhost:9000",
-  "homepage": ".",
+  "homepage": "https://tigerwfh.github.io/webapp",
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "7.16.0"
   }
