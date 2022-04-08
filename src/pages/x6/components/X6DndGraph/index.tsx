@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Graph, Addon, Shape, Cell } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import dagre from 'dagre';
 import '@antv/x6-react-shape';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import { Stencil } from '@antv/x6/lib/addon';
 import styles from './index.module.scss';
 import Trigger from '../X6ReactTrigger';
-import { log } from 'console';
 
 const { Rect, Circle } = Shape;
 const { Item, Group } = Toolbar;
@@ -16,222 +14,6 @@ const { Item, Group } = Toolbar;
 interface IX6DndGraphProps {
   businessType?: string; // 业务类型，不同业务使用不同的图元集合
 }
-
-const MOCK_DATA = {
-  nodes: [
-    {
-      nodeName: '客群',
-      nodeCustomConfig: {
-        dataSetId: 0,
-        dataSetObjectVO: {
-          objectCode: '',
-          source: ''
-        }
-      },
-      nodeKey: '1603716783816',
-      nodeBizKey: 'CUSTOMER',
-      text: '全部',
-      nodeType: 'TRIGGER_OBJ',
-      id: '1603716783816',
-      x: 100,
-      y: 0,
-      width: 80,
-      height: 40,
-      label: 'world'
-    },
-    {
-      nodeName: '行为触发1',
-      nodeCustomConfig: {
-        startFlag: true,
-        triggerType: 'BEHAVIOUR_TRIGGER',
-        mqTriggerTypeBo: {
-          execEndTime: '23:00:00',
-          diyCycle: {},
-          frequencyType: 1,
-          eventPlanVOList: ['测试111'],
-          execStartTime: '00:00:00'
-        },
-        params: []
-      },
-      nodeKey: '1603716786205',
-      nodeBizKey: 'BEHAVIOR_TRIGGER',
-      position: {
-        x: 100,
-        y: -300
-      },
-      text: '测试111',
-      nodeType: 'TRIGGER_METHOD',
-      id: '1603716786205',
-      x: 400,
-      y: 0,
-      width: 80,
-      height: 40,
-      label: 'hello'
-    },
-    {
-      nodeName: 'CMS资源位',
-      nodeCustomConfig: {
-        putScene: 'equity',
-        cmsParams: [
-          {
-            componentType: ['INTO_VERSION'],
-            appName: 'hb',
-            allType: [
-              {
-                label: '开屏广告',
-                value: 'INTO_VERSION'
-              }
-            ],
-            pageId: 'into_version',
-            content: [
-              {
-                componentType: 'INTO_VERSION',
-                configs: {
-                  materialInfo: {
-                    imgUrl: [''],
-                    materialCode: '290824aa-1134-44ae-adca-c51dfcb51e5e',
-                    jumpUrl: 'wwwwww.dedewrvgrb'
-                  },
-                  trackName: '1',
-                  validity: {
-                    scope: 1,
-                    type: 'relative'
-                  },
-                  jumpUrl: 'wwwwww.dedewrvgrb',
-                  frequency: {
-                    type: 'DAY_COUNT',
-                    frequency: 1
-                  }
-                },
-                condition: [
-                  {
-                    middleSymbol: 'EQUALS',
-                    leftParam: 'deviceType',
-                    rightParam: 'i'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            componentType: ['BANNER'],
-            appName: 'hb',
-            userGroupName: 'cms-重资产过审',
-            allType: [
-              {
-                label: '弹窗',
-                value: 'POPUP_V2'
-              },
-              {
-                label: '金融卡片头图',
-                value: 'HEAD_FIGURE'
-              },
-              {
-                label: '开屏广告',
-                value: 'INTO_VERSION'
-              },
-              {
-                label: '轮播图',
-                value: 'BANNER'
-              },
-              {
-                label: '图片',
-                value: 'IMAGE'
-              },
-              {
-                label: '快捷入口',
-                value: 'SHORTCUT_ENTRY'
-              }
-            ],
-            pageId: 'tabOv3',
-            userGroup: 'r_clientview_r_hvy_adt',
-            content: [
-              {
-                componentType: 'BANNER',
-                configs: {
-                  materialInfo: {
-                    imgUrl: [''],
-                    materialCode: 'b631638e-d036-44af-9ca3-a8deb93dfbdf',
-                    jumpUrl: ''
-                  },
-                  trackName: '2',
-                  validity: {
-                    scope: 20,
-                    type: 'relative'
-                  },
-                  jumpUrl: ''
-                },
-                condition: [
-                  {
-                    middleSymbol: 'EQUALS',
-                    leftParam: 'deviceType',
-                    rightParam: 'not-limited'
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        tagKey: 's',
-        tagName: 'testB'
-      },
-      nodeKey: 'node_1623125728292_461016',
-      nodeBizKey: 'CMS',
-      position: {
-        x: 420,
-        y: -300
-      },
-      text: 'CMS资源位',
-      nodeType: 'CMS',
-      id: 'node_1623125728292_461016',
-      x: 720,
-      y: 0,
-      width: 80,
-      height: 40,
-      label: 'CMS资源位'
-    },
-    {
-      nodeName: '结束',
-      nodeKey: 'node_1623125740071_987289',
-      nodeBizKey: 'END',
-      position: {
-        x: 740,
-        y: -300
-      },
-      nodeType: 'END',
-      id: 'node_1623125740071_987289',
-      x: 1040,
-      y: 0,
-      width: 80,
-      height: 40,
-      label: 'END'
-    }
-  ],
-  edges: [
-    {
-      source: '1603716783816',
-      edgeKey: '1619782850480',
-      inputPortId: '1603716786205_in_1',
-      outputPortId: '1603716783816_out_1',
-      type: 'Edge',
-      target: '1603716786205'
-    },
-    {
-      source: '1603716786205',
-      edgeKey: 'e07131e4-da32-46a7-8241-084d79b6f7d4',
-      inputPortId: 'node_1623125728292_461016_in_1',
-      outputPortId: '1603716786205_out_1',
-      target: 'node_1623125728292_461016'
-    },
-    {
-      source: 'node_1623125728292_461016',
-      edgeKey: 'a189beda-78a8-4cd4-b081-40453407ef0f',
-      inputPortId: 'node_1623125740071_987289_in_1',
-      outputPortId: 'node_1623125728292_461016_out_1',
-      target: 'node_1623125740071_987289'
-    }
-  ]
-};
 /*
     source是父节点
     target是子节点
@@ -404,7 +186,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
     };
   }
   getnerateTreeFromEdges = (edges: any[]) => {
-    let root = null;
+    // let root = null;
     edges.forEach((edge) => {
       const parent = {
         id: edge.source,
@@ -612,7 +394,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
   }
 
   componentDidUpdate() {
-    const { node } = this.state;
+    // const { node } = this.state;
     console.log('didUpdate========>', this.state);
     // if (node !== null) {
     //     this.graph?.addNode(node)

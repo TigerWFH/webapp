@@ -40,7 +40,7 @@ import * as t from '../types';
 import styles from './index.module.scss';
 import '@antv/x6-react-shape';
 import { WfhRect } from '../WfhRect';
-import { WfhDD, WfhDemoNode } from './biz';
+// import { WfhDD, WfhDemoNode } from './biz';
 import './register';
 interface IX6Workbench extends t.IWorkbench {}
 
@@ -390,7 +390,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
             targetCell
             type
           */
-          const { targetCell, targetMagnet, sourceCell, type } = args;
+          const { targetCell, sourceCell, type } = args;
           // const { model } = targetCell;
           // const tmpEdges = model.getOutgoingEdges(targetCell);
           if (type === 'source') {

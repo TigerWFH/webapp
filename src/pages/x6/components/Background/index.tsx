@@ -8,7 +8,7 @@ interface IBackground extends t.IComponent {
 }
 
 export function Background(props: IBackground) {
-  const { color, image, componentType } = props;
+  const { componentType } = props;
   if (componentType !== Background.componentType) {
     return null;
   }
@@ -25,9 +25,9 @@ Background.componentType = 'background';
 Background.title = '背景色';
 
 export function BackgroundConfig(props: t.IConfig) {
-  const { color, image, setConfig } = props;
+  const { color, setConfig } = props;
   const [bgColor, setBgColor] = React.useState(color || '');
-  const [bgImage, setBgImage] = React.useState(image);
+  // const [, setBgImage] = React.useState(image);
 
   function onChange(e: any) {
     setConfig('color', e.target.value);

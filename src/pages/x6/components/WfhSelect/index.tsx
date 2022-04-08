@@ -90,7 +90,7 @@ export function Config(props: any, ref: any) {
       setParam(paramList);
     }, 1000);
   }, []);
-  const { text, setConfig, componentType } = props;
+  const { setConfig, componentType } = props;
   if (componentType !== WfhSelect.componentType) {
     return null;
   }

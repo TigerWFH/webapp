@@ -132,12 +132,12 @@ function DropTarget(props: IDropTargetProps) {
       payload
     });
   }, []);
-  const setData = React.useCallback((payload) => {
-    dispatch({
-      type: 'drop',
-      payload
-    });
-  }, []);
+  // const setData = React.useCallback((payload) => {
+  //   dispatch({
+  //     type: 'drop',
+  //     payload
+  //   });
+  // }, []);
   const deleteData = React.useCallback(() => {
     dispatch({
       type: 'deleteData'

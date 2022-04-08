@@ -41,8 +41,8 @@ export class WfhRect extends Component<ICustomProps, any> {
   }
 
   componentDidMount() {
-    const { node } = this.props;
-    const pl = JSON.parse(JSON.stringify(node));
+    // const { node } = this.props;
+    // const pl = JSON.parse(JSON.stringify(node));
     const begin = Date.now();
     // console.log('didMount', JSON.stringify(this.props.node));
     const duration = Date.now() - begin;
