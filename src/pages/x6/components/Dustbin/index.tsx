@@ -54,7 +54,7 @@ function Dustbin(props: any) {
   }
   console.log('itemList8888888====>', itemList);
   return (
-    <div ref={drop} role="Dustbin" style={{ ...dustbinStyle, backgroundColor }}>
+    <div ref={drop} style={{ ...dustbinStyle, backgroundColor }}>
       {isActive ? 'drop' : 'drag'}
       {itemList.map((item: any, index: number) => {
         return (
@@ -100,7 +100,7 @@ function Box(props: any) {
   }));
 
   return (
-    <div ref={drag} role="Box" style={{ ...style, opacity: collect.opacity }}>
+    <div ref={drag} style={{ ...style, opacity: collect.opacity }}>
       {name}
     </div>
   );

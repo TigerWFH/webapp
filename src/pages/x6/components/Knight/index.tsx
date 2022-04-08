@@ -14,6 +14,7 @@ export default function () {
     <span
       ref={drag}
       role="img"
+      aria-label="img"
       style={{
         opacity: isDragging ? 0 : 1,
         fontSize: 25,

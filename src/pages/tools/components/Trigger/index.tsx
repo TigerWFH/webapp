@@ -42,7 +42,7 @@ export default function Triger(props: any) {
   }));
 
   return (
-    <div ref={drag} role="Box" style={{ ...style, opacity: collect.opacity }}>
+    <div ref={drag} style={{ ...style, opacity: collect.opacity }}>
       {name}
     </div>
   );

@@ -116,7 +116,7 @@ export class ContextMenuTool extends ToolsView.ToolItem<
           visible={true}
           trigger={['contextMenu']}
           overlay={this.renderMenu()}>
-          <a />
+          <span>123</span>
         </Dropdown>,
         this.knob as HTMLDivElement
       );
