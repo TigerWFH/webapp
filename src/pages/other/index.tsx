@@ -91,7 +91,7 @@ class Other extends React.Component<IProps, IState> {
     }
   };
   onNewTable = () => {
-    const target = window.open('http://localhost:3000/#/demos', '_blank');
+    // const target = window.open('http://localhost:3000/#/demos', '_blank');
   };
   /**
    * about：个人简介

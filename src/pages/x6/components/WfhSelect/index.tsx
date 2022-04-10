@@ -57,6 +57,7 @@ const CONFIG_LABELS = {
 };
 export function Config(props: any, ref: any) {
   const [form] = Form.useForm();
+  const { setConfig, componentType } = props;
   React.useImperativeHandle(ref, () => ({
     form
   }));
@@ -65,7 +66,7 @@ export function Config(props: any, ref: any) {
       const key = Object.keys(changedValue)[0];
       setConfig(key, changedValue[key]);
     },
-    []
+    [setConfig]
   );
   const [paramList, setParam] = React.useState([] as any);
   React.useEffect(() => {
@@ -90,7 +91,7 @@ export function Config(props: any, ref: any) {
       setParam(paramList);
     }, 1000);
   }, []);
-  const { text, setConfig, componentType } = props;
+
   if (componentType !== WfhSelect.componentType) {
     return null;
   }

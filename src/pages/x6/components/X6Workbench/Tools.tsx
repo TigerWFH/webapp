@@ -29,7 +29,7 @@ export class ContextMenuTool extends ToolsView.ToolItem<
 
   onMenu = (args: any) => {
     const { cell, edge } = this.contextMenu;
-    const { key, domEvent } = args;
+    const { key } = args;
     if (key === '1') {
       const source = edge.getSourceNode();
       const target = edge.getTargetNode();
@@ -116,7 +116,7 @@ export class ContextMenuTool extends ToolsView.ToolItem<
           visible={true}
           trigger={['contextMenu']}
           overlay={this.renderMenu()}>
-          <a />
+          <span>123</span>
         </Dropdown>,
         this.knob as HTMLDivElement
       );

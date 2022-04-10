@@ -18,54 +18,54 @@ X6正是借助该标签，可以渲染html、react、vue等。根本在html
     5、辅助工具@antv/x6-react-shape提供了usePortal工具，用于提升挂载性能
     6、React组件形式，无法使用graph.toJSON()导出画布数据，通过Graph.registerReactComponent()方法处理
 */
-import * as React from "react";
-import styles from "./index.module.scss";
-
+import * as React from 'react';
+import styles from './index.module.scss';
 
 const LOG_NODE_WIDTH = 180;
 const LOG_NODE_HEIGHT = 60;
 
 interface ILogProps {
-    width: number
-    height: number
-    name: string
-    bActive: boolean
-    bDecision: boolean
-    node?: any
+  width: number;
+  height: number;
+  name: string;
+  bActive: boolean;
+  bDecision: boolean;
+  node?: any;
 }
 class Log extends React.Component<ILogProps, never, never> {
-    static defaultProps = {
-        width: LOG_NODE_WIDTH,
-        height: LOG_NODE_HEIGHT,
-        name: "",
-        bActive: false,
-        bDecision: false,
+  static defaultProps = {
+    width: LOG_NODE_WIDTH,
+    height: LOG_NODE_HEIGHT,
+    name: '',
+    bActive: false,
+    bDecision: false
+  };
+  shouldComponentUpdate() {
+    const node = this.props.node;
+    if (node) {
+      if (node.hasChanged('data')) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  render() {
+    const { name, bActive, bDecision, width, height } = this.props;
+    const inlineStyles = {
+      height: `${height}px`,
+      width: `${width}px`
     };
-    shouldComponentUpdate() {
-        const node = this.props.node;
-        if (node) {
-            if (node.hasChanged("data")) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    render() {
-        const { name, bActive, bDecision, width, height, node } = this.props;
-        const inlineStyles = {
-            height: `${height}px`,
-            width: `${width}px`,
-        };
-        return (
-            <div className={bActive ? styles.active : styles.normal} style={inlineStyles}>
-                <span className={styles.name}>{name}</span>
-                {bDecision ? <div className={styles.icon}>button</div> : null}
-            </div>
-        );
-    }
+    return (
+      <div
+        className={bActive ? styles.active : styles.normal}
+        style={inlineStyles}>
+        <span className={styles.name}>{name}</span>
+        {bDecision ? <div className={styles.icon}>button</div> : null}
+      </div>
+    );
+  }
 }
-
 
 export default Log;

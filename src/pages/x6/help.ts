@@ -17,9 +17,9 @@ export function observe(o: any) {
   observer = o;
 }
 
-function emitChange() {
-  observe(position);
-}
+// function emitChange() {
+//   observe(position);
+// }
 
 export function moveKnight(toX: number, toY: number) {
   position.knightX = toX;

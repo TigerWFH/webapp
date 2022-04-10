@@ -35,7 +35,7 @@ function DragSource(props: IDragSourceProps) {
     toolComponent, // 当前组件使用
     data = {} // 要传递的数据
   } = props;
-  const [collectedProps, drag, dragPrivew] = useDrag(() => {
+  const [, drag] = useDrag(() => {
     console.log('useDrag-----data=======>', data);
 
     return {
