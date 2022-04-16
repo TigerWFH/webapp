@@ -32,6 +32,8 @@
   >
   > type r w x r w x r w x，其中 type 是文件类型，rwx （可使用八进制模式 421，1 是执行，2 室写，4 是读）是读写执行权限，三组分别对应 owner、group、others
 
+- `mktemp：`用于建立暂存文件或者文件夹，供 shell script 使用
+
   ```shell
   chmod [-cfvR] [--help] [--verions] mode file
 
@@ -58,6 +60,7 @@
   - `START：`进程开始时间
   - `TIME：`进程执行的时间
   - `COMMAND：`执行的命令
+- `date：`可以用来显示或设定系统的日期与时间，若是不以加号作为开头，则表示要设定时间，而时间格式为 MMDDhhmm[[CC]YY][.ss]
 
 ### 系统设置
 
