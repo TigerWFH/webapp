@@ -10,6 +10,22 @@
 
 ## git
 
+### git commadns
+
+- `git merge：`将一个分支的更改集成到另一个分支上
+  > git merge 是一种非破坏性操作
+  >
+  > git merge 会产生一个 merge commit 记录，并且保留所有分支的 commit 记录
+  >
+  > fast forward：fast forward 模式，快速合并，看不出做过合并。 不会显示 feature，只保留单条分支记录
+  >
+  > --no-ff 模式，普通合并，可以保存之前的分支历史。能够更好的查看 merge 历史，以及 branch 状态。会生成一个新的 commit-id
+  >
+  > git 默认操作：如果从当前分支 master 和目标分支 feature 没有分叉，那么 git 会使用 fast forward 的方式来完成 merge 操作。
+- `git rebase`
+- `git log`
+- `git reflog`
+
 ### git submodule
 
 ### git 配置
