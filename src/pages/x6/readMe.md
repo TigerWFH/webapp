@@ -720,3 +720,61 @@ var observer = {
   complete: () => console.log('complete')
 };
 ```
+
+## X6 源码解读
+
+```js
+/*
+  Event实现了发布订阅者模式
+
+  Event <|-- Basecoat
+  Basecoat <|-- Graph
+
+  Basecoat <|-- View
+  View <|-- GraphView
+
+  Basecoat <|-- Model
+  Basecoat <|-- Collection
+
+  Base包含Graph属性，并且包含Graph的model、view属性，以访问器属性形式存在
+  Base <|-- Renderer
+  Base <|-- Hook
+
+  Graph初始化过程：
+    1、继承Events的listeners以及on、once、trigger、off等
+
+    2、Graph组合Hook，graph.hook = new Hook(this)；同时Hook聚合Graph，在构建hook实例时，存入Hook从Base继承来的Graph属性，即hook.graph = graph
+
+    3、Graph组合GraphView，graph.view = new GraphView(this)；同时GraphView获取markup，创建SVG dom节点；同时聚合Graph实例，即GraphView.graph = graph
+
+    4、Graph组合Model。graph.model = new Model()，同时Model聚合Graph，即Model.graph = graph
+      4.1 new Model组合Collection，model.collection = new Collection([])，同时监听collection的变化(Collection的增删查改，会发出消息，触发对应的事件)，Model数据的修改，实际就是操作collection：
+        collection.on("sorted", fn)
+        collection.on("updated", fn)
+        collection.on("cell:change:zIndex", fn)
+        collection.on("added", fn)
+        collection.on("removed", fn)
+        collection.on("cell:removed", fn)
+        collection.on("node:removed", fn)
+        collection.on("edge:removed", fn)
+        collection.on("reseted", fn)
+        collection.on("edge:change:source", fn)
+        collection.on("edge:change:target", fn)
+
+    5、Graph组合Rednerer，graph.renderer = new Renderer(this.graph)，Renderer聚合Graph，将graph存储在从Base继承来的属性graph上，即Renderer.graph = graph，同时监听model的的变化：
+      model.on("sorted", this.onSortModel, this)
+      model.on("reseted")
+      model.on("batch:stop")
+      model.on("cell:added")
+      model.on("cell:removed")
+      model.on("cell:change:zIndex")
+      model.on("cell:change:visible")
+    
+    6、添加节点的过程，graph.addNode 调用 model.addNode（会创建cell实例） -> model.addCell（为cell实例增加model属性） -> collection.add -> 触发collection的added事件；同时cell也会触发added事件
+      6.1 创建cell实例过程中，会构建Store实例
+      6.2 cell触发added事件；同时会触发model的node:added事件，就回到了对应的renderer中
+
+    7、renderer根据监听到的cell:add事件，调用renderView，创建或获取对应的view，插入到DOM中
+
+*/
+```
