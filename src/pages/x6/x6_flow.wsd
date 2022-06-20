@@ -1,0 +1,66 @@
+@startuml X6关键类
+class Events {
+    - Object listeners
+}
+
+note left: 发布订阅模式实现的消息注册订阅类
+
+Events <|-- Basecoat
+class Basecoat {}
+
+Basecoat <|-- Collection
+class Collection {
+    - Cell[] cells
+}
+
+note bottom: 每次修改collection都会发送消息【added、sorted、updated、removed】
+
+Basecoat <|-- Model
+Model *-- Collection
+class Model {
+    + Graph graph
+    + Collection collection
+    # Object nodes
+    # Object edges
+    # Object outgoings
+    # Object incomings
+}
+
+Disposable <|-- Base
+class Base {
+    + Graph graph
+}
+Base <|-- Renderer
+
+Basecoat <|-- View
+View <|-- GraphView
+class GraphView {
+    # Graph graph
+    + HTMLElement container
+    + SVGSVGElement svg
+    + SVGDefsElement defs
+    ...
+}
+View <|-- CellView
+class CellView {}
+CellView <|-- NodeView
+class NodeView {}
+CellView <|-- EdgeView
+class EdgeView {}
+NodeView <|-- ReactShapeView
+class ReactShapeView {}
+
+Renderer ...> CellView
+
+Basecoat <|-- Graph
+Graph *-- Model
+Graph *-- Renderer
+Graph *-- GraphView
+class Graph {
+    + hook Hook
+    + Model model
+    + ViewRenderer renderer
+    + GraphView view
+    + Coord coord
+}
+@enduml
