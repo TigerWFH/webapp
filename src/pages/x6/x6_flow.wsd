@@ -63,4 +63,16 @@ class Graph {
     + GraphView view
     + Coord coord
 }
+
+Basecoat <|-- Cell
+class Cell {
+    + Object markup
+    + string shape
+}
+Cell <|-- Node
+class Node {
+    + Object portMarkup
+    + Object portLabelMarkup
+}
+Cell <|-- Edge
 @enduml
