@@ -1,5 +1,27 @@
 # nginx：nginx 是一个 HTTP 和反向代理服务器
 
+> 一些 nginx 资料：<https://qastack.cn/ubuntu/553937/what-is-the-difference-between-the-core-full-extras-and-light-packages-for-ngi>
+>
+> nginx-full 的安装：<https://github.com/denji/homebrew-nginx>
+
+## homebrew 安装 nginx-full，可以安装第三方模块
+
+```shell
+    # 安装
+    brew tap denji/nginx
+    brew install nginx-full --with-upload-module
+    # 信息查询
+    brew options nginx-full
+    brew info nginx-full
+```
+
+## homebrew 安装 openresty
+
+```shell
+# 安装
+brew install openresty/brew/openresty
+```
+
 ## 参考资料
 
 [参考资料](https://blog.csdn.net/u010994966/article/details/78193041)
