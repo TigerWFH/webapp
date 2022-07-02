@@ -117,6 +117,10 @@ const Rxjs = Loadable((props: any) => import('@/pages/rxjs'), {
   fallback: <div>Loading</div>
 });
 
+const Dag = Loadable((props: any) => import('@/pages/dag'), {
+  fallback: <div>Loading</div>
+});
+
 const STATIC_ROUTE = [
   {
     href: '/',
@@ -274,6 +278,7 @@ const elem = (
           <Route path={'/test'} exact component={Test}></Route>
           <Route path={'/tools'} exact component={Tools}></Route>
           <Route path={'/rxjs'} exact component={Rxjs}></Route>
+          <Route path={'/dag'} exact component={Dag}></Route>
           <Route component={About}></Route>
         </Switch>
       </MyApp>

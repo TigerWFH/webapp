@@ -725,11 +725,14 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
           shape: componentType,
           component: <WfhRect />
         };
+        debugger;
         this.graph?.addNode(node);
+        debugger;
         this.graph?.addEdge({
           target: { x: 10, y: 50 },
           source: { x: 70, y: 50 }
         });
+        debugger;
       } else if (dataSource === 'COPY_EDGE_DATA') {
         console.log('边拷贝数据');
       } else {

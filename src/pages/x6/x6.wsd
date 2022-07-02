@@ -43,6 +43,17 @@ interface IHook {
     createCoordManager
 }
 
+class Event {
+    - Object listeners
+    + Event on(name, fn, context)
+    + Event once(name, fn, context)
+    + Event off(name, fn, context)
+    + any trigger(name)
+    # any emit(name)
+}
+
+Event <|-- Basecoat
+
 class Basecoat<T> {}
 Basecoat <|-- Collection
 class Collection {
