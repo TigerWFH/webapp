@@ -1,0 +1,53 @@
+@startuml Bizui业务节点
+    class Events {}
+
+    Events <|-- Basecoat
+    class Basecoat {}
+
+    Basecoat <|-- Cell
+    class Cell {}
+
+    Cell <|-- Node
+    Cell <|-- Edge
+    class Node {}
+    class Edge {}
+
+    Node <|-- ReactShape
+    class ReactShape {}
+
+    ReactShape <|-- BaseNode
+    class BaseNode {
+        + Object canAddIncomingEdge(Edge edge)
+        + Object canAddOutgoingEdge(Edge edge)
+        + boolean beginWithEventNode(Edge edge)
+    }
+
+    BaseNode <|-- ConditionNode
+    class ConditionNode {}
+
+    BaseNode <|-- EventNode
+    class EventNode {}
+
+    BaseNode <|-- MiddleNode
+    class MiddleNode {}
+
+    BaseNode <|-- ParallelNode
+    class ParallelNode {}
+
+    BaseNode <|-- X6DemoNode
+    class X6DemoNode {}
+
+    BaseNode <|-- ExprGatewayNode
+    class ExprGatewayNode {}
+
+    BaseNode <|-- ExprGroupGatewayNode
+    class ExprGroupGatewayNode {}
+
+
+
+    BaseNode <|-- EndNode
+    class EndNode {}
+
+    BaseNode <|-- StartNode
+    class StartNode {}
+@enduml

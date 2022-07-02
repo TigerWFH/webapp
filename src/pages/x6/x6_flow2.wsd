@@ -1,0 +1,53 @@
+@startuml 活动图
+start
+group Graph
+:开始创建Graph实例;
+:构建Hook实例，Hook保存Graph实例;
+:构建GraphView实例;
+    group GraphView
+        :构建一堆工具实例;
+        :将画布插入DOM;
+    end group
+:构建Model实例;
+    group Model
+        :构建Collection实例;
+        :model在collection上注册并订阅sorted消息;
+        :model在collection上注册并订阅updated消息;
+        :model在collection上注册并订阅cell:change:zIndex消息;
+        :model在collection上注册并订阅added消息;
+        :model在collection上注册并订阅removed消息;
+        :model在collection上注册并订阅reseted消息;
+        :model在collection上注册并订阅edge:change:source消息;
+        :model在collection上注册并订阅edge:change:target消息;
+        :model保存Graph实例;
+    end group
+:构建Renderer实例;
+    group Renderer
+        :renderer保存graph实例;
+        :renderer在model上注册并订阅sorted消息;
+        :renderer在model上注册并订阅reseted消息;
+        :renderer在model上注册并订阅batch:stop消息;
+        :renderer在model上注册并订阅cell:added消息;
+        :renderer在model上注册并订阅cell:removed消息;
+        :renderer在model上注册并订阅cell:change:zIndex消息;
+        :renderer在model上注册并订阅cell:change:zIndex消息;
+    end group
+end group
+
+group 新增节点
+    :调用graph.addNode(node);
+    :调用model.addNode(node);
+    :调用model.createNode(node)创建节点实例;
+    :调用model.addCell(node);
+    :调用model.pareCell(cell)，处理cell;
+    :调用model.collection.add(node)，触发collection的added消息,同时触发cell的added消息;
+    :model接收到added消息，调用model.onCellAdded(cell);
+    :cell.added会触发model的cell:added和node:added消息;
+    :renderer监听了cell:added，调用renderer.renderView(cell);
+    :renderer创建对应view，并调用renderer.requestViewUpdate;
+    :调用renderer.scheduleViewUpdate();
+    :调用renderer.updateViews();
+    :调用renderer.updateView();
+    :view.confirmUpdate(flag, options)();
+end group
+@enduml
