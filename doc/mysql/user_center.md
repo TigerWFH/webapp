@@ -144,3 +144,19 @@ CREATE TABLE `user_info_update` (
 > Access Token 的是 OAuth2.0 中用户经过授权后，返回调用 API 的凭证。对于自己的应用来讲，用户在登录后，即返回 access_token。在 token 有效期内可凭借此凭证，调用其他接口。对于 access_token 的刷新有两种方案，第一种每次用户重启 app 时，重新 refresh。第二种，在调用周期内服务端发现 access token 可能过期时，返回新的 token 给客户端。
 >
 > 至于 Access Token 的生成，这个并没有规定，只要保证其唯一性即可。简单点，对用户 uid 和当前时间哈希得到新的 Access Token，并设置过期时间。另外也可以采用 JWT 实现。
+
+## MYSQL 导入文本文件 txt
+
+```js
+/*
+使用命令：LOAD DATA LOCAL INFILE '/Users/monkey/Desktop/data.txt' INTO TABLE demo FIELDS TERMINATED BY ',' LINES TERMINATED BY ';';
+其中，元数据间隔符，行结束符可以自行指定；
+使用改命令会产生报错：ERROR: Loading local data is disabled - this must be enabled on both the client and server sides
+解决方案：
+mysql> SET GLOBAL local_infile=1;
+Query OK, 0 rows affected (0.00 sec)
+
+退出mysql，并重新进入即可。参考资料：https://stackoverflow.com/questions/59993844/error-loading-local-data-is-disabled-this-must-be-enabled-on-both-the-client
+
+*/
+```
