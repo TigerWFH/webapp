@@ -1,33 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            height: 100%;
-            border: 1px solid red;
-        }
-        .content {
-            height: 200%;
-            border: 1px solid blue;
-        }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        height: 100%;
+        border: 1px solid red;
+      }
+      .content {
+        height: 200%;
+        border: 1px solid blue;
+      }
     </style>
-</head>
-<body>
+    <script>
+      // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
+      const old = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function () {
+        const listener = arguments[1];
+        const newListener = function (e) {
+          fn;
+        };
+      };
+
+      function onClick() {
+        console.log('我是第一个');
+      }
+    </script>
+  </head>
+  <body>
     <div class="container">
-        <div class="content">
-            <span>
-                sdklfsakfslakdfjsa
-            </span>
-        </div>
+      <div class="content">
+        <span> sdklfsakfslakdfjsa </span>
+        <div id="click" onclick="onClick()">button</div>
+      </div>
     </div>
-</body>
+    <script>
+      const dom = document.querySelector('#click');
+      dom.addEventListener('click', function () {
+        console.log('我是addeventlistener添加上的');
+      });
+    </script>
+  </body>
 </html>
