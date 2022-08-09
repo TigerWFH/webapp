@@ -22,6 +22,59 @@
 
 ## HTTP 请求方法：OPTIONS、GET、POST、PUT、DELETE、HEAD、TRACE、CONNECT
 
+## HTTP 缓存
+
+> 优先级：pragma > cach-control > expires，理论上 pragma 和 expires 不应该同时出现
+>
+> 浏览器缓存过程：
+
+- 浏览器第一次加载资源，服务器返回 200，浏览器将资源文件从服务器上请求下载下来，并把 response header 及该请求的返回时间(要与 Cache-Control 和 Expires 对比)一并缓存(经验证，当 cache-control 和 expires 同时出现时，两者中只要有一个导致强缓存失效，浏览器就会发请求到服务器验证资源新鲜度)；
+- 下一次加载资源时，先比较当前时间和上一次返回 200 时的时间差，如果没有超过 Cache-Control 设置的 max-age，则没有过期，命中强缓存，不发请求直接从本地缓存读取该文件（如果浏览器不支持 HTTP1.1，则用 Expires 判断是否过期）；
+- 如果时间过期，服务器则查看 header 里的 If-None-Match 和 If-Modified-Since ；
+- 服务器优先根据 Etag 的值判断被请求的文件有没有做修改，Etag 值一致则没有修改，命中协商缓存，返回 304；如果不一致则有改动，直接返回新的资源文件带上新的 Etag 值并返回 200；
+- 如果服务器收到的请求没有 Etag 值，则将 If-Modified-Since 和被请求文件的最后修改时间做比对，一致则命中协商缓存，返回 304；不一致则返回新的 last-modified 和文件并返回 200；
+
+### 强缓存 header
+
+> 不会向服务器发送请求，直接从缓存中读取资源（from disk cache 或 from memory cache）
+
+- `pragma: no-cache // 禁用缓存`响应 header； 值域={no-cache}，告诉客户端不要禁用缓存，http1.0
+- `expires: GMT格式时间，绝对时间 // 启用缓存，并设置主体缓存有效期`响应 header；值域={GMT 格式时间}，时间相对于服务器时间；http1.0
+- `cache-control: 控制缓存行为`通用 header；http1.1
+  - `通用`值域={no-store, no-cache, max-age, no-transform, stale-if-error }
+  - `请求header`值域={max-stale, min-fresh, only-if-cached,}
+  - `响应header`值域={s-maxage, must-revalidate, proxy-revalidate, must-understand, private, public, immutable, stale-whie-revalidate}
+
+### 协商缓存（新鲜度校验）
+
+> 向服务器发送请求，服务器会根据这个请求的 request http headers 的一些参数判断是否命中协商缓存，如果命中，则返回 304 状态码，并带上新的 response header 通知浏览器从缓存中读取资源
+>
+> 其本质是节约带宽
+
+- `If-Modified-Since：`浏览器在下一次加载资源时发送给服务器，会将上一次的 Last-Modified 值放在 If-Modified-Since 中
+- `Last-Modified：`该资源最后一次更改时间，作为 response header 返回给
+- `If-None-Match：`条件式请求首部。
+- `Etag：`是资源的特定版本的标识符。
+
+### 禁止缓存
+
+- `cache-control：`
+  - `no-store：`禁用缓存
+  - `no-cache：`使用缓存，但是必须进行新鲜度校验
+- `header禁止缓存：`
+  - `Cache-Control: no-store, no-cache, must-revalidate`
+  - `Expires: GMT格式设置为当前时间`
+- `html禁止缓存`
+  - `<script src="xxx?random=random>"`
+  - `<meta http-equiv="pragma" content="no-store">`
+  - `<meta http-equiv="expires" content="Wed, 26 Feb 1997 00:00:00">`
+  - `<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">`
+
+### 资源缓存位置
+
+- `缓存在内存`from memory cache
+- `缓存在磁盘`from disk cache
+
 ## POST 规范规定，POST 提交的数据必须放到消息体中，但协议没有规定数据使用什么编码方式。开发者完全可以自己决定消息主体的格式
 
 > 数据能够被服务端解析才有意义，一般服务端框架会内置一些编码方式，方便解析前端传送的数据。服务端是根据 content-type 字段值获得请求体的数据是何种编码方式
