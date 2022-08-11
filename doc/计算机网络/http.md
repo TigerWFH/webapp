@@ -134,16 +134,27 @@
     </methodCall>
 ```
 
-## 浏览器输入 url 到显示页面背后的事情
+## http 长链接和短链接
 
-```plain
-    1、输入url并回车
-    2、浏览器拿到域名后，请求域名DNS获取对应的IP（有可能出错，域名不存在；未找到对应的IP等）
-    3、拿到IP后，建立TCP链接
-    4、TCP链接建立后，封装HTTP数据包并通过TCP进行数据交换
-```
+- `http长短链接本质：TCP链接在time时间内是否断开`
+  > http 长短链接本质是 TCP 的链接保持和断开
+  >
+  > http1.0 时，默认是短链接，每次 http 事务都要建立 TCP 链接并断开 TCP 链接
+  >
+  > http1.1 以后，默认长链接，在 tcp 指定的时间内，tcp 链接一旦建立，就会保持 t 时间，然后才断开
+- `http超时本质：TCP超时`
 
-## 请求超时：就是建立 TCP 三次握手的时间限制
+### TCP 三次握手和 4 次挥手
+
+> 建立连接：三次握手
+>
+> 断开链接：四次挥手
+
+### http 协议头
+
+- `connection:keep-alive`
+
+### 请求超时：就是建立 TCP 三次握手的时间限制
 
 ```plain
     三次握手：
@@ -156,9 +167,63 @@
     http协议请求超时，主要也就是TCP链接建立超时
 ```
 
-## 响应超时：建立起 TCP 链接后，到第一次接收到数据之间的时间限制（包括第一次到第二次，第二次到第三次……）
+### 响应超时：建立起 TCP 链接后，到第一次接收到数据之间的时间限制（包括第一次到第二次，第二次到第三次……）
 
 ```plain
     1、经测试，chrome存在响应超时，即后台一直处理业务，超过time时间没有返回，浏览器会将请求置为失败状态，走到catch中，chrome大概是5分钟
     2、一般，响应后台应该统一在后台处理，当处理耗时任务时，需要设置好超时time值，及时反馈给请求
+```
+
+## 跨域
+
+### 浏览器同源策略
+
+> 用于限制一个 origin 的文档或者它加载的脚本如何能与另一个 origin 的资源进行交互
+>
+> `protocol+host+port` 完全相同才是同源；否者是非同源
+>
+> 使用 document.domain 来允许子域安全访问其父域时，您需要在父域和子域中设置 document.domain 为相同的值。这是必要的
+
+- `同源策略的限定`
+  - ``
+  - ``
+  - ``
+
+### 如何允许跨源访问 CORS
+
+> CORS(Cross-Origin Resource Sharing)，跨域资源共享
+>
+> CORS 是 http 的一部分，它允许服务端来指定哪些主机可以从这个服务端加载资源
+
+- `跨域资源共享标准新增了一组HTTP首部字段`允许服务器声明哪些源站通过浏览器有权限访问哪些资源
+
+  > 响应首部
+
+  - `Access-Control-Allow-Origin`：指定了允许访问当前当前资源的外域 URI
+  - `Access-Control-Expose-Headers`：在跨域访问时，XMLHttpRequest 只能获取部分 headers，服务端设定该 header，指定更多的可访问 headers
+  - `Access-Control-Max-Age`：
+  - `Access-Control-Allow-Credentials`：
+  - `Access-Control-Allow-Methods`
+  - `Access-Control-Allow-Headers`
+
+  > 请求首部
+
+  - `Origin`
+  - `Access-Control-Request-Method`
+  - `Access-Control-Request-Headers`
+
+### 如何禁止跨源共享 CSRF（Cross Site Request Forgery）
+
+### 跨源数据存储访问
+
+- `localStorage、IndexedDB`受同源策略影响，以源进行分隔，每个源都拥有自己单独的存储空间
+- `Cookies`子域和父域
+
+## 浏览器输入 url 到显示页面背后的事情
+
+```plain
+    1、输入url并回车
+    2、浏览器拿到域名后，请求域名DNS获取对应的IP（有可能出错，域名不存在；未找到对应的IP等）
+    3、拿到IP后，建立TCP链接
+    4、TCP链接建立后，封装HTTP数据包并通过TCP进行数据交换
 ```
