@@ -5,9 +5,10 @@ fs.readFile('/Users/admin/Desktop/data.json', (err, data) => {
     const ret = data.toString();
     const result = JSON.parse(ret);
     if (Array.isArray(result)) {
-      let csvData = 'page_id, page_name\r\n';
+      let csvData =
+        'page_id, page_name, event_type, inner_version, app_identifier\r\n';
       result.forEach((meta) => {
-        csvData += `${meta[0]}, ${meta[1]}\r\n`;
+        csvData += `${meta[0]}, ${meta[1]}, ${meta[2]}, ${meta[3]}, ${meta[4]}\r\n`;
       });
       const err = fs.writeFileSync(OUTPUT_PATH, csvData, { encoding: 'utf8' });
       if (err) {
