@@ -8,6 +8,47 @@
 >
 > 用户信息包括：用户属性、用户地理位置信息、用户设备信息以及用户日志信息
 
+## MySql 数据类型
+
+```SQL
+    CREATE TABLE `commission_store_user_settle` (
+        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+        `gmt_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+        `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+        `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
+        `commission_user_id` bigint(20) NOT NULL COMMENT '店员用户ID',
+        `user_id` bigint(20) NOT NULL COMMENT '扫码下单用户ID',
+        `trade_id` varchar(64) NOT NULL COMMENT '订单id',
+        `seller_id` bigint(20) NOT NULL COMMENT '商户ID',
+        `store_id` bigint(20) NOT NULL COMMENT '门店ID',
+        `order_date` datetime NOT NULL COMMENT '下单日期',
+        `sku_id` bigint(20) NOT NULL COMMENT '商品规格渠道ID',
+        `price` bigint(20) NOT NULL COMMENT '金额_支付金额',
+        `item_count`  int(11) NOT NULL COMMENT '商品数量',
+        `commission_status` tinyint(4) NOT NULL COMMENT '分佣状态 1:待分佣 2:已分佣 3:不分佣' ,
+        `commission_type` tinyint(4) NOT NULL COMMENT '分佣类型 1:患者支付处方 2:买手商城' ,
+        `commission_amount` bigint(20) NOT NULL DEFAULT '0' COMMENT '分佣金额，单位分',
+        `commission_percent` int(11) NOT NULL DEFAULT '0' COMMENT '分佣比例',
+
+        PRIMARY KEY (`id`),
+        KEY `idx_trade_id` (`trade_id`) USING BTREE,
+        KEY `idx_cms_user_id_cms_date` (`commission_user_id`,`order_date`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='店员分佣结算表';
+```
+
+- `bigint(20)`
+- `int(10)`
+- `tinyint(1)`
+- `datetime`
+- `varchar`
+- `char`
+- ``
+- ``
+
+## SQL 关键字
+- ``
+- ``
+- ``
 ## 登录授权表
 
 ```SQL
