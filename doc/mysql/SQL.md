@@ -1,5 +1,56 @@
 # MYSQL
 
+## SQL（Structured Query Language）
+
+> 标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等
+>
+> SQL 语句不区分大小写
+> [参考资料](https://juejin.cn/post/6844903790571700231#heading-14)
+
+### 数据定义语言(DDL)
+
+> 数据定义语言（Data Definition Language，DDL）是 SQL 语言集中负责数据结构定义与数据库对象定义的语言。DDL 的主要功能是定义数据库对象
+
+- `CREATE`
+- `ALTER`
+- `DROP`
+
+### 数据操纵语言（DML）
+
+> 数据操纵语言（Data Manipulation Language, DML）是用于数据库操作，对数据库其中的对象和数据运行访问工作的编程语句，DML 的主要功能是 访问数据，因此其语法都是以读写数据库为主
+
+- `INSERT`
+
+```SQL
+INSERT INTO student(sname, sid, ssex)
+VALUES ('monkey', 1, '男');
+
+INSERT INTO student
+VALUES ('monkey', 1, 12, '男')
+```
+
+- `UPDATE`
+- `DELETE`
+- `SELECT`
+
+### 事务控制语言（TCL）
+
+> 事务控制语言 (Transaction Control Language, TCL) 用于管理数据库中的事务。这些用于管理由 DML 语句所做的更改。它还允许将语句分组为逻辑事务
+
+- `COMMIT`
+- `ROLLBACK`
+
+### 数据控制语言（DCL）
+
+> 数据控制语言 (Data Control Language, DCL) 是一种可对数据访问权进行控制的指令，它可以控制特定用户账户对数据表、查看表、预存程序、用户自定义函数等数据库对象的控制权
+
+- `GRANT`
+- `REVOKE`
+- `CONNECT`
+- `EXECUTE`
+- `USAGE`
+- `REFERENCES`
+
 ## MYSQL 数据类型
 
 - `整数类型`
