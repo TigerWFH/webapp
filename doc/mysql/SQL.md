@@ -1,5 +1,11 @@
 # MYSQL
 
+```plantuml
+@startuml 明天
+class A {}
+@enduml
+```
+
 ## SQL（Structured Query Language）
 
 > 标准 SQL 由 ANSI 标准委员会管理，从而称为 ANSI SQL。各个 DBMS 都有自己的实现，如 PL/SQL、Transact-SQL 等
