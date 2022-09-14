@@ -103,12 +103,14 @@ VALUES ('monkey', 1, 12, '男')
     > 写入形式：datetime 和 timestamp 的写入形式都是一样的，都必须是时间格式的，不能因为 timestamp 本质存储的是时间戳，然后我们就可以直接写入时间戳
     > 时区：时间戳是相对值，与时区有关
 - `文字字符串类型`
-  - `CHAR`
+  - `CHAR：`
+    > CHAR(length): v4.0 及其一下版本，length 是指字节数；v5.0 及其以上，length 指的是字符个数
   - `VARCHAR`
-  - `TINYTEXT`
-  - `TEXT`
-  - `MEDIUMTEXT`
-  - `LONGTEXT`
+    > VARCHAR(length): v4.0 及其一下版本，length 是指字节数；v5.0 及其以上，length 指的是字符个数
+  - `TINYTEXT：`0-255 字节
+  - `TEXT：`0-65535 字节
+  - `MEDIUMTEXT：`0-16772150 字节
+  - `LONGTEXT：`0-4294967295 字节
 - `枚举类型`
   - `ENUM`
 - `集合类型`
@@ -116,10 +118,10 @@ VALUES ('monkey', 1, 12, '男')
 - `二进制字符串类型`
   - `BINARY`
   - `VARBINARY`
-  - `TINYBLOB`
-  - `BLOB`
-  - `MEDIUMBLOB`
-  - `LONGBLOB`
+  - `TINYBLOB：`0-255 字节，短文本`二进制`字符串
+  - `BLOB：`0-65KB，`二进制`字符串
+  - `MEDIUMBLOB：`0-16MB
+  - `LONGBLOB：`0-4GB
 - `JSON类型`
   - `JSON对象`
   - `JSON数组`
