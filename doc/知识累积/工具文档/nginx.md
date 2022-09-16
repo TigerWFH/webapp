@@ -186,6 +186,23 @@ http {
         root html; // 定义网站根目录，可以是相对路径或绝对路径
         index index.html index.htm; // 定义默认页
     }
+
+    root和alias
+    root：路径拼接，将location路径拼接到root的path后面
+        root path，
+    alias：路径替换，将location路径替换为alias的path
+        alias path，
+
+    Demo：
+    location ^~ /t/ {
+        root /www/root/html/;
+    }
+    请求: /t/a.html，server返回：/www/root/html/t/a.html
+    -----------------------------
+    location ^~ /t/ {
+        alias /www/root/html/t_new/;
+    }
+    请求: /t/a.html，server返回：/www/root/html/t_new/a.html
  */
 ```
 
