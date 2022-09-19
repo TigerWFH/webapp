@@ -20,6 +20,12 @@
 ```shell
 # 安装
 brew install openresty/brew/openresty
+# 启动
+brew services restart openresty/brew/openresty
+# 停止
+brew services stop openresty/brew/openresty
+# 重新启动
+brew services restart openresty/brew/openresty
 ```
 
 ## 参考资料
@@ -229,3 +235,22 @@ http {
 - `JSON`
 - `INI：配置简单文件,`\*.ini,\*.cfg,\*.conf
 - `TOML`
+
+## nginx（openresty） 配置实例
+
+### location 配置 nginx 返回 json 数据
+
+```conf
+location /wdt {
+        default_type application/json;
+        add_header Access-Control-Allow-Credentials true;
+        add_header Access-Control-Allow-Origin *;
+        add_header Cache-Control public;
+        add_header Cache-Control max-age=300;
+
+        return 200 '"123"';
+        # index index.htm index.html;
+        # try_files $uri $uri/ =404;
+    }
+
+```
