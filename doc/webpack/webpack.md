@@ -7,11 +7,13 @@
 - `hash`代表的是 compilation 的 hash 值，每次重新编译都会重新生成，所有文件共享相同的 hash 值
 - `chunkhash`代表的是 chunk 的 hash 值，根据 chunk 的内容计算出的 hash 值，只和文件自身相关
 
-> webpack 打包生成的模块以自然数自增命名，作为模块的唯一识别标识
+### webpack module id
+
+> 最初 webpack 打包生成的模块以自然数自增命名，作为模块的唯一识别标识
 >
-> 新增模块，新模块生成 id，会对已有的模块 id 产生影响，就是会改变已有 id 的值，造成对应的 chunk 文件内容发生变化，进而造成 chunkhash 发生变化，这就是不稳定的 chunhash，不利于持久化缓存
+> 新增模块，新模块生成 id，会对已有的模块 id 产生影响，就是会改变已有 id 的值，造成对应的 chunk 文件内容发生变化，进而造成 chunkhash 发生变化，这就是`不稳定的 chunhash`，不利于持久化缓存
 >
-> 依赖导致的变化是在逾期范围内的，造成不稳定 chunkhash 的原因不在预期内
+> `依赖导致的变化`是在预期范围内的；`不稳定 chunkhash`导致的的变化不在预期内
 >
 > webpack 优化了模块 ID 生成的算法，基于文件名生成模块 ID，避免了不稳定 chunkhash 现象
 
@@ -310,7 +312,7 @@ function webpack(options, callback) {
 }
 ```
 
-# 生成 copmiler
+## 生成 copmiler
 
 - `2-1处理options：`1、生成默认 config；2、将用户 options 合并到 config
 
@@ -1037,7 +1039,7 @@ function process(options, compiler) {
 	}
 ```
 
-# 执行 compiler.run 方法
+## 执行 compiler.run 方法
 
 ```js
     run(callback) {
@@ -1134,7 +1136,7 @@ function process(options, compiler) {
 
 ```
 
-# webpack 部分知识点
+## webpack 部分知识点
 
 - `plugins`
 

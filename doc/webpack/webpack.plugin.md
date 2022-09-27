@@ -1,10 +1,11 @@
-# Compiler事件执行顺序以及对应的Plugin：childCompiler不复制这些hooks:"make","compile","emit","afterEmit","invalid","done","thisCompilation"
+# Compiler 事件执行顺序以及对应的 Plugin：childCompiler 不复制这些 hooks:"make","compile","emit","afterEmit","invalid","done","thisCompilation"
+
 ```js
     /* environment、afterEnvironment、
     entryOption、afterPlugins、afterResolvers、
     beforeRun、run、
     normalModuleFactory、contextModuleFactory、beforeCompile、compile、thisCompilation、compilation、make、
-    afterCompile、shouldEmit、emit、afterEmit、done  */ 
+    afterCompile、shouldEmit、emit、afterEmit、done  */
     1、environment------>SyncHook,[]
     2、afterEnvironment------>SyncHook,[]
     3、entryOption------>SyncBailHook,[vConsolePlugin, EntryOptionPlugin]
@@ -37,7 +38,9 @@
     23、watchClose------>SyncHook,["fork-ts-checker-webpack-plugin"]
     24、invalid------>SyncHook,[]
 ```
-# Compilation事件顺序
+
+## Compilation 事件顺序
+
 ```js
 	addEntry------>SyncHook,监听器：[]
 	additionalAssets------>AsyncSeriesHook,监听器：[]
@@ -120,76 +123,132 @@
 	succeedModule------>SyncHook,[smp]
 	succeedEntry------>SyncHook,[]
 ```
-# 依次执行的内部插件
-* `JsonpTemplatePlugin：`为compiler的thisCompilation事件注册监听器
+
+## 依次执行的内部插件
+
+- `JsonpTemplatePlugin：`为 compiler 的 thisCompilation 事件注册监听器
+
 ```
     thisCompilation广播执行该插件，执行JsonpMainTemplatePlugin、JsonpChunkTemplatePlugin、JsonpHotUpdateChunkTemplatePlugin等插件
 ```
-* `FetchCompileWasmTemplatePlugin：`为compiler的thisCompilation事件注册监听器
+
+- `FetchCompileWasmTemplatePlugin：`为 compiler 的 thisCompilation 事件注册监听器
+
 ```
-    
+
 ```
-* `FunctionModulePlugin：`为compiler的compilation事件注册监听器
+
+- `FunctionModulePlugin：`为 compiler 的 compilation 事件注册监听器
+
 ```
+
 ```
-* `NodeSourcePlugin：`为compiler的compilation和afterResolvers事件注册监听器
+
+- `NodeSourcePlugin：`为 compiler 的 compilation 和 afterResolvers 事件注册监听器
+
 ```js
-    /**
-     * compilation和afterResolvers
-     * 该插件为afterResolvers事件注册监听器
-     * 执行：
-     *  1、为compiler.resolverFactory.hooks.resolver事件注册监听器，涉及插件AliasPlugin
-     * */ 
+/**
+ * compilation和afterResolvers
+ * 该插件为afterResolvers事件注册监听器
+ * 执行：
+ *  1、为compiler.resolverFactory.hooks.resolver事件注册监听器，涉及插件AliasPlugin
+ * */
 ```
-* `LoaderTargetPlugin：`为compiler的compilation事件注册监听器
+
+- `LoaderTargetPlugin：`为 compiler 的 compilation 事件注册监听器
+
 ```js
-    /**
-     * compilation和afterResolvers
-     * */ 
+/**
+ * compilation和afterResolvers
+ * */
 ```
-* `WebWorkerTemplatePlugin：`为thisCompilation事件注册监听器
+
+- `WebWorkerTemplatePlugin：`为 thisCompilation 事件注册监听器
+
 ```
+
 ```
-* `FetchCompileWasmTemplatePlugin：`为thisCompilation事件注册监听器
+
+- `FetchCompileWasmTemplatePlugin：`为 thisCompilation 事件注册监听器
+
 ```
+
 ```
-* `NodeTemplatePlugin：`为thisCompilation事件注册监听器
+
+- `NodeTemplatePlugin：`为 thisCompilation 事件注册监听器
+
 ```
+
 ```
-* `ReadFileCompileWasmTemplatePlugin：`为thisCompilation事件注册监听器
+
+- `ReadFileCompileWasmTemplatePlugin：`为 thisCompilation 事件注册监听器
+
 ```
+
 ```
-* `FunctionModulePlugin：`为compilation事件注册监听器
+
+- `FunctionModulePlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `NodeTargetPlugin：`实际注册的是ExternalsPlugin
+
+- `NodeTargetPlugin：`实际注册的是 ExternalsPlugin
+
 ```
+
 ```
-* `ExternalsPlugin：`为compile事件注册监听器
+
+- `ExternalsPlugin：`为 compile 事件注册监听器
+
 ```
+
 ```
-* `LibraryTemplatePlugin：`为thisCompilation事件注册监听器
+
+- `LibraryTemplatePlugin：`为 thisCompilation 事件注册监听器
+
 ```
+
 ```
-* `EvalSourceMapDevToolPlugin：`为compilation事件注册监听器
+
+- `EvalSourceMapDevToolPlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `SourceMapDevToolPlugin：`为compilation事件注册监听器
+
+- `SourceMapDevToolPlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `EvalDevToolModulePlugin：`为compilation事件注册监听器
+
+- `EvalDevToolModulePlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `JavascriptModulesPlugin：`为compilation事件注册监听器
+
+- `JavascriptModulesPlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `JsonModulesPlugin：`为compilation事件注册监听器
+
+- `JsonModulesPlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `WebAssemblyModulesPlugin：`为compilation事件注册监听器
+
+- `WebAssemblyModulesPlugin：`为 compilation 事件注册监听器
+
 ```
+
 ```
-* `EntryOptionPlugin：`为entryOption事件注册监听器
+
+- `EntryOptionPlugin：`为 entryOption 事件注册监听器
+
 ```js
     /**
      * entryOption：SyncBailHook
@@ -202,14 +261,14 @@
      *      array：则执行MultiEntryPlugin，为compilation和make事件注册监听器
      *  3、如果entry参数function，则执行DynamicEntryPlugin插件，为compilation和make事件注册监听器
      * 作用：
-     * 
+     *
     */
    /**
     * EntryOptionPlugin
-    *     ************ 类**************      
-    *           EntryOptionPlugin       
+    *     ************ 类**************
+    *           EntryOptionPlugin
     *     ************ 属性************
-    *       无 
+    *       无
     *     ************ 操作 ***********
     *       apply(compiler): void
     *     *****************************
@@ -230,32 +289,32 @@
     }
      /**
     * SingleEntryPlugin
-    *     ************ 类**************      
-    *           SingleEntryPlugin       
+    *     ************ 类**************
+    *           SingleEntryPlugin
     *     ************ 属性************
     *       this.context = context
     *       this.entry = entry
-    *       this.name = name 
+    *       this.name = name
     *     ************ 操作 ***********
     *       apply(compiler): void
     *     *****************************
     */
    /**
     * MultiEntryPlugin
-    *     ************ 类**************      
-    *           MultiEntryPlugin       
+    *     ************ 类**************
+    *           MultiEntryPlugin
     *     ************ 属性************
     *       this.context = context
     *       this.entry = entry（数组）
-    *       this.name = name 
+    *       this.name = name
     *     ************ 操作 ***********
     *       apply(compiler): void
     *     *****************************
     */
    /**
     * DynamicEntryPlugin
-    *     ************ 类**************      
-    *           DynamicEntryPlugin       
+    *     ************ 类**************
+    *           DynamicEntryPlugin
     *     ************ 属性************
     *       this.context = context
     *       this.entry = entry(function)
@@ -264,279 +323,249 @@
     *     *****************************
     */
 ```
-* `CompatibilityPlugin：`为compilation事件注册监听器
-* `HarmonyModulesPlugin：`为compilation事件注册监听器
-* `AMDPlugin：`为compilation和afterResolvers事件注册监听器
+
+- `CompatibilityPlugin：`为 compilation 事件注册监听器
+- `HarmonyModulesPlugin：`为 compilation 事件注册监听器
+- `AMDPlugin：`为 compilation 和 afterResolvers 事件注册监听器
+
 ```js
-    /**
-     * compilation和afterResolvers
-     * afterResolvers：SyncHook
-     * 该插件为afterResolvers事件注册监听器
-     * 执行：
-     *  1、为compiler.resolverFactory.hooks.resolver事件注册监听器，涉及插件AliasPlugin
-     * 作用：
-     * */ 
-    /**
-    * AMDPlugin
-    *     ************ 类**************      
-    *           AMDPlugin       
-    *     ************ 属性************
-    *       this.amdOptions = amdOptions
-    *       this.options = options
-    *     ************ 操作 ***********
-    *       apply(compiler): void
-    *     *****************************
-    */
-   compiler.hooks.compilation.tap(
-			"AMDPlugin",
-			(compilation, { contextModuleFactory, normalModuleFactory }) => {
-				compilation.dependencyFactories.set(
-					AMDRequireDependency,
-					new NullFactory()
-				);
-				compilation.dependencyTemplates.set(
-					AMDRequireDependency,
-					new AMDRequireDependency.Template()
-				);
+/**
+ * compilation和afterResolvers
+ * afterResolvers：SyncHook
+ * 该插件为afterResolvers事件注册监听器
+ * 执行：
+ *  1、为compiler.resolverFactory.hooks.resolver事件注册监听器，涉及插件AliasPlugin
+ * 作用：
+ * */
+/**
+ * AMDPlugin
+ *     ************ 类**************
+ *           AMDPlugin
+ *     ************ 属性************
+ *       this.amdOptions = amdOptions
+ *       this.options = options
+ *     ************ 操作 ***********
+ *       apply(compiler): void
+ *     *****************************
+ */
+compiler.hooks.compilation.tap(
+  'AMDPlugin',
+  (compilation, { contextModuleFactory, normalModuleFactory }) => {
+    compilation.dependencyFactories.set(
+      AMDRequireDependency,
+      new NullFactory()
+    );
+    compilation.dependencyTemplates.set(
+      AMDRequireDependency,
+      new AMDRequireDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					AMDRequireItemDependency,
-					normalModuleFactory
-				);
-				compilation.dependencyTemplates.set(
-					AMDRequireItemDependency,
-					new AMDRequireItemDependency.Template()
-				);
+    compilation.dependencyFactories.set(
+      AMDRequireItemDependency,
+      normalModuleFactory
+    );
+    compilation.dependencyTemplates.set(
+      AMDRequireItemDependency,
+      new AMDRequireItemDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					AMDRequireArrayDependency,
-					new NullFactory()
-				);
-				compilation.dependencyTemplates.set(
-					AMDRequireArrayDependency,
-					new AMDRequireArrayDependency.Template()
-				);
+    compilation.dependencyFactories.set(
+      AMDRequireArrayDependency,
+      new NullFactory()
+    );
+    compilation.dependencyTemplates.set(
+      AMDRequireArrayDependency,
+      new AMDRequireArrayDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					AMDRequireContextDependency,
-					contextModuleFactory
-				);
-				compilation.dependencyTemplates.set(
-					AMDRequireContextDependency,
-					new AMDRequireContextDependency.Template()
-				);
+    compilation.dependencyFactories.set(
+      AMDRequireContextDependency,
+      contextModuleFactory
+    );
+    compilation.dependencyTemplates.set(
+      AMDRequireContextDependency,
+      new AMDRequireContextDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					AMDDefineDependency,
-					new NullFactory()
-				);
-				compilation.dependencyTemplates.set(
-					AMDDefineDependency,
-					new AMDDefineDependency.Template()
-				);
+    compilation.dependencyFactories.set(AMDDefineDependency, new NullFactory());
+    compilation.dependencyTemplates.set(
+      AMDDefineDependency,
+      new AMDDefineDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					UnsupportedDependency,
-					new NullFactory()
-				);
-				compilation.dependencyTemplates.set(
-					UnsupportedDependency,
-					new UnsupportedDependency.Template()
-				);
+    compilation.dependencyFactories.set(
+      UnsupportedDependency,
+      new NullFactory()
+    );
+    compilation.dependencyTemplates.set(
+      UnsupportedDependency,
+      new UnsupportedDependency.Template()
+    );
 
-				compilation.dependencyFactories.set(
-					LocalModuleDependency,
-					new NullFactory()
-				);
-				compilation.dependencyTemplates.set(
-					LocalModuleDependency,
-					new LocalModuleDependency.Template()
-				);
+    compilation.dependencyFactories.set(
+      LocalModuleDependency,
+      new NullFactory()
+    );
+    compilation.dependencyTemplates.set(
+      LocalModuleDependency,
+      new LocalModuleDependency.Template()
+    );
 
-				const handler = (parser, parserOptions) => {
-					if (parserOptions.amd !== undefined && !parserOptions.amd) return;
+    const handler = (parser, parserOptions) => {
+      if (parserOptions.amd !== undefined && !parserOptions.amd) return;
 
-					const setExpressionToModule = (outerExpr, module) => {
-						parser.hooks.expression.for(outerExpr).tap("AMDPlugin", expr => {
-							const dep = new AMDRequireItemDependency(module, expr.range);
-							dep.userRequest = outerExpr;
-							dep.loc = expr.loc;
-							parser.state.current.addDependency(dep);
-							return true;
-						});
-					};
+      const setExpressionToModule = (outerExpr, module) => {
+        parser.hooks.expression.for(outerExpr).tap('AMDPlugin', (expr) => {
+          const dep = new AMDRequireItemDependency(module, expr.range);
+          dep.userRequest = outerExpr;
+          dep.loc = expr.loc;
+          parser.state.current.addDependency(dep);
+          return true;
+        });
+      };
 
-					new AMDRequireDependenciesBlockParserPlugin(options).apply(parser);
-					new AMDDefineDependencyParserPlugin(options).apply(parser);
+      new AMDRequireDependenciesBlockParserPlugin(options).apply(parser);
+      new AMDDefineDependencyParserPlugin(options).apply(parser);
 
-					setExpressionToModule("require.amd", "!!webpack amd options");
-					setExpressionToModule("define.amd", "!!webpack amd options");
-					setExpressionToModule("define", "!!webpack amd define");
+      setExpressionToModule('require.amd', '!!webpack amd options');
+      setExpressionToModule('define.amd', '!!webpack amd options');
+      setExpressionToModule('define', '!!webpack amd define');
 
-					parser.hooks.expression
-						.for("__webpack_amd_options__")
-						.tap("AMDPlugin", () =>
-							parser.state.current.addVariable(
-								"__webpack_amd_options__",
-								JSON.stringify(amdOptions)
-							)
-						);
-					parser.hooks.evaluateTypeof
-						.for("define.amd")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.evaluateToString(typeof amdOptions)
-						);
-					parser.hooks.evaluateTypeof
-						.for("require.amd")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.evaluateToString(typeof amdOptions)
-						);
-					parser.hooks.evaluateIdentifier
-						.for("define.amd")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.evaluateToIdentifier("define.amd", true)
-						);
-					parser.hooks.evaluateIdentifier
-						.for("require.amd")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.evaluateToIdentifier("require.amd", true)
-						);
-					parser.hooks.typeof
-						.for("define")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.toConstantDependency(
-								parser,
-								JSON.stringify("function")
-							)
-						);
-					parser.hooks.evaluateTypeof
-						.for("define")
-						.tap("AMDPlugin", ParserHelpers.evaluateToString("function"));
-					parser.hooks.canRename
-						.for("define")
-						.tap("AMDPlugin", ParserHelpers.approve);
-					parser.hooks.rename.for("define").tap("AMDPlugin", expr => {
-						const dep = new AMDRequireItemDependency(
-							"!!webpack amd define",
-							expr.range
-						);
-						dep.userRequest = "define";
-						dep.loc = expr.loc;
-						parser.state.current.addDependency(dep);
-						return false;
-					});
-					parser.hooks.typeof
-						.for("require")
-						.tap(
-							"AMDPlugin",
-							ParserHelpers.toConstantDependency(
-								parser,
-								JSON.stringify("function")
-							)
-						);
-					parser.hooks.evaluateTypeof
-						.for("require")
-						.tap("AMDPlugin", ParserHelpers.evaluateToString("function"));
-				};
-
-				normalModuleFactory.hooks.parser
-					.for("javascript/auto")
-					.tap("AMDPlugin", handler);
-				normalModuleFactory.hooks.parser
-					.for("javascript/dynamic")
-					.tap("AMDPlugin", handler);
-			}
+      parser.hooks.expression
+        .for('__webpack_amd_options__')
+        .tap('AMDPlugin', () =>
+          parser.state.current.addVariable(
+            '__webpack_amd_options__',
+            JSON.stringify(amdOptions)
+          )
         );
-        // afterResolvers事件监听器
-		compiler.hooks.afterResolvers.tap("AMDPlugin", () => {
-			compiler.resolverFactory.hooks.resolver
-				.for("normal")
-				.tap("AMDPlugin", resolver => {
-					new AliasPlugin(
-						"described-resolve",
-						{
-							name: "amdefine",
-							alias: path.join(
-								__dirname,
-								"..",
-								"..",
-								"buildin",
-								"amd-define.js"
-							)
-						},
-						"resolve"
-					).apply(resolver);
-					new AliasPlugin(
-						"described-resolve",
-						{
-							name: "webpack amd options",
-							alias: path.join(
-								__dirname,
-								"..",
-								"..",
-								"buildin",
-								"amd-options.js"
-							)
-						},
-						"resolve"
-					).apply(resolver);
-					new AliasPlugin(
-						"described-resolve",
-						{
-							name: "webpack amd define",
-							alias: path.join(
-								__dirname,
-								"..",
-								"..",
-								"buildin",
-								"amd-define.js"
-							)
-						},
-						"resolve"
-					).apply(resolver);
-				});
-		});
+      parser.hooks.evaluateTypeof
+        .for('define.amd')
+        .tap('AMDPlugin', ParserHelpers.evaluateToString(typeof amdOptions));
+      parser.hooks.evaluateTypeof
+        .for('require.amd')
+        .tap('AMDPlugin', ParserHelpers.evaluateToString(typeof amdOptions));
+      parser.hooks.evaluateIdentifier
+        .for('define.amd')
+        .tap(
+          'AMDPlugin',
+          ParserHelpers.evaluateToIdentifier('define.amd', true)
+        );
+      parser.hooks.evaluateIdentifier
+        .for('require.amd')
+        .tap(
+          'AMDPlugin',
+          ParserHelpers.evaluateToIdentifier('require.amd', true)
+        );
+      parser.hooks.typeof
+        .for('define')
+        .tap(
+          'AMDPlugin',
+          ParserHelpers.toConstantDependency(parser, JSON.stringify('function'))
+        );
+      parser.hooks.evaluateTypeof
+        .for('define')
+        .tap('AMDPlugin', ParserHelpers.evaluateToString('function'));
+      parser.hooks.canRename
+        .for('define')
+        .tap('AMDPlugin', ParserHelpers.approve);
+      parser.hooks.rename.for('define').tap('AMDPlugin', (expr) => {
+        const dep = new AMDRequireItemDependency(
+          '!!webpack amd define',
+          expr.range
+        );
+        dep.userRequest = 'define';
+        dep.loc = expr.loc;
+        parser.state.current.addDependency(dep);
+        return false;
+      });
+      parser.hooks.typeof
+        .for('require')
+        .tap(
+          'AMDPlugin',
+          ParserHelpers.toConstantDependency(parser, JSON.stringify('function'))
+        );
+      parser.hooks.evaluateTypeof
+        .for('require')
+        .tap('AMDPlugin', ParserHelpers.evaluateToString('function'));
+    };
+
+    normalModuleFactory.hooks.parser
+      .for('javascript/auto')
+      .tap('AMDPlugin', handler);
+    normalModuleFactory.hooks.parser
+      .for('javascript/dynamic')
+      .tap('AMDPlugin', handler);
+  }
+);
+// afterResolvers事件监听器
+compiler.hooks.afterResolvers.tap('AMDPlugin', () => {
+  compiler.resolverFactory.hooks.resolver
+    .for('normal')
+    .tap('AMDPlugin', (resolver) => {
+      new AliasPlugin(
+        'described-resolve',
+        {
+          name: 'amdefine',
+          alias: path.join(__dirname, '..', '..', 'buildin', 'amd-define.js')
+        },
+        'resolve'
+      ).apply(resolver);
+      new AliasPlugin(
+        'described-resolve',
+        {
+          name: 'webpack amd options',
+          alias: path.join(__dirname, '..', '..', 'buildin', 'amd-options.js')
+        },
+        'resolve'
+      ).apply(resolver);
+      new AliasPlugin(
+        'described-resolve',
+        {
+          name: 'webpack amd define',
+          alias: path.join(__dirname, '..', '..', 'buildin', 'amd-define.js')
+        },
+        'resolve'
+      ).apply(resolver);
+    });
+});
 ```
-* `CommonJsPlugin：`为compilation事件注册监听器
-* `LoaderPlugin：`为compilation事件注册监听器
-* `NodeStuffPlugin：`为compilation事件注册监听器
-* `RequireJsStuffPlugin：`为compilation事件注册监听器
-* `APIPlugin：`为compilation事件注册监听器
-* `ConstPlugin：`为compilation事件注册监听器
-* `UseStrictPlugin：`为compilation事件注册监听器
-* `RequireIncludePlugin：`为compilation事件注册监听器
-* `RequireEnsurePlugin：`为compilation事件注册监听器
-* `RequireContextPlugin：`options.resolve.modules、extensions、mainFiles，为compilation事件注册监听器
-* `ImportPlugin：`为compilation事件注册监听器
-* `SystemPlugin：`为compilation事件注册监听器
-* `WarnNoModeSetPlugin：`为thisCompilation事件注册监听器
-* `EnsureChunkConditionsPlugin：`为compilation事件注册监听器
-* `RemoveParentModulesPlugin：`为compilation事件注册监听器
-* `RemoveEmptyChunksPlugin：`为compilation事件注册监听器
-* `MergeDuplicateChunksPlugin：`为compilation事件注册监听器
-* `FlagIncludedChunksPlugin：`为compilation事件注册监听器
-* `SideEffectsFlagPlugin：`为compilation和normalModuleFactory事件注册监听器
-* `FlagDependencyExportsPlugin：`为compilation事件注册监听器
-* `FlagDependencyUsagePlugin：`为compilation事件注册监听器
-* `ModuleConcatenationPlugin：`为compilation事件注册监听器
-* `SplitChunksPlugin：`为thisCompilation事件注册监听器
-* `RuntimeChunkPlugin：`为thisCompilation事件注册监听器
-* `NoEmitOnErrorsPlugin：`为compilation和shouldEmit事件注册监听器
-* `WasmFinalizeExportsPlugin：`为compilation事件注册监听器
-* `NamedModulesPlugin：`为compilation事件注册监听器
-* `HashedModuleIdsPlugin：`为compilation事件注册监听器
-* `OccurrenceModuleOrderPlugin：`为compilation事件注册监听器
-* `NaturalChunkOrderPlugin：`为compilation事件注册监听器
-* `OccurrenceChunkOrderPlugin：`为compilation事件注册监听器
-* `NamedChunksPlugin：`为compilation事件注册监听器
-* `DefinePlugin：`为compilation事件注册监听器
-* `SizeLimitsPlugin：`为afterEmit事件注册监听器
-* `TemplatedPathPlugin：`为compilation事件注册监听器
-* `RecordIdsPlugin：`为compilation事件注册监听器
-* `WarnCaseSensitiveModulesPlugin：`为compilation事件注册监听器
-* `CachePlugin：`为thisCompilation事件注册监听器
+
+- `CommonJsPlugin：`为 compilation 事件注册监听器
+- `LoaderPlugin：`为 compilation 事件注册监听器
+- `NodeStuffPlugin：`为 compilation 事件注册监听器
+- `RequireJsStuffPlugin：`为 compilation 事件注册监听器
+- `APIPlugin：`为 compilation 事件注册监听器
+- `ConstPlugin：`为 compilation 事件注册监听器
+- `UseStrictPlugin：`为 compilation 事件注册监听器
+- `RequireIncludePlugin：`为 compilation 事件注册监听器
+- `RequireEnsurePlugin：`为 compilation 事件注册监听器
+- `RequireContextPlugin：`options.resolve.modules、extensions、mainFiles，为 compilation 事件注册监听器
+- `ImportPlugin：`为 compilation 事件注册监听器
+- `SystemPlugin：`为 compilation 事件注册监听器
+- `WarnNoModeSetPlugin：`为 thisCompilation 事件注册监听器
+- `EnsureChunkConditionsPlugin：`为 compilation 事件注册监听器
+- `RemoveParentModulesPlugin：`为 compilation 事件注册监听器
+- `RemoveEmptyChunksPlugin：`为 compilation 事件注册监听器
+- `MergeDuplicateChunksPlugin：`为 compilation 事件注册监听器
+- `FlagIncludedChunksPlugin：`为 compilation 事件注册监听器
+- `SideEffectsFlagPlugin：`为 compilation 和 normalModuleFactory 事件注册监听器
+- `FlagDependencyExportsPlugin：`为 compilation 事件注册监听器
+- `FlagDependencyUsagePlugin：`为 compilation 事件注册监听器
+- `ModuleConcatenationPlugin：`为 compilation 事件注册监听器
+- `SplitChunksPlugin：`为 thisCompilation 事件注册监听器
+- `RuntimeChunkPlugin：`为 thisCompilation 事件注册监听器
+- `NoEmitOnErrorsPlugin：`为 compilation 和 shouldEmit 事件注册监听器
+- `WasmFinalizeExportsPlugin：`为 compilation 事件注册监听器
+- `NamedModulesPlugin：`为 compilation 事件注册监听器
+- `HashedModuleIdsPlugin：`为 compilation 事件注册监听器
+- `OccurrenceModuleOrderPlugin：`为 compilation 事件注册监听器
+- `NaturalChunkOrderPlugin：`为 compilation 事件注册监听器
+- `OccurrenceChunkOrderPlugin：`为 compilation 事件注册监听器
+- `NamedChunksPlugin：`为 compilation 事件注册监听器
+- `DefinePlugin：`为 compilation 事件注册监听器
+- `SizeLimitsPlugin：`为 afterEmit 事件注册监听器
+- `TemplatedPathPlugin：`为 compilation 事件注册监听器
+- `RecordIdsPlugin：`为 compilation 事件注册监听器
+- `WarnCaseSensitiveModulesPlugin：`为 compilation 事件注册监听器
+- `CachePlugin：`为 thisCompilation 事件注册监听器
