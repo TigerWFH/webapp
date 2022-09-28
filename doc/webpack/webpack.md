@@ -1,11 +1,41 @@
 # webpack
 
+## JS 模块规范
+
+> webpack 支持解析一下模块规范，既支持解析 import、require 等关键字和 import()函数
+>
+> 其它资源的处理，需要通过 loader 包装成 JS 模块进行处理，`细节待确认？？？`
+
+### commonjs
+
+> 所有 commonjs 模块默认可以访问的规范核心变量有：exports、module.exports、require
+
+- `一个js文件就是一个模块，模块默认`
+- `commonjs的加载是同步的`
+
+### esmodule
+
+> 所有 esmodule 模块默认访问的规范核心变量有：export、export default、impor...from、as、import()函数
+
+- `一个js文件就是一个模块，模块默认`
+- `import的内容是只读的`
+
+### 其它
+
+> AMD、CMD、UMD 等等
+
 ## webpack 的 chunk 和 module
 
-- `chunk：`webpack 打包后最终生成的单独的文件，一个 chunk 文件可以包含多个 module
 - `module：`JS 代码组织形式，webpack 打包 js 代码的单元，通常会通过 import 或 require 等关键字引用
+- `chunk：`webpack 打包后最终生成的单独的文件，一个 chunk 文件可以包含 1 或多个 module
 - `hash`代表的是 compilation 的 hash 值，每次重新编译都会重新生成，所有文件共享相同的 hash 值
 - `chunkhash`代表的是 chunk 的 hash 值，根据 chunk 的内容计算出的 hash 值，只和文件自身相关
+
+### webpack 拆分 chunk 依据
+
+- `项目入口entry：`每个入口都会被拆分成一个单独的 chunk
+- `import()函数：`每个 import()函数载入的模块，都会被拆分成一个 chunk
+- `splitChunks：`根据 splitChunks 配置进行拆分
 
 ### webpack module id
 
