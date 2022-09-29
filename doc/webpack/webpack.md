@@ -1,5 +1,21 @@
 # webpack
 
+> webpack 配置开箱即用，默认配置以 src/index.js 为 entry，并输出压缩和优化的产物到 dist/main.js
+
+## concepts
+
+```js
+export default {
+  mode: 'production',
+  entry: '',
+  output: {},
+  module: {},
+  plugins: [],
+  target: 'node',
+  resolve: {} // these options change how modules are resolved
+};
+```
+
 ## JS 模块规范
 
 > webpack 支持解析一下模块规范，既支持解析 import、require 等关键字和 import()函数
