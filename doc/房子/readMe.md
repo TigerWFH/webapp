@@ -237,6 +237,20 @@
   > 管委会领导：吴杰，分管`建设和交通管理处`
   >
   > 直接职能部门：中国（上海）自由贸易试验区临港新片区管理委员会下设结构：[建设和交通管理处](https://www.lingang.gov.cn/html/website/lgxc/index/government/opendutys/openduty/index.html)
+  >
+  > 信息公开申请：
+  >
+  > 申请地址：https://xxgk.sh.gov.cn/zwgk_interface/pages/zwgkfront/publicApply.html?ouguid=0c1ccf6f-8533-4977-a61a-b208a07563b5
+  >
+  > 申请内容：
+  管委会落实预售资金全过程监管的，涉及红星铂雅华庭楼盘开发商上海洛景企业管理有限公司的月报，
+对应楼盘备案名：红星铂雅华庭；
+地址：浦东临港新城夏栎路 518 弄、588 弄；
+开发商：上海洛景企业管理有限公司；
+预售款监管机构：恒丰银行股份有限公司上海分行
+预售款监管账号账户名：上海洛景企业管理有限公司
+一期预售款监管账号：802110010122200390
+二期预售款监管账号：31050101100100000011
 - `第二层投诉渠道：浦东区政府`
   > [浦东新区区委信箱](https://qxf.sh.gov.cn/310115/party.getAreaPartyList.do)
   >
