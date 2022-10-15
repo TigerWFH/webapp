@@ -191,13 +191,6 @@
 - `远洋资本`
 - `红星控股`
 
-## 投诉渠道
-
-- `12306：`电话或者小程序
-- `国务院微信小程序：`
-- `临港管委会信箱：`https://www.lingang.gov.cn/html/website/lgxc/index/indexmsg/index.html
-- `随申办->互动->市领导信箱：`
-
 ## 房屋预售资金监管
 
 > 临港新片区管委会 2021 年 2 月 4 日公布了《临港新片区加强房地产项目预售资金监管指导意见（试行）》，公告表示，临港新片区房地产项目预售资金的监督管理遵循"政府指导，银行监管，专款专用"的原则。对监管银行实行短名单制，对房地产开发企业实行黑名单制，督促监管银行落实资金监管责任，监督房地产开发企业按照资金监管要求配合监管银行做好资金管理
@@ -209,6 +202,69 @@
 - `通过开发商直接查看：一般行不通`
 - `咨询监管银行如何查询：需要提前准备资料`
 - `去住建部门等监管部门查询，需要提前准备资料`
+
+## 投诉
+
+> [中央政府网站](http://www.gov.cn)
+>
+> [上海市浦东新区人民政府](https://www.pudong.gov.cn/)
+>
+> [上海市浦东新区政府](https://www.pudong.gov.cn)
+>
+> [中国（上海）自由贸易试验区临港新片区管理委员会](https://www.lingang.gov.cn)
+>
+> [管委会领导](https://www.lingang.gov.cn/html/website/lgxc/index/government/opendutys/guanweihuilingdao/index.html)
+>
+> [建设和交通管理处](https://www.lingang.gov.cn/html/website/lgxc/index/government/opendutys/openduty/index.html)
+>
+> [上海市浦东新区建设和交通委员会政府信息公开指南](https://www.pudong.gov.cn/zwgk_zfxxgkzn_zfbm_jjwfgjmfbrfb_gkzn/20220108/454519.html)
+
+- `政府信息，是指行政机关在履行行政管理职能过程中制作或者获取的，以一定形式记录、保存的信息。`
+- `请您按要求准确、完整填写信息，保证表达清楚、语句通顺、意思完整，以便行政机关更好地答复`
+- `信访投诉、廉政举报、业务咨询、意见建议等事项不属于依申请公开政府信息范畴`
+- `行政机关已就申请人提出的政府信息公开申请作出答复、申请人重复申请公开相同政府信息的，将不予重复处理`
+- `如本系统无法满足您的申请需求，请通过书面等其他方式提出申请，相关程序及要求请见中国银保监会及其派出机构《政府信息公开指南》`
+
+### 投诉渠道
+
+[![投诉样本](./images/投诉样本.jpg)](https://xfb.sh.gov.cn/xinfang/swld/feedback/feedbackshow?id=2AE2E78E5E814EB48D29327E0EB8D0BA)
+
+### 申诉监管账号资金公开
+
+- `第一层投诉渠道：临港管委会的`建设和交通管理处和吴杰
+  > [临港管委会信箱](https://www.lingang.gov.cn/html/website/lgxc/index/indexmsg/)
+  >
+  > 管委会领导：吴杰，分管`建设和交通管理处`
+  >
+  > 直接职能部门：中国（上海）自由贸易试验区临港新片区管理委员会下设结构：[建设和交通管理处](https://www.lingang.gov.cn/html/website/lgxc/index/government/opendutys/openduty/index.html)
+- `第二层投诉渠道：浦东区政府`
+  > [浦东新区区委信箱](https://qxf.sh.gov.cn/310115/party.getAreaPartyList.do)
+  >
+  > [上海市浦东新区建设和交通委员会](https://www.pudong.gov.cn/jjw/)
+- `第三层投诉渠道：上海市政府`
+  > [上海市领导信箱](https://www.shanghai.gov.cn/nw48867/index.html)
+  >
+  > [上海市住房和城乡建设管理委员会](https://www.shanghai.gov.cn/nw2405/20201030/0a9703842737468ca013e5e18d1246fb.html)
+- `第四层投诉渠道：国务院`
+
+  > [我向总理说句话](http://www.gov.cn/hudong/xzlwh.htm)
+  >
+  > [我要 留言](http://www.gov.cn/hudong/index.htm)
+  >
+  > [中华人民共和国住房和城乡建设部](http://www.gov.cn/guowuyuan/zuzhi.htm)
+
+- `银保监会申诉`监管银行向购房者公开监管账号余额
+  > [中国银行保险监督管理委员会](http://ysqpt.cbirc.gov.cn/requestSpecPage.html)
+
+### 其它非职能部门投诉渠道
+
+- `12306：`电话或者小程序
+- `国务院微信小程序：`
+
+### 投诉及申诉内容
+
+- 申请`建设和交通管理处`对远洋红星-临港天铂楼盘开发商上海洛景企业管理有限公司房屋预售资金的监管信息公开，同时向全体业主公开房屋预售资金监管账户的余额，并形成定期向全体购房者公开监管账号的有效机制
+- 投诉`上海洛景企业管理有限公司`，私自停工且多次欺骗业主复工的恶劣行为，督促建设和交通管理处行使监管职责，同时由临港管委会牵头成立专门的工作小组，拉建设和交通管理处、上海洛景企业管理有限公司、业主代表一起会谈，正面回答业主的所有疑问和停工原因，同时形成长期有效的监控账户余额及其收支明细定期向全体购房者公开的有效机制
 
 ## 参考资料
 
