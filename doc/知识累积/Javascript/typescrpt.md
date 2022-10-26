@@ -11,6 +11,30 @@
 - `behaviors`
 - `capabilities`
 - `primitives: 原始的，基础的`
+- `泛型操作符：`TypeScript 中类型系统中的函数被称作`泛型操作符`，其定义的方式是关键字 type
+  > 定义泛型操作符
+- `联合类型：`keyof 关键字，动态地取出某个键值对类型的 key
+
+```typescript
+// 在typescript类型系统中定义函数
+type foo<T> = T;
+type foo<T extends string = 'hello world'> = T;
+// 条件类型：在typescript类型系统中支持条件判断
+T extends U ? X : Y
+
+type num = 1;
+type str = 'hello world';
+type IsNumber<N> = N extends number ? 'yes, is a number' : 'no, not a number';
+type result1 = IsNumber<num>; // 'yes, is a number'
+type result2 = IsNumber<str>; // 'yes, is a number'
+// keyof
+interface Student {
+  name: string;
+  age: number;
+}
+
+type StudentKey = keyOf Student; // name | age
+```
 
 ## typescript 实践
 
@@ -20,6 +44,115 @@
   > 从定义看，就是判断 T 是否继承与 U，如果是返回 never；否则返回 T;结构相似依然有效
 - `Extract<T, U>：`type Extract<T, U> = T extends U ? T : never
   >
+
+## types
+
+### 基本类型
+
+- `string`
+- `number`
+- `boolean`
+- `Arrays`
+- `any：`you can use whenever you don’t want a particular value to cause typechecking errors.
+- `null`
+- `undefined`
+- `Functions`
+- `Object Types`
+- `Union Types`：使用现有类型组成新类型
+- `类型别名：`关键字：type
+- `接口：`关键字：interface
+- `扩展接口：`extends 和&
+- `Type Assertions：`类型断言
+- `Literal Types：`字面类型
+- `Enums`
+- `Less Common Primitives：`JS 私有类型
+  - `bigint`
+  - `symbol`
+
+```typescript
+// union types
+typeof ut = string | number;
+// 类型别名
+typeof Point = {
+  x: number;
+  y: number;
+}
+// 接口
+interface IPoint = {
+  x: number;
+  y: number;
+}
+// 扩展接口1，可动态修改
+interface Animal {
+  name: string;
+}
+interface Bear extends Animal {
+  honey: boolean;
+}
+// 扩展接口2，不可动态修改
+type Animal = {
+  name: string;
+}
+
+type Bear =  Animal & {
+  honey: boolean;
+}
+// Type Assertions
+const x = "hello" as number;
+const a = expr as any as T;
+// Literal Types
+let str = "hello world"
+```
+
+### 类型操作
+
+- `Generics：`泛型，接受参数的类型
+- `Keyof Type Operator：`keyof 操作符，参数是一个 object type，获取 object type 的键
+- `Typeof Type Operator：`typeof 操作符，返回变量或者属性的类型
+- `Indexed Access Types：`通过索引返回对应属性的类型
+- `Conditional Types：`条件类型
+- `Mapped Types：`in 操作符，和 keyof 联合使用
+- `Template Literal Types：`Template literal types build on string literal types, and have the ability to expand into many strings via unions
+
+```typescript
+// 泛型
+function identifier<T>(arg: T): T {
+  return arg;
+}
+// keyof操作符
+typeof Point = {
+  x: number;
+  y: number;
+}
+
+type P = keyof Point = x | y;
+// typeof
+let s = "hello";
+let n: typeof s; // 等价let n: string
+// Indexed Access Types
+type Person = {
+  age: number;
+  name: string;
+  alive: boolean;
+}
+type Age = Person["age"]; // 等价 type Age = number;
+type I1 = Person["age"] | Person["name"]; // 等价type I1 = age | string
+// Conditional Types
+interface Animal {
+  live(): void;
+}
+interface Dog extends Animal {
+  woof(): void;
+}
+
+type Example1 = Dog extends Animal ? number : string; // type Example1 = number
+type Example2 = Dog extends Animal ? number : string; // type Example2 = string
+
+type NameOrId<T extends number | string> = T extends number ? IdLabel : NameLabel;
+// Template Literal Types
+type World = "world";
+type Greeting = `hello ${World}`; // type Greeting = "hello world"
+```
 
 ## TSC：the TypeScript compiler，检测和擦除类型
 
