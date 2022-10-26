@@ -47,6 +47,8 @@ type StudentKey = keyOf Student; // name | age
 
 ## types
 
+[类型工具](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
 ### 基本类型
 
 - `string`
