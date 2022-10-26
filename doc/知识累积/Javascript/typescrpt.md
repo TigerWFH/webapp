@@ -12,6 +12,15 @@
 - `capabilities`
 - `primitives: 原始的，基础的`
 
+## typescript 实践
+
+- `Exclude<T, U>：`type Exclude<T, U> = T extends U ? never : T
+  > Typescript@2.8增加了 Exclude 高级类型类型
+  >
+  > 从定义看，就是判断 T 是否继承与 U，如果是返回 never；否则返回 T;结构相似依然有效
+- `Extract<T, U>：`type Extract<T, U> = T extends U ? T : never
+  >
+
 ## TSC：the TypeScript compiler，检测和擦除类型
 
 ## TypeScript: A Static Type Checker
