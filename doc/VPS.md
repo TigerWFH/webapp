@@ -12,6 +12,12 @@
 
 ### 查看防火墙
 
+> 使用 systemctl，可以启动、停止、重新加载、重启服务、列出服务单元、检查服务状态、启用/禁用服务、管理运行级别和电源管理
+>
+> [参考资料](http://www.wjhsh.net/kelamoyujuzhen-p-10111596.html)
+>
+> [资料 2](https://www.cnblogs.com/ccl971123/p/15495698.html)
+
 ```bash
 # 查看防火墙开启还是关闭
 systemctl status firewalld.service
