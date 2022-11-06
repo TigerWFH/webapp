@@ -8,6 +8,11 @@
   - `vncpasswd：`vncserver 的密码设置工具
   - `vncconnect：`告诉 vncserver 连接到远程一个运行 vncviewer 的计算机的 IP 和端口号。这样我就可以避免给其他人一个接入的密码。
 
+## 网络命令
+
+- `ping：`是 ICMP 包测试，用来检测服务器状态和 IP 有没有被墙
+- `tcping：`是 TCP 链接配置的端口，用来检测端口开放情况和服务端软件状态
+
 ## centos@7
 
 ### 查看防火墙
