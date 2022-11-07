@@ -47,8 +47,34 @@ sudo firewall-cmd --list-all
 
 > project V 使用 go 作为开发语言
 
-## 代理和 VPN
+## web proxy server 和 VPN
+
+[VPN 原理以及实现](https://baijiahao.baidu.com/s?id=1728306251160631722&wfr=spider&for=pc)
+
+[VPN 和 V2Ray、SSR、加速器有什么区别？](https://www.shutupandshowpages.com/index.php/2021/07/06/vpn%E5%92%8Cv2ray%E3%80%81ssr%E3%80%81%E5%8A%A0%E9%80%9F%E5%99%A8%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/)
 
 [VPN 和代理区别](https://fanqiang.network/20780.html)
+
 [浅谈 vpn、vps、Proxy 以及 shadowsocks 之间的联系和区别](https://medium.com/@thomas_summon/%E6%B5%85%E8%B0%88vpn-vps-proxy%E4%BB%A5%E5%8F%8Ashadowsocks%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB-b0198f92db1b)
+
 [各种加密代理协议的简单对比](https://blankwonder.medium.com/%E5%90%84%E7%A7%8D%E5%8A%A0%E5%AF%86%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94-1ed52bf7a803)
+
+### web proxy server
+
+> V2Ray 的运行原理与其他代理工具基本相同，使用特定的中转服务器完成数据传输
+>
+> V2Ray 可同时开启多个协议支持，包括 Socks、HTTP、Shadowsocks、VMess、Trojan 和 VLESS 等。每个协议可单独设置传输载体，比如 TCP、mKCP 和 WebSocket 等。
+
+### VPN
+
+> VPN 全称为虚拟私人网络(Virtual Private Network)，常用于连接中、大型企业或团体间私人网络的通讯方法，利用隧道协议（Tunneling Protocol）来达到发送端认证、消息保密与准确性等功能。
+>
+> VPN 以 CS 架构运行
+>
+> VPN 如果一旦应用在某电脑上，所有内部流量全部都转移到落地服务器再分发会导致两个比较大的问题：
+> 1、访问国内未墙网速慢
+> 2、无法访问本地局域网设备，如 NAS、TM 服务器、局域网打印机等，非常不方便。
+
+- `TUN/TAP`
+  > TUN/TAP 是操作系统内核中的虚拟网络设备，由软件进行实现，向操作系统和应用程序提供与硬件网络设备完全相同的功能。其中 TAP 是以太网设备(二层设备)，操作和封装以太网数据帧，TUN 则是网络层设备(三层设备)，操作和封装网络层数据帧。
+  > [重点讲 TUN/TAP 文章](https://baijiahao.baidu.com/s?id=1728306251160631722&wfr=spider&for=pc)
