@@ -79,6 +79,55 @@ sudo firewall-cmd --list-all
   > TUN/TAP 是操作系统内核中的虚拟网络设备，由软件进行实现，向操作系统和应用程序提供与硬件网络设备完全相同的功能。其中 TAP 是以太网设备(二层设备)，操作和封装以太网数据帧，TUN 则是网络层设备(三层设备)，操作和封装网络层数据帧。
   > [重点讲 TUN/TAP 文章](https://baijiahao.baidu.com/s?id=1728306251160631722&wfr=spider&for=pc) > [重点知识 2](https://segmentfault.com/a/1190000009249039)
 
+## 网卡命名规范
+
+> 系统默认命名规则，默认情况下，systemd 会使用一下策略：
+> 方案 1：eno1
+> 方案 2：ens1
+> 方案 3：enp2s0
+> 方案 4：enx78e7d1ea46da
+> 方案 5：传统不可预测的命名，eth0
+
+### 传统网卡命名，系统默认命名
+
+> eth[0,1,2...]：以太网
+>
+> wlan[0,1,2...]：无线局域网
+
+### 一致网络设备命名规范（CONSISTENT NETWORK DEVICE NAMING）
+
+> 支持两种命名规范：biosdevname 和 net.ifnames
+
+### net.ifnames 规范:设备类型+设备位置+数字
+
+> 设备类型【en、wl、ww】
+
+- `en 以太网 Ethernet`
+- `wl 无线局域网 WLAN`
+- `ww 无线广域网 WWAN`
+
+> 设备位置【】
+
+- `o<index>:`on-board device index number，板载设备索引号
+- `s<slot>[f<function>][d<dev_id>]:`hotplug slot index number，热插拔插槽索引号
+- `x<MAC>:`MAC address，MAC 地址
+- `p<bus>s<slot>[f<function>][d<dev_id>]:`PCI 地理位置
+- `p<bus>s<slot>[f<function>][u<port>][...][c<config>][i<interface>]:`USB 端口链
+
+```plain
+eno1：板载1号以太网卡
+enp0s2：PCI扩展卡的2号端口以太网卡
+ens33：热插拔插槽3号PCI-E插槽的3号端口以太网卡
+wlp3s0：第3号PCI扩展卡的0号端口无线局域网卡
+
+```
+
+### biosdevname 方案
+
+- `内嵌网络接口卡（LOM）：` em[1234...][a]，em1
+- `PCI卡网络接口：`pp[b], p3p4
+- `虚拟功能：`pp\_[c], p3p4_1
+
 ## ipconfig
 
 > window 系统，查看 TCP/IP 配置的命令
@@ -98,6 +147,48 @@ ifconfig eth0 down // 关闭网卡
 ifconfig eth0 up   // 启用网卡
 ifconfig eth0 netmask 255.255.0.0
 ifconfig eth0 // 查看第一块网卡状态
+
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+  ether ac:de:48:00:11:22
+  options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP>
+  inet 127.0.0.1 netmask 0xff000000
+  inet6 ::1 prefixlen 128
+  inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1
+  nd6 options=201<PERFORMNUD,DAD>
+------------------------------------------------------------------
+  lo0：回环网络接口，lo是loopback缩写，不代表真正的网络接口，是一个虚拟的网络几口，通常用于对本机的网络测试。并非真实存在，并不真实地从外界接收和发送数据包，而是在系统内部接收和发送数据包，因此虚拟网络接口不需要驱动程序。
+  flags：标识，取值有：【UP、DOWN、RUNNING】
+    UP：网卡启用
+    DOWN：网卡停用
+    RUNNING：接口工作中
+    MULTICAST：主机支持多播
+    BROADCAST：表示主机支持广播
+    MTU：最大传输单元
+  options：
+  inet：IP地址
+  netmask：子网掩码
+  broadcast：广播地址
+  ether(Ethernet)：表示连接类型（以太网），后面是硬件Mac地址
+  inet6：ipv6地址
+  nd6
+
+  Metric（Met）：度量值，用于计算一条路由的成本，供操作系统使用
+  RX packets（RX-OK）：接收时，正确的数据包数
+  RX erro（RX-ERR）：接收时，错误的数据包数
+  RX dropped（RX-DRP）：接收时，丢弃的数据包数
+  RX overru（RX—OVR）：接收时，过速丢失的数据包数
+  RX frame：接收时，发生frame错误而丢失的数据包数
+  RX bytes：接收的数据量
+
+  TX packages（TX-OK）：发送时，正确的数据包数
+  TX erro（TX-ERR）：发送时，错误的数据包数
+  TX dropped（TX-DRP）：发送时，丢弃的数据包数
+  TX overru（TX-OVR）：发送时，过速丢失的数据包数
+  TX carrier：发送时，发生carrier丢失的数据包数
+  TX bytes：发送的数据量
+
+  Interrupt IRQ：中断地址
+  Base address：基址
 */
 ```
 
@@ -124,3 +215,33 @@ add 添加一个路由标项
 ## netstat
 
 > Netstat 是在内核中访问网络连接状态及其相关信息的程序，它能提供 TCP 连接，TCP 和 UDP 监听，进程内存管理的相关报告
+
+```javascript
+// netstate命令格式
+/*
+netstat -i
+Name Mtu Network Address Ipkts Ierrs Opkts Oerrs Coll
+*/
+/*
+Active Internet connections(including servers)
+Proto    Recv-Q    Send-Q    LocalAddress     ForeignAddress   (state)
+
+Active Multipath Internet connections
+Proto/ID Flags LocalAddress ForeignAddress (state)
+
+Active LOCAL(UNIX) domain sockets
+Address Type Recv-Q Send-Q Inode Conn Refs Nextref Addr
+
+Registered kernel control modules
+id flags pcbcount rcvbuf sndbuf name
+
+Active kernel event sockets
+Proto Recv-Q Send-Q vendor class subcl
+
+Active kernel control sockets
+Proto Recv-Q Send-Q unit id name
+
+Routing tables
+Destination    Gateway   Flags    Netif Expire
+*/
+```
