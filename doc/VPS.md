@@ -78,3 +78,49 @@ sudo firewall-cmd --list-all
 - `TUN/TAP`
   > TUN/TAP 是操作系统内核中的虚拟网络设备，由软件进行实现，向操作系统和应用程序提供与硬件网络设备完全相同的功能。其中 TAP 是以太网设备(二层设备)，操作和封装以太网数据帧，TUN 则是网络层设备(三层设备)，操作和封装网络层数据帧。
   > [重点讲 TUN/TAP 文章](https://baijiahao.baidu.com/s?id=1728306251160631722&wfr=spider&for=pc) > [重点知识 2](https://segmentfault.com/a/1190000009249039)
+
+## ipconfig
+
+> window 系统，查看 TCP/IP 配置的命令
+
+## ifconfig
+
+> linux 用于显示或配置网络设备的命令：network interface configuring
+
+```javascript
+/*
+ifconfig [-a][-V][-s]
+-a：查看所有网卡状态
+-V：查看ifconfig命令的版本信息
+-s：查看统计信息
+ifconfig eth0 192.168.1.1 netmask 255.255.0.0 // 设置网卡ip和子网掩码
+ifconfig eth0 down // 关闭网卡
+ifconfig eth0 up   // 启用网卡
+ifconfig eth0 netmask 255.255.0.0
+ifconfig eth0 // 查看第一块网卡状态
+*/
+```
+
+## route 命令，配置路由
+
+```javascript
+/*
+route [-CFvnee]
+route [-v][-A family] add [-net|-host] target [neymask Nm] [gw Gw] [metric N] [mod] [reinstate] [[dev] if]
+-v 使用冗余输出模式
+-A family：指定特定的地址族（inet，inet6）
+-n 使用数字显示的地址
+-e 使用与netstat相同的输出格式
+-ee 参数会产生很长的输出，包括内核路由表的几乎所有内容
+-net 目标是一个网段
+-host 目标是一个单独的主机
+-F 显示内核FIB路由表可能被-e和-ee参数改变
+-C 显示内核中路由缓存信息
+del 删除一个路由表项
+add 添加一个路由标项
+*/
+```
+
+## netstat
+
+> Netstat 是在内核中访问网络连接状态及其相关信息的程序，它能提供 TCP 连接，TCP 和 UDP 监听，进程内存管理的相关报告
