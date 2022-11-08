@@ -27,13 +27,22 @@
   > `路由表字段：`
 
   - `Destination/Mask：`目的网段地址/子网掩码
-  - `Dummy(Gateway)：`网管地址
-  - `Proto：`路由协议
-  - `Pre：`
-  - `Cost：`
-  - `NextHop：`
-  - `Interface：`
-  - `：`
+  - `Dummy(Gateway)：`网关地址
+  - `Flags：`
+  - `Nettif：`
+  - `Expire：`
+    |destination|gateway|flags|Netif|Expire|
+    |:--|:--|:--|:--|:--|
+    |default|192.168.50.1|UGScg|en1|
+    |127|127.0.0.1|UCS|lo0|
+    |127.0.0.1|127.0.0.1|UH|lo0|
+    |169.254|link#5|UCS|en1|!|
+    |192.168.50.1|4:42:1a:d4:c6:c8|UHLWIir|en1|1198|
+    > default 是默认路由
+    ***
+    > link#5 表示没有网关，发给 169.254.*.*的数据包直接从 en1 发出
+    ***
+    > 4:42:1a:d4:c6:c8，直接填充 MAC 地址，通过 en1 发包。其他需要 ARP 协议广播查询 MAC 地址
 
   > `路由：`是指分组从源到目的地时，决定`端`到`端`路径的网络范围的进程。主机和路由器都会维护一张路由表，里面存放着`目的地址段`和`下一跳的地址`。
 
