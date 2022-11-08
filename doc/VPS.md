@@ -81,12 +81,38 @@ sudo firewall-cmd --list-all
 
 ## 网卡命名规范
 
+> XNU is Not Unix
+>
+> XNU 是 Mac 和 iOS 的核心。XNU 是 Darwin 的核心，也是 OS X 的核心
+>
+> App 和系统自带 App 都是运行在用户空间
+>
+> `协议栈`是操作系统`内核`实现的，以系统调用方式供`用户空间应用`调用
+>
+> `ifconfig` 展示了 `device interface names`，对应了物理或者虚拟网卡。`用户空间`如果要访问这些设备，必须通过 `Unix domain socket` 进行通信
+>
+> [XNU 资料](https://justinyan.me/post/4009)
+
+---
+
+- `Unix dimain socket：`用户区应用要和 ifconfig 显示的网卡接口通信，需要使用到 UnixDomainSocket（内核提供）
+
+  > Unix domain Socket 可以简称为 UDS，不同程序间的数据可以在操作系统层，借助于文件系统来进行数据交换。
+  >
+  > int socket(int family, int type, int protocol)
+
+- `IP socket`
+
+---
+
 > 系统默认命名规则，默认情况下，systemd 会使用一下策略：
 > 方案 1：eno1
 > 方案 2：ens1
 > 方案 3：enp2s0
 > 方案 4：enx78e7d1ea46da
 > 方案 5：传统不可预测的命名，eth0
+
+---
 
 ### 传统网卡命名，系统默认命名
 
@@ -128,9 +154,69 @@ wlp3s0：第3号PCI扩展卡的0号端口无线局域网卡
 - `PCI卡网络接口：`pp[b], p3p4
 - `虚拟功能：`pp\_[c], p3p4_1
 
+## Mac 命令 ifconfig 输出内容
+
+> ifconfig 输出网络接口。一些是物理接口，一些是虚拟接口（逻辑接口）
+
+```javascript
+/*
+参考资料：《Mac OS® X and iOS Internals》第17章 Interfaces in OS X and iOS
+bond：bsd/net/if_bond.c, Bonding two or more interfaces
+bridge：bsd/net/if_bridge.c, Layer II bridging (new in Lion)
+gif：bsd/net/if_gif.c, Generic IP-in-IP tunneling (RFC2893), 通用IP-in-IP隧道（RFC89）
+lo： bsd/net/if_loop.c, Loopback interface
+
+pflog：bsd/net/if_pflog.c, Packet fi ltering (new in Lion): receives copies of all
+packets logged by PF.
+
+stf：bsd/net/if_stf.c, 6to4 (RFC3056) connectivity
+
+utun：bsd/net/if_utun.c, User tunnels: used by VPN and other processes
+to provide a pseudo interface, whose traffi c will be
+rerouted through a user-mode process
+
+vlan：bsd/net/if_vlan.c, Virtual Local Area Networks
+
+en：IONetworkingFamily, Ethernet or 802.11 interfaces
+fw：IOFireWireIP, IP over FireWire (IEEE-1394). OS X only
+pdp_ip： AppleBaseBandFamily, Cellular data connection (iPhone, iPad 1/2)
+ppp： PPP, Point-to-Point protocol (pppd)
+
+p2p：Point-to-Point协议，类似awdl
+awdl：AWDL全称是Apple Wireless Direct Link，即无线直连网卡
+ap：
+llw：
+
+
+许多VPN将在TUN/TAP(L3/L2)虚拟网络设备之后添加其它设备，通常是utun或utap
+*/
+```
+
 ## ipconfig
 
 > window 系统，查看 TCP/IP 配置的命令
+
+## route 命令，配置路由
+
+> window 系统，查看路由
+
+```javascript
+/*
+route [-CFvnee]
+route [-v][-A family] add [-net|-host] target [neymask Nm] [gw Gw] [metric N] [mod] [reinstate] [[dev] if]
+-v 使用冗余输出模式
+-A family：指定特定的地址族（inet，inet6）
+-n 使用数字显示的地址
+-e 使用与netstat相同的输出格式
+-ee 参数会产生很长的输出，包括内核路由表的几乎所有内容
+-net 目标是一个网段
+-host 目标是一个单独的主机
+-F 显示内核FIB路由表可能被-e和-ee参数改变
+-C 显示内核中路由缓存信息
+del 删除一个路由表项
+add 添加一个路由标项
+*/
+```
 
 ## ifconfig
 
@@ -192,29 +278,12 @@ lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
 */
 ```
 
-## route 命令，配置路由
-
-```javascript
-/*
-route [-CFvnee]
-route [-v][-A family] add [-net|-host] target [neymask Nm] [gw Gw] [metric N] [mod] [reinstate] [[dev] if]
--v 使用冗余输出模式
--A family：指定特定的地址族（inet，inet6）
--n 使用数字显示的地址
--e 使用与netstat相同的输出格式
--ee 参数会产生很长的输出，包括内核路由表的几乎所有内容
--net 目标是一个网段
--host 目标是一个单独的主机
--F 显示内核FIB路由表可能被-e和-ee参数改变
--C 显示内核中路由缓存信息
-del 删除一个路由表项
-add 添加一个路由标项
-*/
-```
-
 ## netstat
 
 > Netstat 是在内核中访问网络连接状态及其相关信息的程序，它能提供 TCP 连接，TCP 和 UDP 监听，进程内存管理的相关报告
+
+- `netstat -r`查看路由,netstat -r Routing tables
+- `netstat -nr`查看路由，不做域名解释
 
 ```javascript
 // netstate命令格式
@@ -242,6 +311,9 @@ Active kernel control sockets
 Proto Recv-Q Send-Q unit id name
 
 Routing tables
-Destination    Gateway   Flags    Netif Expire
+  Destination（目标地址）
+  Gateway（网关）
+  Flags（路由标志位）:U（Up，路由处于活动状态），H（Host：路由目标是单个主机），G（Gateway：网关），S（Static：手工配制路由），C（Clone，生成一个新路由），W（WasCloned：指明一个路由），L（Link：路由涉及到了以太网硬件）
+  Netif Expire（网络接口，例如en0）
 */
 ```
