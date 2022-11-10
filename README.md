@@ -927,18 +927,31 @@
      * 结论：React的捕获事件触发，原生捕获事件触发，原生冒泡事件触发、React的冒泡事件触发
      * 分析：基于React的事件系统，捕获阶段React最先获取事件，接着走到native，然后走到native的冒泡阶段，最后走React的冒泡（因为React的所有事件都是委托到document节点下的，所以冒泡最慢）
      * 以下代码结果输出：
+     *
+     * 1、DOM原生documentCapture
+     * 2、React捕获链先执行
      *  ReactContainerCapture=========>
      *  ReactDemoCapture=========>
+     * 3、DOM捕获链再执行
      *  containerCapture======>
      *  demoCapture======>
+     * 4、DOM冒泡链执行
      *  demo======>
      *  container======>
+     * 5、React冒泡链执行
      *  ReactDemo=========>
      *  ReactContainer=========>
+     * 6、DOM原生document
      */
     componentDidMount() {
         const container = document.getElementById("container")
         const demo = document.getElementById("demo")
+        document.addEventListener('click', (e) => {
+                console.log('documentCapture');
+            }, {capture: true})
+            document.addEventListener('click', (e) => {
+                console.log('document');
+            }, {capture: false})
         if (container) {
             container.addEventListener("click", function() {
                 console.log("containerCapture======>")
