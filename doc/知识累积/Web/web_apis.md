@@ -1,20 +1,34 @@
-# js Apis
+# web APIs
 
-## web apis
+## Selection
 
-### 事件系统相关接口
+- `Selection：`表示用户选择的文本范围或插入符号的当前位置，代表页面中的文本选取，可能横跨多个元素
 
-#### EventTarget 是一个 DOM 接口，可以接收事件、创建侦听器
+  > - anchorNode：选取起点所在节点
+  > - anchorOffset：选取起点在 anchorNode 中的位置偏移量
+  > - focusNode：
+  > - focusOffset：
+  > - isCollapsed：表示选区被压缩至一点，即光标位置
+  > - rangeCount：返回选区所包含的连续范围的数量
+  > - 方法：
+  > - getRangeAt()
+  > - collapse()
+  > - extend()
+  > - modify()
+  > - toString()
+  > - [更多资料](https://developer.mozilla.org/zh-CN/docs/Web/API/Selection)
+
+- `window.getSelection()返回Selection实例`
+
+## 事件系统相关接口
+
+### EventTarget 是一个 DOM 接口，可以接收事件、创建侦听器
 
 - `EventTarget.addEventListener()：在EventTarget上注册特定事件类型的事件处理程序`
 - `EventTarget.removeEventListener()：EventTarget中删除事件侦听器`
 - `EventTarget.dispatchEvent()：将事件分派到此EventTarget`
 
-```js
-// 模拟实现EventTarget，就是一个简单的订阅-发布者模式
-```
-
-#### Event 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
+### Event 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
 
 > 用户触发的事件；API 触发的事件
 
@@ -105,9 +119,9 @@
 */
 ```
 
-### DOM 元素接口
+## DOM 元素接口
 
-#### Node
+### Node
 
 > EventTarget <-- Node
 
@@ -148,54 +162,16 @@
 */
 ```
 
-#### Document 接口：网页内容的入口，也是 DOM 树
+### Document 接口：网页内容的入口，也是 DOM 树
 
 > EventTarget <-- Node <-- Document
 
-#### Element
+### Element
 
 > EventTarget <-- Node <-- Element
 
 ```js
 /*
-attributes
-classList
-className
-clientHeight
-clientLeft
-clientTop
-clientWidth
-computedName
-computedRol
-id
-innerHTML
-outerHTML
-localName
-namespaceURI
-prefix
-scrollHeight
-*/
-```
-
-#### HTMLElement
-
-```js
-/**
- *
- * 1、获取屏幕宽高（screen）：
- *      window.screen.width：屏幕宽度
- *      window.screen.height：屏幕高度
- * 2、获取可视区域宽高（client*）
- *      window.innerWidth
- *      window.innerHeight
- *
- * 3、文档对象：documentElement返回文档对象的根元素的只读属性，对于任何非空HTML文档，总是会返回一个 <html> 元素
- *  特例：css的width和height样式作用于html元素，有视觉效果，但是client不受影响，且overflow属性无效（部分css属性作用在html无效），比较特殊
- *       常规样式设定：html,body {XXXXXX}，规避掉html，直接操作body
- *  3-1：documentElement.clientWidth === window.innerWidth, documentElement.clientHeight === window.innnerHeight，不受CSS样式影响
- *  3-2：默认左边框和顶边框为1，即documentElement.clientLeft = documentElement.clientTop = 1，可能可视区域有一个宽度为1的边框
- *
- *
  *      Element.clientLeft：滚动条宽度和左边框（border）宽度，验证（MAC chrome和safari）
  *      Element.clientTop：滚动条宽度和顶边框（border）宽度，验证（MAC chrome和safari）
  *      Element.clientWidth：元素内部的高度，包括内容和内边距，验证（MAC chrome和safari），包括滚动内容
@@ -218,8 +194,26 @@ scrollHeight
  *
  *          width：元素的宽度
  *          height：元素的高度
+ */
+```
+
+### HTMLElement
+
+```js
+/**
  *
+ * 1、获取屏幕宽高（screen）：
+ *      window.screen.width：屏幕宽度
+ *      window.screen.height：屏幕高度
+ * 2、获取可视区域宽高（client*）
+ *      window.innerWidth
+ *      window.innerHeight
  *
+ * 3、文档对象：documentElement返回文档对象的根元素的只读属性，对于任何非空HTML文档，总是会返回一个 <html> 元素
+ *  特例：css的width和height样式作用于html元素，有视觉效果，但是client不受影响，且overflow属性无效（部分css属性作用在html无效），比较特殊
+ *       常规样式设定：html,body {XXXXXX}，规避掉html，直接操作body
+ *  3-1：documentElement.clientWidth === window.innerWidth, documentElement.clientHeight === window.innnerHeight，不受CSS样式影响
+ *  3-2：默认左边框和顶边框为1，即documentElement.clientLeft = documentElement.clientTop = 1，可能可视区域有一个宽度为1的边框
  *      HTMLElement.offsetParent：返回指向最近的（包含层级上的最近）包含当前元素的定位元素或者最近的table、td、th、body，当元素的display为none或fixed时，返回null。offsetTop和offsetLeft都是相对于offsetParent内边距边界
  *      HTMLElement.offsetTop：距离定位父级元素上边边界的距离
  *      HTMLElement.offsetLeft：距离定位父级元素左边边界的距离
@@ -228,9 +222,9 @@ scrollHeight
  */
 ```
 
-### 文件操作相关接口
+## 文件操作相关接口
 
-#### 文本文件和二进制文件<https://www.zhihu.com/question/19971994>
+### 文本文件和二进制文件<https://www.zhihu.com/question/19971994>
 
 ```js
 /*
@@ -243,7 +237,7 @@ scrollHeight
 */
 ```
 
-#### Blob File and Streams API
+### Blob、File and Streams API
 
 ```js
 /*
@@ -302,7 +296,7 @@ scrollHeight
  */
 ```
 
-#### URL<https://www.zhihu.com/question/19557151>，以下是 URL 和 URI 的构成组件
+### URL<https://www.zhihu.com/question/19557151>，以下是 URL 和 URI 的构成组件
 
 - `schema:`协议，分隔符是冒号:
 - `user:`用户名，冒号:
@@ -408,7 +402,7 @@ URL编码(百分号编码)：使用安全字符（没有特殊用途或者特殊
   > 指向 Blob 或 File 内容的 URL
   > 对象 URLs 是一个字符创，格式是: "blob:当前链接/data"没搞明白？？？？？？
 
-#### FileReader 接口：允许 Web 应用异步读取存储在用户计算机上的文件（或原始数据缓冲区）内容，使用 Blob 或 File 对象指定要读取的内容。不能用于从文件系统中按路径名简单的读取文件
+### FileReader 接口：允许 Web 应用异步读取存储在用户计算机上的文件（或原始数据缓冲区）内容，使用 Blob 或 File 对象指定要读取的内容。不能用于从文件系统中按路径名简单的读取文件
 
 ```js
 /*
@@ -434,7 +428,7 @@ URL编码(百分号编码)：使用安全字符（没有特殊用途或者特殊
  */
 ```
 
-#### Canvas Image Audio ImageData
+### Canvas Image Audio ImageData
 
 ```js
 /*
