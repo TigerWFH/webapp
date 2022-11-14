@@ -1,5 +1,22 @@
 # Web 技术
 
+## MDN
+
+- `Array[@@species]`
+  > 其中`@@`是指 Symbol，即 Array[Symbol.species]。
+  >
+  > Symbol 会有一些内置的符号属性（well-known symbols），在规范中通过@@name 形式进行引用，例如
+  >
+  > @@hasInstance 就是 Symbol.hasInstance
+  >
+  > @@iterator 就是 Symbol.iterator
+  >
+  > @@species 就是 Symbol.species
+  >
+  > [well-known symbol is referred to by using a notation of the form @@name](https://262.ecma-international.org/6.0/#sec-well-known-symbols)
+- `function name(name, age[, gender[,args]])`
+  > 这里的[,]表示可选参数
+
 ## 互联网和电信网
 
 ## 技术标准化组织
