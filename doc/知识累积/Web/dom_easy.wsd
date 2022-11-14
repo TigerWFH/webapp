@@ -1,0 +1,62 @@
+@startuml DOM
+    interface EventTarget {
+        == 方法 ==
+        undefined addEventListener(type, listener, optionsOrUseCapture)
+        undefined removeEventListener(type, listener, optionsOrUseCapture)
+        boolean dispatchEvent(event)
+    }
+    note left: 接口由可以接收事件、创建侦听器的<b>对象</b>实现
+    ' interface CustomEvent {}
+    ' interface NodeList {}
+    ' interface NamedNodeMap {}
+    interface Node {}
+    note left: 各种类型的 DOM API 对象会从这个接口继承
+    interface CharacterData {}
+    interface Attr {}
+    interface Element {}
+    interface DocumentType {}
+    interface Document {}
+    ' interface ProcessingInstruction {}
+    ' interface Notation {}
+    ' interface Entity {}
+    ' interface EntityReference {}
+
+    interface Text {}
+    interface Comment {}
+
+    interface CDATASection {}
+
+    interface SVGElement {}
+    interface HTMLElement {}
+    interface HTMLHtmlElement {}
+    interface HTMLDivElement {}
+
+    interface HTMLDocument {}
+    interface XMLDocument {}
+
+    EventTarget <|-- Node
+    Node <|-- Document
+    note right: 表示任何在浏览器中\n载入的网页并作为\n网页内容的入口\n也就是 DOM 树
+    Node <|-- Element
+    note right: 描述了所有相同种类的\n元素所普遍具有的\n方法和属性
+    Element <|-- SVGElement
+    Element <|-- HTMLElement
+    HTMLElement <|-- HTMLHtmlElement
+    HTMLElement <|-- HTMLDivElement
+    Node <|-- Attr
+    Node <|-- CharacterData
+    Node <|-- DocumentType
+    ' Node <|-- ProcessingInstruction
+    ' Node <|-- Notation
+    ' Node <|-- Entity
+    ' Node <|-- EntityReference
+
+    Document <|-- HTMLDocument
+    Document <|-- XMLDocument
+
+    CharacterData <|-- Text
+    CharacterData <|-- Comment
+
+    Text <|-- CDATASection
+
+@enduml
