@@ -34,6 +34,23 @@
     </style>
     <script>
       // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
+      const nativeAddEventListener = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (
+        event,
+        handler,
+        options
+      ) {
+        console.log('add========>', event, handler, options);
+        let fn = handler;
+        // 从新封装handler
+        fn = function (...args) {
+          console.log('拦截');
+          handler.yanpin = fn;
+          handler.call(this, ...args);
+        };
+        // 注册
+        nativeAddEventListener(event, fn, options);
+      };
 
       function onSpan1() {
         console.log('span1');
