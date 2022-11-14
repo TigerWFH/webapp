@@ -1,4 +1,16 @@
-# Proxy And Reflect
+# JS APIs
+
+## Symbol
+
+> 2015 年 Symbol 被添加到 JavaScript 的 primitive value 中，是 ES6 规范的一部分
+>
+> 唯一目的，就是作为`对象属性的唯一标识`
+
+- `Symbol全局注册表`
+  > Symbol.for()、Symbol.keyFor()会在 symbol 全局注册表中创建和读取 symbol
+- `引入Symbol的动机：`在 JavaScript 中可以使用私有属性
+
+## Proxy And Reflect
 
 - `JS中的对象和非对象（primitive value）`
   - `primitive value：`null, undefined, number, string, boolean, symbol
