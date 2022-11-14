@@ -1,87 +1,79 @@
+# Proxy And Reflect
+
+- `JS中的对象和非对象（primitive value）`
+  - `primitive value：`null, undefined, number, string, boolean, symbol
+- `对象语义：`
+  - `get/set：`即 o.x 和 o.x=xxx
+  - `Apply：`即 o(...args)
+  - `Constructor：`即 new o(...args)
+  - `delete：`删除属性
+  - `Object.defineProperty：`定义属性
+    > 有一些看上去是基本语义的，实际是由多个基本语义复合而成。
+    ***
+    > 例如 o.method(...args)，在 JS 中由 f=Get(o, 'method')和 Apply(f, o, args)复合而成
+    ***
+    > k in o 对应的基本语义是 Has
+    ***
+    > for k in o 确是由 OweKeys、GetPrototypeOf、GetOwnPropertyDescriptor 复合而成
+- `所有对象基本语义`即构成`对象模型`
+  > Proxy 可以完全地实现对象的`所有基本语义`，每个基本语义在 proxy handler 都有对应的 trap，并且在 Reflect 对象上也有对应的方法方便实现默认行为，所以 Reflect 和 Proxy 是对称的。`注意：`Proxy 和 Reflect 覆盖所有基本语义，但不管那些复合语义
+  >
+  > [参考资料](https://www.zhihu.com/question/426875859)
+
+```javascript
+// code 1
+let p = new Proxy(x, {
+  // 第一种写法：将操作透明的转发给被代理的对象上
+  set(...args) {
+    console.log('set===>', args);
+
+    return Reflect.set(...args);
+  },
+  /* 
+    第二种写法：当你知道某种操作实现时，手动实现操作
+    我们知道get/set的语法，所以可以这样写；
+    oweKeys()的语法不知道，该怎么写呢？但是Reflect.oweKeys()可以将操作转发到对应的对象上。
+    所以Proxy的trap都在Reflect上有一一对应的实现
+    */
+  set(target, key, value) {
+    console.log('set===>', target, key, value);
+    target[key] = value;
+  }
+  //
+});
 ```
-// Proxy(target, handler)
-// handler是一个占位符
-/*
-handler = {
-    getPrototypeOf: function,访问代理对象的原型时触发该操作, 执行 Object.getPrototypeOf(proxy)
-    setPrototypeOf: function,设置代理对象的原型时触发该操作, 执行 Object.setPrototypeOf(proxy, null)
-    isExtensible: function,判断一个代理对象是否是可扩展时触发该操作, 执行 Object.isExtensible(proxy)
-    preventExtensions: function,让一个代理对象不可扩展时触发该操作, 执行 Object.preventExtensions(proxy)
-    getOwnPropertyDescriptor: function,获取代理对象某个属性的属性描述时触发该操作, 执行 Object.getOwnPropertyDescriptor(proxy, "foo")
-    defineProperty: function,定义代理对象某个属性时的属性描述时触发该操作, 执行 Object.defineProperty(proxy, "foo", {}) 
-    has: function, 判断代理对象是否拥有某个属性时触发该操作, 执行 "foo" in proxy
-    get: function, 读取代理对象的某个属性时触发该操作, 执行 proxy.foo
-    set: function, 给代理对象的某个属性赋值时触发该操作, 执行 proxy.foo = 1 
-    deleteProperty: function, 删除代理对象的某个属性时触发该操作, 即使用 delete 运算符
-    ownKeys: function,Object.getOwnPropertyNames 和Object.getOwnPropertySymbols 的陷阱
-    apply: 函数调用操作的陷阱,
-    constructor: new 运算符的陷阱
-}
- */
-// Reflect,类似Math，是一个全局内置对象
-/* 
-    Reflect.getPrototype(等同于Object.getPrototype),
-    Reflect.setPrototype(等同于Object.setPrototype),
-    Reflect.isExtensible(等同于Object.isExtensible),
-    Reflect.preventExtensions(等同于Object.preventExtensions),返回boolean
-    Reflect.getOwnPropertyDescriptor(等同于Object.getOwnPropertyDescriptor),
-    Reflect.defineProperty(等同于Object.defineProperty),
-    Reflect.has(等同于in运算符),
-    Reflect.get,
-    Reflect.set,返回boolean
-    Reflect.deleteProperty(相当于delete),
-    Reflect.ownKeys(类似Object.keys,但不受enumerable影响),返回数组
-    Reflect.apply,
-    Reflect.constructor,
 
- */
-function watch(obj) {
-    // todo: 返回一个新对象，对象属性与obj.data相同
-    // 当data下的属性改变时，调用watch下的同名函数，不存在不调用
-    let target = new Proxy(obj.data, {
-        set: function(target, property, value, reciever) {
-            let propertyList = Reflect.ownKeys(target);
-            let func = obj.watch[property];
-            propertyList.forEach((key) => {
-                if (typeof func === 'function') {
-                    func(obj.data[key], obj.data[key]);
-                }
-                if (typeof target[key] === 'object') {
-                    new Proxy(target[key], {
-                        set: function(target, property, value, receiver) {
-                            Reflect.set(target, property, value, receiver);
-                        }
-                    });
-                }
-                else {
-                    Reflect.set(target, property, value, reciever);
-                }
-            })
-        }
-    })
+## Proxy
 
-    return target;
-}
+> [Proxy 代理 Map](https://www.zhihu.com/question/426875859)
 
-const obj = {
-    data: {
-        a: 1,
-        b: {
-            c: 1
-        }
-    },
-    watch: {
-        a(val, oldVal) {
-            console.log(val, oldVal)
-        },
-        b(val, oldVal) {
-            console.log(val, oldVal)
-        }
-    }
-}
+- `Proxy(targey, handler)：`用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找，赋值，枚举，函数调用等等）。`Proxy设计目标是代理一个对象的所有基本语义，以允许构建membrane(膜)`
 
-const instance = watch(obj);
-instance.a = 2; // log==>2 1
-instance.b.c = 2; // log ==>{c: 2}{c:1}
-instance.x = 'x';
-```
+  > - `target：`要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组、函数、代理）
+  > - `handler：`以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。handler 对象是一个容纳一批特定属性的占位符对象。它包含有 Proxy 的各个捕获器（trap）
+  >   - `handler.getPrototypeOf(target)`
+  >   - `handler.setPrototypeOf(target, prototype)`
+  >   - `handler.defineProperty(target, property, descriptor)`
+  >   - `handler.has(target, props)`in 操作符的捕捉器
+  >   - `handler.get(target, property, receiver)`属性读取操作的捕捉器
+  >   - `handler.set(target, property, value, receiver)`属性设置操作的捕捉器
+  >   - `handler.deleteProperty(target, property)`delete 操作符的捕捉器
+  >   - `handler.ownKeys(target)`
+  >   - `handler.apply(target, thisArg, argumentsList)`函数调用操作的捕捉器
+  >   - `handler.constructor(target, argumentsList, newTarget)`new 操作符的捕捉器
+
+## Reflect
+
+> Reflect 主要是配合 Proxy 配对使用，提供对象语义的默认行为，详情内容见 `code 1` 中的代码和注释
+>
+> [Reflect 作用](https://www.zhihu.com/question/460133198)
+
+- `Reflect`它提供拦截 JavaScript `操作`的方法。这些方法与 proxy handlers 的方法相同。Reflect 的所有属性和方法都是静态的，就像 Math 对象一样
+
+  > - `Reflect.apply(target, thisArgument, argumentsList)`
+  > - `Reflect.constructor(target, argumentsList[,newTarget])`
+  > - `Reflect.defineProperty(target, propertyKey, attributes)`
+  > - `Reflect.deleteProperty(target, property)`
+  > - `Reflect.get(target, propertyKey[,receiver])`
+  > - `Reflect.set(target, propertyKey, value[,receiver])`
+  > - `Reflect.has(target, propertyKey)`
