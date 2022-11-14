@@ -9,27 +9,31 @@
       html,
       body {
         height: 100%;
+        width: 100%;
         margin: 0;
         padding: 0;
+        outline: none;
       }
       .container {
         height: 100%;
         border: 1px solid red;
       }
       .content {
-        height: 200%;
+        height: 50%;
         border: 1px solid blue;
+      }
+      #click {
+        border: 1px solid red;
+      }
+      span {
+        display: inline-block;
+        width: 200px;
+        height: 300px;
+        border: 1px solid red;
       }
     </style>
     <script>
       // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
-      const old = EventTarget.prototype.addEventListener;
-      EventTarget.prototype.addEventListener = function () {
-        const listener = arguments[1];
-        const newListener = function (e) {
-          fn;
-        };
-      };
 
       function onClick() {
         console.log('我是第一个');
@@ -42,6 +46,7 @@
         <span> sdklfsakfslakdfjsa </span>
         <div id="click" onclick="onClick()">button</div>
       </div>
+      <span> 兄弟 </span>
     </div>
     <script>
       const dom = document.querySelector('#click');
