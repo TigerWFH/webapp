@@ -20,7 +20,105 @@
 
 - `window.getSelection()返回Selection实例`
 
-## 事件系统相关接口
+## Event
+
+> 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
+
+```plantuml
+@startuml Event
+    interface Event {
+        boolean bubbles;
+        boolean cancelable;
+        <s>boolean cancelBubble</s>;
+        boolean composed;
+        HTMLElement currentTarget;
+        boolean defaultPrevented;
+        string eventPhase;
+        <u>HTMLElement originalTarget</u>
+        <u>HTMLElement explicitOriginalTarget</u>
+        <u>HTMLElement srcElement</u>
+        any returnValue;
+        HTMLElement target;
+        long timestamp;
+        string type;
+        -- 方法 --
+        any createEvent();
+        any composedPath();
+        <s>any initEvent()</s>
+        any preventDefault();
+        any stopPropagation();
+        any stopImmediatePropagation();
+    }
+    interface UIEvent {}
+
+    Event <|-- AnimationEvent
+    Event <|-- BeforeUnloadEvent
+    Event <|-- CustomEvent
+    Event <|-- FetchEvent
+    Event <|-- FocusEvent
+    Event <|-- HashChangeEvent
+    Event <|-- InputEvent
+    Event <|-- StorageEvent
+    Event <|-- UIEvent
+    Event <|-- MessageEvent
+
+    UIEvent <|-- MouseEvent
+    UIEvent <|-- TouchEvent
+    UIEvent <|-- KeyboardEvent
+    UIEvent <|-- CompositionEventEvent
+
+    MouseEvent <|-- WheelEvent
+    MouseEvent <|-- DragEvent
+@enduml
+```
+
+### FocusEvent
+
+> 提供了 focus, blur, focusin, focusout 等事件
+>
+> `Document.activeElement`的值随浏览器不同而不同（BUG）
+
+- `触发对象：`Window(MDN 没有，W3C 规范上有，实测 chrome、safari 支持),Element
+
+### ClipboardEvent
+
+> 提供了 cut, copy, paste 事件
+>
+> `HTMLElement.contentEditable：` 该属性用于表明元素是否是可编辑
+>
+> [Clipboard 规范](https://www.w3.org/TR/clipboard-apis/#the-copy-action)
+
+- `触发对象：`Window(实测 chrome、safari 支持), Element(获得焦点的元素)或者 body
+
+## DOM
+
+```plantuml
+@startuml DOM类图
+interface EventTarget {}
+interface Node {}
+interface Document {}
+interface Element {}
+interface HTMLDocument {}
+interface HTMLElement {}
+
+interface HTMLHtmlElement {}
+interface HTMLDivElement {}
+
+EventTarget <|-- Node
+
+Node <|-- Document
+Node <|-- Element
+
+Document <|-- HTMLDocument
+
+Element <|-- HTMLElement
+
+HTMLElement <|-- HTMLHtmlElement
+HTMLElement <|-- HTMLDivElement
+
+@enduml
+
+```
 
 ### EventTarget 是一个 DOM 接口，可以接收事件、创建侦听器
 
@@ -28,102 +126,7 @@
 - `EventTarget.removeEventListener()：EventTarget中删除事件侦听器`
 - `EventTarget.dispatchEvent()：将事件分派到此EventTarget`
 
-### Event 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
-
-> 用户触发的事件；API 触发的事件
-
-```js
-/**
- *  1：Event：表示DOM中出现的事件，包括用户触发的click，或者runtime触发的动画事件，自定义事件
- *      1-1：Event.bubbles，表示事件是否会在DOM中冒泡
- *      1-2：Event.cancelBubble，在事件回调返回之前，设置该值为true，可以阻止冒泡，Event.stopPropagation()的别名
- *      1-3：Event.cancelable，表示事件是否可以取消
- *      1-4：Event.currentTarget，对事件当前注册的目标的引用
- *      1-5：Event.target，对产生事件的目标的引用
- *      1-6：Event.defaultPrevented，表示event.preventDefault()方法是否取消了事件的默认行为
- *      1-7：Event.eventPhase，表示事件流到了哪个阶段(捕获、冒泡)
- *      1-8：Event.timestamp，时间戳
- *      1-9：Event.type，事件类型
- *      1-10：Event.isTrusted，事件是由浏览器发起的还是脚本发起的，Event.initEvent
- *              event.preventDefault()：如果事件可取消，用来取消事件
- *              event.stopPropagation()：停止冒泡
- *              event.stopImmediatePropagation()：阻止监听同一事件的其他事件监听器被调用
- *  2：UIEvent：继承了Event，表示简单的用户界面事件
- *      2-1：UIEvent.detail，
- *      2-1：UIEvent.layerX和UIEvent.layerY，事件相对于当前层的坐标
- *      2-1：UIEvent.pageX和UIEvent.pageY，事件相对于整个文档的坐标
- *  3：MouseEvent：指用户与指针设备（如鼠标）交互时发生的事件。
- *          例如click,dbclick,mouseup,mousedown,mousemove
- *      3-1：MouseEvent.altKey，鼠标事件中，标识alt键是否被按下
- *      3-2：MouseEvent.ctrlKey，
- *      3-3：MouseEvent.metaKey，
- *      3-4：MouseEvent.shiftKey，
- * 
- *      3-5：MouseEvent.button，鼠标按钮值
- *      3-6：MouseEvent.buttons，多个鼠标按钮
- *      3-7：MouseEvent.which，
- * 
- *      3-8：MouseEvent.clientX和MouseEvent.clientY，相对于可视区域
- *      3-9：MouseEvent.movementX和MouseEvent.movementY，
- *      3-10：MouseEvent.offsetX和MouseEvent.offsetY，
- *      3-11：MouseEvent.pageX和MouseEvent.pageY，相对于文档
- *      3-12：MouseEvent.screenX和MouseEvent.screenY，相对于屏幕的鼠标坐标
- * 
- *      3-13：MouseEvent.region
- *      3-14：MouseEvent.relatedTarget
- * 
- *  4：WheelEvent：MouseEvent的派生类，用户滚动鼠标滚轮或类似输入设备时触发的事件
- *      1：WheelEvent.deltaX、WheelEvent.deltaY、WheelEvent.deltaZ，滚动量
- *      2：WheelEvent.deltaMode，单位
- * 
- *  5：DragEvent：MouseEvent的派生类，
- *          事件drag、dragend、dragEnter、dragexit、dragleave、dragover、dragstart、drop
- *      5-1：dataTransfer，在拖放交互期间传输的数据
- 
- *  6：TouchEvent：是一类描述手指在触摸平面的状态变化的事件。这类事件用于描述一个或多个触点的信息
- *          TouchEvent继承了UIEvent和Event属性，UIEvent
- *      2-1：TouchEvent.altKey，
- *      2-1：TouchEvent.ctrlKey，
- *      2-1：TouchEvent.metaKey，
- *      2-1：TouchEvent.shiftKey，
- *      
- *      2-4：TouchEvent.touches，TouchList对象，包含了所有当前接触触摸平面的触点的 Touch 对象
- *      2-3：TouchEvent.targetTouches，返回TouchList对象，起始触点并且仍然没有离开的Touch对象
- *      2-2：TouchEvent.changedTouches，返回TouchList对象，状态发生变化的触点的Touch对象
- *      关于touch对象：
- *          Touch.identifier：touch对象的标识
- *          Touch.target：触摸点最初的接触元素引用
- * 
- *          Touch.screenX：相对于屏幕的坐标
- *          Touch.screenY：
- *          Touch.clientX：相对于可视区域的坐标
- *          Touch.clientY：
- *          Touch.pageX：相对于文档的坐标
- *          Touch.pageY：
- *          Touch.radiusX：包围接触点最小椭圆的水平轴半径
- *          Touch.radiusY：包围接触点最小椭圆的垂直轴半径
- *          Touch.rotationAngle：椭圆顺时针旋转角度
- *          Touch.force：压力大小
- *          
- *  7：FocusEvent：
- *  8：KeyboardEvent：
- *  9：InputEvent：
- *  10：FocusEvent：
- *  11：CompositionEventEvent：
- *  12: MessageEvent
- *  13: CustomEvent
- *  14: DragEvent
- *  15: FetchEvent
- *  16: StorageEvent
- *  17: TimeEvent
-*/
-```
-
-## DOM 元素接口
-
 ### Node
-
-> EventTarget <-- Node
 
 ```js
 /*
@@ -164,11 +167,7 @@
 
 ### Document 接口：网页内容的入口，也是 DOM 树
 
-> EventTarget <-- Node <-- Document
-
 ### Element
-
-> EventTarget <-- Node <-- Element
 
 ```js
 /*
