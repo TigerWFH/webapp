@@ -1,0 +1,52 @@
+@startuml Event Interface，表示在DOM中出现的事件
+    interface Event {
+        boolean bubbles;
+        boolean cancelable;
+        <s>boolean cancelBubble</s>;
+        boolean composed;
+        HTMLElement currentTarget;
+        boolean defaultPrevented;
+        string eventPhase;
+        <u>HTMLElement originalTarget</u>
+        <u>HTMLElement explicitOriginalTarget</u>
+        <u>HTMLElement srcElement</u>
+        any returnValue;
+        HTMLElement target;
+        long timestamp;
+        string type;
+        -- 方法 --
+        any createEvent();
+        any composedPath();
+        <s>any initEvent()</s>
+        any preventDefault();
+        any stopPropagation();
+        any stopImmediatePropagation();
+    }
+    interface AnimationEvent {}
+    interface BeforeUnloaded {}
+    interface CustomEvent {}
+    interface FetchEvent {}
+    interface FocusEvent {}
+    interface HashChangeEvent {}
+    interface InputEvent {}
+    interface StorageEvent {}
+    interface UIEvent {}
+    interface MouseEvent {}
+    interface TouchEvent {}
+    interface WheelEvent {}
+    interface DragEvent {}
+
+    Event <|-- AnimationEvent
+    Event <|-- BeforeUnloaded
+    Event <|-- CustomEvent
+    Event <|-- FetchEvent
+    Event <|-- FocusEvent
+    Event <|-- HashChangeEvent
+    Event <|-- InputEvent
+    Event <|-- StorageEvent
+    Event <|-- UIEvent
+    UIEvent <|-- TouchEvent
+    UIEvent <|-- MouseEvent
+    MouseEvent <|-- WheelEvent
+    MouseEvent <|-- DragEvent
+@enduml
