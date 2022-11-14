@@ -35,23 +35,32 @@
     <script>
       // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
 
+      function onSpan1() {
+        console.log('span1');
+      }
       function onClick() {
         console.log('我是第一个');
+      }
+      function onDiv() {
+        console.log('span1和button的父组件');
+      }
+      function onSpan2() {
+        console.log('span2');
       }
     </script>
   </head>
   <body>
     <div class="container">
-      <div class="content">
-        <span> sdklfsakfslakdfjsa </span>
-        <div id="click" onclick="onClick()">button</div>
+      <div class="content" onclick="onDiv()">
+        <span onClick="onSpan1()"> span1 </span>
+        <div id="click" onclick="onClick()">span1的兄弟button</div>
       </div>
-      <span> 兄弟 </span>
+      <span onclick="onSpan2"> content的兄弟span2 </span>
     </div>
     <script>
       const dom = document.querySelector('#click');
       dom.addEventListener('click', function () {
-        console.log('我是addeventlistener添加上的');
+        console.log('我是addeventlistener添加上的，是第2个');
       });
     </script>
   </body>
