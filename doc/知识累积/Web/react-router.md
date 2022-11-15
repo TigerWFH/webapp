@@ -42,6 +42,8 @@
 
 - `RouterProvider：`All router objects are passed to this component to render your app and enable the rest of the APIs
 - `loader：`Each route can define a "loader" function to provide data to the route element before it renders. This feature only works if using a data router, see Picking a Router
+- `switch`@5
+- `routes`@6，在 6 版本中，switch 废弃，改用 routes
 
 ### Router
 
