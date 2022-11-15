@@ -1,39 +1,30 @@
 @startuml DOM
-    interface Event {}
-    interface AnimationEvent {}
-    interface BeforeUnloaded {}
-    interface CustomEvent {}
-    interface FetchEvent {}
-    interface FocusEvent {}
-    interface HashChangeEvent {}
-    interface InputEvent {}
-    interface StorageEvent {}
-    interface UIEvent {}
-    interface MouseEvent {}
-    interface TouchEvent {}
-    interface WheelEvent {}
-    interface DragEvent {}
-
-    Event <|-- AnimationEvent
-    Event <|-- BeforeUnloaded
-    Event <|-- CustomEvent
-    Event <|-- FetchEvent
-    Event <|-- FocusEvent
-    Event <|-- HashChangeEvent
-    Event <|-- InputEvent
-    Event <|-- StorageEvent
-    Event <|-- UIEvent
-    UIEvent <|-- TouchEvent
-    UIEvent <|-- MouseEvent
-    MouseEvent <|-- WheelEvent
-    MouseEvent <|-- DragEvent
-
     interface EventTarget {
         + undefined addEventListener(DOMString type, EventListener? callback, optional options)
         + undefined removeEventListener(DOMString type, EventListener? callback, optional options)
         + boolean dispatchEvent(Event event)
     }
-    interface CustomEvent {}
+
+    interface XMLHttpRequestEventTarget {
+        EventHandler onloadstart;
+        EventHandler onprogress;
+        EventHandler onabort;
+        EventHandler onerror;
+        EventHandler onload;
+        EventHandler ontimeout;
+        EventHandler onloadend;
+    }
+    interface XMLHttpRequest {
+        EventHandler onreadystatechange;
+        open()
+        setRequestHeader()
+        send()
+        abort()
+        string responseURL;
+        number status;
+        string statusText;
+    }
+
     interface NodeList {}
     interface NamedNodeMap {}
     interface Node {
@@ -128,6 +119,8 @@
         + Number offsetLeft
     }
 
+    EventTarget <|-- XMLHttpRequestEventTarget
+    XMLHttpRequestEventTarget <|-- XMLHttpRequest
     EventTarget <|-- Node
     Node <|-- CharacterData
     Node <|-- Attr

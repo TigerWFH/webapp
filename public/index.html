@@ -24,21 +24,27 @@
     -->
     <title>Monkey的小屋</title>
     <script>
-      if (window.addEventListener) {
-        const old = EventTarget.prototype.addEventListener;
-        EventTarget.prototype.addEventListener = function (event, handler, b) {
-          // console.log('new===>', this.getAttribute('data-custom'));
-          old(
-            event,
-            function (...args) {
-              // window.open('https://www.baidu.com', '_blank');
-              console.log(`触发了${event}`);
-              handler(...args);
-            },
-            b
-          );
-        };
-      }
+      window.addEventListener('pageshow', function () {
+        console.log('pageshow===>', location.href);
+      });
+      window.addEventListener('pagehide', function () {
+        console.log('pagehide===>', location.href);
+      });
+      // if (window.addEventListener) {
+      //   const old = EventTarget.prototype.addEventListener;
+      //   EventTarget.prototype.addEventListener = function (event, handler, b) {
+      //     // console.log('new===>', this.getAttribute('data-custom'));
+      //     old(
+      //       event,
+      //       function (...args) {
+      //         // window.open('https://www.baidu.com', '_blank');
+      //         console.log(`触发了${event}`);
+      //         handler(...args);
+      //       },
+      //       b
+      //     );
+      //   };
+      // }
     </script>
     <script>
       // 苹果手机的缩放

@@ -33,6 +33,42 @@
       }
     </style>
     <script>
+      //
+      window.addEventListener('pageshow', function () {
+        console.log('pageshow===>', location.href);
+      });
+      window.addEventListener('pagehide', function () {
+        console.log('pagehide===>', location.href);
+      });
+      // 拦截XMLHttpRequest
+      Object.defineProperties(XMLHttpRequest.prototype, {
+        open: function (...args) {
+          const nativeOpen = XMLHttpRequest.prototype.open;
+          const { method, url, ...rest } = args;
+          // console.log('请求方法和地址======>', method, url);
+          nativeOpen.call(this, args);
+        },
+        send: function (data) {
+          const nativeSend = XMLHttpRequest.prototype.send;
+          // console.log('请求body======>', method, url);
+          this.addEventListener('loadend', function () {
+            // console.log('httpxmlrequest实例===>', this);
+          });
+          nativeSend.apply(this, body);
+        }
+      });
+      // const nativeOpen = XMLHttpRequest.prototype.open;
+      // const nativeSend = XMLHttpRequest.prototype.send;
+
+      // XMLHttpRequest.prototype.open = function (...args) {
+      //   const { method, url, ...rest } = args;
+      //   console.log('请求方法和地址======>', method, url);
+      //   nativeOpen.call(this, args);
+      // };
+      // XMLHttpRequest.prototype.send = function (body) {
+      //   console.log('请求body======>', method, url);
+      //   nativeSend.apply(this, body);
+      // };
       // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
       const nativeAddEventListener = EventTarget.prototype.addEventListener;
       EventTarget.prototype.addEventListener = function (
@@ -40,7 +76,7 @@
         handler,
         options
       ) {
-        console.log('add========>', event, handler, options);
+        // console.log('add========>', event, handler, options);
         let fn = handler;
         // 从新封装handler
         fn = function (...args) {
