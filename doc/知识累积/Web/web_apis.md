@@ -90,6 +90,15 @@
 
 - `触发对象：`Window(实测 chrome、safari 支持), Element(获得焦点的元素)或者 body
 
+### 文档事件（Document）
+
+- `beforeunload：` 窗口关闭、文档网页资源卸载之前触发，防止用户不小心关闭网页。`默认操作是关闭窗口或文档`
+- `pagehide`
+- `unload`
+- `DOMContentLoaded`
+- `load`
+- `pageshow`
+
 ## DOM
 
 ```plantuml

@@ -19,6 +19,10 @@ import 'Components/base.scss';
 import * as serviceWorker from './serviceWorker';
 // import loadable from '@loadable/component';
 
+window.addEventListener('hashchange', function (e) {
+  console.log('hash=====>', e);
+});
+
 // 个人简介
 const About = Loadable((props: any) => import('@/pages/about'), {
   cacheKey: (props) => props.path,
