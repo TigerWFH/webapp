@@ -103,6 +103,7 @@
       /*
       hashchange是老的API，浏览器支持度高。本意是监听hash变化，可以被用来做客户端前进后退
       popstate及相关api等术语HTML5新标准，产生的目的就是做客户端的前进后退，不仅支持hash变化，非同源的url变化也支持
+      但是pushState和replaceState不会触发hashchange和popstate
       */
       function onHash() {
         window.location.hash = '/about';

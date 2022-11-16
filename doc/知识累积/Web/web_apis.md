@@ -92,12 +92,25 @@
 
 ### 文档事件（Document）
 
-- `beforeunload：` 窗口关闭、文档网页资源卸载之前触发，防止用户不小心关闭网页。`默认操作是关闭窗口或文档`
+- `beforeunload：`
+  > - `触发对象：`
+  > - 窗口关闭或文档资源卸载前触发
+  > - 默认操作是关闭窗口或文档，如果调用 event.preventDefault()，阻止关闭；或 event.returnValue=xxx，则会出现关闭弹框
 - `pagehide`
+  > - `触发对象`
 - `unload`
+  > - `触发对象`window,body,frameset
+  > - 窗口关闭或文档资源卸载前触发
+  > - 页面没有被缓存的场景下才会触发（bfcache 场景就不会触发）
+  > - unload 事件触发，文档资源存在，但是视觉已经不可见
 - `DOMContentLoaded`
+  > - `触发对象`document、XMLHttpRequest
+  > - HTML 文档下载并解析完成会触发该事件
 - `load`
+  > - `触发对象`document、img、script、video、audio、link、XMLHttpRequest 等等
+  > - 文档加载成功时，触发，bfcache 不是触发
 - `pageshow`
+  > - `触发对象`
 
 ## DOM
 
