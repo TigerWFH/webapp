@@ -62,7 +62,12 @@
 ### hashchange 和 popstate
 
 - `window.hashchange`
-  > 页面的 hash 值发生变化时触发，常用语构建单页应用。window.location.hash = xxx 触发 hashchange
+  > - window.location.hash = xxx，触发 hashchange
+  > - address bar 修改 hash 片段，会触发 hashchange
+  > - window.location.href = xxx，只修改 hash 部分，不会加载，但会触发 hashchange
+  ***
+  > - history@4 使用了 window.location.hash = path， 实现 push，触发 hashchange
+  > - history@4 使用了 window.location.replace()，实现 replace，触发 hashchange
 - `window.popstate`
   > 历史记录发生变化时触发
 

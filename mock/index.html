@@ -34,29 +34,29 @@
     </style>
     <script>
       //
-      window.addEventListener('pageshow', function () {
-        console.log('pageshow===>', location.href);
+      window.addEventListener('hashchange', function () {
+        console.log('hashchange===>', location.href);
       });
-      window.addEventListener('pagehide', function () {
-        console.log('pagehide===>', location.href);
+      window.addEventListener('popstate', function () {
+        console.log('popstate===>', location.href);
       });
       // 拦截XMLHttpRequest
-      Object.defineProperties(XMLHttpRequest.prototype, {
-        open: function (...args) {
-          const nativeOpen = XMLHttpRequest.prototype.open;
-          const { method, url, ...rest } = args;
-          // console.log('请求方法和地址======>', method, url);
-          nativeOpen.call(this, args);
-        },
-        send: function (data) {
-          const nativeSend = XMLHttpRequest.prototype.send;
-          // console.log('请求body======>', method, url);
-          this.addEventListener('loadend', function () {
-            // console.log('httpxmlrequest实例===>', this);
-          });
-          nativeSend.apply(this, body);
-        }
-      });
+      // Object.defineProperties(XMLHttpRequest.prototype, {
+      //   open: function (...args) {
+      //     const nativeOpen = XMLHttpRequest.prototype.open;
+      //     const { method, url, ...rest } = args;
+      //     // console.log('请求方法和地址======>', method, url);
+      //     nativeOpen.call(this, args);
+      //   },
+      //   send: function (data) {
+      //     const nativeSend = XMLHttpRequest.prototype.send;
+      //     // console.log('请求body======>', method, url);
+      //     this.addEventListener('loadend', function () {
+      //       // console.log('httpxmlrequest实例===>', this);
+      //     });
+      //     nativeSend.apply(this, body);
+      //   }
+      // });
       // const nativeOpen = XMLHttpRequest.prototype.open;
       // const nativeSend = XMLHttpRequest.prototype.send;
 
@@ -70,23 +70,23 @@
       //   nativeSend.apply(this, body);
       // };
       // 拦截所有事件https://zhuanlan.zhihu.com/p/351505506
-      const nativeAddEventListener = EventTarget.prototype.addEventListener;
-      EventTarget.prototype.addEventListener = function (
-        event,
-        handler,
-        options
-      ) {
-        // console.log('add========>', event, handler, options);
-        let fn = handler;
-        // 从新封装handler
-        fn = function (...args) {
-          console.log('拦截');
-          handler.yanpin = fn;
-          handler.call(this, ...args);
-        };
-        // 注册
-        nativeAddEventListener.call(this, event, fn, options);
-      };
+      // const nativeAddEventListener = EventTarget.prototype.addEventListener;
+      // EventTarget.prototype.addEventListener = function (
+      //   event,
+      //   handler,
+      //   options
+      // ) {
+      //   // console.log('add========>', event, handler, options);
+      //   let fn = handler;
+      //   // 从新封装handler
+      //   fn = function (...args) {
+      //     console.log('拦截');
+      //     handler.yanpin = fn;
+      //     handler.call(this, ...args);
+      //   };
+      //   // 注册
+      //   nativeAddEventListener.call(this, event, fn, options);
+      // };
 
       function onSpan1() {
         console.log('onclick=====>span1');
@@ -100,10 +100,30 @@
       function onSpan2() {
         console.log('onclick=====>span2');
       }
+      /*
+      hashchange是老的API，浏览器支持度高。本意是监听hash变化，可以被用来做客户端前进后退
+      popstate及相关api等术语HTML5新标准，产生的目的就是做客户端的前进后退，不仅支持hash变化，非同源的url变化也支持
+      */
+      function onHash() {
+        window.location.hash = '/about';
+      }
+
+      function onHref() {
+        window.location.href = 'http://127.0.0.1:8080/#/about';
+      }
+
+      function onReplace() {
+        window.location.replace('http://127.0.0.1:8080/#/about');
+      }
     </script>
   </head>
   <body>
     <div class="container">
+      <div>
+        <button onclick="onHash()">onHash</button>
+        <button onclick="onHref()">onHref</button>
+        <button onclick="onReplace()">onReplace</button>
+      </div>
       <div class="content" onclick="onDiv()">
         <span onclick="onSpan1()"> span1 </span>
         <div id="click" onclick="onClick()">span1的兄弟button</div>
