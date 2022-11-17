@@ -16,6 +16,93 @@ export default {
 };
 ```
 
+## configs
+
+### entry
+
+> 指定 chunk 入口
+>
+> 命名 chunkou 入口，后面的 name 占位取 entry 对象的 key，单入口默认是 main
+
+#### Single Entry Syntax
+
+```js
+// entry支持string、object、array
+{
+  entry: `./path/pages/index.js`, // 打包出来的文件名为main，是对象写法的简写
+  entry: {
+    main: './path/pages/index.js'
+  },
+  // multi-main entry,传入一个数组的作用是将多个资源预先合并,在打包的时候Webpack会将数组中最后一个元素作为实际入口路径
+  entry: ['./path/pages/index.js', './path/pages/native.js']
+}
+```
+
+#### Multi-Page Application
+
+> webpack 会为不同的入口创建独立的 dependency graphs
+>
+> 但是 optimization.splitChunks 可以为所有的入口抽象出公用的 chunk
+
+### output
+
+> 配置 webpack 如何输出打包的代码
+>
+> - `filename：`string，可以使用一些占位符[name],[hash:8],[id],[chunkhash:8]
+>   - `name`chunk 的名称
+>   - `id`chunk 的 ID，从 0 开始
+>   - `hash`构建 hash
+>   - `chunkhash`chunk 的内容 hash
+> - `chunkFilename`配置无入口 chunk 名称
+> - `path`配置输出文件存放在`本地的目录`，必须是绝对路径
+> - `publicPath`静态资源前缀
+> - `crossOriginLoading`
+> - `library`：
+> - `libraryTarget：`配置 lib 的导出规范，支持 var,commonjs,commonjs2,
+> - `libraryExport`
+> - `path`
+
+### module
+
+### plugins
+
+### target
+
+> webpack 根据该项配置，自动优化打包的代码
+>
+> 值域={web, node, async-node, webworker, electron-main, electron-renderer}
+>
+> - `web：`默认值，针对浏览器的打包优化
+> - `node：`针对 node，使用 require 语句加载 chunk 代码
+> - `async-node：`针对 node，异步加载 chunk 代码
+> - `webworker：`针对 webworker
+> - `electron-main：`针对 electron 主线程
+> - `electron-renderer：`针对 electron 渲染线程
+> - [targets concept page](https://webpack.js.org/concepts/targets/)
+
+### devtool：是否生成 sourceMap，默认值为 false
+
+### externals
+
+> webpack 打包忽略配置，并生成全局引用
+
+```javascript
+// html
+<script src="path/jquery.js"></script>;
+// js
+import $ from 'jquery';
+// webpack.config.js
+{
+  externals: {
+    jquery: 'jQuery';
+  }
+}
+```
+
+### ResolveLoader
+
+> webpack 根据改配置，查找并调用 loader
+
 ## JS 模块规范
 
 > webpack 支持解析一下模块规范，既支持解析 import、require 等关键字和 import()函数
@@ -31,7 +118,7 @@ export default {
 
 ### esmodule
 
-> 所有 esmodule 模块默认访问的规范核心变量有：export、export default、impor...from、as、import()函数
+> 所有 esmodule 模块默认访问的规范核心变量有：export、export default、import...from、as、import()函数
 
 - `一个js文件就是一个模块，模块默认`
 - `import的内容是只读的`
@@ -77,7 +164,7 @@ export default {
 
 ## 前言 BS 架构之浏览器和服务器，更本质的就是 http client and http server<https://www.zhihu.com/question/20790576/answer/32602154>
 
-> https://www.huanbeiloan.com的历程
+> https://www.xxxxxx.com的历程
 
 ```html
 <html>
