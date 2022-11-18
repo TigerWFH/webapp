@@ -18,6 +18,43 @@
 
 > `掩码`是指一些开关设置为开(1)或关(0)的位组合
 
+### UUID 的使用
+
+```js
+/*
+    格式：xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
+    x：取值范围是[0-F]
+    M是版本号，值域是{1,2,3,4,5}
+    N表示UUID变体，值域是{8,9,a,b}。变体是为了能兼容过去的UUID，以及应对未来的变化。
+    目前已知的变体有以下几种，因为目前正在使用的UUID都是variant1，所以取值只能是8,9,a,b中的一个，
+    对应(1000,1001,1010,1011)
+    variant0：0xxx，为了向后兼容预留
+    variant1：10xx，当前正在使用
+    variant2：11xx，为早起微软GUID预留
+    variant3：111x，为将来扩展预留，目前暂未使用
+
+    time_low：32位，
+    time_mid：16位
+    time_hi_version：16位
+    clock_seq_hi_variant：8位
+    clock_seq_low：8位
+    node UUID：48位
+    */
+function generateUUID() {
+  let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+    /[xy]/g,
+    function (c) {
+      const bit = (Math.random() * 16) | 0;
+      const value = c === 'x' ? bit : (bit & 0x3) | 0x8;
+
+      return value.toString(16);
+    }
+  );
+
+  return uuid;
+}
+```
+
 ### 位的奇技淫巧
 
 |             功能 |   位运算 |             示例 |
