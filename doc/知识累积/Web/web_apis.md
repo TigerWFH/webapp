@@ -113,15 +113,29 @@
   > - `触发对象`
 
 ## DOM
+> - `textContent`可以获取script、style标签组成元素的内容；`innerText`只能获取渲染的文本内容
+> - `textContent`返回节点中的每一个元素；`innerText`受CSS样式影响，不会返回隐藏元素的文本
+> - `innerText`会触发回流计算
 
 ```plantuml
 @startuml DOM类图
 interface EventTarget {}
-interface Node {}
+interface Node {
+    ' 表示一个节点及其后代的文本内容
+    string textContent
+}
 interface Document {}
-interface Element {}
+interface Element {
+    ' 设置或获取HTML语法表示的元素后代
+    string innerHTML
+    ' 设置或获取描述元素（包括后代）的序列化HTML片段
+    string outerHTML
+}
 interface HTMLDocument {}
-interface HTMLElement {}
+interface HTMLElement {
+    ' 获取节点及其后代的渲染文本内容
+    string innerText
+}
 
 interface HTMLHtmlElement {}
 interface HTMLDivElement {}
