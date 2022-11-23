@@ -919,6 +919,8 @@
 
 ## React Event
 
+> document 中注册的事件不处理具体的事件，仅对事件进行分发
+
 ```js
     /**
      * SyntheticEvent：ReactEvent是合成事件，实现了W3C规范，和nativeEvent有着相似的接口

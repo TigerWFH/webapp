@@ -116,11 +116,31 @@
       function onReplace() {
         window.location.replace('http://127.0.0.1:8080/#/about');
       }
+
+      document.addEventListener('wfhmsg', function (e) {
+        console.log('Event===>', e);
+      });
+      const wfhMsg = new Event('wfhmsg');
+
+      document.addEventListener('wfhinfo', function (e) {
+        console.log('MyCustomEvent===>', e);
+      });
+      const wfhInfo = new CustomEvent('wfhinfo', {
+        detail: {
+          name: 'wfh'
+        }
+      });
+
+      function onEvent() {
+        document.dispatchEvent(wfhInfo);
+        document.dispatchEvent(wfhMsg);
+      }
     </script>
   </head>
   <body>
     <div class="container">
       <div>
+        <button onClick="onEvent()">CustomEvent</button>
         <button onclick="onHash()">onHash</button>
         <button onclick="onHref()">onHref</button>
         <button onclick="onReplace()">onReplace</button>
@@ -132,6 +152,10 @@
       <span onclick="onSpan2()"> content的兄弟span2 </span>
     </div>
     <script>
+      // const wfhEvent = new Event('wfhMsg');
+      // document.addEventListener('wfhMsg', function () {
+      //   console.log('My Event===>', arguments);
+      // });
       const dom = document.querySelector('#click');
       dom.addEventListener('click', function () {
         console.log('我是addeventlistener添加上的，button2');
