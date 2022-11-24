@@ -1,5 +1,25 @@
 # web APIs
 
+## Beacon APIs
+
+> Beacon 接口用于将异步和非阻塞请求发送到服务器。
+>
+> 信标（Beacon）请求使用 HTTP 协议中的 POST 方法，请求通常不需要响应。
+>
+> 这个请求被保证在，页面的 unload 状态从发起到完成之前，被发送
+
+- `问题`用户代理通常会忽略卸载文档处理程序中的异步 XMLHttpRequests 请求
+- `传统方案：`通常会在 unload 事件或 beforeunload 事件中创建同步 XMLHttpRequest 请求以提交数据。同步 XMLHttpRequest 请求强制浏览器延迟卸载文档，并使下一个页面跳转看起来较慢
+- `img方案：`创建 Image 元素并在卸载文档处理程序中设置其 src 属性来延迟卸载以提交数据。由于大多数用户代理会延迟文档卸载，以完成挂起的图片加载，因此可以在卸载过程中提交数据
+- `Beacon方案：`用于在全局浏览上下文中向服务器发送数据信标
+  > - `Navigator.sendBeacon(url[,data])`
+  >   用户代理常常忽略 unload 和 beforeunload 中的异步 ajax 请求，导致数据丢失
+  > - `WorkerNavigator.sendBeacon(url[,data])`
+- `会话结束时发送统计数据的可靠方案`
+  > visibilitychange 事件发生时，发送数据,document.visibilityState === 'hidden'
+  >
+  > pagehide 可以作为 visibilitychange 的降级方案，避免使用 beforeunload、unload
+
 ## Selection
 
 - `Selection：`表示用户选择的文本范围或插入符号的当前位置，代表页面中的文本选取，可能横跨多个元素
@@ -23,6 +43,11 @@
 ## Event
 
 > 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
+
+- `添加事件处理程序的方法有三种`
+  > - `HTML事件处理程序` onclick="alert(123)"，直接写 JS
+  > - `DOM0级事件处理程序` 添加：dom.onclick = function() {}; 删除：dom.onclick = null
+  > - `DOM2级事件处理程序`addEventlistener 和 removeEventListener
 
 ```plantuml
 @startuml Event
@@ -113,8 +138,9 @@
   > - `触发对象`
 
 ## DOM
-> - `textContent`可以获取script、style标签组成元素的内容；`innerText`只能获取渲染的文本内容
-> - `textContent`返回节点中的每一个元素；`innerText`受CSS样式影响，不会返回隐藏元素的文本
+
+> - `textContent`可以获取 script、style 标签组成元素的内容；`innerText`只能获取渲染的文本内容
+> - `textContent`返回节点中的每一个元素；`innerText`受 CSS 样式影响，不会返回隐藏元素的文本
 > - `innerText`会触发回流计算
 
 ```plantuml
