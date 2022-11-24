@@ -128,8 +128,11 @@
       const wfhInfo = new CustomEvent('wfhinfo', {
         detail: {
           name: 'wfh'
-        }
+        },
+        bubbles: true,
+        cancelable: true
       });
+      window.$WfhInfo = wfhInfo;
 
       function onEvent() {
         document.dispatchEvent(wfhInfo);
@@ -140,7 +143,7 @@
   <body>
     <div class="container">
       <div>
-        <button onClick="onEvent()">CustomEvent</button>
+        <button onclick="onEvent()">CustomEvent</button>
         <button onclick="onHash()">onHash</button>
         <button onclick="onHref()">onHref</button>
         <button onclick="onReplace()">onReplace</button>
@@ -159,6 +162,7 @@
       const dom = document.querySelector('#click');
       dom.addEventListener('click', function () {
         console.log('我是addeventlistener添加上的，button2');
+        dom.dispatchEvent(window.$WfhInfo);
       });
     </script>
   </body>
