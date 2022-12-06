@@ -104,6 +104,9 @@ class Other extends React.Component<IProps, IState> {
   render() {
     return (
       <div>
+        <div onClick={function () {}}>
+          <span onClick={function () {}}>qqweqe</span>
+        </div>
         <button className={styles.button} onClick={this.onNewTable}>
           跳转页面
         </button>
