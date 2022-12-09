@@ -23,6 +23,29 @@
   - `路由器也会使用ARP查询下一个转发目标的MAC地址`
 - ``
 
+## Linux 网络命令
+
+- `tracepath：`用来追踪并显示报文到达目的主机所经过的路由
+- `iptables：`Linux 管理员用来设置 IPv4 数据包过滤条件和 NAT 的命令行工具
+- `route：`操作基于内核的 IP 路由表，主要作用是创建一个静态路由让指定一个主机或者网络接口
+  - `route del xxx`
+  - `route add -net xxx`
+- `ping：`
+- `lspci | grep Ethernet：`查看网卡信息
+- `sudo ethtool -i eno1：`查看网卡驱动信息
+- `netstat -apn：`查看本机端口的网络连接情况
+- `nc：`端口扫描和模拟 server 或者 client 通信
+- `ifconfig：`
+- `tcmpdump：`网络抓包
+
+## Linux 防火墙命令
+
+- `启动：`systemctl start firewalld
+- `查看状态：`systemctl status firewalld
+- `停止：`systemctl disable firewalld
+- `禁用：`systemctl stop firewalld
+- `查看版本：`firewall-cmd --version
+
 ## 浏览器是如何 DNS 服务器发出查询的？
 
 > DNS 解决的是域名到 IP 的转换
