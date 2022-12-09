@@ -4,6 +4,38 @@
 
 ## Console（控制台面板）：记录 debug 信息，并用 shell 与页面 JS 进行交互
 
+- `$(selector[, startNode])：`返回 CSS 选择器查询到的元素的引用，document.querySelector 的缩写
+- `$$(selector[, startNode])：`document.querySelectorAll 的缩写
+- `$x(path[,startNode])`：使用 xpath 选择器来返回符合选择器的所有元素
+- `$_：`返回的是上一次表达式的值
+
+```js
+// 控制台
+2 + 2;
+4;
+$_;
+4;
+```
+
+- `$0：`当前选中元素
+- `$1：`最近第 1 次选择的元素
+- `$2：`最近第 2 次选择的元素
+- `$3：`最近第 3 次选择的元素
+- `$4：`最近第 4 次选择的元素
+- `clear()：`用于清除历史记录
+- `copy(object)：`可以直接复制字符串表达式
+- `debug(function)：`当指定函数被执行时自动触发 source pabel 的 debug 功能
+- `undebug(fn)：`取消 debug
+- `dir(object)：`列出指定 object 的所有属性，相当于 console.dir(object)
+- `getEventListeners(object)：`返回指定元素所有绑定的事件
+- `keys(object)：`返回指定对象的所有 key 的数组，相当于 object.keys()
+- `monitor(function)`
+- `monitorEvents(object[,events])`
+- `profile([name])`
+- `profileEnd([name])`
+- `table(data[,columns])：`打印出格式化的表格，可以定制表头
+- `console.log("content", "color: red")`
+
 ## Network（网络面板）：了解请求和下载的资源文件并优化网络加载性能
 
 ## Sources（源代码面板）：debug javascript 或者连接本地文件用于实时编辑，持久化保存
