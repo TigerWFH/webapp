@@ -111,12 +111,23 @@
 
     interface CDATASection {}
 
+' https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement
     interface HTMLElement {
         + Number offsetParent
         + Number offsetWidth
         + Number offsetHeight
         + Number offsetTop
         + Number offsetLeft
+        + string accessKey
+        + string accessKeyLabel
+        + string contentEditable
+        + boolean isContentEditable
+        + DOMStringMap dataset
+        + string dir
+        + string innerText
+        + boolean hidden
+        + number tabindex
+        + string title
     }
 
     EventTarget <|-- XMLHttpRequestEventTarget
@@ -131,6 +142,7 @@
     Node <|-- Notation
     Node <|-- Entity
     Node <|-- EntityReference
+    Element <|-- HTMLElement
     CharacterData <|-- Text
     CharacterData <|-- Comment
     Text <|-- CDATASection
