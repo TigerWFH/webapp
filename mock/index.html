@@ -89,16 +89,17 @@
       // };
 
       function onSpan1() {
-        console.log('onclick=====>span1');
+        console.log('onclick=====>span1', event);
       }
       function onClick() {
-        console.log('onclick=====>button1');
+        console.log('onclick=====>button1', event);
       }
       function onDiv() {
-        console.log('onclick=====>span1和button的父组件');
+        console.log('onclick=====>span1和button的父组件', event);
       }
       function onSpan2() {
-        console.log('onclick=====>span2');
+        
+        console.log('onclick=====>span2', event);
       }
       /*
       hashchange是老的API，浏览器支持度高。本意是监听hash变化，可以被用来做客户端前进后退
@@ -106,24 +107,27 @@
       但是pushState和replaceState不会触发hashchange和popstate
       */
       function onHash() {
+        console.log("click======>", event)
         window.location.hash = '/about';
       }
 
       function onHref() {
+        console.log("click======>", event)
         window.location.href = 'http://127.0.0.1:8080/#/about';
       }
 
       function onReplace() {
+        console.log("click======>", event)
         window.location.replace('http://127.0.0.1:8080/#/about');
       }
 
       document.addEventListener('wfhmsg', function (e) {
-        console.log('Event===>', e);
+        // console.log('Event===>', e);
       });
       const wfhMsg = new Event('wfhmsg');
 
       document.addEventListener('wfhinfo', function (e) {
-        console.log('MyCustomEvent===>', e);
+        // console.log('MyCustomEvent===>', e);
       });
       const wfhInfo = new CustomEvent('wfhinfo', {
         detail: {
@@ -135,18 +139,53 @@
       window.$WfhInfo = wfhInfo;
 
       function onEvent() {
+        console.log("click======>", event)
         document.dispatchEvent(wfhInfo);
         document.dispatchEvent(wfhMsg);
       }
+      function onFocusout() {
+        console.log('focusout=======>', event);
+      }
     </script>
   </head>
-  <body onclick="alert(1)">
+  <body>
     <div class="container">
       <div>
-        <button onclick="onEvent()">CustomEvent</button>
-        <button onclick="onHash()">onHash</button>
-        <button onclick="onHref()">onHref</button>
-        <button onclick="onReplace()">onReplace</button>
+        <a href="./script.html">script</a>
+        <button tabindex="1" onfocus="onFocusout()" id="add">addevent</button>
+        <input type="radio" onfocus="onFocusout()">
+          <label>单选</label>
+        </input>
+        <div>
+          <input id="first" type="checkbox" onfocus="onFocusout()">
+          <label for="first">复选框</label>
+          </input>
+          <input id="second" type="checkbox" onfocus="onFocusout()">
+          <label for="second">复选框</label>
+          </input>
+        </div>
+        <button
+          tabindex="2"
+          onfocus="onFocusout()"
+          id="hide"
+          onclick="onHide()"
+        >
+          隐藏
+        </button>
+        <input onfocus="onFocusout()" />
+        <button tabindex="3" onfocus="onFocusout()" onclick="onEvent()">
+          CustomEvent
+        </button>
+        <button tabindex="4" onfocus="onFocusout()" onclick="onHash()">
+          onHash
+        </button>
+        <button tabindex="5" onfocus="onFocusout()" onclick="onHref()">
+          onHref
+        </button>
+        <button tabindex="6" onfocus="onFocusout()" onclick="onReplace()">
+          onReplace
+        </button>
+        <div tabindex="6" onfocus="onFocusout()">div tabindex</div>
       </div>
       <div class="content" onclick="onDiv()">
         <span onclick="onSpan1()"> span1 </span>
@@ -164,6 +203,19 @@
         console.log('我是addeventlistener添加上的，button2');
         dom.dispatchEvent(window.$WfhInfo);
       });
+      const dom2 = document.querySelector('#add');
+      dom2.addEventListener('click', function () {
+        console.log('dom2');
+      });
+
+      function onHide() {
+        const dom3 = document.querySelector('#add');
+        if (dom2.style.display === 'none') {
+          dom2.style.display = 'block';
+        } else {
+          dom2.style.display = 'none';
+        }
+      }
     </script>
   </body>
 </html>
