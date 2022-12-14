@@ -1,4 +1,5 @@
 @startuml Event Interface，表示在DOM中出现的事件
+' https://developer.mozilla.org/en-US/docs/Web/Events，事件触发对象以及明细
     interface Event {
         boolean bubbles;
         boolean cancelable;
