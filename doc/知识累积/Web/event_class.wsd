@@ -23,31 +23,221 @@
         any stopPropagation();
         any stopImmediatePropagation();
     }
-    interface AnimationEvent {}
-    interface BeforeUnloaded {}
-    interface CustomEvent {}
-    interface FetchEvent {}
-    interface FocusEvent {}
-    interface HashChangeEvent {}
-    interface InputEvent {}
-    interface StorageEvent {}
-    interface UIEvent {}
-    interface MouseEvent {}
-    interface TouchEvent {}
-    interface WheelEvent {}
-    interface DragEvent {}
+    interface AnimationEvent {
+        + string animationName
+        __对应的event type__
+        + string animationstart
+        + string animationend
+        + string animationiteration
+        + string animationcancel
+        __对应的event handler__
+        __支持的元素__
+        + DOM Element
+        + DOM Document
+        + BOM Window
+    }
+    interface BeforeUnloadEvent {
+        + DOMString returnValue
+        __event type__
+        + string beforeunload
+        __支持的元素__
+        + BOM Window
+    }
+    interface BlobEvent {
+        
+    }
+    interface ExtendableEvent {
+        __event type__
+        __支持的元素__
+    }
+    interface FetchEvent {
+        + string clientId
+        + Promise preloadResponse
+        + string replacesClientId
+        + string resultingClientId
+        + Request request
+        __event type__
+        + string fetch
+        __支持的元素__
+    }
+    interface HashChangeEvent {
+        + string newUrl
+        + string oldUrl
+        __event type__
+        + string hashchange
+        __支持的元素__
+    }
+    interface StorageEvent {
+        __event type__
+        + string storage
+        __支持的元素__
+    }
+    interface UIEvent {
+        + long detail
+        + WindowProxy view
+    }
+    interface TouchEvent {
+        + boolean altKey
+        + boolean ctrlKey
+        + boolean metaKey
+        + boolean shiftKey
+        + TouchList changedTouches
+        + TouchList targetTouches
+        + TouchList touches
+        __event type__
+        + string touchstart
+        + string touchend
+        + string touchmove
+        + string touchcancel
+        __支持的元素__
+    }
+    interface FocusEvent {
+        + EventTarget relatedTarget
+        __对应的event type__
+        + string blur
+        + string focusout
+        + string focus
+        + string focusin
+        __对应的event handler__
+        __支持的元素__
+    }
+    interface KeyboardEvent {
+        + boolean altKey
+        + boolean ctrlKey
+        + boolean metaKey
+        + boolean shiftKey
+        + boolean repeat
+        + string code
+        + string key
+        + string locale
+        + number location
+        + boolean isComposing
+        __event type__
+        + string keydown
+        + string keypress
+        + string keyup
+        __支持的元素__
+    }
+    interface CompositionEvent {
+        + string data
+        + string locale
+        __event type__
+        + string composionstart
+        + string composionend
+        + string composionupdate
+        __支持的元素__
+    }
+    interface InputEvent {
+        + string data
+        + DataTrasfer dataTransfer
+        + string inputType
+        + boolean isComposing
+        __event type__
+        + string input
+        __支持的元素__
+    }
+    interface MouseEvent {
+        + boolean altKey
+        + number button
+        + array buttons
+        + number clientX
+        + number clientY
+        + boolean ctrlKey
+        + number layerX
+        + number layerY
+        + number movementX
+        + number movementY
+        + number offsetX
+        + number offsetY
+        + number pageX
+        + number pageY
+        + EventTarget relatedTarget
+        + number screenX
+        + number screenY
+        + boolean shiftKey
+        + number x
+        + number y
+        __event type__
+        + string click
+        + string dbclick
+        + string mouseup
+        + string mousedown
+        __支持的元素__
+    }
+
+    interface WheelEvent {
+        + double deltaX
+        + double deltaY
+        + double deltaZ
+        + double deltaMode
+        __event type__
+        + string wheel
+        ' 代替非标准mousewheel
+        __支持的元素__
+    }
+    interface DragEvent {
+        + DataTransfer dataTransfer
+        __event type__
+        + string drag
+        + string dragend
+        + string dragenter
+        + string dragleave
+        + string dragover
+        + string dragstart
+        + string drop
+        __支持的元素__
+    }
+    interface PointerEvent {
+        + string pointerId
+        + number width
+        + number height
+        + number pressure
+        + number tangentialPressure
+        + number tiltX
+        + number tiltY
+        + number twist
+        + string pointerType
+        + boolean isPrimary
+        __event type__
+        + string pointerover
+        + string pointerenter
+        + string pointerdown
+        + string pointermove
+        + string pointerrawupdate
+        + string pointerup
+        + string pointercancel
+        + string pointerout
+        + string pointerleave
+        + string gotpointercapture
+        + string lostpointercapture
+        __支持的元素__
+    }
+    
+    interface CustomEvent {
+        __event type__
+        __支持的元素__
+    }
+    
 
     Event <|-- AnimationEvent
-    Event <|-- BeforeUnloaded
-    Event <|-- CustomEvent
-    Event <|-- FetchEvent
-    Event <|-- FocusEvent
+    Event <|-- BeforeUnloadEvent
+    Event <|-- BlobEvent
+    Event <|-- ExtendableEvent
     Event <|-- HashChangeEvent
-    Event <|-- InputEvent
     Event <|-- StorageEvent
+    Event <|-- CustomEvent
     Event <|-- UIEvent
+
+    ExtendableEvent <|-- FetchEvent
+
     UIEvent <|-- TouchEvent
+    UIEvent <|-- FocusEvent
+    UIEvent <|-- KeyboardEvent
+    UIEvent <|-- InputEvent
+    UIEvent <|-- CompositionEvent
     UIEvent <|-- MouseEvent
+
     MouseEvent <|-- WheelEvent
     MouseEvent <|-- DragEvent
+    MouseEvent <|-- PointerEvent
 @enduml
