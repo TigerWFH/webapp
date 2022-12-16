@@ -1,4 +1,4 @@
-@startuml Event Interface，表示在DOM中出现的事件
+@startuml Event Interface，表示在DOM中出现的事件的handler的参数类型
 ' https://developer.mozilla.org/en-US/docs/Web/Events，事件触发对象以及明细
     interface Event {
         boolean bubbles;
@@ -46,6 +46,23 @@
     interface BlobEvent {
         
     }
+    interface ClipboardEvent {
+        + DataTransfer clipboardData;
+        __event type__
+        + string cut
+        + string copy
+        + string paste
+        __支持的元素__
+    }
+    interface CloseEvent {
+        + number code;
+        + string reason;
+        + boolean wasClean;
+        __event type__
+        + string close
+        __支持的元素__
+        WebSockets
+    }
     interface ExtendableEvent {
         __event type__
         __支持的元素__
@@ -72,6 +89,36 @@
         + string storage
         __支持的元素__
     }
+    interface DeviceMotionEvent {
+        + object acceleration;
+        + object accelerationIncludingGravity;
+        + object rotationRate;
+        + number interval;
+        __event type__
+        + string devicemotion;
+        + string devicemotion;
+    }
+    interface DeviceOrientationEvent {}
+    interface ErrorEvent {}
+    interface FontFaceSetLoadEvent {}
+    interface FormDataEvent {}
+    interface GamepadEvent {}
+    interface HIDInputReportEvent {}
+    interface MessageEvent {}
+    interface OfflineAudioCompletionEvent {}
+    interface PageTransitionEvent {}
+    interface PaymentRequestUpdateEvent {}
+    interface PopStateEvent {}
+    interface ProgressEvent {}
+    interface RTCDataChannelEvent {}
+    interface RTCPeerConnectionIceEvent {}
+    interface SubmitEvent {}
+    interface TimeEvent {}
+    interface TrackEvent {}
+    interface TransitionEvent {}
+    interface WebGLContextEvent {}
+
+
     interface UIEvent {
         + long detail
         + WindowProxy view
@@ -222,9 +269,30 @@
     Event <|-- AnimationEvent
     Event <|-- BeforeUnloadEvent
     Event <|-- BlobEvent
+    Event <|-- ClipboardEvent
     Event <|-- ExtendableEvent
     Event <|-- HashChangeEvent
     Event <|-- StorageEvent
+    Event <|-- DeviceMotionEvent
+    Event <|-- DeviceOrientationEvent
+    Event <|-- ErrorEvent
+    Event <|-- FontFaceSetLoadEvent
+    Event <|-- FormDataEvent
+    Event <|-- GamepadEvent
+    Event <|-- HIDInputReportEvent
+    Event <|-- MessageEvent
+    Event <|-- OfflineAudioCompletionEvent
+    Event <|-- PageTransitionEvent
+    Event <|-- PaymentRequestUpdateEvent
+    Event <|-- PopStateEvent
+    Event <|-- ProgressEvent
+    Event <|-- RTCDataChannelEvent
+    Event <|-- RTCPeerConnectionIceEvent
+    Event <|-- SubmitEvent
+    Event <|-- TimeEvent
+    Event <|-- TrackEvent
+    Event <|-- TransitionEvent
+    Event <|-- WebGLContextEvent
     Event <|-- CustomEvent
     Event <|-- UIEvent
 
