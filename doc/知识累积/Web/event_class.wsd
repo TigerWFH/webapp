@@ -44,7 +44,9 @@
         + BOM Window
     }
     interface BlobEvent {
-        
+        + Blob data;
+        + string timecode;
+        __Blob API__
     }
     interface ClipboardEvent {
         + DataTransfer clipboardData;
@@ -60,8 +62,8 @@
         + boolean wasClean;
         __event type__
         + string close
-        __支持的元素__
-        WebSockets
+        __WebSockets API__
+        
     }
     interface ExtendableEvent {
         __event type__
@@ -88,6 +90,7 @@
         __event type__
         + string storage
         __支持的元素__
+        __storage api__
     }
     interface DeviceMotionEvent {
         + object acceleration;
@@ -100,12 +103,19 @@
     }
     interface DeviceOrientationEvent {}
     interface ErrorEvent {}
-    interface FontFaceSetLoadEvent {}
-    interface FormDataEvent {}
+    interface FontFaceSetLoadEvent {
+        __CSS Font Loading API__
+    }
+    interface FormDataEvent {
+    }
     interface GamepadEvent {}
-    interface HIDInputReportEvent {}
+    interface HIDInputReportEvent {
+        __WebHID API__
+    }
     interface MessageEvent {}
-    interface OfflineAudioCompletionEvent {}
+    interface OfflineAudioCompletionEvent {
+        __Web Audio API__
+    }
     interface PageTransitionEvent {}
     interface PaymentRequestUpdateEvent {}
     interface PopStateEvent {}
@@ -113,10 +123,14 @@
     interface RTCDataChannelEvent {}
     interface RTCPeerConnectionIceEvent {}
     interface SubmitEvent {}
-    interface TimeEvent {}
+    interface TimeEvent {
+        __SVG SMIL__
+    }
     interface TrackEvent {}
     interface TransitionEvent {}
-    interface WebGLContextEvent {}
+    interface WebGLContextEvent {
+        __WebGL API__
+    }
 
 
     interface UIEvent {
