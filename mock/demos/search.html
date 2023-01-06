@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        height: 200px;
+        overflow: auto;
+        border: 1px solid red;
+      }
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 模拟实现浏览器查找功能，并定位到元素 -->
+    <input type="text" placeholder="请输入搜索内容" oninput="onInput()" />
+    <div id="container" class="container">
+      <input type="text" />
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <span>\我是span元素</span>
+      <span>\\\\我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>123<span>我是span元素</span></div>
+      <div>
+        <span>我是span元素</span>
+      </div>
+    </div>
+    <script>
+      const wrapper = document.querySelector('#container');
+      const originHTML = wrapper.innerHTML;
+      console.log('dom==', originHTML);
+      function onInput() {
+        console.log('onInput===>', event.target.value);
+        debugger;
+        // if (!event.target.value) {
+        //   wrapper.innerHTML = originHTML;
+        // } else {
+        //   const regexp = new RegExp(event.target.value, 'g');
+        //   const target = `<span class="active">${event.target.value}</span>`;
+        //   const newHTML = originHTML.replace(regexp, target);
+        //   if (newHTML !== originHTML) {
+        //     console.log('new====>', newHTML);
+        //     wrapper.innerHTML = newHTML;
+        //   }
+        // }
+      }
+    </script>
+  </body>
+</html>
