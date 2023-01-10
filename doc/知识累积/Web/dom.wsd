@@ -51,7 +51,15 @@
         + boolean hasChildNodes()
         + Node cloneNode(boolean deep)
     }
-    interface CharacterData {}
+    interface CharacterData {
+        DOMString data;
+        unsigned long length;
+        DOMString substringData(unsigned long offset, unsigned long count);
+        undefined appendData(DOMString data)
+        undefined insertData(unsigned long offset, DOMString data);
+        undefined deleteData(unsigned long offset, unsigned long count);
+        undefined replaceData(unsigned long offset, unsigned long count, DOMString data);
+    }
     interface Attr {}
     interface Element {
         + DOMString namespaceURI
@@ -106,7 +114,10 @@
     interface Entity {}
     interface EntityReference {}
 
-    interface Text {}
+    interface Text {
+        Text splitText(unsigned long offset);
+        DOMString wholeText;
+    }
     interface Comment {}
 
     interface CDATASection {}

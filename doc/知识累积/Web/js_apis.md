@@ -1,5 +1,63 @@
 # JS APIs
 
+## 转译
+
+> ASCII 编码，有些特殊符号需要转译符和字符标识，例如
+
+- `制表符：\t`
+- `换行符：\n`
+- `双引号：\"`
+
+> 用作转译符的符号
+
+- `\`
+
+> 用作标识符的符号：例如 js 字符串中的单双引号
+
+- `"`
+- `'`
+
+```js
+const str = '123123123';
+const str = '\t'; // 打印出来是制表符，特殊编码
+const str = '\\'; // 打印转译符号本身的意义
+const str = "'"; // 打印字符串中的标识符,"\""
+const str = '"'; // 打印字符串中的标识符, '\''
+```
+
+## RegExp
+
+### 一些常用特殊符号
+
+```js
+/*
+U+000A 换行符 "\n"
+U+000D 回车符 "\r"
+U+2028 行分隔符 "line separator"
+U+2029 段分隔符 "paragraph seprator"
+匹配数字Digits "\d"
+匹配whitespace "\s"
+匹配Word Characters "\w"
+匹配 All except digits "\D"
+匹配 All except whitespace "\S"
+匹配 All except word characters "\W"
+匹配 All except newlines .
+匹配 Word boundary positions "\b"
+匹配 Not word boundary positions "\B"
+
+Digit: The characters 0-9 only
+Whitespace: Tab, line feed, vertical tab, form feed, carriage return, space, no-break space, line separator, paragraph separator, and "any other Unicode 'space separator'".
+Word character: The characters A-Z, a-z, 0-9, and _ only
+Word boundary: The position between a word character and non-word character
+Newline: The line feed, carriage return, line separator, and paragraph separator characters
+
+\u000a Line feed "\n"
+\u000d Carriage return "\r"
+\u2028 Line separator
+\u2029 Paragraph separator
+*/
+```
+
 ## JS 位操作符
 
 > ECMAScript 中的所有数值都以 IEEE-754 64 位格式存储，但`位操作符`并不直接操作 64 位的值。而是将 64 位的值转换成 32 位的`整数`，然后执行操作，最后再将结果转换回 64 位。 ------ 《JavaScript 高级程序设计设计》

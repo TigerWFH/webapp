@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        height: 200px;
+        overflow: auto;
+        border: 1px solid red;
+      }
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 模拟实现浏览器查找功能，并定位到元素 -->
+    <input type="text" placeholder="请输入搜索内容" oninput="onInput()" />
+    <div id="container" class="container">
+      <input type="text" />
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <span>\我是span元素</span>
+      <span>\\\\我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>这是一个模拟浏览器搜索功能的demo</div>
+      <input type="text" />
+      <span>我是span元素</span>
+      <span>我是span元素</span>
+      <div>123<span>我是span元素</span></div>
+      <div>
+        <span>我是span元素</span>
+      </div>
+    </div>
+    <script>
+      const wrapper = document.querySelector('#container');
+      const originHTML = wrapper.innerHTML;
+      console.log('dom==', originHTML);
+      // 获取所有text节点
+      function getTextNodeList(container) {
+        const nodeList = [...container.childNodes];
+        const textNodeList = [];
+        while (nodeList.length) {
+          const node = nodeList.shift();
+          if (node.nodeType === node.TEXT_NODE) {
+            textNodeList.push(node);
+          } else {
+            nodeList.unshift(...node.childNodes);
+          }
+        }
+
+        return textNodeList;
+      }
+      // 拼接文本节点，并记录索引
+      function getTextPosition(container) {
+        const textNodeList = getTextNodeList(container);
+        if (Array.isArray(textNodeList)) {
+          let length = 0;
+          let jointText = '';
+          const textPosition = textNodeList.map((text) => {
+            let start = length;
+            let end = length + text.length - 1;
+            length = end + 1;
+            jointText += text.wholeText;
+            return [text, start, end];
+          });
+
+          return [jointText, textPosition];
+        }
+
+        return [];
+      }
+
+      /*
+        使用正则匹配，但是正则里面的标识符需要额外处理。
+        用户的输入，有可能和正则标识符重叠，需要进行转译处理，按照字符本义进行匹配
+      */
+      function matchTarget(keyword, jointText) {
+        // 正则标识符
+        const regexpMetaMap = [...'\\?+*:.^${}[]()'].reduce((sum, curr) => {
+          sum[curr] = true;
+          return sum;
+        }, {});
+        const matchedKeyword = keyword
+          .split('')
+          .map((character) =>
+            regexpMetaMap[character] ? `\\${character}` : character
+          )
+          .join('[\\s\\n]*');
+        const reg = new RegExp(matchedKeyword, 'gmi');
+        return [...jointText.matchAll(reg)];
+      }
+      /*
+        对匹配结果进行变更
+      */
+      function replaceMatchResult(matchList, textPositionList) {
+        for (let i = matchList.length - 1; i >= 0; i--) {
+          // 获取匹配到的索引
+          const matched = matchList[i];
+          const matchedStart = matched.index;
+          const matchedEnd = matchedStart + matched[0].length;
+          // 在textPositionList中查找对应的text节点
+          for (let j = 0; j < textPositionList.length; j++) {
+            let [text, start, end] = textPositionList[j];
+            const wholeText = text.wholeText;
+            if (end < matchedStart) {
+              continue;
+            }
+            if (start >= matchedEnd) {
+              // 当前匹配完成
+              break;
+            }
+            const nodeMatchedStart = Math.max(0, matchedStart - start);
+            const nodeMatchedLength =
+              Math.min(end, matchedEnd) - start - nodeMatchedStart;
+            if (nodeMatchedStart > 0) {
+              text = text.splitText(nodeMatchedStart);
+            }
+            if (nodeMatchedLength < text.wholeText.length) {
+              text.splitText(nodeMatchedLength);
+            }
+            const font = document.createElement('font');
+            font.innerText = wholeText.substr(
+              nodeMatchedStart,
+              nodeMatchedLength
+            );
+            font.style.background = 'red';
+            console.log('paren======>', text.parentNode);
+            text.parentNode.replaceChild(font, text);
+          }
+        }
+      }
+      function onInput() {
+        if (!event.target.value) {
+          wrapper.innerHTML = originHTML;
+        } else {
+          const div = document.createElement('div');
+          div.innerHTML = originHTML;
+          const [jointText, textPositionList] = getTextPosition(div);
+          if (jointText && Array.isArray(textPositionList)) {
+            const result = matchTarget(event.target.value, jointText);
+            console.log('result======>', result);
+            replaceMatchResult(result, textPositionList);
+            wrapper.innerHTML = div.innerHTML;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
