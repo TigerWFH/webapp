@@ -147,7 +147,7 @@
             const nodeMatchedLength =
               Math.min(end, matchedEnd) - start - nodeMatchedStart;
             if (nodeMatchedStart > 0) {
-              text = text.splitText(nodeMatchedLength);
+              text = text.splitText(nodeMatchedStart);
             }
             if (nodeMatchedLength < text.wholeText.length) {
               text.splitText(nodeMatchedLength);
@@ -167,24 +167,16 @@
         if (!event.target.value) {
           wrapper.innerHTML = originHTML;
         } else {
-          const [jointText, textPositionList] = getTextPosition(wrapper);
+          const div = document.createElement('div');
+          div.innerHTML = originHTML;
+          const [jointText, textPositionList] = getTextPosition(div);
           if (jointText && Array.isArray(textPositionList)) {
             const result = matchTarget(event.target.value, jointText);
             console.log('result======>', result);
             replaceMatchResult(result, textPositionList);
+            wrapper.innerHTML = div.innerHTML;
           }
         }
-        // if (!event.target.value) {
-        //   wrapper.innerHTML = originHTML;
-        // } else {
-        //   const regexp = new RegExp(event.target.value, 'g');
-        //   const target = `<span class="active">${event.target.value}</span>`;
-        //   const newHTML = originHTML.replace(regexp, target);
-        //   if (newHTML !== originHTML) {
-        //     console.log('new====>', newHTML);
-        //     wrapper.innerHTML = newHTML;
-        //   }
-        // }
       }
     </script>
   </body>
