@@ -22,6 +22,35 @@
 
 ## HTTP 请求方法：OPTIONS、GET、POST、PUT、DELETE、HEAD、TRACE、CONNECT
 
+## HTTP 首部字段类型
+
+- `通用首部字段（General）`请求报文和响应报文都会使用的首部字段
+  - `Cache-Control：`控制缓存的行为
+    - `缓存请求指令：`
+      - `no-cache：`客户端发送请求包含该指令，表示不会接收缓存过的响应，强制缓存服务器必须把请求妆发给源服务器
+      - `no-store：`不缓存请求或响应的任何内容（无参数）
+      - `max-age = [秒]：`响应的最大 Age 值（参数必须）
+      - `max-stable：`接收已经过期的响应（参数可以省略）
+      - `min-fresh = [秒]：`期望在指定时间内的响应仍有效（参数必须）
+      - `no-transform：`代理不可更改媒体类型（无参数）
+      - `only-if-cached：`从缓存中获取资源（无参数）
+      - `cache-extention：`新指令标记（token）
+    - `缓存响应指令：`
+      - `public：`告诉客户端，可以向任意方提供响应的缓存（无参数）。明确表明其他用户也可以利用缓存
+      - `private：`告诉客户端，仅向特定用户返回响应（无参数）。缓存服务器只对特定的用户提供资源缓存的服务，对于其他用户发送的请求，则不会提供对应的缓存服务
+      - `no-cache：`告诉客户端，缓存前必须先确认其有效性（参数可省略）,不缓存过期的资源
+      - `no-store：`告诉客户端，不要不缓存
+      - `no-transform：`告诉代理不可修改媒体类型
+      - `max-age=[秒]：`告诉客户端响应的最大 Age 值
+      - `s-maxage=[秒]：`公共缓存服务器的最大 Age
+      - `must-revalidate：`可缓存但必须再向源服务器进行确认
+      - `proxy-revalidate：`要求中间服务器对缓存的响应有效性再进行确认
+      - `cache-extension：`新指令标记
+- `请求首部字段（Request Header）`客户端向服务端发送请求时使用的首部字段
+  - `Pragma: no-cache：`表示客户端要求所有的代理服务器都不返回缓存的资源
+- `响应首部字段（Response Header）`服务器端向客户端发送响应内容时使用的首部信息
+- `实体首部字段（Entity Header）`针对请求报文和响应报文的实体部分使用的首部，补充了资源内容的更新时间等与实体有关的信息
+
 ## HTTP 缓存
 
 > 优先级：pragma > cach-control > expires，理论上 pragma 和 expires 不应该同时出现
@@ -38,7 +67,8 @@
 
 > 不会向服务器发送请求，直接从缓存中读取资源（from disk cache 或 from memory cache）
 
-- `pragma: no-cache // 禁用缓存`响应 header； 值域={no-cache}，告诉客户端不要禁用缓存，http1.0
+- `pragma: no-cache`通用首部
+  响应 header； 值域={no-cache}，告诉客户端不要禁用缓存，http1.0
 - `expires: GMT格式时间，绝对时间 // 启用缓存，并设置主体缓存有效期`响应 header；值域={GMT 格式时间}，时间相对于服务器时间；http1.0
 - `cache-control: 控制缓存行为`通用 header；http1.1
   - `通用`值域={no-store, no-cache, max-age, no-transform, stale-if-error }
@@ -227,3 +257,30 @@
     3、拿到IP后，建立TCP链接
     4、TCP链接建立后，封装HTTP数据包并通过TCP进行数据交换
 ```
+
+## 浏览器缓存控制
+
+### html 控制缓存方法
+
+```html
+<!-- 告诉浏览器当前页面不需要缓存，每次请求页面都需要取服务器请求资源 -->
+<meta http-equiv="Pragma" content="no-store" />
+```
+
+### http 协议头控制缓存
+
+> 浏览器根据 http 响应头，确定是否缓存以及缓存周期
+
+- `Pragma：`
+- `Expires：`缓存标识字段，缓存的绝对有效时间，HTTP1.0
+- `Cache-Control：`缓存标识字段，优先级高于Expires
+  - `public：`所有内容都将被缓存（客户端和代理服务器都可缓存）
+  - `private：`内容只缓存到私有缓存中（仅客户端可以缓存，代理服务器不可缓存）
+  - `no-cache：`必须做新鲜度校验（协商缓存）
+  - `no-store：`所有内容都不允许缓存
+  - `max-age=[秒]：`缓存的内容在本次响应后多少秒失效
+
+- `If-Modified-Since：`
+- `Last-Modified：`
+- `If-None-Match：`
+- `Etag：`
