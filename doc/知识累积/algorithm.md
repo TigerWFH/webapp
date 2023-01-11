@@ -79,23 +79,24 @@
 ### 交换排序
 
 - 冒泡排序（稳定, O(n^2), in-place, O(1)）
+  > 冒泡排序：从`待排序列`中的第一个元素开始，`依次`对`相邻`的两个元素进行比较，如果前一个元素`大于`后一个元素则交换他们的位置。如果前一个元素`小于或等于`后一个元素则`不交换`他们的位置。这一比较和交换的操作一直持续到最后一个还未排好序的元素为止。
 
 ```js
 let arr = [1, 2, 3, 8, 5, 2, 1];
 let begin = new Date().valueOf();
 function bubleSort(arr) {
-  for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = 0; j < arr.length - 1 - i; j++) {
-      let hasSwap = false;
+  for (let i = 1; i < arr.length; i++) {
+    let hasSwap = false;
+    for (let j = 0; j < arr.length - i; j++) {
       if (arr[j] > arr[j + 1]) {
         hasSwap = true;
         let tmp = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = tmp;
       }
-      if (!hasSwap) {
-        break;
-      }
+    }
+    if (!hasSwap) {
+      break;
     }
   }
 }
@@ -106,6 +107,7 @@ console.log('time===>', end - begin);
 ```
 
 - 快速排序（不稳定, O(nlogn), in-place, O(logn)
+  > 快速排序：从`待排序列`中选择一个基准数，通过一趟排序将待排序的数据进行分割：其中`一部分`的所有数据都比`另一部分`的所有数据都要`小`。然后，再按此方法分别对这两部分数据进行快速排序，整个排序过程可以递归进行，以此达到整个序列变成有序序列。
 
 ```js
 function quickSort(arr, left, right) {
@@ -153,7 +155,10 @@ console.log('time===>', end - begin);
 
 ### 插入排序
 
-- 简单插入排序（稳定, O(n^2), in-place, O(1), 适合小规模、基本有序数据集合）
+- 直接插入排序（稳定, O(n^2), in-place, O(1), 适合小规模、基本有序数据集合）
+  > 直接插入排序：从`待排序列`中选择元素，并插入到已经排序好的`有序表`中，直到`待排序列`中所有元素全部插入完毕。
+  >
+  > 从`待排序列`的`第二个`元素开始往前比较，即一开始用第二个数据和第二个数据前面的所有数据进行比较，如果符合`比较规则`则让他们交换位置，直接
 
 ```js
 let arr = [];
@@ -169,7 +174,6 @@ function insertSort(arr) {
         let tmp = arr[j - 1];
         arr[j - 1] = arr[j];
         arr[j] = tmp;
-        hasSwap = true;
       }
     }
   }
@@ -180,7 +184,8 @@ console.log('===>', arr);
 console.log('time===>', end - begin);
 ```
 
-- 希尔排序（不稳定, O(nlogn), in-place, O(1)）
+- 希尔排序（不稳定, O(nlogn), in-place, O(1)），`递减量`排序算法，是插入排序的一种更高效的改进版本
+  >
 
 ```js
     // 增量方式：1、gap = length / 2; gap /= 2
