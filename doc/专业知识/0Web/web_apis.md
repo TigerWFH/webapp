@@ -42,7 +42,11 @@
 
 ## Event
 
-> 表示 DOM 中出现的事件的类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
+> - 事件(event)、事件处理器、事件处理器 event 参数接口
+
+### 事件处理器 event 参数接口
+
+> 表示 DOM 中出现的事件处理器的 event 参数类型，所有的事件接口名称都以 event 结尾<https://developer.mozilla.org/zh-CN/docs/Web/API/Event>
 
 - `添加事件处理程序的方法有三种`
   > - `HTML事件处理程序` onclick="alert(123)"，直接写 JS
@@ -97,6 +101,21 @@
 @enduml
 ```
 
+### 事件
+
+| 事件                   | 参数接口            | 触发对象        | 触发                         | 备注       |
+| :--------------------- | :------------------ | :-------------- | :--------------------------- | :--------- |
+| readystatechange       | Event               | document        |                              | 多次触发   |
+| pagehide               | PageTransitionEvent | window          |                              |            |
+| visibilitychange       | Event               | document        | 浏览器标签页可视或隐藏时触发 |            |
+| webkitvisibilitychange | Event               | document        | 浏览器标签页可视或隐藏时触发 |            |
+| unload                 | BeforeUnloadEvent   | window,document |                              |            |
+| beforeunload           | BeforeUnloadEvent   | window,document |                              | 似乎未触发 |
+| load                   | Event               | window          |                              |            |
+| toggle                   | Event               | window          |                              |            |
+| DOMContentLoaded       | Event               | document        |                              |            |
+| pageshow               | BeforeUnloadEvent   | window          |                              |            |
+
 ### FocusEvent
 
 > 提供了 focus, blur, focusin, focusout 等事件
@@ -115,12 +134,15 @@
 
 - `触发对象：`Window(实测 chrome、safari 支持), Element(获得焦点的元素)或者 body
 
+### BeforeUnloadEvent
+
+> - 提供了 beforeunload 事件
+> - `触发对象：`window、document
+> - 窗口关闭或文档资源卸载前触发
+> - 默认操作是关闭窗口或文档，如果调用 event.preventDefault()，阻止关闭；或 event.returnValue=xxx，则会出现关闭弹框
+
 ### 文档事件（Document）
 
-- `beforeunload：`
-  > - `触发对象：`
-  > - 窗口关闭或文档资源卸载前触发
-  > - 默认操作是关闭窗口或文档，如果调用 event.preventDefault()，阻止关闭；或 event.returnValue=xxx，则会出现关闭弹框
 - `pagehide`
   > - `触发对象`
 - `unload`
