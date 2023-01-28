@@ -11,14 +11,19 @@
         overflow: auto;
         border: 1px solid red;
       }
+      .search_wfh__ {
+        background-color: red;
+      }
       .active {
-        color: red;
+        background-color: green;
       }
     </style>
   </head>
   <body>
     <!-- 模拟实现浏览器查找功能，并定位到元素 -->
     <input type="text" placeholder="请输入搜索内容" oninput="onInput()" />
+    <button onclick="onNext()">next</button>
+    <button onclick="onPrev()">prev</button>
     <div id="container" class="container">
       <input type="text" />
       <div>这是一个模拟浏览器搜索功能的demo</div>
@@ -68,6 +73,23 @@
     <script>
       const wrapper = document.querySelector('#container');
       const originHTML = wrapper.innerHTML;
+      let current = 0;
+      function onNext() {
+        const domList = document.querySelectorAll('font.search_wfh__');
+        console.log('domList===>', domList);
+        if (current < domList.length) {
+          const prevDom = domList[current];
+          prevDom.classList.remove('active');
+          const nextDom = domList[current + 1];
+          nextDom.classList.add('active');
+
+          current++;
+        }
+      }
+
+      function onPrev() {
+        const domList = document.querySelectorAll('font.search_wfh__');
+      }
       console.log('dom==', originHTML);
       // 获取所有text节点
       function getTextNodeList(container) {
@@ -157,7 +179,7 @@
               nodeMatchedStart,
               nodeMatchedLength
             );
-            font.style.background = 'red';
+            font.classList = ['search_wfh__'];
             console.log('paren======>', text.parentNode);
             text.parentNode.replaceChild(font, text);
           }
