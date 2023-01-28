@@ -105,16 +105,16 @@
 
 | 事件                   | 参数接口            | 触发对象        | 触发                         | 备注       |
 | :--------------------- | :------------------ | :-------------- | :--------------------------- | :--------- |
-| readystatechange       | Event               | document        |                              | 多次触发   |
+| beforeunload           | BeforeUnloadEvent   | window          |                              | 似乎未触发 |
 | pagehide               | PageTransitionEvent | window          |                              |            |
-| visibilitychange       | Event               | document        | 浏览器标签页可视或隐藏时触发 |            |
-| webkitvisibilitychange | Event               | document        | 浏览器标签页可视或隐藏时触发 |            |
-| unload                 | BeforeUnloadEvent   | window,document |                              |            |
-| beforeunload           | BeforeUnloadEvent   | window,document |                              | 似乎未触发 |
+| visibilitychange       | Event               | window,document | 浏览器标签页可视或隐藏时触发 |            |
+| webkitvisibilitychange | Event               | window,document | 浏览器标签页可视或隐藏时触发 |            |
+| unload                 | Event               | window          |                              |            |
+| readystatechange       | Event               | document        |                              | 多次触发   |
+| DOMContentLoaded       | Event               | window,document |                              |            |
 | load                   | Event               | window          |                              |            |
-| toggle                   | Event               | window          |                              |            |
-| DOMContentLoaded       | Event               | document        |                              |            |
 | pageshow               | BeforeUnloadEvent   | window          |                              |            |
+| toggle                 | Event               | details 元素    |                              |            |
 
 ### FocusEvent
 

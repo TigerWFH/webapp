@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试事件</title>
+    <script>
+      document.addEventListener('readystatechange', function (event) {
+        console.log('document-readystatechange====>', event);
+      });
+      window.addEventListener('readystatechange', function (event) {
+        console.log('window-readystatechange====>', event);
+      });
+
+      document.addEventListener('pagehide', function (event) {
+        console.log('document-pagehide====>', event);
+      });
+      window.addEventListener('pagehide', function (event) {
+        console.log('window-pagehide====>', event);
+      });
+
+      document.addEventListener('visibilitychange', function (event) {
+        console.log('document-visibilitychange====>', event);
+      });
+      window.addEventListener('visibilitychange', function (event) {
+        console.log('window-visibilitychange====>', event);
+      });
+
+      document.addEventListener('webkitvisibilitychange', function (event) {
+        console.log('document-webkitvisibilitychange====>', event);
+      });
+      window.addEventListener('webkitvisibilitychange', function (event) {
+        console.log('window-webkitvisibilitychange====>', event);
+      });
+
+      document.addEventListener('unload', function (event) {
+        console.log('document-unload====>', event);
+      });
+      window.addEventListener('unload', function (event) {
+        console.log('window-unload====>', event);
+      });
+
+      document.addEventListener('beforeunload', function (event) {
+        console.log('document-beforeunload====>', event);
+      });
+      window.addEventListener('beforeunload', function (event) {
+        console.log('window-beforeunload====>', event);
+      });
+
+      document.addEventListener('load', function (event) {
+        console.log('document-load====>', event);
+      });
+      window.addEventListener('load', function (event) {
+        console.log('window-load====>', event);
+      });
+
+      document.addEventListener('DOMContentLoaded', function (event) {
+        console.log('document-DOMContentLoaded====>', event);
+      });
+      window.addEventListener('DOMContentLoaded', function (event) {
+        console.log('window-DOMContentLoaded====>', event);
+      });
+
+      document.addEventListener('pageshow', function (event) {
+        console.log('document-pageshow====>', event);
+      });
+      window.addEventListener('pageshow', function (event) {
+        console.log('window-pageshow====>', event);
+      });
+    </script>
+  </head>
+  <body>
+    测试事件
+  </body>
+</html>
