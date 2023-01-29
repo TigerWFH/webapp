@@ -144,7 +144,29 @@ const options = {
     FormData：content-type: multipart/form-data;boundary=----WebKitFormBoundaryOErPZP11lGE5iLqT
     URLSearchParams: content-type: application/x-www-form-urlencoded;charset=UTF-8
 
-    
+
+    常见的content-type：
+        application/json：JSON数据格式
+        application/js：JS文件
+        application/xml：XML数据格式
+        application/x-www-form-urlencoded：post请求默认的数据格式，URLSearchParams
+            用等号连接参数名和参数值，并使用urlencode编码：title=test&sub%5B%5D=1&sub%5B%5D=2&sub%5B%5D=3
+        multipart/form-data：表单数据格式，支持上传文件
+            这个格式会在多个参数之前插入一段分隔符
+        application/octet-stream
+        text/html： HTML数据格式
+        text/css： css文件
+        text/plain：纯文本字符串
+        image/png：图片格式
+
+    Content-Type: 指定数据格式
+    Content-Disposition: 指定如何处理数据[inline, attachment]
+        inline：直接在页面展示
+        attachment：以附件形式下载
+
+    Server端实现文件下载：
+        Content-Type: application/octet-stream
+        Content-Disposition: attachment;filename=xxxx.xlsx
 */
 ```
 
