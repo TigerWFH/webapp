@@ -2,12 +2,12 @@
 
 ## XMLHttpRequest
 
-> ## `构造函数`
->
+### `构造函数`
+
 > - `XMLHttpRequest()`，返回一个 XMLHttpRequest 实例
->
-> ## `实例属性`
->
+
+### `实例属性`
+
 > - `readyState：`只读，当前请求（request）的状态；【0：UNSENT；1：OPENED；2：HEADERS_RECEIVED；3：LOADING；4：DONE】
 > - `responseType：`表明 response 数据的类型；【"":"text"; "arraybuffer": "ArrayBuffer"; "blob": "Blob"; "document": "HTML or XML document"; "json": "JSON"; "text": "string"】
 > - `response：`原始响应数据；【string, ArrayBuffer, Blob, HTML, XML, JSON, null 】
@@ -18,7 +18,7 @@
 > - `statusText：`HTTP 协议状态描述
 > - `timeout：` 超时时间，单位 ms；默认 0，标识不设置超时。设置了超时，超时后会触发 timeout 事件
 > - `upload：`一个 XMLHttpRequestUpload 对象，用于监听上传进度。支持事件【loadstart,progress,abort,error,load,timeout,loadend】
-> - `withCrdentials：`默认值为 false；
+> - `withCrdentials：`默认值为 false；标识跨域请求时是否带上凭证（cookie、Authoization Headers 或者 TLS 客户端证书）
 
 ```js
 /*
@@ -60,18 +60,18 @@
 */
 ```
 
-> ## `实例方法`
->
-> - `abort()`
+### `实例方法`
+
+> - `abort()：`中断已经 send 的请求，同时设置 readyState 为 0；status 为 0；触发 abort 事件
 > - `getAllResponseHeaders()`
 > - `getResponseHeader()`
 > - `open()`
 > - `overrideMimeType()`
 > - `send()`
 > - `setRequestHeader()`
->
-> ## `事件`
->
+
+### `事件`
+
 > - `abort`
 > - `error`
 > - `load`
@@ -81,7 +81,74 @@
 > - `readystatechange`
 > - `timeout`
 
+## Request
+
+### `构造函数`
+
+> - `Request()`
+> - `input：`USVString URL 或 Request 对象
+> - `init：`可选参数
+
+```js
+const init = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: 'Blob, BufferSource, FormData, URLSearchParams, USVString, ReadableStream等等；GET和HEAD没有body',
+  mode: 'cors | no-cors | same-origin | navigate',
+  credentials: 'omit | same-origin | include',
+  cache: '',
+  redirect: 'follow | error | manual',
+  referrer: '',
+  integrity: ''
+};
+```
+
+## Response
+
+## Headers
+
+## URL
+
+> The URL interface is used to parse, construct, normalize, and encode URLs
+
 ## fetch
+
+> - 使用到了最新的 web apis：Response、Request、Headers 等
+> - fetch 是一个全局的 function
+
+### fetch(resource[, options])
+
+> stringifier: An object's stringifier is any attribute or method that is defined to provide a textual representation of the object for use in situations where a string is expected.
+>
+> - resource: string, 或具有 stringifier 工具 的对象，例如 URL。或者 Request 对象
+> - options
+
+```js
+const options = {
+  method: '',
+  headers: '',
+  body: '', // [Blob, ArrayBuffer, TypedArray, DataView, FormData, URLSearchParams, string object, literal, ReadableStream]
+  mode: '', // [cors, no-cors, same-origin]
+  credentials: '', // [omit, same-origin, include]
+  cache: '', // HTTP cache
+  redirect: '', // [follow, error, manual]
+  referrer: '', // ['', 'about:client']
+  referrerPolicy: '' // [no-referrer, no-ferrer-when-downgrade, same-origin, origin, strict-origin, origin-when-cross-origin, strict-origin-when-cross-origin, unsafe-url]
+  keepalive: '', //
+  signal: '', //
+};
+/*
+    body数据以及对应的content-type：
+    FormData：content-type: multipart/form-data;boundary=----WebKitFormBoundaryOErPZP11lGE5iLqT
+    URLSearchParams: content-type: application/x-www-form-urlencoded;charset=UTF-8
+
+    
+*/
+```
+
+> 返回一个 Promise<Response>对象
 
 ## websockets
 
