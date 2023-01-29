@@ -153,7 +153,7 @@ const options = {
             用等号连接参数名和参数值，并使用urlencode编码：title=test&sub%5B%5D=1&sub%5B%5D=2&sub%5B%5D=3
         multipart/form-data：表单数据格式，支持上传文件
             这个格式会在多个参数之前插入一段分隔符
-        application/octet-stream
+        application/octet-stream：暂时理解为二进制文件，就是字节流
         text/html： HTML数据格式
         text/css： css文件
         text/plain：纯文本字符串
