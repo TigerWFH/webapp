@@ -1,5 +1,33 @@
 # web APIs
 
+## IntersectionObserver API
+
+> 该接口提供了一种异步观察目标元素与其祖先元素或顶级文档视口（viewport）交叉状态的方法。其祖先元素或视口被称为根 root
+>
+> 当一个 IntersectionObserver 对象被创建，其被配置为监听根中一段给定比例的可视区域。
+
+### 构造函数
+
+- `IntersectionObserver(callback[,options])`
+  - `callback(entries, observer)`
+  - `options={}`
+    - `root`
+    - `rootMargin`
+    - `threshhold`
+
+### 实例属性
+
+- `root`
+- `rootMargin`
+- `threshholds`
+
+### 实例方法
+
+- `disconnect()`
+- `observe()`
+- `takeRecords()`
+- `unobserve()`
+
 ## XMLHttpRequest
 
 ### `构造函数`

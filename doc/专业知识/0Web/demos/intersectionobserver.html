@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .first {
+        height: 500px;
+        width: 500px;
+        border: 1px solid red;
+        overflow: auto;
+      }
+      .second {
+        height: 300px;
+        width: 300px;
+        border: 1px solid green;
+      }
+      .third {
+        height: 300px;
+        width: 300px;
+        border: 1px solid blue;
+      }
+      .fouth {
+        height: 300px;
+        width: 300px;
+        border: 1px solid yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="first">
+      我是一个大容器
+      <div class="second">second</div>
+      <div class="third">third</div>
+      <div class="fouth">fouth</div>
+    </div>
+    <script>
+      const first = document.querySelector('.first');
+      const second = document.querySelector('.second');
+      const third = document.querySelector('.third');
+      const fouth = document.querySelector('.fouth');
+      const ob = new IntersectionObserver(
+        function (entries, observer) {
+          console.log('ob========>', entries, observer);
+        },
+        {
+          root: first
+        }
+      );
+      ob.observe(second);
+      ob.observe(third);
+      ob.observe(fouth);
+    </script>
+  </body>
+</html>
