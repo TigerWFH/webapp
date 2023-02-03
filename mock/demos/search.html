@@ -76,19 +76,35 @@
       let current = 0;
       function onNext() {
         const domList = document.querySelectorAll('font.search_wfh__');
-        console.log('domList===>', domList);
-        if (current < domList.length) {
+        console.log('current===>', current, domList.length);
+        if (current < domList.length - 1) {
           const prevDom = domList[current];
           prevDom.classList.remove('active');
           const nextDom = domList[current + 1];
           nextDom.classList.add('active');
+          // 滚动选中dom到可视区域
+          nextDom.scrollIntoView();
 
           current++;
+        } else {
+          console.log('space space space');
         }
       }
 
       function onPrev() {
         const domList = document.querySelectorAll('font.search_wfh__');
+        if (current > 0) {
+          const prevDom = domList[current];
+          prevDom.classList.remove('active');
+          const nextDom = domList[current - 1];
+          nextDom.classList.add('active');
+          // 滚动选中dom到可视区域
+          nextDom.scrollIntoView();
+
+          current--;
+        } else {
+          console.log('cold cold cold');
+        }
       }
       console.log('dom==', originHTML);
       // 获取所有text节点
@@ -180,7 +196,10 @@
               nodeMatchedLength
             );
             font.classList = ['search_wfh__'];
-            console.log('paren======>', text.parentNode);
+            if (i === 0) {
+              font.classList.add('active');
+            }
+            console.log('paren======>', font);
             text.parentNode.replaceChild(font, text);
           }
         }
