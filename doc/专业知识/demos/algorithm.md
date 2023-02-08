@@ -110,6 +110,7 @@ console.log('time===>', end - begin);
   > 快速排序：从`待排序列`中选择一个基准数，通过一趟排序将待排序的数据进行分割：其中`一部分`的所有数据都比`另一部分`的所有数据都要`小`。然后，再按此方法分别对这两部分数据进行快速排序，整个排序过程可以递归进行，以此达到整个序列变成有序序列。
 
 ```js
+// first
 function quickSort(arr, left, right) {
   if (left >= right) {
     return arr;
@@ -145,12 +146,48 @@ function partion(arr, left, right) {
   return start;
 }
 
-let arr = [1, 2, 3, 8, 5, 2, 1, 90, 23892, 1, 334, 4, 4, 4, 2, 34, 34, 2, 78];
+let arr = new Array(10).fill(0).map((item) => Math.floor(Math.random() * 100));
 let begin = new Date().valueOf();
 quickSort(arr, 0, arr.length - 1);
 let end = new Date().valueOf();
 console.log('===>', arr);
 console.log('time===>', end - begin);
+// second
+function quickSort(arr) {
+  const partition = (start, end) => {
+    if (start >= end) {
+      return;
+    }
+    const pivot = arr[end];
+    let left = start;
+    let right = end;
+
+    while (left < right) {
+      while (left < right && arr[left] < pivot) {
+        left++;
+      }
+      while (right > left && arr[right] >= pivot) {
+        right--;
+      }
+      if (left < right) {
+        [arr[left], arr[right]] = [arr[right], arr[left]];
+      }
+    }
+    // 关键点，不调整pivot，永远无法排序
+    arr[end] = arr[left];
+    arr[left] = pivot;
+    partition(start, left - 1);
+    partition(right, end);
+  };
+  partition(0, arr.length - 1);
+}
+
+const unorderList = new Array(10)
+  .fill(0)
+  .map((item) => Math.floor(Math.random() * 100));
+console.log('before===>', unorderList);
+quickSort(unorderList);
+console.log('quickSort', unorderList);
 ```
 
 ### 插入排序
