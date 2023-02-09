@@ -11,12 +11,12 @@
   - `setState()`
   - `forceUpdate()`
 
-  - `constructor()`
+  - `constructor(props, context)`
   - `static getDerivedStateFromProps()`
   - `render()`
   - `componentDidMount`
 
-  - `shouldComponentUpdate()`
+  - `shouldComponentUpdate(nextProps, nextState, nextContext)`
   - `static getSnapshotBeforeUpdate()`
   - `componentDidUpdate()`
 
@@ -48,6 +48,23 @@
   - `React.Children.only(children)`
   - `React.Children.toArray(children)`
   - `React.Children.`
+- `createContext()`
+
+```js
+const MyContext = React.createContext(defaultValue);
+class MyClass extends React.Component {
+  static contextType = MyContext;
+  render() {
+    let value = this.context;
+    /* render something based on the value */
+  }
+}
+<MyContext.Provider value={/* some value */}>
+<MyContext.Consumer>
+  {value => /* render something based on the context value */}
+</MyContext.Consumer>
+
+```
 
 ### Fragments
 
@@ -123,9 +140,96 @@ function MyComponent() {
 - `useTransition()`
 - `useId`
 
-## Library Hooks
+### Library Hooks
 
 - `useSyncExternalState`
 - `useInsertionEffect`
 
 ## react-dom
+
+- `createPortal(child, container)`
+- `flushSync(callback)`Force React to flush any updates inside the provided callback synchronously. This ensures that the DOM is updated immediately.
+- `render()`legacy
+- `hydrate()`legacy
+- `findDOMNode()`legacy
+- `unmountComponentAtNode()`legacy
+
+### react-dom/client
+
+- `createRoot(container[, options])`
+- `hydrateRoot(container, element[, options])`
+
+```js
+const root = createRoot(container);
+root.render(element);
+root.unmount();
+```
+
+### react-dom/server
+
+- `renderToPipeableStream()`
+- `renderToNodeStream()`
+- `renderToStaticNodeStream()`
+- `renderToReadableStream()`
+- `renderToString()`
+- `renderToStaticMarkup()`
+
+## 关于 context apis
+
+### react@18.0.0
+- `useId()`
+- `startTransition()`
+- `useTransition()`
+- `useDeferredValue()`
+- `useSyncExternalStore()`
+- `useInsertionEffect()`
+- `createRoot()`
+- `hydrateRoot()`
+- `renderToPipeableStream()`
+- `renderToReadableStream()`
+- ``
+- ``
+### react@17.0.0
+
+> 代理放到 root 节点，而非 document
+
+### react@16.13.0
+
+> 弃用 createFactory()
+
+### react@16.8.6
+
+### react@16.8.0
+
+- `add hooks`
+
+### react16.6.0
+
+- `memo()`
+- `lazy()`
+- `contextType：`扩展类组件订阅 context 的方法
+- `getDerivedStateFromError()`for server-side renderer
+
+### react@16.5.0
+
+> 支持 React DevTools
+
+### react@16.3
+
+- `createContext`
+- `createRef()`
+- `forwardRef()`
+
+- `getDerivedStateFromProps()`
+- `getSnapshotBeforeUpdate()`
+- `StrictMode`
+
+### react@16.2.0
+
+- `Fragment`
+
+### react@16.0.0
+
+> 依赖 Map 和 Set，requestAnimationFrame
+
+- `createPortal`
