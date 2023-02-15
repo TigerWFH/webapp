@@ -3311,3 +3311,19 @@ type ReadonlyPerson = Readonly<Person>;
   </body>
 </html>
 ```
+
+## 脚手架工具（命令行工具）
+
+> `命令 命令参数 选项 选项参数`
+
+```shell
+my-utility command -o --option option-argument command-argument-1 command-argument-2
+```
+
+- `commander`
+  > 命令行参数由`选项`（options）、`选项参数`（option-arguments）、`命令`（commands）、`命令参数`（command-arguments）组成
+- `chalk`
+- `git-clone`
+- `ora`
+- `rimraf`
+- `async`
