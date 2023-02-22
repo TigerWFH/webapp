@@ -174,7 +174,7 @@ function DropTarget(props: IDropTargetProps) {
   const [collectedProps, drop] = useDrop(() => {
     return {
       accept,
-      drop: (item: t.IAnyObj, monitor: any) => {
+      drop: (item: any, monitor: any) => {
         const id = uuid({
           node: [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
           clockseq: 0x1234,
