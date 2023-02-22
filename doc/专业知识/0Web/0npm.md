@@ -21,3 +21,29 @@
   - `bin`
   - `engine`
 - `dependencies`：lockfileVersion: 1 使用的数据
+
+## monorepo and multirepo
+
+> 但仓库多包
+>
+> 多仓库多包
+
+### yarn workspace
+
+### lerna
+
+#### lerna 命令
+
+- `bootstrap：`安装依赖，同时处理依赖项的软连接
+  - `--hoist：`公共依赖提升
+- `list：`查看本地包列表
+- `clean：`删除安装依赖
+- `link：`建立软链接
+- `publish：`发布安装包
+- `changed：`待发布包列表
+
+[lerna]()
+
+### Pants 构建系统(Twitter)
+
+[pants](https://github.com/pantsbuild/pants)

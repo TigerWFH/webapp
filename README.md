@@ -126,17 +126,6 @@
     */
 ```
 
-# 基础设施
-
-- API 封装和 APILoading
-- polyfill
-- ErrorPage
-- URL 查询参数获取
-- Alert 组件
-- Modal 组件
-- Toast 组件
-- Mask 组件
-
 # vscode 源码关键点
 
 - `InstatiationService设计`
@@ -154,10 +143,6 @@
 - `服务端server`
 - `客户端client`
 
-```
-
-```
-
 # 面向对象方法：Booch、Coad（1989）、OMT（1991）、UML（1995），UML 不仅统一了 Booch 方法、OMT 方法、OOSE 方法的表示方法，而且对其作了进一步的发展，最终统一为大众接受的标准建模语言
 
 # OMT 和 UML，题外话，面向对象分析（OOA），面向对象设计（OOD），面向对象编程（OOP）90 年代软件开发方法的主流
@@ -168,124 +153,18 @@
 - OMT：功能模型，指明系统应该做什么。更直接地反映了用户对目标系统的需求。用`数据流图`表示
 - OMT：功能模型指明应该做什么，动态模型明确了什么时候做，对象模型定义做事情的实体
 
-## 设计模式：可复用面向对象软件的基础，则是使用了 OMT 表示方法
-
-<table>
-        <tr>
-            <th>
-                技术
-            <th>
-            <th>
-                继承
-            </th>
-            <th>
-                相识（关联、集合）
-            </th>
-            <th>
-                聚集（组合）
-            </th>
-            <th>
-                依赖
-            </th>
-            <th>
-                创建
-            </th>
-            <th>
-                实现
-            </th>
-        </tr>
-    <tbody>
-        <tr>
-            <td>
-                OMT
-            </td>
-            <td />
-            <td>
-                表述相同
-            </td>
-            <td>
-                相识就是关联或者聚合，箭头
-            </td>
-            <td>
-                聚集就是组合，白色菱形
-            </td>
-            <td>
-                无聚合
-            </td>
-            <td>
-                无依赖
-            </td>
-            <td>
-                无创建，GOF自创
-            </td>
-            <td>
-                无实现
-            </td>
-        </tr>
-        <tr>
-            <td>
-                UML
-            </td>
-            <td />
-            <td>
-                表述相同
-            </td>
-            <td>
-                关联或聚合概念，三角形或白色菱形
-            </td>
-            <td>
-                组合就是聚集，黑色菱形
-            </td>
-            <td>
-                白色菱形表示
-            </td>
-            <td>
-                依赖，虚线三角形
-            </td>
-            <td>
-                无创建，GOF自创
-            </td>
-            <td>
-                三角形虚线
-            </td>
-        </tr>
-    </tbody>
-</table>
 # 系统设计
+
 [消息系统、事件系统和命令系统设计](https://tuhrig.de/messages-vs-events-vs-commands/)
-# chrome插件离线下载：https://chrome-extension-downloader.com/ca85a45a24e78a17132bcab29077db37/https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg?hl=zh-CN.crx
-# 在线工具
-* `js在线编程：`https://codepen.io/pen/?&editors=001
-* `node对ES的支持程度查询：`https://node.green/
-* `浏览器对ES的支持程度查询：`
-* `浏览器对CSS样式支持程度查询：`https://wwww.caniuse.com
-* `在线正则表达式：`https://regex101.com/
-# typescript
-[typescript默认配置项](https://www.tslang.cn/docs/handbook/compiler-options.html)
+
+# chrome 插件离线下载：https://chrome-extension-downloader.com/ca85a45a24e78a17132bcab29077db37/https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg?hl=zh-CN.crx
+
 # 流的概念
+
 [mmap](https://stackoverflow.com/questions/258091/when-should-i-use-mmap-for-file-access/258097#258097)
 [更好的资料](https://www.zhihu.com/question/24734041)
 [流](http://catb.org/esr/writings/taoup/html/ch07s02.html#plumbing)
 [缓冲区和流概念](http://www.cppblog.com/gujiayue/archive/2016/05/27/213595.html)
-# react-router-redux：已废弃，该库适用于react-router4.x以下；替代库connected-react-router
-[react-router-redux](https://github.com/reactjs/react-router-redux)
-
-[connected-react-router](https://github.com/supasate/connected-react-router)
-
-```
-
-    react-router-redux 是将react-router 和 redux 集成到一起的库，让你可以用redux的方式去操作react-router。例如，react-router 中跳转需要调用 router.push(path)，集成了react-router-redux 你就可以通过dispatch的方式使用router，例如跳转可以这样做 store.dispatch(push(url))。本质上，是把react-router自己维护的状态，例如location、history、path等等，也交给redux管理。一般情况下，是没有必要使用这个库的。
-
-    connected-react-router：用于redux store同步并管理react-router的状态
-```
-
-# redux-actions：号称简化 redux 的一个库
-
-[redux-actions](https://github.com/redux-utilities/redux-actions)
-
-```
-
-```
 
 # 主流压缩工具：Uglify(保守，格式化逻辑基本还能看出来)，YUI Compressor，Google Closure Compiler(压缩率更高)
 
@@ -306,10 +185,6 @@
 [keymirror 资料](https://segmentfault.com/q/1010000011048491)
 
 [keymirror 资料 2](https://segmentfault.com/a/1190000008185613)
-
-```
-
-```
 
 # Tapable
 
@@ -847,11 +722,6 @@
 - `多进程多实例构建：`thread-loader、parallel-webpack、HappyPack
 - `多进程多实例并行压缩：`parallel-uglify-plugin 和 uglifyjs-webpack-plugin、terser-webpack-plugin（支持 es6 语法压缩）配合使用
 - ``
-
-# iScroll 组件库
-
-# Swiper 组件库
-
 # 缓存：https://github.com/CJY0208/react-router-cache-route/blob/master/README_CN.md
 
 # 待学习知识
@@ -887,149 +757,6 @@
 
             return x + 3;
         }
-```
-
-# 视觉优化
-
-```
-    1、接口数据回来之前，使用骨架图
-    2、接口回来之后，
-        2-1：成功：渲染视觉效果
-        2-2：失败：跳转错误页
-```
-
-# React 的 TS 类型
-
-- `DOM`: Node, Element, HTMLElement, HTMLDivElement
-- `ReactNode`: ReactChild | ReactFragment | ReactPortal | boolean | null | undefined
-- `ReactChild`: ReactElement | ReactText
-- `ReactElement`: 带有 props 的 js 对象
-- `ReactText`: string | number
-- `ReactFragment`: {} | ReactNodeArray
-- `ReactNodeArray`: interface ReactNodeArray extends Array<ReactNode>{}
-- `ReactPortal`: interface ReactPortal extends ReactElement {key: Key | null;children: ReactNode;}
-
-# React 的 event
-
-```
-    React的event是合成事件，native事件全部冒泡到document，document将native event封装成合成事件在进行派发，所以，如果使用addeventlistener为dom添加事件，会比JSX的onXXX优先执行。因为，native事件首先冒泡到子结点，执行子结点的native onXXX，冒泡到document后，合成事件才会被dispatch到JSX对应的结点，执行JSX的onXXX
-```
-
-# React
-
-## React Event
-
-> document 中注册的事件不处理具体的事件，仅对事件进行分发
-
-```js
-    /**
-     * SyntheticEvent：ReactEvent是合成事件，实现了W3C规范，和nativeEvent有着相似的接口
-     * native事件的冒泡和捕获阶段执行完毕，才会执行React的合成事件
-     *
-     * 结论：React的捕获事件触发，原生捕获事件触发，原生冒泡事件触发、React的冒泡事件触发
-     * 分析：基于React的事件系统，捕获阶段React最先获取事件，接着走到native，然后走到native的冒泡阶段，最后走React的冒泡（因为React的所有事件都是委托到document节点下的，所以冒泡最慢）
-     * 以下代码结果输出：
-     *
-     * 1、DOM原生documentCapture
-     * 2、React捕获链先执行
-     *  ReactContainerCapture=========>
-     *  ReactDemoCapture=========>
-     * 3、DOM捕获链再执行
-     *  containerCapture======>
-     *  demoCapture======>
-     * 4、DOM冒泡链执行
-     *  demo======>
-     *  container======>
-     * 5、React冒泡链执行
-     *  ReactDemo=========>
-     *  ReactContainer=========>
-     * 6、DOM原生document
-     */
-    componentDidMount() {
-        const container = document.getElementById("container")
-        const demo = document.getElementById("demo")
-        document.addEventListener('click', (e) => {
-                console.log('documentCapture');
-            }, {capture: true})
-            document.addEventListener('click', (e) => {
-                console.log('document');
-            }, {capture: false})
-        if (container) {
-            container.addEventListener("click", function() {
-                console.log("containerCapture======>")
-            }, {
-                capture: true
-            })
-            container.addEventListener("click", function() {
-                console.log("container======>")
-            }, {
-                capture: false
-            })
-        }
-        if (demo) {
-            demo.addEventListener("click", function() {
-                console.log("demoCapture======>")
-            }, {
-                capture: true
-            })
-            demo.addEventListener("click", function() {
-                console.log("demo======>")
-            }, {
-                capture: false
-            })
-        }
-    }
-    onReactContainer = () => {
-        console.log("ReactContainer=========>")
-    }
-    onReactContainerCapture = (event: any) => {
-        console.log("ReactContainerCapture=========>")
-    }
-    onReactDemo = () => {
-        console.log("ReactDemo=========>")
-    }
-    onReactDemoCapture = () => {
-        console.log("ReactDemoCapture=========>")
-    }
-    <div id="container"
-        onClick={this.onReactContainer}
-        onClickCapture={this.onReactContainerCapture}>
-        <div id="demo"
-            onClick={this.onReactDemo}
-            onClickCapture={this.onReactDemoCapture}>
-                点击测试
-        </div>
-    </div>
-```
-
-## 关于 ReactAPIs
-
-```
-    1、import React, {Component, Suspense, lazy } from 'react';
-    APIs：
-        1、React.Component
-        2、React.PureComponent
-        3、React.memo
-        4、createElement
-        5、createFactory
-        6、cloneElement
-        7、isVAlidElement
-        8、React.Fragment
-        9、React.createRef
-        10、React.forwardRef
-        11、React.lazy
-        12、REact.Suspense
-        Hooks
-        13、useState
-        14、useEffect
-        15、useContext
-        16、useReducer
-        17、useCallback
-        18、useMemo
-        19、useRef
-        20、useImperativeHandle
-        21、useLayoutEffect
-        22、useDebugVAlue
 ```
 
 ## Render props 模式：是 React Component 之间逻辑代码重用的技术。准确将，使用一个函数 prop 属性，返回 React Element，即<Demo func={params => ReactElement} />。ReactRouter 库使用了 render props 技术
@@ -1371,11 +1098,6 @@ function enhance(WrappedComponent) {
 -
 
 [React APIs](https://reactjs.org/docs/react-api.html)
-
-# create-react-app 创建的 ts 项目
-
-- 使用 typescript
-- 没有分包
 
 # 关于规范，ISOC 和 W3C 是互联网领域两大国际协会组织
 
@@ -1770,20 +1492,6 @@ https://3dtransforms.desandro.com/carousel
 - `target：`对事件原始目标的引用，指最初派发（dispatch）事件时指定的目标
 - `type：`
 - `isTrusted：`
-
-### 方法
-
-- `createEvent()`
-- `composedPath()`
-- `preventDefault()`
-- `stopPropagation()：`停止冒泡，阻止事件在 DOM 中继续冒泡
-- `stopImmediatePropagation()：`
-- ``
-- ``
-
-## XMLHttpRequest
-
-## Fetch
 
 ## 二进制文件
 
