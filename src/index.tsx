@@ -1,6 +1,6 @@
 import 'react-app-polyfill/ie9';
 // // import 'core-js/features/array/from';
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import * as ReactDOM from 'react-dom';
 import {
   HashRouter as Router,
@@ -10,120 +10,60 @@ import {
 } from 'react-router-dom';
 import store from './store';
 import { Provider } from 'react-redux';
-// import Loadable from 'react-loadable';
-import Loadable from '@loadable/component';
 import View from 'Components/View';
 import Header from 'Components/Header';
 import Sidebar from 'Components/Sidebar';
 import 'Components/base.scss';
 import * as serviceWorker from './serviceWorker';
-// import loadable from '@loadable/component';
 
 window.addEventListener('hashchange', function (e) {
   console.log('hash=====>', e);
 });
 
 // 个人简介
-const About = Loadable((props: any) => import('@/pages/about'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const About = lazy(() => import('@/pages/about'));
 // 主页
-const Home = Loadable((props: any) => import('@/pages/home'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const Home = lazy(() => import('@/pages/home'));
 // 博客
-const Blog = Loadable((props: any) => import('@/pages/blog'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const Blog = lazy(() => import('@/pages/blog'));
 // Demos
-const Demos = Loadable((props: any) => import('@/pages/demos'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const Demos = lazy(() => import('@/pages/demos'));
 
-const Antd = Loadable((props: any) => import('@/pages/antd'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const Antd = lazy(() => import('@/pages/antd'));
 
-const Video = Loadable((props: any) => import('@/pages/video'), {
-  fallback: <div>Loading</div>
-});
+const Video = lazy(() => import('@/pages/video'));
 
-const Middle = Loadable((props: any) => import('@/pages/middle'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
+const Middle = lazy(() => import('@/pages/middle'));
 
-const Animation = Loadable((props: any) => import('@/pages/animation'), {
-  fallback: <div>Loading</div>
-});
+const Animation = lazy(() => import('@/pages/animation'));
 
-const Bones = Loadable((props: any) => import('@/pages/bones'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
-const Hooks = Loadable((props: any) => import('@/pages/hooks'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
-const Reacts = Loadable((props: any) => import('@/pages/react'), {
-  fallback: <div>Loading</div>
-});
-const Context = Loadable((props: any) => import('@/pages/context'), {
-  fallback: <div>Loading</div>
-});
-const Detail = Loadable((props: any) => import('@/pages/detail'), {
-  fallback: <div>Loading</div>
-});
-const StartApp = Loadable((props: any) => import('@/pages/startapp'), {
-  cacheKey: (props) => props.path,
-  fallback: <div>Loading</div>
-});
-const Signature = Loadable((props: any) => import('@/pages/signature'), {
-  fallback: <div>Loading</div>
-});
-const Child = Loadable((props: any) => import('@/pages/child'), {
-  fallback: <div>Loading</div>
-});
-const Other = Loadable((props: any) => import('@/pages/other'), {
-  fallback: <div>Loading</div>
-});
-// const Echat = Loadable((props: any) => import('@/pages/echat'), {
-//     fallback: <div>Loading</div>
-// })
-const Mine = Loadable((props: any) => import('@/pages/mine'), {
-  fallback: <div>Loading</div>
-});
-const Canvas = Loadable((props: any) => import('@/pages/canvas'), {
-  fallback: <div>Loading</div>
-});
-const X6 = Loadable((props: any) => import('@/pages/x6'), {
-  fallback: <div>Loading</div>
-});
+const Bones = lazy(() => import('@/pages/bones'));
 
-const Dnd = Loadable((props: any) => import('@/pages/x6/dnd'), {});
+const Hooks = lazy(() => import('@/pages/hooks'));
 
-const DndFrame = Loadable((props: any) => import('@/pages/x6/frame'), {});
+const Reacts = lazy(() => import('@/pages/react'));
+const Context = lazy(() => import('@/pages/context'));
+const Detail = lazy(() => import('@/pages/detail'));
+const StartApp = lazy(() => import('@/pages/startapp'));
+const Signature = lazy(() => import('@/pages/signature'));
+const Child = lazy(() => import('@/pages/child'));
+const Other = lazy(() => import('@/pages/other'));
 
-const Test = Loadable((props: any) => import('@/pages/test'), {
-  fallback: <div>Loading</div>
-});
+const Mine = lazy(() => import('@/pages/mine'));
+const Canvas = lazy(() => import('@/pages/canvas'));
+const X6 = lazy(() => import('@/pages/x6'));
 
-const Tools = Loadable((props: any) => import('@/pages/tools'), {
-  fallback: <div>Loading</div>
-});
+const Dnd = lazy(() => import('@/pages/x6/dnd'));
 
-const Rxjs = Loadable((props: any) => import('@/pages/rxjs'), {
-  fallback: <div>Loading</div>
-});
+const DndFrame = lazy(() => import('@/pages/x6/frame'));
 
-const Dag = Loadable((props: any) => import('@/pages/dag'), {
-  fallback: <div>Loading</div>
-});
+const Test = lazy(() => import('@/pages/test'));
+
+const Tools = lazy(() => import('@/pages/tools'));
+
+const Rxjs = lazy(() => import('@/pages/rxjs'));
+
+const Dag = lazy(() => import('@/pages/dag'));
 
 const STATIC_ROUTE = [
   {
@@ -255,36 +195,38 @@ const elem = (
   <Provider store={store}>
     <Router>
       <MyApp>
-        <Switch>
-          <Route path={'/'} exact component={About}></Route>
-          <Route path={'/home'} exact component={Home}></Route>
-          <Route path={'/blog'} exact component={Blog}></Route>
-          <Route path={'/demos'} exact component={Demos}></Route>
-          <Route path={'/about'} exact component={About}></Route>
-          <Route path={'/other'} exact component={Other}></Route>
-          <Route path={'/antd'} exact component={Antd}></Route>
-          <Route path={'/video'} exact component={Video}></Route>
-          <Route path={'/middle'} exact component={Middle}></Route>
-          <Route path={'/animation'} exact component={Animation}></Route>
-          <Route path={'/bones'} exact component={Bones}></Route>
-          <Route path={'/hooks'} exact component={Hooks}></Route>
-          <Route path={'/react'} exact component={Reacts}></Route>
-          <Route path={'/context'} exact component={Context}></Route>
-          <Route path={'/detail/:skuid'} exact component={Detail}></Route>
-          <Route path={'/startapp'} exact component={StartApp}></Route>
-          <Route path={'/signature'} exact component={Signature}></Route>
-          <Route path={'/child'} exact component={Child}></Route>
-          <Route path={'/mine'} exact component={Mine}></Route>
-          <Route path={'/canvas'} exact component={Canvas}></Route>
-          <Route path={'/x6'} exact component={X6}></Route>
-          <Route path={'/dnd'} exact component={Dnd}></Route>
-          <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
-          <Route path={'/test'} exact component={Test}></Route>
-          <Route path={'/tools'} exact component={Tools}></Route>
-          <Route path={'/rxjs'} exact component={Rxjs}></Route>
-          <Route path={'/dag'} exact component={Dag}></Route>
-          <Route component={About}></Route>
-        </Switch>
+        <Suspense fallback={<div>Loading</div>}>
+          <Switch>
+            <Route path={'/'} exact component={About}></Route>
+            <Route path={'/home'} exact component={Home}></Route>
+            <Route path={'/blog'} exact component={Blog}></Route>
+            <Route path={'/demos'} exact component={Demos}></Route>
+            <Route path={'/about'} exact component={About}></Route>
+            <Route path={'/other'} exact component={Other}></Route>
+            <Route path={'/antd'} exact component={Antd}></Route>
+            <Route path={'/video'} exact component={Video}></Route>
+            <Route path={'/middle'} exact component={Middle}></Route>
+            <Route path={'/animation'} exact component={Animation}></Route>
+            <Route path={'/bones'} exact component={Bones}></Route>
+            <Route path={'/hooks'} exact component={Hooks}></Route>
+            <Route path={'/react'} exact component={Reacts}></Route>
+            <Route path={'/context'} exact component={Context}></Route>
+            <Route path={'/detail/:skuid'} exact component={Detail}></Route>
+            <Route path={'/startapp'} exact component={StartApp}></Route>
+            <Route path={'/signature'} exact component={Signature}></Route>
+            <Route path={'/child'} exact component={Child}></Route>
+            <Route path={'/mine'} exact component={Mine}></Route>
+            <Route path={'/canvas'} exact component={Canvas}></Route>
+            <Route path={'/x6'} exact component={X6}></Route>
+            <Route path={'/dnd'} exact component={Dnd}></Route>
+            <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
+            <Route path={'/test'} exact component={Test}></Route>
+            <Route path={'/tools'} exact component={Tools}></Route>
+            <Route path={'/rxjs'} exact component={Rxjs}></Route>
+            <Route path={'/dag'} exact component={Dag}></Route>
+            <Route component={About}></Route>
+          </Switch>
+        </Suspense>
       </MyApp>
     </Router>
   </Provider>
@@ -342,7 +284,7 @@ ReactDOM.render(elem, document.getElementById('root'));
 //     }
 // }
 
-// function Children(props: any) {
+// function Children() {
 //     return <div>
 //         {
 //             props.name
