@@ -4,15 +4,18 @@
 >
 > HOC 共享业务计算逻辑
 >
-> render props 共享业务状态
+> render props 共享业务计算逻辑
 >
 > 共享状态可以将状态提升（redux 等技术）
 
 ## useState<https://www.cnblogs.com/hymenhan/p/14991789.html>
 
+### 访问到旧状态问题
+
 > 页存在异步问题
 >
 > 在异步回调或闭包中获取最新状态并设置状态，此时第一种方式获取的状态不是实时的，React 官方文档提到：组件内部的任何函数，包括事件处理函数和 Effect，都是从它被创建的那次渲染中被「看到」的，所以引用的值任然是旧的，最后导致 setState 出现异常：
+> setState 访问的是你闭包内的状态，非最新状态
 
 ```js
 const [state, setState] = useState(0);
@@ -24,4 +27,11 @@ Promise.resolve()
     setState(state + 1); // state = 0
   });
 // 解决方案：setState((prevState) => )
+```
+
+### 多个setXXX是否合并render问题
+
+```js
+/*
+*/ 
 ```
