@@ -126,7 +126,7 @@ function reducers(state: any, action: any) {
 function DropTarget(props: IDropTargetProps) {
   const [{ dataList, edgeList, current, configs, dataSource }, dispatch] =
     React.useReducer(reducers, initialState);
-  const initData = React.useCallback((payload) => {
+  const initData = React.useCallback((payload: any) => {
     dispatch({
       type: 'init',
       payload
@@ -143,26 +143,26 @@ function DropTarget(props: IDropTargetProps) {
       type: 'deleteData'
     });
   }, []);
-  const setEdge = React.useCallback((payload) => {
+  const setEdge = React.useCallback((payload: any) => {
     dispatch({
       type: 'edge',
       payload
     });
   }, []);
-  const deleteEdge = React.useCallback((payload) => {
+  const deleteEdge = React.useCallback((payload: any) => {
     dispatch({
       type: 'deleteEdge',
       payload
     });
   }, []);
 
-  const setCurrent = React.useCallback((payload) => {
+  const setCurrent = React.useCallback((payload: any) => {
     dispatch({
       type: 'current',
       payload
     });
   }, []);
-  const setConfigs = React.useCallback((payload) => {
+  const setConfigs = React.useCallback((payload: any) => {
     dispatch({
       type: 'configs',
       payload
