@@ -17,8 +17,6 @@ import { WfhTriangle } from './components/WfhTriangle';
 import Immutable from 'immutable';
 import styles from './index.module.scss';
 
-interface IProps {}
-
 const DND_ITEM_LIST = ['CMS_DND_ITEM_TYPE', 'X6_DND_ITEM_TYPE'];
 /*
   DragSource的Props

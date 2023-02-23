@@ -33,8 +33,6 @@ const Bones = lazy(() => import('@/pages/bones'));
 const ReactDemo = lazy(() => import('@/pages/react'));
 const Context = lazy(() => import('@/pages/context'));
 const Detail = lazy(() => import('@/pages/detail'));
-const Child = lazy(() => import('@/pages/child'));
-const Other = lazy(() => import('@/pages/other'));
 const Mine = lazy(() => import('@/pages/mine'));
 const Canvas = lazy(() => import('@/pages/canvas'));
 const X6 = lazy(() => import('@/pages/x6'));
@@ -50,10 +48,6 @@ const STATIC_ROUTE = [
     title: '主页'
   },
   {
-    href: '/blog',
-    title: '博客'
-  },
-  {
     href: '/demos',
     title: '实践'
   },
@@ -62,17 +56,26 @@ const STATIC_ROUTE = [
     title: 'x6'
   },
   {
-    href: '/other',
-    title: '其它'
+    href: '/react',
+    title: 'react'
+  },
+  {
+    href: 'canvas',
+    title: 'canvas'
+  },
+  {
+    href: '/blog',
+    title: '博客'
   }
 ];
 const ROUTER_TO_TITLE = new Map([
   ['/', '个人简介'],
-  ['/blog', '博客'],
   ['/demos', '实践'],
   ['/home', '主页'],
   ['/x6', 'x6'],
-  ['/other', '其它']
+  ['/react', 'react'],
+  ['/canvas', 'canvas'],
+  ['/blog', '博客']
 ]);
 
 window.document.addEventListener('DOMContentLoaded', function () {
@@ -106,7 +109,6 @@ class App extends React.Component<any, IState> {
         title: ROUTER_TO_TITLE.get(location.pathname) || 'No Match'
       });
     });
-    console.log('MyApp======constructor');
   }
   componentDidMount() {
     console.log('MyApp====didMount===>', Date.now());
@@ -123,11 +125,11 @@ class App extends React.Component<any, IState> {
   }
 
   componentDidUpdate(nextProps: any, nextState: any, snapshot: any) {
-    console.log('MyApp======DidUpdate===>', nextProps, nextState, snapshot);
+    // console.log('MyApp======DidUpdate===>', nextProps, nextState, snapshot);
   }
 
   componentWillUnmount() {
-    console.log('MyApp===Unmount===>');
+    // console.log('MyApp===Unmount===>');
   }
 
   onSwitchSidebar = () => {
@@ -178,16 +180,14 @@ const elem = (
             <Route path={'/demos'} exact component={Demos}></Route>
             <Route path={'/about'} exact component={About}></Route>
             <Route path={'/x6'} exact component={X6}></Route>
-            <Route path={'/other'} exact component={Other}></Route>
-
-            <Route path={'/bones'} exact component={Bones}></Route>
+            <Route path={'/canvas'} exact component={Canvas}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
+
+            <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
+            <Route path={'/bones'} exact component={Bones}></Route>
             <Route path={'/context'} exact component={Context}></Route>
             <Route path={'/detail/:skuid'} exact component={Detail}></Route>
-            <Route path={'/child'} exact component={Child}></Route>
             <Route path={'/mine'} exact component={Mine}></Route>
-            <Route path={'/canvas'} exact component={Canvas}></Route>
-            <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
             <Route component={About}></Route>
           </Switch>
         </Suspense>
