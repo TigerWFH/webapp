@@ -2,6 +2,35 @@
 
 ## 参考资料
 
+## https
+
+> http over ssl（主要任务是提供私密性，信息完整性和身份认证）
+
+```js
+/*
+  HTTP  SMTP   FTP
+  --------------------
+  Secure Socket Layer -------------->SSL
+  --------------------
+  TCP/IP Layer
+*/
+```
+
+### SSL<https://www.cnblogs.com/outsider0606/p/14621832.html>
+
+> SSL 握手协议：它建立在 SSL 记录协议之上，用于在实际的数据传输开始之前，通讯双方进行身份认证、协商加密算法、交换加密密钥等
+
+- `SSL记录层`为高层协议提供基本的安全服务
+- `SSL握手协议层`包括 SSL 握手协议（SSL HandShake Protocol）、SSL 密码参数修改协议（SSL Change Cipher Spec Protocol）和 SSL 告警协议（SSL Alert Protocol）。握手层的这些协议用于 SSL 管理信息的交换，允许应用协议传送数据之间相互验证，协商加密算法和生成密钥等。
+
+```js
+/*
+客户端证书：向服务端证明『客户端』是对的客户端
+服务端的证书：向客户端证明『服务端』是对的服务端
+-------------------------------------------
+*/
+```
+
 ## HTTP/1.1 协议<https://www.ietf.org/rfc/rfc2616.txt>
 
 > HTTP 协议是以 ASCII 码传输，建立在 TCP/IP 协议之上的应用层协议。请求分为状态行、请求头、消息主体
@@ -273,7 +302,8 @@
 
 - `Pragma：`
 - `Expires：`缓存标识字段，缓存的绝对有效时间，HTTP1.0
-- `Cache-Control：`缓存标识字段，优先级高于Expires
+- `Cache-Control：`缓存标识字段，优先级高于 Expires
+
   - `public：`所有内容都将被缓存（客户端和代理服务器都可缓存）
   - `private：`内容只缓存到私有缓存中（仅客户端可以缓存，代理服务器不可缓存）
   - `no-cache：`必须做新鲜度校验（协商缓存）
