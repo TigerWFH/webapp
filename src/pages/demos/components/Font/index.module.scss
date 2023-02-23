@@ -1,143 +1,145 @@
 // 内阴影 水平偏移 垂直偏移 模糊半径 阴影半径 颜色,内阴影 水平偏移 垂直偏移 模糊半径 阴影半径 颜色（可以多个值）
 // box-shadow: inset h-shadow v-shadow blur spread color;
 .font {
-    border: 1px solid #e0e0e0;
-    .field {
-        background-color: #000;
-        text-align: center;
-    }
-    .legend {
-        width: initial;
-        background-color: #00a3fe;
-        color: #fff;
-    }
-    .container {
-        margin: 15px;
-        color: #00a3fe;
-        .half { 
-            .textarea {
-                font-size: 1.5rem;
-                padding: 10px;
-                border: none;
-                background-image: linear-gradient(to bottom right, #d9d9d9, #f8f8f8);
-            }
-            &::before {
-                content: "";
-                border-radius: 50%;
-                height: 90%;
-                box-shadow: 0px 0px 30px 5px #f8f8f8;
-            }
-        }
-    }
-    button {
-        margin-right: 10px;
-        padding: 5px;
+  border: 1px solid #e0e0e0;
+  height: 700px;
+  overflow: auto;
+  .field {
+    background-color: #000;
+    text-align: center;
+  }
+  .legend {
+    width: initial;
+    background-color: #00a3fe;
+    color: #fff;
+  }
+  .container {
+    margin: 15px;
+    color: #00a3fe;
+    .half {
+      .textarea {
+        font-size: 1.5rem;
+        padding: 10px;
         border: none;
-        color: #00a3fe;
-        background-color: #efefef;
+        background-image: linear-gradient(to bottom right, #d9d9d9, #f8f8f8);
+      }
+      &::before {
+        content: '';
+        border-radius: 50%;
+        height: 90%;
+        box-shadow: 0px 0px 30px 5px #f8f8f8;
+      }
     }
-    .demo {
-        color: #00a3fe;
-        .label {
-            display: inline-block;
-            width: 160px;
-            padding-right: 10px;
-            font-size: 1rem;
-            color: #ededed;
-            text-align: right;
-        }
-        .result {
-            text-align: right;
-        }
+  }
+  button {
+    margin-right: 10px;
+    padding: 5px;
+    border: none;
+    color: #00a3fe;
+    background-color: #efefef;
+  }
+  .demo {
+    color: #00a3fe;
+    .label {
+      display: inline-block;
+      width: 160px;
+      padding-right: 10px;
+      font-size: 1rem;
+      color: #ededed;
+      text-align: right;
     }
-    .window {
-        padding: 15px 15px;
-        .MicrosoftYahei {
-            font-family: "Microsoft Yahei";
-            font-size: 14px;
-        }
-        .Arial {
-            font-family: "Arial";
-            font-size: 14px;
-        }
+    .result {
+      text-align: right;
     }
-    .mac {
-        padding: 15px 15px;
-        .pingfangsc1 {
-            font-family: "MyPingFang";
-            font-size: 19px;
-        }
-        .pingfangsc2 {
-            font-family: "MyPingFang";
-            font-size: 40px;
-        }
-        .pingfangsc3 {
-            font-family: "MyPingFang";
-            font-size: 17px;
-        }
-        .pingfangsc4 {
-            font-family: "MyPingFang";
-            font-size: 15px;
-        }
-        .pingfangsc5 {
-            font-family: "MyPingFang";
-            font-size: 13px;
-        }
-        .pingfangsc6 {
-            font-family: "MyPingFang";
-            font-size: 20px;
-        }
-        .pingfangsc7 {
-            font-family: "MyPingFang";
-            font-size: 18px;
-        }
-        .pingfangsc8 {
-            font-family: "MyPingFang";
-            font-size: 23px;
-        }
-        .pingfangsc9 {
-            font-family: "MyPingFang";
-            font-size: 30px;
-        }
-        .helvetica0 {
-            font-family: "Helvetica";
-            font-size: 14px;
-        }
-        .helvetica1 {
-            font-family: "Helvetica";
-            font-size: 15px;
-        }
-        .helvetica2 {
-            font-family: "Helvetica";
-            font-size: 22px;
-        }
-        .helvetica3 {
-            font-family: "Helvetica";
-            font-size: 16px;
-        }
-        .helvetica4 {
-            font-family: "Helvetica";
-            font-size: 17px;
-        }
-        .helvetica5 {
-            font-family: "Helvetica";
-            font-size: 24px;
-        }
-        .helvetica6 {
-            font-family: "Helvetica";
-            font-size: 18px;
-        }
-        .helvetica7 {
-            font-family: "Helvetica";
-            font-size: 19px;
-        }
-        .helvetica8 {
-            font-family: "Helvetica";
-            font-size: 33px;
-        }
-        .helvetica9 {
-            font-family: "Helvetica";
-            font-size: 20px;
-        }
+  }
+  .window {
+    padding: 15px 15px;
+    .MicrosoftYahei {
+      font-family: 'Microsoft Yahei';
+      font-size: 14px;
     }
+    .Arial {
+      font-family: 'Arial';
+      font-size: 14px;
+    }
+  }
+  .mac {
+    padding: 15px 15px;
+    .pingfangsc1 {
+      font-family: 'MyPingFang';
+      font-size: 19px;
+    }
+    .pingfangsc2 {
+      font-family: 'MyPingFang';
+      font-size: 40px;
+    }
+    .pingfangsc3 {
+      font-family: 'MyPingFang';
+      font-size: 17px;
+    }
+    .pingfangsc4 {
+      font-family: 'MyPingFang';
+      font-size: 15px;
+    }
+    .pingfangsc5 {
+      font-family: 'MyPingFang';
+      font-size: 13px;
+    }
+    .pingfangsc6 {
+      font-family: 'MyPingFang';
+      font-size: 20px;
+    }
+    .pingfangsc7 {
+      font-family: 'MyPingFang';
+      font-size: 18px;
+    }
+    .pingfangsc8 {
+      font-family: 'MyPingFang';
+      font-size: 23px;
+    }
+    .pingfangsc9 {
+      font-family: 'MyPingFang';
+      font-size: 30px;
+    }
+    .helvetica0 {
+      font-family: 'Helvetica';
+      font-size: 14px;
+    }
+    .helvetica1 {
+      font-family: 'Helvetica';
+      font-size: 15px;
+    }
+    .helvetica2 {
+      font-family: 'Helvetica';
+      font-size: 22px;
+    }
+    .helvetica3 {
+      font-family: 'Helvetica';
+      font-size: 16px;
+    }
+    .helvetica4 {
+      font-family: 'Helvetica';
+      font-size: 17px;
+    }
+    .helvetica5 {
+      font-family: 'Helvetica';
+      font-size: 24px;
+    }
+    .helvetica6 {
+      font-family: 'Helvetica';
+      font-size: 18px;
+    }
+    .helvetica7 {
+      font-family: 'Helvetica';
+      font-size: 19px;
+    }
+    .helvetica8 {
+      font-family: 'Helvetica';
+      font-size: 33px;
+    }
+    .helvetica9 {
+      font-family: 'Helvetica';
+      font-size: 20px;
+    }
+  }
 }

@@ -1,60 +1,18 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import Font from './components/Font';
-// import GPS from './components/GPS';
-// import IconFont from 'Components/IconFont';
-// import Carousel from "Components/Carousel"
 import Tabs, { TabPanel } from 'Components/Tabs';
-// import Lines from "./components/Lines"
-// import Change from "./components/Change"
-// import Lazy from "./components/Lazy"
-// import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Carousel from 'Components/Carousel';
+import IconFont from 'Components/IconFont';
+import Font from './components/Font';
+import GPS from './components/GPS';
+import Lines from './components/Lines';
+import Change from './components/Change';
+import Lazy from './components/Lazy';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 // import styles from "./index.module.scss"
 import actions from './controller/actions';
-// import home from '../home';
-// const MOCK_TABS_LIST = [
-//     {
-//         key: 0,
-//         name: "热门推荐",
-//         title: "热门推荐"
-//     },
-//     {
-//         key: 1,
-//         name: "商品商品",
-//         title: "商品商品"
-//     },
-//     {
-//         key: 2,
-//         name: "家具用品",
-//         title: "家具用品"
-//     },
-//     {
-//         key: 3,
-//         name: "服装服饰",
-//         title: "服装服饰"
-//     },
-//     {
-//         key: 4,
-//         name: "热门推荐4",
-//         title: "热门推荐"
-//     },
-//     {
-//         key: 5,
-//         name: "商品商品5",
-//         title: "商品商品"
-//     },
-//     {
-//         key: 6,
-//         name: "家具用品6",
-//         title: "家具用品"
-//     },
-//     {
-//         key: 7,
-//         name: "服装服饰7",
-//         title: "服装服饰"
-//     },
-// ]
+
 // const MOCK_BANNER_LIST = [
 //     {
 //         key: 1,
@@ -119,47 +77,6 @@ const containerStyle = {
   overflow: 'hidden'
 };
 
-// async function getEle() {
-//     const result = await new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             resolve(1)
-//         }, 1000)
-//     })
-
-//     console.log("result====>", result)
-// }
-
-// async function getEle2() {
-//     const result = await new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             reject(2)
-//         }, 1000)
-//     })
-
-//     console.log("result====>", result)
-// }
-
-// async function getEle3() {
-//     const result = await new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             throw new Error("Error")
-//             // reject(123)
-//         }, 1000)
-//     })
-
-//     console.log("result====>", result)
-// }
-
-// function getEle4() {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             throw new Error("Error")
-//             resolve(123)
-//             // reject(123)
-//         }, 1000)
-//     })
-// }
-
 interface IProps {
   [x: string]: any;
   history: any;
@@ -196,7 +113,7 @@ class Demos extends React.Component<IProps, never> {
   render() {
     console.log('demos-render333333===>', this.props);
     const {
-      // bannerList = [],
+      bannerList = [],
       tabList = [],
       homePageStatus,
       activeName
@@ -208,52 +125,63 @@ class Demos extends React.Component<IProps, never> {
     return (
       <div style={containerStyle}>
         <button onClick={this.onSendMessage}>send message</button>
-        {/* <Carousel autoPlay={true}
-                    dotType="bottom">
-                    {
-                        bannerList.map((metadata: any, index: number) => {
-                            return (
-                                <div key={index}>
-                                    <img width={"100%"} src={metadata.image} />
-                                </div>
-                            )
-                        })
-                    }
-                </Carousel> */}
-        <Tabs defaultActiveName={activeName} onChange={this.onChangeTab}>
-          {tabList.map((tab: any, index: number) => {
-            const commodityList = this.props[tab.name];
-            return (
-              <TabPanel key={tab.id} name={tab.name} title={tab.title}>
-                {/* {
-                                    console.log("TabPanel children===>", commodityList)
-                                } */}
-                {`${index}-commodityList-${commodityList.length}`}
-                {commodityList.map((commodity: any, index: number) => {
-                  return <div key={index}>{commodity.title}</div>;
-                })}
-              </TabPanel>
-            );
-          })}
+        <Tabs defaultActiveName="carousel">
+          <TabPanel key="@carousel" name="carousel" title="carousel">
+            <Carousel autoPlay={true} dotType="bottom">
+              {bannerList.map((metadata: any, index: number) => {
+                return (
+                  <div key={index}>
+                    <img width={'100%'} src={metadata.image} />
+                  </div>
+                );
+              })}
+            </Carousel>
+          </TabPanel>
+          <TabPanel key="@tabs" name="tabs" title="tabs">
+            <Tabs defaultActiveName={activeName} onChange={this.onChangeTab}>
+              {tabList.map((tab: any, index: number) => {
+                const commodityList = this.props[tab.name];
+                return (
+                  <TabPanel key={tab.id} name={tab.name} title={tab.title}>
+                    {`${index}-commodityList-${commodityList.length}`}
+                    {commodityList.map((commodity: any, index: number) => {
+                      return <div key={index}>{commodity.title}</div>;
+                    })}
+                  </TabPanel>
+                );
+              })}
+            </Tabs>
+          </TabPanel>
+          <TabPanel key="@font" name="font" title="font">
+            <div style={{ overflow: 'auto' }}>
+              <Font />
+            </div>
+          </TabPanel>
+          <TabPanel key="@gps" name="gps" title="gps">
+            <GPS />
+          </TabPanel>
+          <TabPanel key="@iconfont" name="iconfont" title="iconfont">
+            <IconFont icon="edit" />
+            <Lines />
+            <IconFont icon="delete" />
+            <Lines />
+            <IconFont icon="close" />
+            <Lines />
+            <IconFont icon="circle" />
+            <Lines />
+            <Change />
+          </TabPanel>
+          <TabPanel key="@lazy" name="lazy" title="lazy">
+            <Lazy />
+            <LazyLoadImage src="https://static.test.pdc.com/image/T1OxdlB7KT1RCvBVdK?img=/rs,w_200,h_200/tf,q_70" />
+            <LazyLoadImage src="http://ww3.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvya0u2j20u01hc16p.jpg" />
+            <LazyLoadImage src="http://ww1.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvyo52qj20u01hcqeq.jpg" />
+            <LazyLoadImage src="http://ww2.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvz2cj6j20u01hck1o.jpg" />
+            <LazyLoadImage src="http://ww1.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0e1mlj20u01hcgvs.jpg" />
+            <LazyLoadImage src="http://ww4.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0p95dj20u01hc7d8.jpg" />
+            <LazyLoadImage src="http://ww2.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw134xqj20u01hcqjg.jpg" />
+          </TabPanel>
         </Tabs>
-        {/* {
-                    MOCK_DATA.map((image: any) => {
-                        return <LazyLoadImage wrapperClassName={styles.img}
-                            threshold={100}
-                            {...image}
-                            effect="flur"
-                            placeholderSrc="Loading" />
-                    })
-                } */}
-
-        {/* <LazyLoadImage src="https://static.test.pdc.com/image/T1OxdlB7KT1RCvBVdK?img=/rs,w_200,h_200/tf,q_70" /> */}
-        {/* <LazyLoadImage src="http://ww3.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvya0u2j20u01hc16p.jpg" />
-                    <LazyLoadImage src="http://ww1.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvyo52qj20u01hcqeq.jpg" />
-                    <LazyLoadImage src="http://ww2.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxvz2cj6j20u01hck1o.jpg" />
-                    <LazyLoadImage src="http://ww1.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0e1mlj20u01hcgvs.jpg" />
-                    <LazyLoadImage src="http://ww4.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0p95dj20u01hc7d8.jpg" />
-                    <LazyLoadImage src="http://ww2.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw134xqj20u01hcqjg.jpg" /> */}
-        {/* <Lazy /> */}
       </div>
     );
   }
