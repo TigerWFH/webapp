@@ -2,6 +2,7 @@ import * as React from 'react';
 import Tabs, { TabPanel } from 'Components/Tabs';
 import Hooks from './components/Hooks';
 import ImperativeHandle from './components/Hooks/useImperativeHandle';
+import UseState from './components/Hooks/useState';
 import KeyTest from './components/KeyTest';
 import SetStateTest from './components/SetStateTest';
 
@@ -30,6 +31,9 @@ class ReactDemo extends React.Component<IProps, IState> {
             name="imperativehandle"
             title="useImperativeHandle">
             <ImperativeHandle />
+          </TabPanel>
+          <TabPanel key="@@useState" name="useState" title="useState">
+            <UseState />
           </TabPanel>
         </Tabs>
       </div>
