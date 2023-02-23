@@ -757,7 +757,7 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
 
         this.graph?.fromJSON({
           nodes: targetList,
-          edges: edgeList?.toJS()
+          edges: edgeList?.toJS() as any
         });
         /*
           继承Cell节点，不注册可以直接实例化使用
