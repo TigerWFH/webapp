@@ -29,11 +29,7 @@ const Blog = lazy(() => import('@/pages/blog'));
 // Demos
 const Demos = lazy(() => import('@/pages/demos'));
 
-const Antd = lazy(() => import('@/pages/antd'));
-
 const Video = lazy(() => import('@/pages/video'));
-
-const Middle = lazy(() => import('@/pages/middle'));
 
 const Animation = lazy(() => import('@/pages/animation'));
 
@@ -54,8 +50,6 @@ const X6 = lazy(() => import('@/pages/x6'));
 const Dnd = lazy(() => import('@/pages/x6/dnd'));
 
 const DndFrame = lazy(() => import('@/pages/x6/frame'));
-
-const Test = lazy(() => import('@/pages/test'));
 
 const Tools = lazy(() => import('@/pages/tools'));
 
@@ -201,9 +195,7 @@ const elem = (
             <Route path={'/demos'} exact component={Demos}></Route>
             <Route path={'/about'} exact component={About}></Route>
             <Route path={'/other'} exact component={Other}></Route>
-            <Route path={'/antd'} exact component={Antd}></Route>
             <Route path={'/video'} exact component={Video}></Route>
-            <Route path={'/middle'} exact component={Middle}></Route>
             <Route path={'/animation'} exact component={Animation}></Route>
             <Route path={'/bones'} exact component={Bones}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
@@ -217,7 +209,6 @@ const elem = (
             <Route path={'/x6'} exact component={X6}></Route>
             <Route path={'/dnd'} exact component={Dnd}></Route>
             <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
-            <Route path={'/test'} exact component={Test}></Route>
             <Route path={'/tools'} exact component={Tools}></Route>
             <Route path={'/rxjs'} exact component={Rxjs}></Route>
             <Route path={'/dag'} exact component={Dag}></Route>
