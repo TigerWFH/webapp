@@ -39,9 +39,7 @@ const Animation = lazy(() => import('@/pages/animation'));
 
 const Bones = lazy(() => import('@/pages/bones'));
 
-const Hooks = lazy(() => import('@/pages/hooks'));
-
-const Reacts = lazy(() => import('@/pages/react'));
+const ReactDemo = lazy(() => import('@/pages/react'));
 const Context = lazy(() => import('@/pages/context'));
 const Detail = lazy(() => import('@/pages/detail'));
 const StartApp = lazy(() => import('@/pages/startapp'));
@@ -208,8 +206,7 @@ const elem = (
             <Route path={'/middle'} exact component={Middle}></Route>
             <Route path={'/animation'} exact component={Animation}></Route>
             <Route path={'/bones'} exact component={Bones}></Route>
-            <Route path={'/hooks'} exact component={Hooks}></Route>
-            <Route path={'/react'} exact component={Reacts}></Route>
+            <Route path={'/react'} exact component={ReactDemo}></Route>
             <Route path={'/context'} exact component={Context}></Route>
             <Route path={'/detail/:skuid'} exact component={Detail}></Route>
             <Route path={'/startapp'} exact component={StartApp}></Route>
