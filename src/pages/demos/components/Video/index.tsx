@@ -1,12 +1,7 @@
 import * as React from 'react';
-// import Child from './components/Child';
-// import Demo from './components/Form';
-
 const res = require('./flower.mp4');
 
-interface IProps {
-  source: string;
-}
+interface IProps {}
 interface IState {
   child: string;
 }

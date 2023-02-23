@@ -1,15 +1,5 @@
 import * as React from 'react';
-// import { connect } from 'react-redux'
 import styles from './index.module.scss';
-export class Monkey extends React.Component {
-  componentWillReceiveProps(nextProps: any) {
-    console.log('props===>', this.props);
-    console.log('nextProps===>', nextProps);
-  }
-  render() {
-    return <div>123</div>;
-  }
-}
 interface IProps {
   history: any;
 }
@@ -127,27 +117,6 @@ class Other extends React.Component<IProps, IState> {
         </button>
         <button className={styles.button} onClick={this.onToDetail}>
           detail
-        </button>
-        <button className={styles.button} onClick={this.onToEchat}>
-          echat
-        </button>
-        <button className={styles.button} onClick={this.onToHooks}>
-          hooks
-        </button>
-        <button className={styles.button} onClick={this.onToMiddle}>
-          middle
-        </button>
-        <button className={styles.button} onClick={this.onToSignature}>
-          signture
-        </button>
-        <button className={styles.button} onClick={this.onToStartApp}>
-          startapp
-        </button>
-        <button className={styles.button} onClick={this.onToState}>
-          state
-        </button>
-        <button className={styles.button} onClick={this.onToVideo}>
-          video
         </button>
       </div>
     );

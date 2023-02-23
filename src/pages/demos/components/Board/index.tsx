@@ -1,9 +1,9 @@
 import React from 'react';
 import { DndProvider, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Square from '../Square';
-import Knight from '../Knight';
-import { ItemTypes } from '../../help';
+import Square from '../../../x6/components/Square';
+import Knight from '../../../x6/components/Knight';
+import { ItemTypes } from '../../../x6/help';
 
 // interface IProps {
 //     position: any

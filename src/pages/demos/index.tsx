@@ -2,12 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Tabs, { TabPanel } from 'Components/Tabs';
 import Carousel from 'Components/Carousel';
-import IconFont from 'Components/IconFont';
+import Animation from './components/Animation';
 import Font from './components/Font';
 import GPS from './components/GPS';
+import Video from './components/Video';
+import Signature from './components/Signature';
+import StartApp from './components/StartApp';
+import IconFont from 'Components/IconFont';
 import Lines from './components/Lines';
 import Change from './components/Change';
 import Lazy from './components/Lazy';
+import Dnd from './components/Dnd';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 // import styles from "./index.module.scss"
@@ -152,6 +157,9 @@ class Demos extends React.Component<IProps, never> {
               })}
             </Tabs>
           </TabPanel>
+          <TabPanel key="@animation" name="animation" title="animation">
+            <Animation />
+          </TabPanel>
           <TabPanel key="@font" name="font" title="font">
             <div style={{ overflow: 'auto' }}>
               <Font />
@@ -159,6 +167,15 @@ class Demos extends React.Component<IProps, never> {
           </TabPanel>
           <TabPanel key="@gps" name="gps" title="gps">
             <GPS />
+          </TabPanel>
+          <TabPanel key="@video" name="video" title="video">
+            <Video />
+          </TabPanel>
+          <TabPanel key="@signature" name="signature" title="signature">
+            <Signature />
+          </TabPanel>
+          <TabPanel key="@startapp" name="startapp" title="startapp">
+            <StartApp />
           </TabPanel>
           <TabPanel key="@iconfont" name="iconfont" title="iconfont">
             <IconFont icon="edit" />
@@ -180,6 +197,9 @@ class Demos extends React.Component<IProps, never> {
             <LazyLoadImage src="http://ww1.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0e1mlj20u01hcgvs.jpg" />
             <LazyLoadImage src="http://ww4.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw0p95dj20u01hc7d8.jpg" />
             <LazyLoadImage src="http://ww2.sinaLazyLoadImage.cn/mw690/62aad664jw1f2nxw134xqj20u01hcqjg.jpg" />
+          </TabPanel>
+          <TabPanel key="@dnd" name="dnd" title="dnd">
+            <Dnd />
           </TabPanel>
         </Tabs>
       </div>

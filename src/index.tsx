@@ -1,5 +1,5 @@
 import 'react-app-polyfill/ie9';
-// // import 'core-js/features/array/from';
+// import 'core-js/features/array/from';
 import React, { lazy, Suspense } from 'react';
 import * as ReactDOM from 'react-dom';
 import {
@@ -29,33 +29,16 @@ const Blog = lazy(() => import('@/pages/blog'));
 // Demos
 const Demos = lazy(() => import('@/pages/demos'));
 
-const Video = lazy(() => import('@/pages/video'));
-
-const Animation = lazy(() => import('@/pages/animation'));
-
 const Bones = lazy(() => import('@/pages/bones'));
-
 const ReactDemo = lazy(() => import('@/pages/react'));
 const Context = lazy(() => import('@/pages/context'));
 const Detail = lazy(() => import('@/pages/detail'));
-const StartApp = lazy(() => import('@/pages/startapp'));
-const Signature = lazy(() => import('@/pages/signature'));
 const Child = lazy(() => import('@/pages/child'));
 const Other = lazy(() => import('@/pages/other'));
-
 const Mine = lazy(() => import('@/pages/mine'));
 const Canvas = lazy(() => import('@/pages/canvas'));
 const X6 = lazy(() => import('@/pages/x6'));
-
-const Dnd = lazy(() => import('@/pages/x6/dnd'));
-
 const DndFrame = lazy(() => import('@/pages/x6/frame'));
-
-const Tools = lazy(() => import('@/pages/tools'));
-
-const Rxjs = lazy(() => import('@/pages/rxjs'));
-
-const Dag = lazy(() => import('@/pages/dag'));
 
 const STATIC_ROUTE = [
   {
@@ -194,24 +177,17 @@ const elem = (
             <Route path={'/blog'} exact component={Blog}></Route>
             <Route path={'/demos'} exact component={Demos}></Route>
             <Route path={'/about'} exact component={About}></Route>
+            <Route path={'/x6'} exact component={X6}></Route>
             <Route path={'/other'} exact component={Other}></Route>
-            <Route path={'/video'} exact component={Video}></Route>
-            <Route path={'/animation'} exact component={Animation}></Route>
+
             <Route path={'/bones'} exact component={Bones}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
             <Route path={'/context'} exact component={Context}></Route>
             <Route path={'/detail/:skuid'} exact component={Detail}></Route>
-            <Route path={'/startapp'} exact component={StartApp}></Route>
-            <Route path={'/signature'} exact component={Signature}></Route>
             <Route path={'/child'} exact component={Child}></Route>
             <Route path={'/mine'} exact component={Mine}></Route>
             <Route path={'/canvas'} exact component={Canvas}></Route>
-            <Route path={'/x6'} exact component={X6}></Route>
-            <Route path={'/dnd'} exact component={Dnd}></Route>
             <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
-            <Route path={'/tools'} exact component={Tools}></Route>
-            <Route path={'/rxjs'} exact component={Rxjs}></Route>
-            <Route path={'/dag'} exact component={Dag}></Route>
             <Route component={About}></Route>
           </Switch>
         </Suspense>
