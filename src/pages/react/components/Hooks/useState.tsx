@@ -1,5 +1,7 @@
 /*
     cosnt [state, setState] = useState(initialState)
+
+    undefined useEffec(setup, dependencies?)
 */
 import React, { useState, useEffect } from 'react';
 

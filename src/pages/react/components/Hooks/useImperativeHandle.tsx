@@ -6,8 +6,9 @@
     * Exposing a custom ref handle to the parent component
     * Exposing your own imperative methods
     * 
-    * createRef()
-    * forwardRef()
+    * createRef(): mostly used for class component, declaring a ref in class component
+    * useRef(initialValue): used for function component
+    * Node forwardRef(render): lets your component expose a DOM node to parent component with ref
     
     useImperativeHandle(ref, createHandle, dependencies)
         * ref
