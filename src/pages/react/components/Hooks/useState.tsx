@@ -27,6 +27,8 @@ export default function UseState(props: any) {
   console.log('UseState====render');
 
   useEffect(() => {
+    // 执行一次
+    console.log('依赖空数组');
     setName('fish');
     setAge(28);
     setGender('girl');
@@ -36,6 +38,20 @@ export default function UseState(props: any) {
       setGender('boy');
     }, 1000);
   }, []);
+  useEffect(() => {
+    // 执行一次
+    console.log('数组空字符串');
+  }, ['']);
+
+  useEffect(() => {
+    // 执行多次
+    console.log('依赖undefiend');
+  }, undefined);
+
+  useEffect(() => {
+    // 执行多次
+    console.log('什么都不依赖');
+  });
 
   return (
     <div>
