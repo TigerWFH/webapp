@@ -42,6 +42,10 @@ export default function UseState(props: any) {
     // 执行一次
     console.log('数组空字符串');
   }, ['']);
+  useEffect(() => {
+    // 执行一次
+    console.log('[undefined]');
+  }, [undefined]);
 
   useEffect(() => {
     // 执行多次

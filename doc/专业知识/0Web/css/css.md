@@ -11,6 +11,26 @@
 - `行框：`内联元素的盒子模型排列成一行，包裹单行内所有内联元素盒子的矩形称为行框
 - `行内框：`内联元素的盒子模型
 
+## 工具
+
+### stylelint
+
+> vscode 自动校验 css 和 postcss 的插件
+> 在 vscode 配置或者提供 stylelint 配置文件
+
+### postcss(something like babel)
+
+> A tool for transforming CSS with JavaScript
+>
+> - `Use tomorrow's CSS today`: PostCSS Preset Env
+> - `CSS modules`
+> - `CSS Tips`need stylelint
+> - `postcss-loader`：
+
+### less
+
+### scss
+
 ## 选择器
 
 - `CSS选择器：`标识 HTML 标签
