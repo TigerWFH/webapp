@@ -295,6 +295,7 @@ for (let s of strings) {
   }
 }
 // 别名
+// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace Shapes {
   export namespace Polygons {
     export class Triangle {}
