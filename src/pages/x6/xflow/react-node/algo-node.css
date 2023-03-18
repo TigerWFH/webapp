@@ -1,4 +1,4 @@
-/* .xflow-algo-node {
+.xflow-algo-node {
   z-index: 10;
   display: flex;
   width: 180px;
@@ -44,4 +44,4 @@
 .x6-node-selected .xflow-algo-node:hover {
   background-color: #fff;
   box-shadow: 0 0 5px 5px rgba(48, 86, 227, 0.15);
-} */
+}
