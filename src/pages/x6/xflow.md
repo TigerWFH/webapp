@@ -70,7 +70,7 @@ export const useGraphConfig = createGraphConfig((config) => {
 
 ### XFlow 的命令钩子：CommandConfig，Hook 之一
 
-- `createCmdConfig`配置命令
+- `createCmdConfig`创建执行命令的 hook<https://xflow.antv.vision/zh-CN/api/hooks>
 
 ```js
 import { XFlow, DisposableCollection, createCmdConfig } from '@antv/xflow';
@@ -135,9 +135,9 @@ export const Demo = () => {
 
 ### XFlow 的 Hook
 
-- `createHookConfig`配置 hook
+- `createHookConfig`配置 GraphOptions 的 hook<https://xflow.antv.vision/zh-CN/api/hooks>
 
-  > 有点代替 createGraphConfig 的样子???
+  > createGraphConfig 配置 GraphOptions 值，有点懵逼
 
 - `GraphHook:`配置 Graph 相关的配置项
   - `graphOptions`x6 graph 配置项
@@ -204,3 +204,16 @@ export const useGraphHookConfig = createHookConfig((config) => {
 > React 组件内部使用： 通过 useXFlowApp 来获取 CommandService
 
 > XFlow 组件的配置项中使用：通过函数的参数可以获得 CommandServic
+
+## 源码
+
+```ts
+export const initHooks = () => ({
+  graphOptions: new HookHub<Graph.Options>(),
+  reactNodeRender: new HookHub<Map<string, NsGraph.INodeRender>>(),
+  reactEdgeLabelRender: new HookHub<Map<string, NsGraph.IEdgeRender>>(),
+  afterGraphInit: new HookHub<IGeneralAppService>(),
+  beforeGraphDestroy: new HookHub<IGeneralAppService>(),
+  x6Events: new HookHub<IEventCollection, IEventSubscription>()
+});
+```
