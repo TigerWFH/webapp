@@ -197,8 +197,20 @@ const elem = (
     </Router>
   </Provider>
 );
-
+/*
+新架构可以选择是否开启并发更新，所以当前市面上所有React版本一定属于如下一种情况：
+https://zhuanlan.zhihu.com/p/434263919
+1、老架构（v15及之前版本）
+2、新架构，未开启并发更新，与情况1行为一致（v16、v17默认属于这种情况）
+3、新架构，未开启并发更新，但是启用了一些新功能（比如Automatic Batching）
+4、新架构，开启并发更新
+  legacy模式：2，通过ReactDOM.render(<App />, rootNode)创建的应用遵循该模式。默认关闭StrictMode
+  blocking模式：3，通过ReactDOM.createBlockingRoot(rootNode).render(<App />)创建的应用遵循该模式，作为从Legacy向Concurrent过渡的中间模式，默认开启StrictMode
+  concurrent模式：4，通过ReactDOM.createRoot(rootNode).render(<App />)创建的应用遵循该模式，默认开启StrictMode
+ */
+console.log('react-dom-version', ReactDOM.version);
 ReactDOM.render(elem, document.getElementById('root'));
+// ReactDOM.createBloockingRoot();
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(elem);
 

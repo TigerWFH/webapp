@@ -1,5 +1,62 @@
 # react 相关知识点
 
+## React APIs 引入版本
+
+### react@18.0.0
+
+> - `useId`
+> - `startTransition`
+> - `useTransition`
+> - `useDeferredValue`
+> - `useSyncExternalStore`
+> - `useInsertionEffect`
+> - `createRoot`
+> - `hydrateRoot`
+> - `renderToPipeableStream`
+> - `renderToReadableStream`
+
+### react@17.0.0
+
+> - `Delegate events to roots instead of document`
+
+### react@16.13.0
+
+> - `ReactDOM.version`
+
+### react@16.11.0
+
+> - `Remove unstable_createRoot and unstable_createSyncRoot experimental APIs.`
+
+### react@16.9.0
+
+> - `React.Profile`
+
+### react@16.8.0
+
+> - `add hooks`
+
+### react@16.6.0
+
+> - `React.memo()`
+> - `React.lazy()`
+> - `React.Suspense`
+> - `getSnapshotFromError`
+
+### react@16.3.0引入
+
+> - `React.createRef()`：代替 callback ref
+> - `React.forwardRef()`：让组件将 ref 转给 child
+> - `React.StrictMode`
+> - `getDerivedStateFromProps`
+> - `getSnapshotBeforeUpdate`
+
+### react@16.0.0
+
+> - `依赖了set、map、requestanimationframe`
+> - `ReactDOM.createPortal()`
+
+###
+
 ## 基础
 
 ### react elements
