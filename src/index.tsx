@@ -36,7 +36,7 @@ const Detail = lazy(() => import('@/pages/detail'));
 const Mine = lazy(() => import('@/pages/mine'));
 const Canvas = lazy(() => import('@/pages/canvas'));
 const X6 = lazy(() => import('@/pages/x6'));
-const DndFrame = lazy(() => import('@/pages/x6/frame'));
+// const DndFrame = lazy(() => import('@/pages/x6/frame'));
 // const XflowDemo = lazy(() => import('@/pages/x6/xflow'));
 
 const STATIC_ROUTE = [
@@ -185,7 +185,7 @@ const elem = (
             <Route path={'/canvas'} exact component={Canvas}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
 
-            <Route path={'/dndframe/:type'} exact component={DndFrame}></Route>
+            {/* <Route path={'/dndframe/:type'} exact component={DndFrame}></Route> */}
             <Route path={'/bones'} exact component={Bones}></Route>
             <Route path={'/context'} exact component={Context}></Route>
             <Route path={'/detail/:skuid'} exact component={Detail}></Route>

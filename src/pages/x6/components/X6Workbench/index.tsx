@@ -34,6 +34,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Graph, Edge } from '@antv/x6';
+import { Clipboard } from '@antv/x6-plugin-clipboard';
+import { Selection } from '@antv/x6-plugin-selection';
+import { Snapline } from '@antv/x6-plugin-snapline';
 import { Tooltip } from 'antd';
 import Immutable from 'immutable';
 import * as t from '../types';
@@ -314,29 +317,6 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         enabled: true,
         modifiers: ['alt']
       },
-      clipboard: {
-        enabled: true
-      },
-      selecting: {
-        enabled: true,
-        // className: styles.ss, // 需要改写css类，实现样式覆盖
-        rubberband: true, // 启用框选（橡皮筋）
-        strict: true,
-        movable: true,
-        showNodeSelectionBox: true,
-        showEdgeSelectionBox: true
-      },
-      snapline: {
-        enabled: true,
-        sharp: true
-      },
-      scroller: {
-        enabled: true,
-        pageVisible: false,
-        pageBreak: false
-        // pannable: true, // 类似panning
-        // modifiers: ['alt'], // 此处两项配置等同于外部的panning配置
-      },
       highlighting: {
         // 设置高亮配置
         magnetAvailable: magnetAvailabilityHighlighter
@@ -465,6 +445,27 @@ class X6Workbench extends React.PureComponent<IX6Workbench, any> {
         }
       }
     });
+    this.graph.use(
+      new Clipboard({
+        enabled: true
+      })
+    );
+    this.graph.use(
+      new Selection({
+        enabled: true,
+        // className: styles.ss, // 需要改写css类，实现样式覆盖
+        rubberband: true, // 启用框选（橡皮筋）
+        strict: true,
+        movable: true,
+        showNodeSelectionBox: true,
+        showEdgeSelectionBox: true
+      })
+    );
+    this.graph.use(
+      new Snapline({
+        enabled: true
+      })
+    );
     // removeCell和removeCells会触发cell:removed,node:removed,edge:removed
     this.graph?.on('cell:removed', function (args) {
       console.log('cell:removed====>', args);
