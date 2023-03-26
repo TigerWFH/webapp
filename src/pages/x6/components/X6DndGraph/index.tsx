@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { Graph, Addon, Shape, Cell } from '@antv/x6';
+import { Graph, Shape, Cell } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
 import '@antv/x6-react-shape';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
-import { Stencil } from '@antv/x6/lib/addon';
+import { Snapline } from '@antv/x6-plugin-snapline';
+// import { Scroller } from '@antv/x6-plugin-scroller';
+// Stencil依赖@antv/x6-plugin-dnd
+import { Stencil } from '@antv/x6-plugin-stencil';
 import styles from './index.module.scss';
 import Trigger from '../X6ReactTrigger';
 
@@ -177,7 +180,7 @@ const MOCKDATA = {
 export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
   container: HTMLDivElement | null = null;
   stencilContainer: HTMLDivElement | null = null;
-  graph: Graph | undefined;
+  private graph: Graph | undefined;
   stencil: Stencil | undefined;
   constructor(props: any) {
     super(props);
@@ -204,18 +207,33 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
   componentDidMount() {
     this.graph = new Graph({
       container: this.container as HTMLDivElement,
-      grid: true,
-      snapline: {
+      grid: true
+      // snapline: {
+      //   enabled: true,
+      //   sharp: true
+      // },
+      // scroller: {
+      //   enabled: true,
+      //   pageVisible: false,
+      //   pageBreak: false,
+      //   pannable: true
+      // }
+    });
+    // 使用插件形式的snapline
+    this.graph.use(
+      new Snapline({
         enabled: true,
         sharp: true
-      },
-      scroller: {
-        enabled: true,
-        pageVisible: false,
-        pageBreak: false,
-        pannable: true
-      }
-    });
+      })
+    );
+    // this.graph.use(
+    //   new Scroller({
+    //     enabled: true,
+    //     pageVisible: true,
+    //     pageBreak: true,
+    //     pannable: true
+    //   })
+    // );
     this.graph.fromJSON(MOCKDATA);
 
     // this.graph.on("cell:dblclick", (options: any) => {
@@ -228,7 +246,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
     //     })
     // })
 
-    this.stencil = new Addon.Stencil({
+    this.stencil = new Stencil({
       title: '业务组件库',
       target: this.graph,
       search(cell, keyword) {
@@ -244,9 +262,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
           name: 'trigger',
           title: '触发',
           graphHeight: 100,
-          graphOptions: {
-            scroller: true
-          }
+          graphOptions: {}
         },
         {
           name: 'flow',
@@ -269,11 +285,11 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
           collapsed: true
         }
       ],
-      getDragNode: (node, options) => {
+      getDragNode: (node: any, options: any) => {
         console.log('getDragNode====>', node, options);
         return node.clone();
       },
-      getDropNode: (node: any, options) => {
+      getDropNode: (node: any, options: any) => {
         console.log('getDropNode=====>', node, options);
         const ports = [
           {
