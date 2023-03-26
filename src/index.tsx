@@ -37,7 +37,7 @@ const Mine = lazy(() => import('@/pages/mine'));
 const Canvas = lazy(() => import('@/pages/canvas'));
 const X6 = lazy(() => import('@/pages/x6'));
 const DndFrame = lazy(() => import('@/pages/x6/frame'));
-const XflowDemo = lazy(() => import('@/pages/x6/xflow'));
+// const XflowDemo = lazy(() => import('@/pages/x6/xflow'));
 
 const STATIC_ROUTE = [
   {
@@ -181,7 +181,7 @@ const elem = (
             <Route path={'/demos'} exact component={Demos}></Route>
             <Route path={'/about'} exact component={About}></Route>
             <Route path={'/x6'} exact component={X6}></Route>
-            <Route path={'/XflowDemo'} exact component={XflowDemo}></Route>
+            {/* <Route path={'/XflowDemo'} exact component={XflowDemo}></Route> */}
             <Route path={'/canvas'} exact component={Canvas}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
 
