@@ -2,6 +2,7 @@ import 'react-app-polyfill/ie9';
 // import 'core-js/features/array/from';
 import React, { lazy, Suspense } from 'react';
 import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   HashRouter as Router,
   Route,
@@ -209,10 +210,16 @@ https://zhuanlan.zhihu.com/p/434263919
   concurrent模式：4，通过ReactDOM.createRoot(rootNode).render(<App />)创建的应用遵循该模式，默认开启StrictMode
  */
 console.log('react-dom-version', ReactDOM.version);
-ReactDOM.render(elem, document.getElementById('root'));
-// ReactDOM.createBloockingRoot();
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(elem);
+// ReactDOM.render(elem, document.getElementById('root'));
+const root: HTMLElement = document.getElementById('root') as HTMLElement;
+const options = {
+  onRecoverableError: (args: any) => {
+    console.log('recover=====>', args);
+  },
+  identifierPrefix: 'wfh'
+};
+const app = createRoot(root, options);
+app.render(elem);
 
 // interface IDemoProps {}
 // interface IDemoState {
