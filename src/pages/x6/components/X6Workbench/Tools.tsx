@@ -112,6 +112,7 @@ export class ContextMenuTool extends ToolsView.ToolItem<
 
     if (visible) {
       ReactDom.render(
+        // @ts-ignore
         <Dropdown
           visible={true}
           trigger={['contextMenu']}

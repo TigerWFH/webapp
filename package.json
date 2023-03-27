@@ -23,8 +23,7 @@
     "@types/jest": "24.0.11",
     "@types/loadable__component": "5.13.4",
     "@types/node": "11.13.7",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
+    "@types/react": "^18.0.29",
     "@types/react-lazy-load-image-component": "1.5.2",
     "@types/react-lazyload": "3.2.0",
     "@types/react-redux": "7.1.25",
@@ -207,6 +206,7 @@
   "proxy": "http://localhost:9000",
   "homepage": "https://tigerwfh.github.io/webapp",
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "7.16.0"
+    "@babel/plugin-proposal-optional-chaining": "7.16.0",
+    "@types/react-dom": "^18.0.11"
   }
 }
