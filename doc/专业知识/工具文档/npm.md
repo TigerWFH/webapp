@@ -8,6 +8,48 @@
 
 > npm 由三部分组成，分别是网站（https://www.npmjs.org）、命令行工具（CLI）和注册表（https://www.npmjs.org/signups）
 
+## npm 依赖安装
+
+> - `npm@2会安装每一个依赖包的所有依赖。依赖树的逻辑结构和物理结构保持一致。`
+
+```js
+/* 
+  project A
+    ------node_modules
+                ---ProjectB
+                    ---node_modules
+                            ---ProjectC@1
+                ---ProjectC@2
+                    ---node_modules
+                            ---ProjetE@1
+                ---ProjectD
+                    ---node_modules
+                            ---ProjectE@2
+                ---ProjectE@2
+ */
+```
+
+> - `npm@3才用了扁平依赖关系树。依赖树的逻辑结构和物理结构可能不一致。npm必须为所有使用到的模块构建一个完整的依赖关系树，这是一个耗时的操作，是npm安装速度慢的一个很重要的原因`
+
+```js
+/*
+    并未完全消除冗余
+        Project
+            ---node_modeuls
+                ---A
+                    ---E@1
+                ---B
+                    ---E@1
+                ---E@2
+    通过npm dedupe处理，但是依然会遗留问题
+
+ */
+```
+
+> - ``
+> - ``
+> - ``
+
 ## npm 配置文件
 
 ```js
