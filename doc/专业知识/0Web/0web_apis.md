@@ -1,5 +1,46 @@
 # web APIs
 
+## web worker
+
+- `worker`
+- `sharedWorker`
+- `ServiceWorker`它一般作为 Web 应用程序、浏览器和网络之间的代理服务，旨在创建有效的离线体验，拦截网络请求，并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作
+
+> JS 执行器是单线程的。web worker 是 HTML5 标准的一部分，这一规范定义了一套 API，允许我们在 js 主线程之外开辟新的 Worker 线程，并将一段 js 脚本运行其中，它赋予了开发者利用 js 操作多线程的能力
+> Worker 线程与 js 主线程能够同时运行，互不阻塞。所以，在我们有大量运算任务时，可以把运算任务交给 Worker 线程去处理，当 Worker 线程计算完成，再把结果返回给 js 主线程
+> 虽然 Worker 线程是在浏览器环境中被唤起，但是它与当前页面窗口运行在`不同的全局上下文`中，我们常用的顶层对象 window，以及 parent 对象在 Worker 线程上下文中是不可用的。另外，在 Worker 线程上下文中，操作 DOM 的行为也是不可行的，document 对象也不存在。但是，`location 和 navigator `对象可以以可读方式访问。除此之外，绝大多数 Window 对象上的方法和属性，都被共享到 Worker 上下文全局对象 WorkerGlobalScope 中。同样，`Worker 线程上下文也存在一个顶级对象 self`。
+
+```js
+// main.js
+const worker = new Worker(path, options);
+/*
+    path: 有效的js脚本的地址，必须遵守同源策略
+
+    options.type: 可选，用以指定 worker 类型。该值可以是 classic 或 module。 如未指定，将使用默认值 classic
+
+    options.credentials: 可选，用以指定 worker 凭证。该值可以是 omit, same-origin，或 include。如果未指定，或者 type 是 classic，将使用默认值 omit (不要求凭证)
+
+    options.name: 可选，在 DedicatedWorkerGlobalScope 的情况下，用来表示 worker 的 scope 的一个 DOMString 值，主要用于调试目的。
+ */
+// 通过postmessage通信
+worker.addEventListener('message', (e) => {
+  console.log(e.data);
+});
+worker.addEventListener('messageerror', (e) => {
+  console.log(e.data);
+});
+work.onmessage = (e) => {};
+work.postMessage('消息');
+work.terminate(); // 关闭worker
+// worker.js
+self.addEventListener('message', (e) => {});
+self.onmessage = (e) => {};
+self.postMessage();
+self.close(); // 关闭worker
+// 主线程与 worker 线程之间的数据传递是传值而不是传地址
+// 通过importScripts导入js文件
+```
+
 ## IntersectionObserver API
 
 > 该接口提供了一种异步观察目标元素与其祖先元素或顶级文档视口（viewport）交叉状态的方法。其祖先元素或视口被称为根 root
