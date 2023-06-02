@@ -217,3 +217,100 @@ export const initHooks = () => ({
   x6Events: new HookHub<IEventCollection, IEventSubscription>()
 });
 ```
+
+## XFlow 扩展
+
+> 对比：x6 vs antd；xflow vs procomponent
+>
+> x6 提供了图编辑的各种原子能力；xflow 是图编辑场景应用，通过 App 扩展系统、状态管理、命令模式实现对 X6 的原子能力的组合封装
+>
+> 在 XFlow 中扩展逻辑都是通过 Hook 来完成，XFlow 内部可以注册 Hook 逻辑来完成对 `Graph 配置`和 `Command 的 扩展`
+>
+> - `createHookConfig`
+> - `createCmdConfig`
+
+### XFLow 核心模块
+
+- `Model`createModelServiceConfig，使用全局状态
+  > - XFlow 内置了常用的 Model 在事件回调和渲染 UI 组件时使用，
+  > - Model 通过监听`画布（X6）的事件`来更新内部的值，
+  > - `组件`通过订阅 Model 的变化可以实现组件渲染的更新
+- `Command`createCmdConfig，使用 Command 执行 x6 api，改变全局状态
+- `Hook`createHookConfig，使用 Hook 扩展 Command
+- `X6 Graph module`
+
+```js
+/*
+  -----------                         ------------------                        -----------------
+ |           | ----MouseEvent----->  | CommandService   |   ---CallApi------>  |   X6 Graph      |
+ |           |  KeyboardEvent        |   executeCommand |      hook时机？       |                 |
+ |    UI     |                       |                  |                      |     X6 GraphApis|
+ | Component |                        ------------------                       |.................|
+ |           |                                                                 |                 |
+ |           |                       -------------------                       |     X6 event    |
+ |           |                      |   Model Service   |                      |                 |
+ |           |    <----setState---- |    setValue       | <-------bindEvent--- |                 |
+ |           |                      |    getValue       |                      |                 |
+  -----------                       ---------------------                       -----------------
+
+
+  在XFLow中，通过Model驱动React UI组件的更新渲染。
+    通过监听事件，在事件的回调函数中调用Model的setValue方法更新Model
+    在UI组件中，通过Model的watch方法更新组件内部的State，实现组件渲染更新
+
+    获取ModelService：通过useXFlowApp获取CommandService；通过参数获取CommandService
+    消费XFlow内置的ModelService：
+        import {MODELS} from '@antv/xflow'
+
+        const getModel = async () => {
+          // value
+          const graphScale = await MODELS.GRAPH_SCALE.useValue(modelService)
+          // model
+          const graphScaleModel = await MODELS.GRAPH_SCALE.getModel(modelService)
+        }
+    在XFlow中自定义Model：
+*/
+```
+
+### 【@antv/xflow-core】
+
+#### useExtensionRegistry
+
+#### XFlowAppExtensionMoudle
+
+#### ManaSyringe
+
+- `ManaSyringe.Syringe.defineToken()`
+- `ManaSyringe.Module()`
+- `ManaSyringe.injectable`
+- `ManaSyringe.inject`
+
+#### type
+
+- `IExtensionModule`
+- `IExtensionModule`
+- `IArgsBase`
+- `IHooks`
+- `IModuleConfig`
+- `ICommandHandler`
+- `ICommandContextProvider`
+
+#### delay
+
+#### DisposableCollection
+
+#### NsGraph
+
+#### XFlowConstants
+
+### @antv/xflow-hook
+
+#### HookHub
+
+### 【@antv/xflow-core/es/model-service/constant】
+
+#### getModelUtil useModelValueUtil
+
+## 【X6】
+
+### Graph Path Registry Shape Node
