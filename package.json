@@ -72,6 +72,7 @@
     "jest-resolve": "^29.5.0",
     "jest-watch-typeahead": "^2.2.2",
     "keymirror": "^0.1.1",
+    "mana-syringe": "0.3.2",
     "mini-css-extract-plugin": "0.5.0",
     "multer": "1.4.4",
     "node-sass": "^4.13.1",

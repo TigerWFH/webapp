@@ -2,6 +2,21 @@
 
 https://www.yuque.com/antv/x6/thk2z7
 
+```js
+/*
+  视图（React组件）：XFlow、XFlowcanvas
+  应用逻辑（Application）：FrontendApplication
+  应用配置（Config）：ExtensionRegistry，存储在配置上下文（ReactContext上）
+
+  XFlow是起点，维护状态
+    appRef：指向应用实例Application
+    appContainerRef：指向HTMLDivElement
+      XFlowCanvas：
+
+
+*/
+```
+
 ## 画布配置：createGraphConfig<https://xflow.antv.vision/docs/tutorial-core-components/xflow-canvas-component>
 
 > XFlow 和 XFlowCanvas 都支持配置，优先级未定
@@ -274,13 +289,96 @@ export const initHooks = () => ({
 
 ### 【@antv/xflow-core】
 
+- `依赖注入`
+
+```js
+/*
+    控制反转思想，是为了程序解耦
+
+    依赖注入是实现 控制反转 的一种设计方法，并不是说依赖注入 等于 控制反转（Inversion of Control， IoC）
+    控制反转是思想
+    依赖注入是 控制反转思想的 实现方式
+
+    SOLID原则：
+    OOP：
+    IoC：
+  */
+```
+
+#### XFlow
+
+> XFlow 引入 `ExtensionRegistryContext` 即 ReactContext，作为 Provider，共享 `ExtensionRegistry` 实例
+>
+> XFlow 引入 `ExtensionRegistry`和`createExtensionRegistry`，通过`createExtensionRegistry`创建`ExtensionRegistry`
+>
+> `FrontendApplication`: 重点
+
+#### XFlowAppExtensionModule
+
+> 通过 useExtensionRegistry，获取 ExtensionRegistry 配置实例
+>
+> 通过 ExtensionRegistry 实例，通过 addExtension 将 config 和 createModule 存储到应用配置实例中
+
+#### XFlowCanvas
+
+> 调用配置中心的 addCoreModule 函数，将扩展组件中的
+
+#### DagGraphExtension【待仔细研究】
+
+> 通过`XFlowAppExtensionModule`将 config 和 createModule 【createDagExtensionModule】注入到配置实例中
+
+#### createDagExtensionModule
+
+>
+
 #### useExtensionRegistry
 
-#### XFlowAppExtensionMoudle
+```ts
+import React from 'react';
+import { ExtensionRegistry } from './extension-registry';
 
-#### ManaSyringe
+/** 通过context收集extension的配置 */
+export const ExtensionRegistryContext = React.createContext<ExtensionRegistry>(
+  {} as ExtensionRegistry
+);
+
+export const useExtensionRegistry = () => {
+  return React.useContext(ExtensionRegistryContext);
+};
+
+export { ExtensionRegistry };
+```
+
+#### ManaSyringe【InversifyJS】
+
+> mana-syringe<https://www.npmjs.com/package/mana-syringe>
+>
+> 提供易于使用的依赖注入容器，参考 TSyringe 项目，参考并基于 inversify
+
+- `标识token：`
+  > - `Token<T> = string | symbole | Newable<T> | Abstract<T> | Syringe.DefineToken<T>`
+  > - `Syringe.defineToken()`定义标识 token
+- `容器Container：`包含标识和注入对象关系描述的上下文。容器会根据注入对象及其标识的关系自动构建所需要的实例
+  > - `register<T = any>(options: Syringe.InjectOption<T>): void`
+  > - `register<T = any>(token: Syringe.Token<T>, options?: Syring.InjectOption<T>: void)`
+- `生命期lifecycle：`容器会根据注入对象的生命期米哦啊叔托管这些对象，决定是否使用缓存等
+- `注册类和别名：`
+  > - `token：`通过 token 注册，关系是独立的，获取不同的对象
+  > - `contrib：`通过 contrib 注册是别名关系，获取到通过一个对象
+- `模块：`可以通过用一组注册动作创建一个模块，方便在不同容器上下文间内夹在
+- `扩展点Contribution`
+  > - `Contribution`
+- `装饰器`
+
+  > - `injectable：`通用装饰器，接受所有绑定绑定描述参数
+  > - `singleton：`单例装饰器，接受除生命周期外的描述参数
+  > - `transient：`多例装饰器，接受除生命周期外的描述参数
+  > - `inject：`注入，接受注入标识作为参数，并接受类型描述
+  > - `contrib`
 
 - `ManaSyringe.Syringe.defineToken()`
+  > - 注入标识 token
+  > - 注入对象所使用的标识，可以带类型约束
 - `ManaSyringe.Module()`
 - `ManaSyringe.injectable`
 - `ManaSyringe.inject`
@@ -314,3 +412,7 @@ export const initHooks = () => ({
 ## 【X6】
 
 ### Graph Path Registry Shape Node
+
+## 参考资料
+
+[参考资料：依赖倒置](https://www.cnblogs.com/dashnowords/p/14380955.html)
