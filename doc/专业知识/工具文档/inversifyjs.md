@@ -36,6 +36,7 @@
 ## APIs
 
 - `Container`
+
   > - `ContainerModule`
   > - `Container.merge(a,b,...)`：合并容器的绑定内容，返回一个新容器
   > - `container.applyCustomMetadataReader(metadataReader):void`
@@ -75,3 +76,26 @@
   > - `container.unloadAsync(...modules)`
   > - `container.parent`
   > - `container.id`
+
+  ## CoreObject
+
+  ### Bindings
+
+  - `BindingToSyntax`
+    > - `to`绑定一个类
+    > - `toSelf`to 的简化版，当 serviceIdentifier（标识符）是构造函数时，直接绑定自身
+    > - `toConstantValue`绑定一个常量
+    > - `toDynamicValue`绑定为动态数值，解析时执行传入的函数获取依赖
+    > - `toFactory`绑定为工厂方法
+    > - `toAutoFactory`绑定为自动工厂方法，工厂方法自动生成为获取传入的 serviceIdentifier 的依赖注入
+    > - `toProvider`绑定为异步工厂方法
+    > - `toService`传递绑定，属于一个语法糖
+  - `BindingInSyntax`
+    > - `inTransientScope` （瞬时作用域模式）每次获取都是新的（也是 container 的默认依赖项作用域）
+    > - `inSingletonScope` （单例作用域模式）创建的是覆盖类型绑定完整生命周期的单例。这意味着当我们使用 container.unbind 取消类型绑定时，inSingletonScope 会在内存中清除
+    > - `inRequestScope` （请求作用域模式）创建的单例覆盖的是调用 container.get、container.getTagged 或 container.getNamed 时的完整生命周期。对这些方法的每一次调用都将解析一个根依赖项及其所有子依赖项。InversifyJS 在 planning 阶段内部创建了一个名为依赖关系图(具体见下文 planning 介绍)inRequestScope 作用域会对其中多次出现的对象使用单个实例。这样就减少了所需的解析数，并且在某些情况下可以用作性能优化的选项
+
+- `BindingWhenSyntax`这个对象主要用于设置绑定条件，会在 planning 阶段找 activeBindings 时进行解析（见下文）
+  > - `whenTargetNamed`
+  > - `whenTargetIsDefault`
+- `BindingOnSyntax`这个对象主要用于设置 binding 的 onActivation 钩子，设置后会在 Activation 阶段执行（见下文
