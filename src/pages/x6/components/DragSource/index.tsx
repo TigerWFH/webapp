@@ -35,7 +35,7 @@ function DragSource(props: IDragSourceProps) {
     toolComponent, // 当前组件使用
     data = {} // 要传递的数据
   } = props;
-  const [, drag] = useDrag(() => {
+  const [, drag, dragPreview] = useDrag(() => {
     console.log('useDrag-----data=======>', data);
 
     return {
@@ -58,6 +58,7 @@ function DragSource(props: IDragSourceProps) {
   }
   return (
     <div className={styles.dragsource} ref={drag}>
+      <div ref={dragPreview}> "preview"</div>
       {element}
     </div>
   );

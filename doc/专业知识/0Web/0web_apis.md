@@ -1,5 +1,25 @@
 # web APIs
 
+## HTML Drag and Drop API
+
+### 事件&事件处理程序
+
+- `dragstart & onsragstart`：开始拖拽元素时触发
+- `drag & ondrag`：拖拽元素时触发
+- `dragend & ondragend`：拖拽操作结束时触发
+
+- `dragenter & ondragenter`：拖拽元素遇到`可释放目标`时触发
+- `dragover & ondragover`：拖拽元素在可释放目标上时，持续触发，每 100ms 触发一次
+- `dragleave & ondragleave`：拖拽元素离开可释放目标时触发
+- `drop & ondrop`：可拖拽元素在可释放目标上释放时触发
+
+### 接口
+
+- `DragEvent`
+- `DataTransfer`
+- `DataTransferItem`
+- `DataTransferItemList`
+
 ## IntersectionObserver API
 
 > 该接口提供了一种异步观察目标元素与其祖先元素或顶级文档视口（viewport）交叉状态的方法。其祖先元素或视口被称为根 root
