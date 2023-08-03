@@ -1,5 +1,24 @@
 # web APIs
 
+## 用户与指针设备（如鼠标）
+
+### 事件&事件处理程序
+
+- `click`：click 事件在按下并释放鼠标按钮后并且指针仍在同一元素内时触发。click 事件会在 mousedown 和 mouseup 事件依次触发后触发
+- `dbclick`：在单个元素上单击两次鼠标的指针设备按钮 (通常是小鼠的主按钮) 时，将触发 dblclick 事件
+- `mouseup`：事件在定点设备（如鼠标或触摸板）按钮在元素内释放时，在该元素上触发
+- `mousedown`：定点设备（鼠标或触摸板）按钮在元素内按下时，会在该元素上触发（mousedown 事件在按下鼠标按钮的那一刻触发）
+- `mouseover`：当一个定点设备（通常指鼠标）在一个元素本身或者其子元素上移动时，mouseover 事件在该元素上触发
+- `mousemove`：事件在定点设备（通常指鼠标）的光标在元素内移动时，会在该元素上触发
+- `mouseenter`：事件在定点设备（通常指鼠标）`首次`移动到元素的激活区域内时，在该元素上触发
+- `mouseleave`：事件在定点设备（通常是鼠标）的指针`移出`某个元素时被触发
+- `mouseout`：mouseout 事件在定点设备（通常是鼠标）移动至元素或其子元素之外时，会在该元素上触发
+  > - 两者的不同在于 mouseleave 不会冒泡而 mouseout 会冒泡。这意味着当指针离开元素及其所有后代时，会触发 mouseleave，而当指针离开元素或离开元素的后代（即使指针仍在元素内）时，会触发 mouseout。
+
+### 接口
+
+- `MouseEvent`
+
 ## HTML Drag and Drop API
 
 ### 事件&事件处理程序
@@ -17,6 +36,7 @@
 
 - `DragEvent`
 - `DataTransfer`
+  > - dropEffect：控制在拖放操作中给用户的反馈（通常是视觉上的），会影响拖拽过程中光标的手势
 - `DataTransferItem`
 - `DataTransferItemList`
 
