@@ -212,9 +212,17 @@ function reducer(state = currentState) {
         效果：延迟执行（一直触发、一直不执行）
         缺陷：如果事件在给定的delay内持续被触发，意味着code永远不会被执行了
         改进：增加一个overtime，在超过overtime时，一定要执行一次code，这就是节流
+        场景：使用防抖，节省计算
+          1、浏览器的resize、keypress、mousemove等事件触发时
+          2、拖拽的over事件等等
+
     节流：在规定的时间time之内只执行一次触发，后续触发在规定时间内会被抛弃
         思路：在debounce基础上，克服debounce的缺陷，需要有一个超时执行机制
         效果：如果短时间内大量触发同一事件，那么执行一次后，该函数在指定的时间期限内不再工作
+        场景：交互需要及时有一个反馈的场景
+          1、滚动加载
+          2、搜索联想
+          3、键盘输入
 */
 // debounce防抖
 function debounce(fn, delay) {
