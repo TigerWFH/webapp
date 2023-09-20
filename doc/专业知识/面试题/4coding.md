@@ -18,11 +18,11 @@
 Function.prototype.myCall = function (target) {
   var context = Object(target) || window;
   context.fn = this;
-  var param = "";
+  var param = '';
   for (var i = 1; i < arguments.length; i++) {
-    param += arguments[i] + ",";
+    param += arguments[i] + ',';
   }
-  var result = eval("context.fn(" + param + ")");
+  var result = eval('context.fn(' + param + ')');
   delete context.fn;
   return result;
 };
@@ -30,11 +30,11 @@ Function.prototype.myApply = function (target) {
   var context = Object(target) || window;
   context.fn = this;
   var paramList = arguments.slice(1); // 数组参数
-  var param = "";
+  var param = '';
   for (var i = 0; i < paramList.length; i++) {
-    param += arguments[i] + ",";
+    param += arguments[i] + ',';
   }
-  var result = eval("context.fn(" + param + ")");
+  var result = eval('context.fn(' + param + ')');
   delete context.fn;
   return result;
 };
@@ -42,10 +42,10 @@ function add(a, b) {
   return a + b + this.c;
 }
 var tar = {
-  c: 1,
+  c: 1
 };
 var result = add.myCall(tar, 1, 2);
-console.log("result===>", result); // 4
+console.log('result===>', result); // 4
 ```
 
 ### 2、实现一个 bind 函数
@@ -55,13 +55,13 @@ console.log("result===>", result); // 4
 Function.prototype.myBind = function (target) {
   var context = Object(target) || window;
   context.fn = this;
-  var param = "";
+  var param = '';
   for (var i = 1; i < arguments.length; i++) {
-    param += arguments[i] + ",";
+    param += arguments[i] + ',';
   }
 
   return function () {
-    var result = eval("context.fn(" + param + ")");
+    var result = eval('context.fn(' + param + ')');
     delete context.fn;
 
     return result;
@@ -79,9 +79,9 @@ Function.prototype.myBind = function (target) {
 };
 // 新思路2
 Function.prototype.myBind = function (fn, target) {
-  var fnStr = fn.toString().replace(/\n/g, ""); // 去掉换行
-  var argsStr = fnStr.slice(fnStr.indexOf("(" + 1, fnStr.indexOf(")")));
-  var fnBody = fnStr.slice(fnStr.indexOf("{") + 1, fnStr.indexOf("}"));
+  var fnStr = fn.toString().replace(/\n/g, ''); // 去掉换行
+  var argsStr = fnStr.slice(fnStr.indexOf('(' + 1, fnStr.indexOf(')')));
+  var fnBody = fnStr.slice(fnStr.indexOf('{') + 1, fnStr.indexOf('}'));
   var newFn = new Function(argsStr, fnBody);
   return function () {
     newFn.apply(target, arguments);
@@ -143,13 +143,13 @@ function myInstanceof(left, right) {
 
 function Person() {
   if (this instanceof Person) {
-    console.log("instanceof ===> using new");
+    console.log('instanceof ===> using new');
   }
   if (this.constructor === arguments.callee) {
-    console.log("constructor ===> using new");
+    console.log('constructor ===> using new');
   }
   if (this.__proto__ === arguments.callee.prototype) {
-    console.log("prototype ===> using new");
+    console.log('prototype ===> using new');
   }
 }
 ```
@@ -204,16 +204,16 @@ function reducer(state = currentState) {
 
 ```js
 /*
-    防抖：短时间内连续触发的事件，防抖的含义就是：在某个规定的事件time内，事件处理函数只执行最后一次触发
+    防抖（延迟执行）：以行为产生为起始时间begin，在规定的时间time内，如果某种行为不再产生，则执行该行为；否者，重新计算起始时间，在规定的时间time内不再产生新行为，则执行该行为
         思路：
             1、在事件触发时，不立即执行code，而是等待一个给定的时间delay，
             2、如果在delay内事件没有被触发，就执行code；
             3、如果在delay内事件再次被触发，重复1，2，3步骤
-        效果：如果短时间内大量触发同一事件，只会执行一次（持续触发，甚至不执行）
+        效果：延迟执行（一直触发、一直不执行）
         缺陷：如果事件在给定的delay内持续被触发，意味着code永远不会被执行了
         改进：增加一个overtime，在超过overtime时，一定要执行一次code，这就是节流
-    节流：在规定的时间之内只执行首次触发，后续触发在规定时间内会被抛弃
-        思路：在debounce基础上，客服debounce的缺陷，需要有一个超时执行机制
+    节流：在规定的时间time之内只执行一次触发，后续触发在规定时间内会被抛弃
+        思路：在debounce基础上，克服debounce的缺陷，需要有一个超时执行机制
         效果：如果短时间内大量触发同一事件，那么执行一次后，该函数在指定的时间期限内不再工作
 */
 // debounce防抖
