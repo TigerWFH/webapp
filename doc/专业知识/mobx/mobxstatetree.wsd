@@ -1,0 +1,52 @@
+@startuml mobx-state-tree
+
+interface IType<C, S, T> {
+    - readonly undefined $type
+    + readonly STNValue<T, this> Type
+    + readonly T TypeWithoutSTN
+    + readonly S SnapshotType
+    + readonly C CreationType
+    + TypeFlags flags
+    + boolean isType
+    + string name
+    + readonly string identifierAttribute
+
+    + any create(C snapshot, any env)
+    + any is(any thing)
+    + any validate(C thing, any context)
+    + string describe()
+    + BaseNode instantiate(parent, subpath, enviroment, initialValue)
+    + BaseNode reconcile(current, newValue, parent, subpath)
+    + S getSnapshot(BaseNode node, boolean applyPostProcess)
+    + boolean isAssignanleFrom(IAnyType)
+    + IAnyType[] getSubTypes()
+}
+
+IType <|-- IAnyType
+interface IAnyType {
+}
+
+IType <|-- ISimpleType
+interface ISimpleType {}
+
+IType <|-- IComplexType
+interface IComplexType {}
+
+IType <|-- IAnyComplexType
+interface IAnyComplexType {}
+
+
+IType <|-- IModelType
+interface IModelType {
+    + readonly PROPS properties;
+
+    + IModelType named(string newName)
+    + IModelType props(PROPS2 props)
+    + IModelType views(fn)
+    + IModelType actions(fn)
+    + IModelType volatile(fn)
+    + IModelType extend(fn)
+    + IModelType preProcessSnapshot(fn)
+    + IModelType postProcessSnapshot(fn)
+}
+@enduml
