@@ -1,0 +1,14 @@
+@startuml OptionsControl调用流程
+' 如果你的表单组件性质和 amis 的 Select、Checkboxes、List 差不多，用户配置配置 source 可通过 API 拉取选项，你可以用 OptionsControl 取代 FormItem 这个注解。
+' 用法是一样，功能方面主要多了以下功能。
+' - 可以配置 options，options 支持配置 visibleOn hiddenOn 等表达式
+' - 可以配置 `source` 换成动态拉取 options 的功能，source 中有变量依赖会自动重新拉取。
+' - 下发了这些 props，可以更方便选项。
+'   - `options` 不管是用户配置的静态 options 还是配置 source 拉取的，下发到组件已经是最终的选项了。
+'   - `selectedOptions` 数组类型，当前用户选中的选项。
+'   - `loading` 当前选项是否在加载
+'   - `onToggle` 切换一个选项的值
+'   - `onToggleAll` 切换所有选项的值，类似于全选。
+
+OptionsControl ----> Bob
+@enduml

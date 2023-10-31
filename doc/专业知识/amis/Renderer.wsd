@@ -1,0 +1,21 @@
+@startuml Renderer调用流程
+participant Amis
+participant Renderer
+participant registerRenderer
+participant Mobx.observer
+participant HocStoreFactory #LightBlue
+participant Scoped #LightBlue
+participant renderersMap
+
+Amis -> Renderer ++ : 参数config
+    Renderer -> registerRenderer ++ : 参数config，调用
+        registerRenderer -> Mobx.observer ++ : 如果参数storeType和component存在，调用
+        return NewComponent，observer包装过的
+        registerRenderer -> HocStoreFactory ++ : 如果参数storeType和component存在，调用
+        return StoreFactory
+        registerRenderer -> Scoped ++ : 参数component
+        return NewComponent
+        registerRenderer -> renderersMap : 存储到renderersMap
+    return config
+return config.component
+@enduml
