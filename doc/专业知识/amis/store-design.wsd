@@ -1,0 +1,112 @@
+@startuml amis store设计
+
+interface node.StoreNode {
+    + string id
+    + string path
+    + string storeType
+    + boolean disposed
+    + string parentId
+    + []string childrenIds
+    --views--
+    
+    --actions-- 
+}
+
+node.StoreNode <|-- iRenderer.iRendererStore
+
+interface iRenderer.iRendererStore {
+    + boolean hasRemoteData
+    + Object data
+    + number initedAt
+    + number updatedAt
+    + Object pristine
+    + any action
+    + boolean dialogOpen
+    + any dialogData
+    + boolean drawerOpen
+    + any drawerData
+    --views--
+    
+    --actions-- 
+}
+
+iRenderer.iRendererStore <|-- service.ServiceStore
+interface service.ServiceStore {
+    + string msg
+    + boolean error
+    + boolean fetching
+    + boolean saving
+    + boolean busying
+    + boolean checking
+    + boolean initializing
+    + any schema
+    + string schemaKey
+    --views--
+
+    --actions-- 
+}
+
+service.ServiceStore <|-- form.FormStore
+interface form.FormStore {
+    + boolean inited
+    + boolean submited
+    + boolean submiting
+    + any savedData
+    + boolean canAccessSuperData
+    + string|boolean persistData
+    + []any allFieldError
+
+    --views--
+
+    --actions-- 
+}
+
+form.FormStore <|-- formItem.FormItemStore
+interface formItem.FormItemStore {
+    + boolean isFocused
+    + string type
+    + string label
+    + boolean unique
+    + boolean loading
+    + boolean required
+    + boolean isValueSchemaExp
+    + any tmpValue
+    + any emitedValue
+    + object rules
+    + object messages
+    + []any errorData
+    + string name
+    + string itemId
+    + boolean unsetValueOnInvisible
+    + []string itemsRef
+    + boolean validated
+    + boolean validating
+    + boolean multiple
+    + string delimiter
+    + string valueField
+    + string labelField
+    + boolean joinValues
+    + boolean extractValue
+    + []any options
+    + boolean expressionsInOptions
+    + boolean selectFirst
+    + any autoFill
+    + boolean clearValueOnHidden
+    + any validateApi
+    + []any selectedOptions
+    + []any filteredOptions
+    + any dialogSchema
+    + boolean dialogOpen
+    + any dialogData
+    + any resetValue
+    + boolean validateOnChange
+    + object inputGroupControl
+    --views--
+    
+    --actions-- 
+}
+
+
+
+
+@enduml

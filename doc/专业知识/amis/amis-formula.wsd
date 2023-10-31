@@ -1,0 +1,90 @@
+@startuml formula
+enum TokenTypeName {
+    Boolean,
+    Raw,
+    Variable,
+    OpenScript,
+    CloseScript,
+    EOF,
+    Identifier,
+    Literal,
+    Numeric,
+    Punctuator,
+    String,
+    RegularExpression,
+    TemplateRaw,
+    TemplateLeftBrace,
+    TemplateRightBrace,
+    OpenFilter,
+    Char,
+}
+
+enum TokenName {
+    BooleanLiteral = 'Boolean',
+    Raw = 'Raw',
+    Variable = 'Variable',
+    OpenScript = 'OpenScript',
+    CloseScript = 'CloseScript',
+    EOF = 'EOF',
+    Identifier = 'Identifier',
+    Literal = 'Literal',
+    Numeric = 'Numeric',
+    Punctuator = 'Punctuator',
+    String = 'String',
+    RegularExpression = 'RegularExpression',
+    TemplateRaw = 'TemplateRaw',
+    TemplateLeftBrace = 'TemplateLeftBrace',
+    TemplateRightBrace = 'TemplateRightBrace',
+    OpenFilter = 'OpenFilter',
+    Char = 'Char',
+}
+
+interface Position {
+    + number index
+    + number line
+    + number column
+}
+
+interface token {
+    + TokenTypeName type
+    + any value
+    + string raw?
+    + Position start
+    + Position end
+}
+
+interface LexerOptions {
+    + boolean evalMode
+    + boolean variableMode
+    + boolean alloFilter
+}
+
+interface ParserOptions {
+    + boolean evalModel?
+    + boolean variableMode?
+    + boolean allowFilter?
+    + Array<string> variableNamespaces?
+}
+
+interface FunctionMap {
+    [propName: string]: (this, input, ...args) => any
+}
+
+interface FilterMap {
+    [propName: string]: (this, input, ...args) => any
+}
+
+interface EvaluatorOptions {
+    + FunctionMap functions?
+    + FilterMap filters?
+    + string defaultFilter?
+}
+
+interface ASTNode {
+    + string type
+    + Position start
+    + Position end
+    [propname: striong]: any
+}
+
+@enduml
