@@ -1,0 +1,74 @@
+@startuml amis渲染流程
+boundary System
+' participant "Renderer(config)" as Renderer
+' participant "closureA(config)" as closureA
+' participant "registerRenderer(component)" as registerRender
+' System --> Renderer ++ : 调用amis入口函数生成amis组件树
+' Renderer --> registerRender ++ : 调用闭包注册渲染器，并返回渲染器
+participant "render(schema, props, options, pathPrefix)" as render
+participant AMISRender
+participant "StatusScoped(ComposedComponent)" as StatusScoped
+participant "HocScoped(ComposedComponent, rendererType)" as Scoped
+participant Root
+participant RootRender
+participant renderChild
+participant renderChildren
+
+System --> render ++ : 调用渲染函数，生成amis组件树【本质是React】
+render --> AMISRender ++ :组合
+AMISRender --> StatusScoped ++: 调用
+    StatusScoped --> Scoped ++ : 调用
+        Scoped --> Root: 只是组合Root，返回ScopedComponent
+        return ScopedComponent
+    StatusScoped --> ScopedComponent: 只是组合，返回ScopedRootRenderer
+    return ScopedRootRenderer
+AMISRender --> ScopedRootRenderer ++: 组合
+note right
+AMISRender
+ 1、计算locale
+ 2、计算translate
+ 3、生成rootStore:RendererStore
+ 4、计算theme
+ 5、替换schema中的字符
+ 6、计算env
+ 7、成为EnvContext的生产者本质就是env
+ props传递1、2、3、4、6
+end note
+ScopedRootRenderer --> ScopedComponent ++: 组合
+note right
+ScopedRootRenderer
+1、计算并维护statusStore
+2、计算ref或forwardRef
+props传递1、2
+end note
+ScopedComponent --> Root ++ : 组合
+note right
+ScopedComponent
+1、计算scoped，并成为ScopedContext的生产者
+ScopedContext提供scoped
+同时拦截scopeRef的传递
+end note
+Root --> RootRender ++ : 组合
+note right
+1、计算render
+2、计算resolveDefinitions
+3、计算children即RootRender
+props传递
+end note
+RootRender --> RootRender ++: 调用render
+note right
+1、计算this.store:IRootStore
+2、计算topStore=this.store
+3、计算data=this.store.downStream
+4、context=store.context
+props透传给render
+end note
+return ComponentTree
+
+return ComponentTree
+return ComponentTree
+return ComponentTree
+return ComponentTree
+return ComponentTree
+return ComponentTree
+@enduml
