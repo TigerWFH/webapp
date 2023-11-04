@@ -1,5 +1,30 @@
 @startuml amis store设计
 
+interface IStore {
+    + string storeType;
+    + string id;
+    + string path;
+    + string parentId?;
+    + any [propName: string];
+}
+
+interface RendererStore {
+    + RendererStore storeType;
+    --views--
+    + get fetcher()
+    + get notify()
+    + get isCancel()
+    + get __()
+    + get stores()
+    + any getStoreById(string: id)
+    --actions--
+    + any addStore(IStore store)
+}
+note bottom
+    渲染器的store管理器，即props.rootStore
+    RendererStoreManager名字更合适
+end note
+
 interface node.StoreNode {
     + string id
     + string path

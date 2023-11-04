@@ -10,19 +10,19 @@ participant AMISRender
 participant "StatusScoped(ComposedComponent)" as StatusScoped
 participant "HocScoped(ComposedComponent, rendererType)" as Scoped
 participant Root
-participant RootRender
+participant RootRender #00a3fe
 participant renderChild
 participant renderChildren
+participant ScopedComponent #00a3fe
+participant ScopedRootRenderer #00a3fe
 
-System --> render ++ : 调用渲染函数，生成amis组件树【本质是React】
-render --> AMISRender ++ :组合
+System -[#00a3fe]-> render ++ : 调用渲染函数，生成amis组件树【本质是React】
+render -[#00a3fe]-> AMISRender ++ :组合，props
 AMISRender --> StatusScoped ++: 调用
     StatusScoped --> Scoped ++ : 调用
-        Scoped --> Root: 只是组合Root，返回ScopedComponent
         return ScopedComponent
-    StatusScoped --> ScopedComponent: 只是组合，返回ScopedRootRenderer
     return ScopedRootRenderer
-AMISRender --> ScopedRootRenderer ++: 组合
+AMISRender -[#00a3fe]-> ScopedRootRenderer ++: 组合，props
 note right
 AMISRender
  1、计算locale
@@ -34,28 +34,28 @@ AMISRender
  7、成为EnvContext的生产者本质就是env
  props传递1、2、3、4、6
 end note
-ScopedRootRenderer --> ScopedComponent ++: 组合
+ScopedRootRenderer -[#00a3fe]-> ScopedComponent ++: 组合，props
 note right
 ScopedRootRenderer
 1、计算并维护statusStore
 2、计算ref或forwardRef
 props传递1、2
 end note
-ScopedComponent --> Root ++ : 组合
+ScopedComponent -[#00a3fe]-> Root ++ : 组合，props
 note right
 ScopedComponent
 1、计算scoped，并成为ScopedContext的生产者
 ScopedContext提供scoped
 同时拦截scopeRef的传递
 end note
-Root --> RootRender ++ : 组合
+Root -[#00a3fe]-> RootRender ++ : 组合，props
 note right
 1、计算render
 2、计算resolveDefinitions
 3、计算children即RootRender
 props传递
 end note
-RootRender --> RootRender ++: 调用render
+RootRender -[#00a3fe]-> RootRender ++: 调用render，传递props
 note right
 1、计算this.store:IRootStore
 2、计算topStore=this.store
