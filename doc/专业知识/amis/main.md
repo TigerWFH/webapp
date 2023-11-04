@@ -1,5 +1,11 @@
 # amis
 
+## 源码中的一部分内容
+
+- `scoped`：实例管理器
+- `rootStore：RendererStore`：store 管理器
+- `store`：组件对应状态
+
 ## amis-formula
 
 ### token
