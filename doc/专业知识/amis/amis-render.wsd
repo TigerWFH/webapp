@@ -9,20 +9,16 @@ participant "render(schema, props, options, pathPrefix)" as render
 participant AMISRender
 participant "StatusScoped(ComposedComponent)" as StatusScoped
 participant "HocScoped(ComposedComponent, rendererType)" as Scoped
+participant ScopedRootRenderer #00a3fe
+participant ScopedComponent #00a3fe
 participant Root
 participant RootRender #00a3fe
 participant renderChild
-participant renderChildren
-participant ScopedComponent #00a3fe
-participant ScopedRootRenderer #00a3fe
+participant SchemaRenderer #00a3fe
+participant Renderer #Red
 
 System -[#00a3fe]-> render ++ : 调用渲染函数，生成amis组件树【本质是React】
 render -[#00a3fe]-> AMISRender ++ :组合，props
-AMISRender --> StatusScoped ++: 调用
-    StatusScoped --> Scoped ++ : 调用
-        return ScopedComponent
-    return ScopedRootRenderer
-AMISRender -[#00a3fe]-> ScopedRootRenderer ++: 组合，props
 note right
 AMISRender
  1、计算locale
@@ -34,37 +30,73 @@ AMISRender
  7、成为EnvContext的生产者本质就是env
  props传递1、2、3、4、6
 end note
-ScopedRootRenderer -[#00a3fe]-> ScopedComponent ++: 组合，props
+AMISRender --> StatusScoped ++: 调用
+    StatusScoped --> Scoped ++ : 调用
+        return react静态属性拷贝，返回ScopedComponent
+    return react静态属性拷贝，返回ScopedRootRenderer
+AMISRender -[#00a3fe]-> ScopedRootRenderer ++: 组合，props
 note right
 ScopedRootRenderer
-1、计算并维护statusStore
-2、计算ref或forwardRef
-props传递1、2
+1、static属性存储ComposedComponent即ScopedComponent
+2、私有属性存储statusStore:IStatusStore
+3、私有属性存储ref，存储ScopedComponent实例
+props传递2、3
+end note
+ScopedRootRenderer -[#00a3fe]-> ScopedComponent ++: 组合，props
+note right
+ScopedComponent
+1、静态属性scopedContext，
+存储Scope实例{renderType,component,parent}
+2、静态属性存储ComposedComponent，即Root
+3、私有属性ref，存储Root实例
+4、私有属性scoped，赋值为scopedTools，
+同时存储为scopedContext的子节点存储
+同时scoped是ScopedContext的生产数据
+5、System可以传一个scopeRef函数进来，存储scoped
+props传递传递非scopeRef属性
+成为ScopedContext的生产者
 end note
 ScopedComponent -[#00a3fe]-> Root ++ : 组合，props
 note right
-ScopedComponent
-1、计算scoped，并成为ScopedContext的生产者
-ScopedContext提供scoped
-同时拦截scopeRef的传递
+Root
+1、提供解析amis的Definitions功能
+2、props.render = renderChild
+props透传1、2
 end note
 Root -[#00a3fe]-> RootRender ++ : 组合，props
 note right
-1、计算render
-2、计算resolveDefinitions
-3、计算children即RootRender
-props传递
-end note
-RootRender -[#00a3fe]-> RootRender ++: 调用render，传递props
-note right
-1、计算this.store:IRootStore
-2、计算topStore=this.store
-3、计算data=this.store.downStream
-4、context=store.context
-props透传给render
-end note
-return ComponentTree
+RootRender
+1、静态属性contextType获取ScopedContext
+2、私有属性store:IRootStore，并通过rootStore管理
+store存储props={context, data, location }
 
+props透传
+topStore={this.store}
+data={this.store.downStream}
+context={store.context}
+主要处理了异常、Dialog、Drawer、Spinner、运行时错误
+end note
+RootRender -[#00a3fe]-> renderChild ++: 调用render即renderChild，传递props
+
+renderChild -[#00a3fe]-> SchemaRenderer ++: 组合，props
+note right
+SchemaRenderer
+1、静态属性contextType=ScopedContext
+2、私有属性rendererKey
+3、私有属性renderer
+4、私有属性ref
+5、私有属性cRef
+6、私有属性schema
+7、私有属性path
+8、私有属性reaction
+9、私有属性unbindEvent，处理广播
+10、私有属性isStatic
+功能集合处
+end note
+SchemaRenderer -[#00a3fe]->Renderer ++: 组合，各种Renderer，render会根据情况调用renderChild
+return ComponentTree
+return ComponentTree
+return ComponentTree
 return ComponentTree
 return ComponentTree
 return ComponentTree
