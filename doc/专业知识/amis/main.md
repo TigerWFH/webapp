@@ -6,6 +6,53 @@
 - `rootStore：RendererStore`：store 管理器
 - `store`：组件对应状态
 
+## 关于 amis 中的 store
+
+> amis 中使用了 mobx-state-tree
+
+### HocStoreFactory
+
+```typescript
+interface IRendererConfig {
+  storeType: string;
+  extendsData?: boolean | ((props: any) => boolean);
+  shouldSyncSuperStore?: (
+    store: any,
+    props: any,
+    prevProps: any
+  ) => boolean | undefined;
+}
+
+HocStoreFactory(renderer: IRendererConfig): any // 返回组件StoreFactory
+```
+
+### StoreFactory
+
+> extendsData：从 config.extendsData 获取
+
+- RootRenderer 会从 props 获取 data，这个 data 应该是 env 中的 data，并初始化 topStore.data、context（就是 scopedContext）
+- RootRenderer 将 topStore 的 data 作为 props.data 传递下去
+- SchemaRender 会从 schema 中读取 data 数据，并作为 defaultData 下发给组件
+
+### 具备数据域的组件
+
+- App
+- Page--->ServiceStore
+- Cards
+- Chart
+- CRUD
+- CRUD2
+- Dialog
+- Drawer
+- List
+- PaginationWrapper
+- Service
+- Wizard
+- Combo
+- InputArray
+- Table
+- Table2
+
 ## amis-formula
 
 ### token

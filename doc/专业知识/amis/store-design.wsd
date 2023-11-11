@@ -8,7 +8,7 @@ interface IStore {
     + any [propName: string];
 }
 
-interface RendererStore {
+interface index.RendererStore {
     + RendererStore storeType;
     --views--
     + get fetcher()
@@ -20,9 +20,12 @@ interface RendererStore {
     --actions--
     + any addStore(IStore store)
 }
-note bottom
+note top
     渲染器的store管理器，即props.rootStore
     RendererStoreManager名字更合适
+    配合manage.js中的store做store的管理
+    rootStore就是store管理器，类型是RendererStore
+    区分topStore，根store，类型是RootStore，顶层数据域
 end note
 
 interface node.StoreNode {
@@ -86,7 +89,7 @@ interface form.FormStore {
     --actions-- 
 }
 
-form.FormStore <|-- formItem.FormItemStore
+node.StoreNode <|-- formItem.FormItemStore
 interface formItem.FormItemStore {
     + boolean isFocused
     + string type
@@ -131,6 +134,87 @@ interface formItem.FormItemStore {
     --actions-- 
 }
 
+formItem.FormItemStore <--* formItem.ErrorDetail 
+interface formItem.ErrorDetail {
+    + string msg;
+    + string tag;
+    + string rule;
+}
+
+service.ServiceStore <|-- app.appStore
+interface app.appStore {
+
+}
+
+iRenderer.iRendererStore <|-- combo.ComboStore
+interface combo.ComboStore {
+
+}
+
+combo.ComboStore <--* combo.UniqueGroup
+interface combo.UniqueGroup {
+
+}
+
+service.ServiceStore <|-- crud.CRUDStore
+interface crud.CRUDStore {
+
+}
+
+iRenderer.iRendererStore <|-- list.ListStore
+interface list.ListStore {
+
+}
+
+list.ListStore <--* list.Item
+interface list.Item {
+
+}
+
+service.ServiceStore <|-- modal.ModalStore
+interface modal.ModalStore {
+
+}
+
+iRenderer.iRendererStore <|-- pagination.PaginationStore
+interface pagination.PaginationStore {
+
+}
+
+service.ServiceStore <|-- root.RootStore
+interface root.RootStore {
+    + types.frozen() runtimeError
+    + types.frozen() runtimeErrorStack
+    + types.frozen() query
+    ---views---
+    + get downStream()
+    ---actions---
+    + updateContext(context)
+    + updateLocation(location, parseFn)
+
+}
+
+interface status.StatusStore {}
+
+iRenderer.iRendererStore <|-- table.TableStore
+
+interface table.TableStore {}
+
+table.TableStore <--* table.Column
+interface table.Column {}
+
+table.TableStore <--* table.Row
+interface table.Row {}
+
+service.ServiceStore <|-- table2.TableStore2
+
+interface table2.TableStore2 {}
+
+table2.TableStore2 <--* table2.Column
+interface table2.Column {}
+
+table2.TableStore <--* table2.Row
+interface table2.Row {}
 
 
 

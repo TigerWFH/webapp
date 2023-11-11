@@ -1,23 +1,53 @@
 @startuml Renderer调用流程
-participant SchemaRender
-participant Renderer
-participant registerRenderer
+participant Amis #00a3fe
+participant "Renderer(config)" as Renderer
+participant "A(component)" as A
+participant "registerRenderer(config)" as registerRenderer
+participant "B(component)" as B
 participant Mobx.observer
-participant HocStoreFactory #LightBlue
+participant HocStoreFactory
+participant StoreFactory #00a3fe
 participant Scoped #LightBlue
+participant ScopedComponent #00a3fe
 participant renderersMap
 
-SchemaRender --> Renderer ++ : 参数config
-    Renderer --> registerRenderer ++ : 参数config，调用
-        registerRenderer --> Mobx.observer ++ : 如果参数storeType和component存在，调用
-        return NewComponent，observer包装过的
+Amis --> Renderer ++ : 返回高阶函数A，注册组件到amis系统
+note left
+    config.test
+    config.type，组件类型
+    config.name，组件名称，默认就是config.type
+    config.storeType，组件对应的store类型
+    config.shouldSyncSuperStore，是否同步
+    config.storeExtendsData， // 是否需要继承上层数据
+    config.weight，权重，值越低越优先命中，默认值为0
+    config.isolateScope，是否建立独立的实例树
+    config.isFormItem，是否表单项组件
+    config.autoVar: boolean，自动解析变量
+    config.component: 组件
+    config.Renderer: 就是config.component
+    
+end note
+    return 返回高阶函数A
+Amis --> A
+    A --> registerRenderer ++ : 参数config，调用
         registerRenderer --> HocStoreFactory ++ : 如果参数storeType和component存在，调用
         note right
         end note
+        return 高阶函数B
+        registerRenderer --> Mobx.observer ++ : 如果参数storeType和component存在，调用
+        return NewComponent，observer包装过的config.component
+        registerRenderer --> B ++ : 以参数NewComponent，调用
         return StoreFactory
         registerRenderer --> Scoped ++ : 参数component
-        return NewComponent
-        registerRenderer --> renderersMap : 存储到renderersMap
+        return ScopedComponent
+        registerRenderer --> renderersMap : 存储到config到renderersMap
     return config
 return config.component
+
+Amis --> ScopedComponent ++: 组合
+ScopedComponent --> StoreFactory ++: 组合
+StoreFactory --> TargetComponent ++: 组合
+return ReactNode
+return ReactNode
+return ReactNode
 @enduml
