@@ -1,7 +1,58 @@
-@startuml OptionsControl调用流程
+@startuml FormItem调用流程
 ' 以上是普通渲染器的注册方式，如果是表单项，为了更简单的扩充，请使用 `FormItem` 注解，而不是 `Renderer`。
 '  原因是如果用 `FormItem` 是不用关心：label 怎么摆，表单验证器怎么实现，如何适配表单的 3 种展现方式（水平、上下和内联模式），
 ' 而只用关心：有了值后如何回显，响应用户交互设置新值。
+participant Amis #00a3fe
+participant "FormItem(config)" as FormItem
+participant "A(component)" as A
+participant "registerFormItem(config)" as registerFormItem
+participant "asFormItem(config)" as asFormItem
+participant "B(component)" as B
+participant HocStoreFactory 
+participant "D(component)" as D
+participant "wrapControl(component)" as wrapControl
+participant "withRootStore(component)" as withRootStore
+participant "registerRenderer(config)" as registerRenderer
 
-OptionsControl ----> Bob
+participant "component" as component #00a3fe
+participant "StoreFactory" as StoreFactory #00a3fe
+participant "FormItemWrap" as FormItemWrap #00a3fe
+participant "WrapControlCustom" as WrapControlCustom #00a3fe
+participant "WithRootStoreCustomCom" as WithRootStoreCustomCom #00a3fe
+
+Amis --> FormItem ++: 传入config，调用
+return 返回函数A
+
+Amis --> A ++: 传入组件component，调用
+A --> registerFormItem ++: 合并config和component，调用函数
+registerFormItem --> asFormItem ++: 传入config和component，
+return 高阶函数B
+registerFormItem --> B ++: 传入config.component，调用
+B --> HocStoreFactory ++: 传入storeType等，调用
+return 高阶函数D
+B --> D ++: 传入增component
+return 返回组件StoreFactory，组合component
+B --> wrapControl ++: 传递FormItemWrap，调用
+wrapControl --> withRootStore ++: 传递自定义WrapControlCustom，调用
+return 自定义组件WithRootStoreCustomCom
+return WithRootStoreCustomCom
+return WithRootStoreCustomCom
+registerFormItem --> registerRenderer ++: 传递CustomComB和config，调用，走注册渲染器的逻辑
+return FinalComponent
+return FinalComponent
+return FinalComponent
+
+Amis --> WithRootStoreCustomCom ++: 组合
+WithRootStoreCustomCom --> WrapControlCustom ++: 组合
+WrapControlCustom --> FormItemWrap ++: 组合
+FormItemWrap --> StoreFactory ++: 组合
+StoreFactory --> component ++: 组合
+return ReactDOMs
+return ReactDOMs
+return ReactDOMs
+return ReactDOMs
+return ReactDOMs
+
+
+
 @enduml
