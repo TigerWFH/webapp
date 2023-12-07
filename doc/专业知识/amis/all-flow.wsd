@@ -1,0 +1,45 @@
+@startuml 全量流程
+start
+:System;
+:render;
+:AmisRender;
+:StatusScopedCom，生成维护StatusStore实例;
+:ScopedComponent，生成维护组件实例工具this.scoped;
+:Root;
+:RootRenderer，接受render中data，\nRoot.tsx中的renderChild函数;
+#00a3fe:renderChild;
+#00a3fe:SchemaRenderer，实现了this.renderChild，\n处理数据域，并调用Root.tsx中的renderChild\n同时将this.renderChild下发给子组件;
+:Schema;
+fork
+    :Renderer;
+    :ScopedComponent;
+    ' #00a3fe:StoreFactory;
+    ' :component;
+fork again
+    :FormItem;
+    :WithRootStoreCustomCom;
+    :WrapControlCustom;
+    :FormItemWrap;
+fork again
+    :ControlOptions;
+    :WithRootStoreCustomCom;
+    :WrapControlCustom;
+    :FormItemWrap;
+    #00a3fe:StoreFactory，实现了this.renderChild，会透传给子组件，实现逻辑很重;
+    :FormOptionsItem;
+    :component;
+    end
+end fork
+    #00a3fe:StoreFactory，实现了this.renderChild，会透传给子组件，实现逻辑很重;
+    :component;
+end
+
+' System --> render
+' render --> AmisRender
+' AmisRender --> StatusScopedCom : StatusScopedCom创建了StatusStore
+' StatusScopedCom --> Root
+' Root --> RootRenderer : RootRenderer接收data、render【本质是Root.jsx】的renderChild
+' RootRenderer --> SchemaRender : 有自己的this.renderChild，会处理数据;调用【Root.jsx】的renderChild
+
+
+@enduml

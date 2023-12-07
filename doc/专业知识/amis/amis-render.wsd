@@ -6,7 +6,7 @@ boundary System
 ' System --> Renderer ++ : 调用amis入口函数生成amis组件树
 ' Renderer --> registerRender ++ : 调用闭包注册渲染器，并返回渲染器
 participant "render(schema, props, options, pathPrefix)" as render
-participant AMISRender
+participant AMISRender #00a3fe
 participant "StatusScoped(ComposedComponent)" as StatusScoped
 participant "HocScoped(ComposedComponent, rendererType)" as Scoped
 participant ScopedRootRenderer #00a3fe
