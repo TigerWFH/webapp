@@ -9,6 +9,170 @@
 '   - `loading` 当前选项是否在加载
 '   - `onToggle` 切换一个选项的值
 '   - `onToggleAll` 切换所有选项的值，类似于全选。
+participant system
+participant OptionsControl
+participant "A(component)" as A
+participant "registryOptionsControl(config)" as registryOptionsControl
+participant "registerFormItem(config1)" as registerFormItem
+participant "asFormItem(config2)" as asFormItem
+participant "B(component)" as B
+participant "wrapControl(component)" as wrapControl
+participant "withRootStore(component)" as withRootStore
+participant "registerRenderer(config3)" as registerRenderer
 
-OptionsControl ----> Bob
+participant WithRootStoreCustom #00a3fe
+participant WrapControlCustom #00a3fe
+participant FormItemWrap #00a3fe
+participant StoreFactory #00a3fe
+participant FormOptionsItem #00a3fe
+participant component #00a3fe
+
+system ---> OptionsControl ++:config参数
+note left
+2023.12.25
+根据源码收集的OptionsControl的配置属性
+config.type: string
+config.name: string
+config.sizeMutable: boolean
+config.strictMode: boolean
+config.validations: string
+config.autoLoadOptionsFromSource: boolean
+----根据registerRenderer补充的配置参数
+config.test
+config.weight
+config.Renderer
+config.storeType
+config.isolateScope
+end note
+return A
+system ---> A ++:
+    A ---> registryOptionsControl ++: config1调用
+    note left
+    config1={...config, component}
+    end note
+        registryOptionsControl --> registerFormItem ++:
+        note left
+        registryOptionsControl生成组件FormOptionsItem，
+        并组合新
+        FormOptionsItem组合了component，修改透传的component
+        config2={...config1, strictMode: false, component: FormOptionsItem}
+        end note
+            registerFormItem --> asFormItem ++: config2
+            return 直接返回高阶B
+            registerFormItem --> B ++: config2.component
+            note left
+            B内部会根据config.storeType确定是否包裹StoreFactory
+            根据源码，OptionsControl都没有storeType属性，
+            故不走这段逻辑
+            end note
+                B --> wrapControl ++: FormItemWrap参数
+                    wrapControl --> withRootStore ++: 传递FormItemWrap参数
+                    return WithRootStoreCustom
+                return 返回WithRootStoreCustom
+            return WithRootStoreCustom
+            registerFormItem --> registerRenderer: config3，完成渲染器注册
+            note left
+            config3={...config2, 
+            weight, 
+            component: FormItemWrap, 
+            isFormItem: true}
+            end note
+            return config3
+        return config3
+    return config3
+
+system ---> WithRootStoreCustom: 组合
+note left
+
+end note
+WithRootStoreCustom ---> WrapControlCustom: 组合
+note left
+WithRootStoreCustom：
+通过RootStoreContext
+获取rootStore: IRendererStore，
+并下发给FormItemWrap组件
+injectedProps={
+    rootStore
+}
+end note
+WrapControlCustom ---> FormItemWrap: 组合
+note left
+WrapControlCustom：
+injectedProps={
+    defaultSize: props.controlWidth,
+    disabled: props.disabled,
+    formMode: props.formMode,
+    formItem: this.model,
+    ref: this.controlRef,
+    data,
+    value,
+    defaultValue,
+    formItemValue,
+    onChange,
+    onBlure,
+    setValue,
+    getValue,
+    prinstine,
+    setPrinstineValue,
+    _filteredOptions
+}
+end note
+FormItemWrap ---> StoreFactory: 可选组合
+note left
+FormItemWrap:
+injectedProps={
+    useMobile,
+    onOpenDialog,
+    onFocus,
+    onBlur,
+    size,
+    type,
+    classnames,
+    ref,
+    forwardRef,
+    formItem,
+    className,
+    ...rest
+}
+end note
+StoreFactory ---> FormOptionsItem
+note left
+StoreFactory:
+injectedProps={
+    ...this.state,
+    ref,
+    data,
+    dataUpdatedAt,
+    store,
+    scope,
+    render
+}
+end note
+FormOptionsItem ---> component: 组合
+note left
+FormOptionsItem:
+injectedProps={
+    placeholder,
+    ref,
+    options,
+    onToggle,
+    onToggleAll,
+    selectedOptions,
+    nodePath,
+    loading,
+    setLoading,
+    setOptions,
+    reloadOptions,
+    deferLoad,
+    expandTreeOptions,
+    creatable,
+    editable,
+    removable,
+    onAdd,
+    onEdit,
+    onDelete
+}
+end note
+
+
 @enduml
