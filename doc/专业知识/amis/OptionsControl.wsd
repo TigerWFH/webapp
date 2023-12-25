@@ -81,98 +81,102 @@ system ---> A ++:
         return config3
     return config3
 
-system ---> WithRootStoreCustom: 组合
-note left
 
-end note
-WithRootStoreCustom ---> WrapControlCustom: 组合
+system ---> WithRootStoreCustom ++: 组合
 note left
-WithRootStoreCustom：
-通过RootStoreContext
-获取rootStore: IRendererStore，
-并下发给FormItemWrap组件
-injectedProps={
-    rootStore
-}
 end note
-WrapControlCustom ---> FormItemWrap: 组合
-note left
-WrapControlCustom：
-injectedProps={
-    defaultSize: props.controlWidth,
-    disabled: props.disabled,
-    formMode: props.formMode,
-    formItem: this.model,
-    ref: this.controlRef,
-    data,
-    value,
-    defaultValue,
-    formItemValue,
-    onChange,
-    onBlure,
-    setValue,
-    getValue,
-    prinstine,
-    setPrinstineValue,
-    _filteredOptions
-}
-end note
-FormItemWrap ---> StoreFactory: 可选组合
-note left
-FormItemWrap:
-injectedProps={
-    useMobile,
-    onOpenDialog,
-    onFocus,
-    onBlur,
-    size,
-    type,
-    classnames,
-    ref,
-    forwardRef,
-    formItem,
-    className,
-    ...rest
-}
-end note
-StoreFactory ---> FormOptionsItem
-note left
-StoreFactory:
-injectedProps={
-    ...this.state,
-    ref,
-    data,
-    dataUpdatedAt,
-    store,
-    scope,
-    render
-}
-end note
-FormOptionsItem ---> component: 组合
-note left
-FormOptionsItem:
-injectedProps={
-    placeholder,
-    ref,
-    options,
-    onToggle,
-    onToggleAll,
-    selectedOptions,
-    nodePath,
-    loading,
-    setLoading,
-    setOptions,
-    reloadOptions,
-    deferLoad,
-    expandTreeOptions,
-    creatable,
-    editable,
-    removable,
-    onAdd,
-    onEdit,
-    onDelete
-}
-end note
-
-
+    WithRootStoreCustom ---> WrapControlCustom ++: 组合
+    note left
+    WithRootStoreCustom：
+    通过RootStoreContext
+    获取rootStore: IRendererStore，
+    并下发给FormItemWrap组件
+    injectedProps={
+        rootStore
+    }
+    end note
+        WrapControlCustom ---> FormItemWrap ++: 组合
+        note left
+        WrapControlCustom：
+        injectedProps={
+            defaultSize: props.controlWidth,
+            disabled: props.disabled,
+            formMode: props.formMode,
+            formItem: this.model,
+            ref: this.controlRef,
+            data,
+            value,
+            defaultValue,
+            formItemValue,
+            onChange,
+            onBlure,
+            setValue,
+            getValue,
+            prinstine,
+            setPrinstineValue,
+            _filteredOptions
+        }
+        end note
+            FormItemWrap ---> StoreFactory ++: 可选组合
+            note left
+            FormItemWrap:
+            injectedProps={
+                useMobile,
+                onOpenDialog,
+                onFocus,
+                onBlur,
+                size,
+                type,
+                classnames,
+                ref,
+                forwardRef,
+                formItem,
+                className,
+                ...rest
+            }
+            end note
+                StoreFactory ---> FormOptionsItem ++:
+                note left
+                StoreFactory:
+                injectedProps={
+                    ...this.state,
+                    ref,
+                    data,
+                    dataUpdatedAt,
+                    store,
+                    scope,
+                    render
+                }
+                end note
+                    FormOptionsItem ---> component ++: 组合
+                    note left
+                    FormOptionsItem:
+                    injectedProps={
+                        placeholder,
+                        ref,
+                        options,
+                        onToggle,
+                        onToggleAll,
+                        selectedOptions,
+                        nodePath,
+                        loading,
+                        setLoading,
+                        setOptions,
+                        reloadOptions,
+                        deferLoad,
+                        expandTreeOptions,
+                        creatable,
+                        editable,
+                        removable,
+                        onAdd,
+                        onEdit,
+                        onDelete
+                    }
+                    end note
+                    return 返回React虚拟DOM结构
+                return 返回React虚拟DOM结构
+            return 返回React虚拟DOM结构
+        return 返回React虚拟DOM结构
+    return 返回React虚拟DOM结构
+return 返回React虚拟DOM结构
 @enduml
