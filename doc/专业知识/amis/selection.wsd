@@ -1,0 +1,22 @@
+@startuml selection
+class React.Component {}
+class Selection.BaseSelection {}
+class Selection.Selection {}
+class AssociatedSelection.AssociatedSelection {}
+class GroupedSelection.GroupedSelection {}
+class TableSelection.TableSelection {}
+class ChainedSelection.ChainedSelection {}
+class Tree.TreeSelector {}
+class Select.Select {}
+
+React.Component <|---- Selection.BaseSelection
+React.Component <|---- Tree.TreeSelector
+React.Component <|---- Select.Select
+
+Selection.BaseSelection <|-> Selection.Selection
+Selection.BaseSelection <|----> TableSelection.TableSelection
+Selection.BaseSelection <|----> GroupedSelection.GroupedSelection
+Selection.BaseSelection <|----> AssociatedSelection.AssociatedSelection
+Selection.BaseSelection <|----> ChainedSelection.ChainedSelection 
+
+@enduml

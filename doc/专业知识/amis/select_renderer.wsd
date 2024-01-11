@@ -1,0 +1,24 @@
+@startuml selectRenderer嵌套关系
+' Select的其它模式时基于transfer的，只有Select是自己
+class React.Component {}
+class SelectRenderer.SelectControl {}
+class SelectRenderer.SelectControlRenderer {}
+class SelectRenderer.MultiSelectControlRenderer {}
+class SelectRenderer.TransferDropdownRenderer {}
+class Transfer.BaseTransferRenderer {}
+class Select.Select {}
+class TransferDropDown {}
+class PopOverContainer {}
+class ResultBox {}
+
+
+React.Component <|--------> SelectRenderer.SelectControl
+React.Component <|----> Transfer.BaseTransferRenderer
+React.Component <|--------> Select.Select
+SelectRenderer.SelectControl <|---> SelectRenderer.SelectControlRenderer
+SelectRenderer.SelectControl <|---> SelectRenderer.MultiSelectControlRenderer
+
+Transfer.BaseTransferRenderer <|----> SelectRenderer.TransferDropdownRenderer
+Transfer <|----> TransferDropDown
+
+@enduml
