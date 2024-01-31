@@ -1,0 +1,8 @@
+{
+  "workbench.tree.enableStickyScroll": true,
+  "editor.stickyScroll.defaultModel": "foldingProviderModel",
+  "notebook.stickyScroll.enabled": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyTabStops": true,
+  "terminal.integrated.stickyScroll.enabled": true
+}
