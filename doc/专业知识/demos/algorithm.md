@@ -86,6 +86,7 @@ let arr = [1, 2, 3, 8, 5, 2, 1];
 let begin = new Date().valueOf();
 function bubleSort(arr) {
   for (let i = 1; i < arr.length; i++) {
+    // 优化的是已经排好序的场景
     let hasSwap = false;
     for (let j = 0; j < arr.length - i; j++) {
       if (arr[j] > arr[j + 1]) {
@@ -108,6 +109,8 @@ console.log('time===>', end - begin);
 
 - 快速排序（不稳定, O(nlogn), in-place, O(logn)
   > 快速排序：从`待排序列`中选择一个基准数，通过一趟排序将待排序的数据进行分割：其中`一部分`的所有数据都比`另一部分`的所有数据都要`小`。然后，再按此方法分别对这两部分数据进行快速排序，整个排序过程可以递归进行，以此达到整个序列变成有序序列。
+  >
+  > - 基准数的选取
 
 ```js
 // first
