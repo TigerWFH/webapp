@@ -722,6 +722,7 @@
 - `多进程多实例构建：`thread-loader、parallel-webpack、HappyPack
 - `多进程多实例并行压缩：`parallel-uglify-plugin 和 uglifyjs-webpack-plugin、terser-webpack-plugin（支持 es6 语法压缩）配合使用
 - ``
+
 # 缓存：https://github.com/CJY0208/react-router-cache-route/blob/master/README_CN.md
 
 # 待学习知识
@@ -1933,7 +1934,7 @@ Demo：
     writing system：书写系统，包括字系统(script)和符号(symbols)与标点(punctuation)
 ```
 
-## Unicode 是什么？有谁维护？
+## Unicode 是什么？由谁维护？
 
 ```
     Unicode是通用字符编码集，为世界上所有的语言和其它符号进行唯一编码的字符集
