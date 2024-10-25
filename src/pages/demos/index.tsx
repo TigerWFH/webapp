@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Tabs, { TabPanel } from 'Components/Tabs';

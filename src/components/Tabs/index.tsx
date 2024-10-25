@@ -20,9 +20,9 @@ interface IProps {
   className?: string;
   onChange?: (name: string) => void;
 }
-interface IState {
-  activeName: string;
-}
+// interface IState {
+//   activeName: string;
+// }
 function Tabs(props: IProps) {
   const { children, className } = props;
   const childList = React.Children.toArray(children);

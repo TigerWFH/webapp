@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../help';
 
-export default function () {
+export default function Knight() {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.KNIGHT,
     collect: (monitor) => ({

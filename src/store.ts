@@ -7,36 +7,36 @@ import {
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import home, {
-  initialHomeState,
-  IHomeState
+  initialHomeState
+  // IHomeState
 } from '@/pages/home/controller/reducers';
 import double, {
-  initialDoubleState,
-  IDouble
+  initialDoubleState
+  // IDouble
 } from '@/pages/bones/controller/reducers';
 import detail, {
-  initialState as detailState,
-  IDetail
+  initialState as detailState
+  // IDetail
 } from '@/pages/detail/controller/reducers';
 
 import demos from '@/pages/demos/controller/reducers';
 import mine, {
-  initialState as mineState,
-  IMineState
+  initialState as mineState
+  // IMineState
 } from '@/pages/mine/controller/reducers';
 import x6, { initialState as x6State } from '@/pages/x6/controller/reducers';
 // app的初始状态
-interface IGlobalState {
-  home: IHomeState;
-  double: IDouble;
-  detail: IDetail;
-  about: any;
-  blog: any;
-  hooks: any;
-  demos: any;
-  mine: IMineState;
-  x6: any;
-}
+// interface IGlobalState {
+//   home: IHomeState;
+//   double: IDouble;
+//   detail: IDetail;
+//   about: any;
+//   blog: any;
+//   hooks: any;
+//   demos: any;
+//   mine: IMineState;
+//   x6: any;
+// }
 
 const initialState: any = {
   home: initialHomeState,

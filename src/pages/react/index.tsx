@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Tabs, { TabPanel } from 'Components/Tabs';
-import Hooks from './components/Hooks';
-import ImperativeHandle from './components/Hooks/useImperativeHandle';
-import UseState from './components/Hooks/useState';
-import KeyTest from './components/KeyTest';
-import SetStateTest from './components/SetStateTest';
+// import Tabs, { TabPanel } from 'Components/Tabs';
+// import Hooks from './components/Hooks';
+// import ImperativeHandle from './components/Hooks/useImperativeHandle';
+// import UseState from './components/Hooks/useState';
+// import KeyTest from './components/KeyTest';
+// import SetStateTest from './components/SetStateTest';
 
 /*
   只要父组件update，子组件无论是否通过props接收了父组件的state，都会被update

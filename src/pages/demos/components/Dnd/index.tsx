@@ -2,8 +2,6 @@ import * as React from 'react';
 import Board from '../Board';
 import Dustbin from '../Dustbin';
 
-interface IProps {}
-
 const boardStyle = {
   width: 600,
   height: 600,
