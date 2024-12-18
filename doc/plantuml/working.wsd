@@ -1,0 +1,16 @@
+@startuml working status
+state not_ready
+state ready
+state calling
+state talking
+state end
+[*] -> not_ready: 默认未就绪
+not_ready -> ready: 切换至准备好了
+ready -> not_ready: 切换至走开一会
+ready -> ready: 自动外呼开始/暂停
+ready -> calling: 点呼
+ready -> talking: 自动外呼接通/呼入转接成功
+calling -> talking: 电话接通
+talking -> end: 电话挂断
+end -> ready: 完成小结/超时
+@enduml
