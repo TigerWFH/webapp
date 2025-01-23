@@ -9,9 +9,13 @@ import '@antv/x6-react-shape';
 import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import styles from './index.module.scss';
-import Trigger from '../X6ReactTrigger';
-import { registerNode, registerEdge } from './X6Canvas/register';
-export { BaseNode, BaseEdge } from './X6Canvas/register';
+import Trigger from '../../X6ReactTrigger';
+import {
+  registerNode,
+  registerEdge,
+  registerReactNode
+} from '../X6Canvas/register';
+export { BaseNode, BaseEdge } from '../X6Canvas/register';
 
 const { Rect, Circle } = Shape;
 const { Item, Group } = Toolbar;
@@ -20,6 +24,7 @@ interface IX6DndGraphProps {
   businessType?: string; // 业务类型，不同业务使用不同的图元集合
   customEdge?: any;
   customNode?: any;
+  customReactNode?: any;
 }
 
 export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
@@ -29,7 +34,12 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
   stencil: Stencil | undefined;
   constructor(props: IX6DndGraphProps) {
     super(props);
-    const { customEdge = {}, customNode = {} } = this.props;
+    const {
+      customEdge = {},
+      customNode = {},
+      customReactNode = {}
+    } = this.props;
+
     if (customEdge) {
       registerEdge(customEdge);
     }
@@ -38,6 +48,9 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
       registerNode(customNode);
     }
 
+    if (customReactNode) {
+      registerReactNode(customReactNode);
+    }
     this.state = {
       node: null
     };
@@ -79,7 +92,7 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
         pannable: true
       })
     );
-    this.graph.fromJSON(MOCKDATA);
+    // this.graph.fromJSON(MOCKDATA);
 
     // this.graph.on("cell:dblclick", (options: any) => {
     //     const { cell, e } = options

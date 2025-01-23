@@ -10,8 +10,13 @@ import '@antv/x6-react-components/es/menu/style/index.css';
 import '@antv/x6-react-components/es/toolbar/style/index.css';
 import styles from './index.module.scss';
 import Trigger from '../X6ReactTrigger';
-import { registerNode, registerEdge } from './X6Canvas/register';
+import {
+  registerNode,
+  registerEdge,
+  registerReactNode
+} from './X6Canvas/register';
 export { BaseNode, BaseEdge } from './X6Canvas/register';
+import { keyToNode, keyToReactNode } from './custom';
 
 const { Rect, Circle } = Shape;
 const { Item, Group } = Toolbar;
@@ -20,6 +25,7 @@ interface IX6DndGraphProps {
   businessType?: string; // 业务类型，不同业务使用不同的图元集合
   customEdge?: any;
   customNode?: any;
+  customReactNode?: any;
 }
 
 const MOCKDATA = {
@@ -184,15 +190,23 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
   stencil: Stencil | undefined;
   constructor(props: IX6DndGraphProps) {
     super(props);
-    const { customEdge = {}, customNode = {} } = this.props;
+    const {
+      customEdge = {},
+      customNode = keyToNode,
+      customReactNode = keyToReactNode
+    } = this.props;
+    // 注册自定义变
     if (customEdge) {
       registerEdge(customEdge);
     }
-
+    // 注册自定义X6节点【扩展节点操作】
     if (customNode) {
       registerNode(customNode);
     }
-
+    // 注册基于React的X6节点【使用react ui】
+    if (customReactNode) {
+      registerReactNode(customReactNode);
+    }
     this.state = {
       node: null
     };
@@ -235,16 +249,6 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
       })
     );
     this.graph.fromJSON(MOCKDATA);
-
-    // this.graph.on("cell:dblclick", (options: any) => {
-    //     const { cell, e } = options
-    //     cell.addTools({
-    //         name: cell.isEdge() ? 'edge-editor' : 'node-editor',
-    //         args: {
-    //             event: e,
-    //         },
-    //     })
-    // })
 
     this.stencil = new Stencil({
       title: '业务组件库',
@@ -322,6 +326,10 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
     if (this.stencilContainer) {
       this.stencilContainer.appendChild(this.stencil.container);
     }
+
+    const condition = this.graph.createNode({
+      shape: 'condition'
+    });
     // 业务组件栏的组件实例
     const r = new Rect({
       width: 70,
@@ -398,14 +406,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
       ]
     });
 
-    const customNode = {
-      shape: 'react-shape',
-      width: 60,
-      height: 60,
-      component: <Trigger />
-    };
-
-    this.stencil.load([r, c, customNode], 'trigger');
+    this.stencil.load([r, c], 'trigger');
     this.stencil.load([c2.clone(), r2, r3, c3], 'flow');
   }
 

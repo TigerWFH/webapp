@@ -1,6 +1,6 @@
 // 用于支持自定义节点
-import { Node, Edge, Cell, Shape } from '@antv/x6';
-import { ReactShape } from '@antv/x6-react-shape';
+import { Node, Edge, Cell, Shape, Dom } from '@antv/x6';
+import { ReactShape, register } from '@antv/x6-react-shape';
 
 export interface IResult {
   success: boolean;
@@ -8,6 +8,68 @@ export interface IResult {
   name?: string; // 节点名称
   edges?: Edge[]; // 没有配置的边节点
 }
+
+// 链接桩节点DOM结构
+const PORT_MARKUP_CONFIG = {
+  tagName: 'foreignObject',
+  selector: 'fo',
+  attrs: {
+    width: 6,
+    height: 6,
+    x: -3,
+    y: -3,
+    zIndex: 10,
+    // magnet决定是否可交互
+    magnet: 'true'
+  },
+  children: [
+    {
+      ns: Dom.ns.xhtml,
+      tagName: 'body',
+      selector: 'foBody',
+      attrs: {
+        xmlns: Dom.ns.xhtml
+      },
+      style: {
+        width: '100%',
+        height: '100%'
+      },
+      children: [
+        {
+          tagName: 'span',
+          selector: 'content',
+          style: {
+            width: '100%',
+            height: '100%'
+          }
+        }
+      ]
+    }
+  ]
+};
+// 链接桩群组定义
+export const PORTS_CONFIG = {
+  groups: {
+    in: {
+      position: { name: 'left' },
+      zIndex: 2,
+      markup: PORT_MARKUP_CONFIG
+    },
+    out: {
+      position: { name: 'right' },
+      zIndex: 2,
+      markup: PORT_MARKUP_CONFIG
+    },
+    top: {
+      position: { name: 'top' },
+      markup: PORT_MARKUP_CONFIG
+    },
+    bottom: {
+      position: { name: 'bottom' },
+      markup: PORT_MARKUP_CONFIG
+    }
+  }
+};
 
 // 抽象节点的业务操作
 export class BaseNode extends ReactShape {
@@ -146,6 +208,7 @@ export class BaseNode extends ReactShape {
     };
   }
 }
+Node.registry.register('basenode', BaseNode, true);
 
 // 抽闲边操作
 export class BaseEdge extends Shape.Edge {
@@ -161,16 +224,27 @@ export class BaseEdge extends Shape.Edge {
   }
 }
 
+Edge.registry.register('baseedge', BaseEdge, true);
+
 // 向X6系统注册自定义节点
 export function registerNode(keyToNode: any) {
   Object.keys(keyToNode).forEach((key) =>
-    Node.registry.register(key, keyToNode[key])
+    Node.registry.register(key, keyToNode[key], true)
   );
 }
 
 // 向X6系统注册自定义边
 export function registerEdge(keyToEdge: any) {
   Object.keys(keyToEdge).forEach((key) => {
-    Edge.registry.register(key, keyToEdge[key]);
+    Edge.registry.register(key, keyToEdge[key], true);
+  });
+}
+
+export function registerReactNode(keyToReactNode: any[]) {
+  keyToReactNode.forEach((item) => {
+    register({
+      inherit: 'basenode',
+      ...item
+    });
   });
 }
