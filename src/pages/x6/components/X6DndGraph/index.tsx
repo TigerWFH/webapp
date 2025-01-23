@@ -4,6 +4,7 @@ import { Toolbar } from '@antv/x6-react-components';
 import { Snapline } from '@antv/x6-plugin-snapline';
 import { Scroller } from '@antv/x6-plugin-scroller';
 import { Stencil } from '@antv/x6-plugin-stencil';
+import { register } from '@antv/x6-react-shape';
 // Stencil依赖@antv/x6-plugin-dnd
 import '@antv/x6-react-shape';
 import '@antv/x6-react-components/es/menu/style/index.css';
@@ -17,6 +18,7 @@ import {
 } from './X6Canvas/register';
 export { BaseNode, BaseEdge } from './X6Canvas/register';
 import { keyToNode, keyToReactNode } from './custom';
+import { Progress, Button } from 'antd';
 
 const { Rect, Circle } = Shape;
 const { Item, Group } = Toolbar;
@@ -328,7 +330,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
     }
 
     const condition = this.graph.createNode({
-      shape: 'condition'
+      shape: 'react-condition'
     });
     // 业务组件栏的组件实例
     const r = new Rect({
@@ -406,7 +408,7 @@ export default class X6DndGraph extends React.Component<IX6DndGraphProps, any> {
       ]
     });
 
-    this.stencil.load([r, c], 'trigger');
+    this.stencil.load([condition], 'trigger');
     this.stencil.load([c2.clone(), r2, r3, c3], 'flow');
   }
 

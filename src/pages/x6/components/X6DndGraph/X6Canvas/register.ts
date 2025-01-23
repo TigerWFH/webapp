@@ -208,7 +208,7 @@ export class BaseNode extends ReactShape {
     };
   }
 }
-Node.registry.register('basenode', BaseNode, true);
+Node.registry.register('base-node', BaseNode, true);
 
 // 抽闲边操作
 export class BaseEdge extends Shape.Edge {
@@ -224,7 +224,7 @@ export class BaseEdge extends Shape.Edge {
   }
 }
 
-Edge.registry.register('baseedge', BaseEdge, true);
+Edge.registry.register('base-edge', BaseEdge, true);
 
 // 向X6系统注册自定义节点
 export function registerNode(keyToNode: any) {
@@ -243,7 +243,7 @@ export function registerEdge(keyToEdge: any) {
 export function registerReactNode(keyToReactNode: any[]) {
   keyToReactNode.forEach((item) => {
     register({
-      inherit: 'basenode',
+      inherit: 'base-node',
       ...item
     });
   });
