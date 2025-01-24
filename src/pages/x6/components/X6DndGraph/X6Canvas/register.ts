@@ -14,12 +14,11 @@ const PORT_MARKUP_CONFIG = {
   tagName: 'foreignObject',
   selector: 'fo',
   attrs: {
-    width: 6,
-    height: 6,
-    x: -3,
-    y: -3,
+    width: 8,
+    height: 8,
+    x: -4,
+    y: -4,
     zIndex: 10,
-    // magnet决定是否可交互
     magnet: 'true'
   },
   children: [
@@ -32,7 +31,9 @@ const PORT_MARKUP_CONFIG = {
       },
       style: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        border: '1px solid #00a3fe',
+        borderRadius: '100%'
       },
       children: [
         {
@@ -50,12 +51,12 @@ const PORT_MARKUP_CONFIG = {
 // 链接桩群组定义
 export const PORTS_CONFIG = {
   groups: {
-    in: {
+    left: {
       position: { name: 'left' },
       zIndex: 2,
       markup: PORT_MARKUP_CONFIG
     },
-    out: {
+    right: {
       position: { name: 'right' },
       zIndex: 2,
       markup: PORT_MARKUP_CONFIG
@@ -68,10 +69,22 @@ export const PORTS_CONFIG = {
       position: { name: 'bottom' },
       markup: PORT_MARKUP_CONFIG
     }
-  }
+  },
+  items: [
+    {
+      id: 'port-left',
+      group: 'left',
+      args: {}
+    },
+    {
+      id: 'port-right',
+      group: 'right',
+      args: {}
+    }
+  ]
 };
 
-// 抽象节点的业务操作
+// 定义节点操作
 export class BaseNode extends ReactShape {
   // eslint-disable-next-line class-methods-use-this
   isGroup() {
@@ -208,6 +221,11 @@ export class BaseNode extends ReactShape {
     };
   }
 }
+// 定义节点UI
+BaseNode.config({
+  ports: PORTS_CONFIG
+});
+
 Node.registry.register('base-node', BaseNode, true);
 
 // 抽闲边操作
@@ -223,7 +241,6 @@ export class BaseEdge extends Shape.Edge {
     return !source || !target;
   }
 }
-
 Edge.registry.register('base-edge', BaseEdge, true);
 
 // 向X6系统注册自定义节点
