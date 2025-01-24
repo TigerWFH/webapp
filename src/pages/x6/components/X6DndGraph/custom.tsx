@@ -1,8 +1,6 @@
 import * as React from 'react';
 import EndComponent, { EndNode } from './X6Canvas/EndNode';
-import ConditionComponent, {
-  ConditionNode
-} from './X6Canvas/ConditionNode.tsx';
+import ConditionComponent, { ConditionNode } from './X6Canvas/ConditionNode';
 
 function BaseComponent() {
   return <div>base</div>;
@@ -19,16 +17,19 @@ export const keyToReactNode = [
   {
     shape: 'react-basenode',
     inherit: 'base-node',
+    effect: ['data'], // 指定的字段发生变化，react会刷新
     component: BaseComponent
   },
   {
     shape: 'react-condition',
     inherit: 'condition',
+    effect: ['data'],
     component: ConditionComponent
   },
   {
     shape: 'react-end',
     inherit: 'end',
+    effect: ['data'],
     component: EndComponent
   }
 ];

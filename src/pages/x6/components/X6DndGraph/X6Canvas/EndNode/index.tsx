@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Edge } from '@antv/x6';
 import { BaseNode, IResult, PORTS_CONFIG } from '../register';
+import styles from './index.module.scss';
 
 // 扩展节点操作
 export class EndNode extends BaseNode {
@@ -39,6 +40,15 @@ EndNode.config({
   height: 80
 });
 // 定制节点UI组件
-export default function EndComponent() {
-  return <div>end</div>;
+export default function EndComponent(props: any) {
+  const { node = {} } = props;
+  if (node.template) {
+    return (
+      <div className={styles.template}>
+        <image />
+        <span>end</span>
+      </div>
+    );
+  }
+  return <div className={styles.end}>end</div>;
 }

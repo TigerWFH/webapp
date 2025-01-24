@@ -12,8 +12,6 @@ import styles from './index.module.scss';
 import Trigger from './X6ReactTrigger';
 import { registerNode, registerEdge, registerReactNode } from './register';
 export { BaseNode, BaseEdge } from './register';
-
-const { Rect, Circle } = Shape;
 const { Item, Group } = Toolbar;
 
 interface IX6DndGraphProps {
@@ -81,61 +79,39 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
       notFoundText: '未搜索到指定的组件',
       collapsable: true,
       stencilGraphWidth: 200,
-      stencilGraphHeight: 180,
+      stencilGraphHeight: 800,
       groups: [
         {
           name: 'trigger',
           title: '触发',
-          graphHeight: 100,
+          // graphHeight: 100,
           graphOptions: {}
         },
         {
           name: 'flow',
           title: '流程控制',
           collapsed: true
-        },
-        {
-          name: 'strategy',
-          title: '策略',
-          collapsed: true
-        },
-        {
-          name: 'actions',
-          title: '动作',
-          collapsed: true
-        },
-        {
-          name: 'productions',
-          title: '数据产品',
-          collapsed: true
         }
+        // {
+        //   name: 'strategy',
+        //   title: '策略',
+        //   collapsed: true
+        // }
       ],
-      getDragNode: (node: any, options: any) => {
-        return node.clone();
+      layoutOptions: {
+        columns: 1
       },
+      // getDragNode: (node: any, options: any) => {
+      //   /*
+      //     不克隆，则是把模板上的节点移动到画布上
+      //   */
+      //   return node.clone();
+      // },
       getDropNode: (node: any, options: any) => {
-        // const ports = [
-        //   {
-        //     id: 'port1',
-        //     attrs: {
-        //       circle: {
-        //         magnet: true
-        //       }
-        //     }
-        //   },
-        //   {
-        //     id: 'port2',
-        //     attrs: {
-        //       circle: {
-        //         magnet: true
-        //       }
-        //     }
-        //   }
-        // ];
-
-        const newNode = node.clone();
-        // newNode.addPorts(ports);
-        return newNode;
+        const newNode = this.graph?.createNode({
+          shape: node.shape
+        });
+        return newNode as any;
       }
     });
 
@@ -143,91 +119,39 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
       this.stencilContainer.appendChild(this.stencil.container);
     }
 
-    const basenode = this.graph.createNode({
-      shape: 'base-node'
-    });
-    const condition = this.graph.createNode({
-      shape: 'react-condition'
-    });
-    // 业务组件栏的组件实例
-    const r = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: '#31D0C6', stroke: '#4B4A67', strokeWidth: 6 },
-        text: { text: 'rect', fill: 'white' }
-      }
-    });
-
-    const c = new Circle({
-      width: 60,
-      height: 60,
-      data: {
-        data: 'myData'
-      },
-      attrs: {
-        circle: { fill: '#FE854F', strokeWidth: 6, stroke: '#4B4A67' },
-        text: { text: 'ellipse', fill: 'white' }
-      }
-    });
-
-    const c2 = new Circle({
-      width: 60,
-      height: 60,
-      attrs: {
-        circle: { fill: '#4B4A67', 'stroke-width': 6, stroke: '#FE854F' },
-        text: { text: 'ellipse', fill: 'white' }
-      }
-    });
-
-    const r2 = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: '#4B4A67', stroke: '#31D0C6', strokeWidth: 6 },
-        text: { text: 'rect', fill: 'white' }
-      }
-    });
-
-    const r3 = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: '#31D0C6', stroke: '#4B4A67', strokeWidth: 6 },
-        text: { text: 'rect', fill: 'white' }
-      }
-    });
-
-    const c3 = new Circle({
-      width: 60,
-      height: 60,
-      attrs: {
-        circle: { fill: '#FE854F', strokeWidth: 6, stroke: '#4B4A67' },
-        text: { text: 'ellipse', fill: 'white' }
-      },
-      ports: [
-        {
-          id: 'port1',
-          attrs: {
-            circle: {
-              magnet: true
-            }
-          }
-        },
-        {
-          id: 'port2',
-          attrs: {
-            circle: {
-              magnet: true
-            }
-          }
+    const condition = this.graph
+      .createNode({
+        shape: 'react-condition',
+        width: 100,
+        height: 44,
+        data: {
+          template: true
         }
-      ]
-    });
-
-    console.log('wfh-----base', basenode);
-    this.stencil.load([basenode, condition], 'trigger');
-    this.stencil.load([c2.clone(), r2, r3, c3], 'flow');
+      })
+      .removePorts();
+    const end = this.graph
+      .createNode({
+        shape: 'react-end',
+        width: 100,
+        height: 44,
+        data: {
+          template: true
+        }
+      })
+      .removePorts();
+    const basenode = this.graph
+      .createNode({
+        shape: 'react-basenode',
+        width: 100,
+        height: 44,
+        data: {
+          template: true
+        }
+      })
+      .removePorts();
+    // 业务组件栏的组件实例
+    this.stencil.load([condition, basenode, end, condition.clone()], 'trigger');
+    this.stencil.load([basenode.clone()], 'flow');
   }
 
   componentDidUpdate() {
@@ -249,7 +173,7 @@ export default class X6Canvas extends React.Component<IX6DndGraphProps, any> {
   onGetAll = () => {
     if (this.graph) {
       const all = this.graph.getCells();
-      console.log('cells======>', all);
+      console.log('wfh---all-cells======>', all);
     }
   };
 

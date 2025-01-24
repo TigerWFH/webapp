@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Edge } from '@antv/x6';
 // import { Progress, Button } from 'antd';
 import { BaseNode, IResult, PORTS_CONFIG } from '../register';
+import styles from './index.module.scss';
+import img from '../../../../../../res/bg3.jpg';
 
 export class ConditionNode extends BaseNode {
   constructor(metaData: any) {
@@ -109,6 +111,16 @@ export const keyToNode = {
   condition: ConditionNode
 };
 
-export default function Condition() {
-  return <div>condition</div>;
+export default function Condition(props: any) {
+  console.log('wfh---condition--props', props.node.data);
+  const { data = {} } = props.node;
+  if (data.template) {
+    return (
+      <div className={styles.template}>
+        <img src={img} />
+        <span>condition</span>
+      </div>
+    );
+  }
+  return <div className={styles.condition}>condition</div>;
 }
