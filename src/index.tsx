@@ -38,6 +38,7 @@ const Mine = lazy(() => import('@/pages/mine'));
 const Canvas = lazy(() => import('@/pages/canvas'));
 const X6 = lazy(() => import('@/pages/x6'));
 const DndFrame = lazy(() => import('@/pages/x6/frame'));
+const Workbench = lazy(() => import('@/pages/reactflow'));
 // const XflowDemo = lazy(() => import('@/pages/x6/xflow'));
 
 const STATIC_ROUTE = [
@@ -58,6 +59,18 @@ const STATIC_ROUTE = [
     title: 'x6'
   },
   {
+    href: '/reactflow',
+    title: 'reactflow'
+  },
+  {
+    href: '/dndframe/x6',
+    title: 'x6'
+  },
+  {
+    href: '/dndframe/cms',
+    title: 'cms'
+  },
+  {
     href: '/react',
     title: 'react'
   },
@@ -75,6 +88,9 @@ const ROUTER_TO_TITLE = new Map([
   ['/demos', '实践'],
   ['/home', '主页'],
   ['/x6', 'x6'],
+  ['/reactflow', 'reactflow'],
+  ['/dndframe/x6', 'x6'],
+  ['/dndframe/cms', 'cms'],
   ['/react', 'react'],
   ['/canvas', 'canvas'],
   ['/blog', '博客']
@@ -182,6 +198,7 @@ const elem = (
             <Route path={'/demos'} exact component={Demos}></Route>
             <Route path={'/about'} exact component={About}></Route>
             <Route path={'/x6'} exact component={X6}></Route>
+            <Route path={'/reactflow'} exact component={Workbench}></Route>
             {/* <Route path={'/XflowDemo'} exact component={XflowDemo}></Route> */}
             <Route path={'/canvas'} exact component={Canvas}></Route>
             <Route path={'/react'} exact component={ReactDemo}></Route>
