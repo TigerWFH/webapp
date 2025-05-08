@@ -1,0 +1,88 @@
+@startuml zyplayer表结构
+entity tbl_setting {
+    * 配置id
+    * key
+    * value
+}
+
+entity tbl_site {
+    * id
+    * name
+    * key
+    * api
+    * playUrl
+    * search
+    * group
+    * type
+    * ext
+    * categories
+    * isActive
+}
+
+entity tbl_iptv {
+    * id
+    * key
+    * name
+    * url
+    * type
+    * epg
+    * logo
+    * headers
+    * isActive
+}
+
+entity tbl_drive {
+    * id
+    * key
+    * name
+    * server  
+    * startPage
+    * search
+    * headers
+    * params
+    * showAll
+    * isActive
+}
+
+entity tbl_analyze {
+    * id 
+    * key 
+    * name 
+    * url 
+    * type
+    * headers 
+    * isActive
+}
+
+entity tbl_star {
+    * id
+    * date
+    * type
+    * related 
+    * videoId
+    * videoImage
+    * videoName
+    * videoType
+    * videoRemarks
+}
+
+entity tbl_history {
+    * id 
+    * date 
+    * type 
+    * related
+    * siteSource
+    * playEnd
+    * videoId
+    * videoImage
+    * videoName
+    * videoIndex
+    * watchTime
+    * duration
+    * skipTimeInEnd
+    * skipTimeInStart
+}
+
+
+
+@enduml
